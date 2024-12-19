@@ -1,0 +1,10 @@
+{
+    "extends": [
+        "config:base"
+    ],
+    "lockfileMaintenance" : {
+        "enalbed" : true,
+        "recreateClosed" : true,
+        "rebaseStalePrs" : true
+    }
+}
