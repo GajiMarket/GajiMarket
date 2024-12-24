@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Mainpage = () => {
+const Mainpage:React.FC = () => {
   return (
     <div>Mainpage</div>
   )

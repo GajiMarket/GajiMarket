@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Chatpage = () => {
+const Chatpage:React.FC = () => {
   return (
     <div>Chatpage</div>
   )
