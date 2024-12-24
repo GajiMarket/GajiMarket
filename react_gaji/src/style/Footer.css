@@ -1,0 +1,34 @@
+.FooterBar{
+    background-color: #ffffff;
+    position: absolute;
+    bottom: 0;
+    width: 60%;
+    height: 70px;
+    display: flex;
+
+}
+.footer_home_icon{
+    width:20%;
+    height: 100%;
+}
+.footer_home_icon_img{
+    width: 30%;
+    height: 100%;
+}
+
+.footer_list_icon{
+    width:20%;
+    height: 100%;
+}
+.footer_join_icon{
+    width:20%;
+    height: 100%;
+}
+.footer_chat_icon{
+    width:20%;
+    height: 100%;
+}
+.footer_my_icon{
+    width:20%;
+    height: 100%;
+}
