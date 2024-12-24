@@ -1,0 +1,153 @@
+
+ const api = `http://localhost:3000`;
+
+// 이메일 유효성 검증
+export const validateEmail = (email: string): string | null => {
+
+    const emailRegx = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+
+    return emailRegx.test(email) ? null : '유효한 이메일이 아닙니다.'
+
+}
+
+// 비밀번호 유효성 검증
+export const validatePassword = (password: string): string | null => {
+
+    const passwordRegx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8, 12}$/;
+
+    return passwordRegx.test(password) ? null : '비밀번호는 최소 대문자, 특수문자, 숫자가 포함된 8~12자리를 입력해야합니다.'
+    
+}
+
+//휴대폰 유효성 검증
+
+export const validatePhone = (phone: string): string | null => {
+
+    const phoneRegex = /^01(0|1[6-9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+
+    return phoneRegex.test(phone) ? null : '없는 전화번호 입니다.'
+}
+
+
+// 아이디 중복
+
+export const checkId = async (id: string): Promise<boolean> => {
+
+   
+
+    try {
+        const response =  await fetch(`${api}/auth/validateId`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id}),
+        });
+
+        if(!response.ok) {
+
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const results = await response.json();
+
+        return results.isCheck;
+    
+    } catch (error) {
+
+        console.error('중복된 아이디 입니다.', error);
+
+        throw error;
+        
+    }
+};
+
+
+
+// 이메일 인증
+
+export const emailCheck = async (code: number): Promise<boolean> => {
+
+   try { 
+    
+    const response = await fetch(`${api}/auth/emailCheck`, {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({code})
+    });
+
+    if(!response.ok) {
+
+        throw new Error (`Server Error: ${response.status}`)
+
+    }
+    
+    const results = await response.json();
+
+    return results.isCheck;
+
+} catch(error) {
+
+    console.error(`코드번호가 맞지 않습니다.`, error);
+
+    throw error;
+    
+    }
+
+
+};
+
+//이메일 인증번호 전송
+
+export const emailSend = async (email: string): Promise<boolean> => {
+
+    try {
+        const response = await fetch(`${api}/auth/emailSend`, {
+            method: 'post',
+            headers: {'Content-Type': 'application.json'},
+            body: JSON.stringify({email})
+        });
+
+        if(!response.ok) {
+
+            throw new Error(`Server Error: ${response.status}`);
+        }
+
+        const results = await response.json();
+
+        return results.isCheck;
+    } catch(error) {
+
+        console.error(`코드 전송이 실패 했습니다`, error);
+
+        throw error;
+        
+    }
+};
+
+
+//회원가입
+
+export const signUp = async(data: Record<string, string>) => {
+
+    try {
+
+        const response = await fetch(`${api}/auth/signUp`, {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data),
+        });
+
+        if(!response.ok) {
+
+            throw new Error(`Server Error: ${response.status}`);
+        }
+
+        return await response.json();
+
+    } catch(error) {
+
+        console.error('데이터 전송 실패:', error);
+
+        throw error;
+        
+    }
+}

@@ -1,0 +1,16 @@
+.signUpForm {
+    display: flex;
+    position: relative;
+    width: 100%;
+    margin: 80px 0 0 0;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+
+.nickName {
+    /* box-shadow: 50px 50px 50px 0 black */
+
+
+}
