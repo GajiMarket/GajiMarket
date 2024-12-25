@@ -64,7 +64,7 @@ export const checkId = async (id: string): Promise<boolean> => {
 
 // 이메일 인증
 
-export const emailCheck = async (code: number): Promise<boolean> => {
+export const emailCheck = async (code: string): Promise<boolean> => {
 
    try { 
     

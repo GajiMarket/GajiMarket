@@ -4,15 +4,25 @@ import {emailCheck, emailSend} from '../../hooks/sign';
 
 interface EmailProps {
 
-    value: string;
+    email: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    setCodeNumber: React.Dispatch<React.SetStateAction<number>>;
-    codeNumber: number;
+    // setCodeNumber: React.Dispatch<React.SetStateAction< Record<string, string>>>;
+    codeNumber: string;
+    accessChecked: boolean;
+    setAccessChecked: React.Dispatch<React.SetStateAction<boolean>>;
     error?: string;
 }
 
 
-const Email:React.FC<EmailProps> = ({value, onChange, error, codeNumber, setCodeNumber}) => {
+const Email:React.FC<EmailProps> = ({email, error, codeNumber, onChange}) => {
+
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  //   setEmail(event.target.value);
+
+  // }
+  
+ 
   
   
 
@@ -25,6 +35,7 @@ const codeCheck = async () => {
     if (code) {
 
       alert('인증번호가 일치합니다.');
+
     } else {
 
       alert('인증번호가 일치하지 않습니다.');
@@ -45,9 +56,9 @@ const codeSend = async () => {
 
   try {
 
-    const email = await emailSend(value);
+    const send = await emailSend(email);
 
-    if (email) {
+    if (send) {
 
       alert('인증번호가 전송되었습니다.');
 
@@ -68,7 +79,7 @@ const codeSend = async () => {
 
   return (
     <div>
-      <input type="email" placeholder="이메일 입력" value={value} onChange={onChange} />
+      <input type="email" placeholder="이메일 입력" value={email} onChange={onChange} />
       <button id="access" type="button" onClick={codeSend}>이메일 인증하기</button>
       {error && <span>{error}</span>}
     </div>
