@@ -1,4 +1,68 @@
+declare global {
 
+    interface Window {
+        daum: any; // 카카오 api
+    }
+}
+
+export interface PostCodeData {
+
+    zonecode: string;
+    address: string;
+    extraAddress: string;
+}
+
+// 우편번호 API 실행 함수
+export const executeDaumPostCode = (setPostCodeData: (data: PostCodeData) => void): void => {
+
+    const {daum} = window;
+
+
+    new daum.Postcode({
+        oncomplete: (data: any) => {
+
+            let addr = ''; // 기본 주소
+            let extraAddr = ''; // 참고 항목
+
+            if (data.userSelectedType === 'R') {
+
+                addr = data.roadAddress;
+
+            } else {
+
+                addr = data.jibunAddress;
+            }
+
+            // 도로명 주소 참고 항목 조합
+            if (data.userSelectedType === 'R') {
+
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+
+                    extraAddr += data.bname;
+                }
+
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+
+                    extraAddr += extraAddr !== '' ? `. ${data.buildingName}` : data.buildingName;
+                }
+
+                if (extraAddr !== '') {
+
+                    extraAddr = ` (${extraAddr})`;
+                }
+            }
+
+            // 상태 업데이트를 위한 데이터 전달
+            setPostCodeData({
+                zonecode: data.zonecode,
+                address: addr,
+                extraAddress: extraAddr,
+            });
+        },
+    }).open();
+
+}
+ 
  const api = `http://localhost:3000`;
 
 // 이메일 유효성 검증
@@ -150,4 +214,6 @@ export const signUp = async(data: Record<string, string>) => {
         throw error;
         
     }
+
+   
 }

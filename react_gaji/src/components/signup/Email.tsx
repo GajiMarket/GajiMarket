@@ -1,6 +1,6 @@
 import React from 'react'
 import {emailCheck, emailSend} from '../../hooks/sign';
-// import '../../style/Signup.css';
+import '../../style/Signup.css';
 
 interface EmailProps {
 
@@ -10,11 +10,11 @@ interface EmailProps {
     codeNumber: string;
     accessChecked: boolean;
     setAccessChecked: React.Dispatch<React.SetStateAction<boolean>>;
-    error?: string;
+    errors?: string;
 }
 
 
-const Email:React.FC<EmailProps> = ({email, error, codeNumber, onChange}) => {
+const Email:React.FC<EmailProps> = ({email, errors, codeNumber, onChange}) => {
 
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -81,7 +81,7 @@ const codeSend = async () => {
     <div>
       <input type="email" placeholder="이메일 입력" value={email} onChange={onChange} />
       <button id="access" type="button" onClick={codeSend}>이메일 인증하기</button>
-      {error && <span>{error}</span>}
+      {errors && <span>{errors}</span>}
     </div>
   );
 };
