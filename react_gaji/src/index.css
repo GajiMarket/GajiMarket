@@ -42,7 +42,7 @@
  
  #root {
    width: 100%;
-   max-width: 390px; /* 모바일 화면 기준 (ex: iPhone 14 Pro) */
+   min-width: 390px; /* 모바일 화면 기준 (ex: iPhone 14 Pro) */
    min-height: 100vh; /* 화면 전체 높이 */
    background-color: white; /* 앱 화면 배경색 */
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 (선택 사항) */
