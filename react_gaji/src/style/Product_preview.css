@@ -1,0 +1,35 @@
+.product_preview{
+    position: absolute;
+    top: 600px;
+    left: 300px;
+    width: 100%;
+    height: 100%;
+}
+
+.product_preview_icon{
+    width: 110px;
+    height: 60px;
+}
+
+.product_preview_img{
+    position: absolute;
+    top: 4px;
+    left: 7px;
+    width: 40px;
+    height: 50px;
+}
+.product_preview_name{
+    position: absolute;
+}
+.product_preview_explanation{
+    position: absolute;
+}
+.product_preview_price{
+    position: absolute;
+}
+.product_preview_distance{
+    position: absolute;
+}
+.product_preview_navigation{
+    position: absolute;
+}

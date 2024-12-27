@@ -23,6 +23,7 @@ function App() {
         <Route path="/productpage" element={<Productpage/>} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/mypage" element={<Mypage/>} />
+        <Route path="/navigation" element={<Chatlist/>} />
       </Routes>
     </BrowserRouter>
     </>
