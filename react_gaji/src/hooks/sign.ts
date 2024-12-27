@@ -13,6 +13,7 @@ export interface PostCodeData {
 }
 
 // 우편번호 API 실행 함수
+// 상태업데이트를 하는 tsx에 import해서 사용
 export const executeDaumPostCode = (setPostCodeData: (data: PostCodeData) => void): void => {
 
     const {daum} = window;
@@ -217,3 +218,4 @@ export const signUp = async(data: Record<string, string>) => {
 
    
 }
+

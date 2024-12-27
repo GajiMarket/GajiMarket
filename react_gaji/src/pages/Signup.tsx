@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import { NNIP } from '../components/signup/NNIP';
 
 const Signup:React.FC = () => {
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const [isIdChecked, setIsIdChecked] = React.useState<boolean>(false);
 
   const [formData, setFormData] = useState<Record<string, string>>({
     nickName: '',
@@ -10,6 +12,11 @@ const Signup:React.FC = () => {
     passwordCheck: '',
     email: '',
     phone: '',
+    address: '',
+    detailAddress: '',
+    year: '',
+    month: '',
+    day: '',
 
   })
 
@@ -22,7 +29,7 @@ const Signup:React.FC = () => {
 
   return (
     <div>
-      <NNIP formData={formData} setFormData={setFormData} onSuccess={handleSuccess} />
+      <NNIP formData={formData} setFormData={setFormData} onSuccess={handleSuccess} errors={errors} setErrors={setErrors} />
     </div>
   )
 }

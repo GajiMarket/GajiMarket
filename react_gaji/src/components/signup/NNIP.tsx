@@ -1,11 +1,12 @@
 import React from 'react'
-import { validatePassword, checkId, signUp, validatePhone, validateEmail} from '../../hooks/sign';
+import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, PostCodeData} from '../../hooks/sign';
 import Email from './Email';
 import NickName from './NickName';
 import Id from './Id';
 import Password from './Password';
 import Phone from './Phone';
 import PostCode from './PostCode';
+import BirthDay from './BirthDay';
 import '../../style/Signup.css';
 
 
@@ -16,22 +17,37 @@ interface SignupFormProps {
   formData: Record<string, string>;
   //회원가입 입력한 데이터
   setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  errors: Record<string, string>;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   onSuccess: () => void;
+  codeNumber: string;
+  setCodeNumber: React.Dispatch<React.SetStateAction<string>>;
   isCheckId: boolean;
+  setIsCheckedId: React.Dispatch<React.SetStateAction<boolean>>;
+  accessChecked: boolean;
+  codeNumberChecked: boolean;
+  selectData: Record<string, string>;
+  setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  
+  // setAccessChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  // codeNumber: string;
+  // setCodeNumber: React.Dispatch<React.SetStateAction<string>>;
+  
 
 }
 
 
 
-export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess}) => {
+export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess, isCheckId, setIsCheckedId, accessChecked, codeNumberChecked, codeNumber, setCodeNumber, errors, setErrors}) => {
 
-  const [errors, setErrors] = React.useState<Record<string, string>>({});
-  const [isIdChecked, setIsIdChecked] = React.useState<boolean>(false);
+  // const [errors, setErrors] = React.useState<Record<string, string>>({});
+  // const [isIdChecked, setIsIdChecked] = React.useState<boolean>(false);
 
-  const handleClickPost = (data: Record<string, string>) => (event: React.MouseEvent<HTMLInputElement>) => {
+ 
+
+
 
     
-  }
 
 
   //input 태그에서 값을 입력하면 해당 매개변수에 담긴다.
@@ -41,6 +57,21 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
     setFormData({...formData, [field]: event.target.value});
 
   };
+
+  const handleCode = () => (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    setCodeNumber(event.target.value);
+
+  }
+
+  const handleBirthDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+
+    const { name, value} = event.target;
+    // const [name, value] = {event.target.name, event.target.value};
+    setFormData({...formData, [name]: value});
+  }
+
+
 
   //유효성 검증, 아이디 중복
   const validateForm = (): boolean => {
@@ -81,17 +112,76 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
     return Object.keys(newErrors).length === 0;
   };
 
+
+  // 이메일 인증번호 발송
+  const codeSend = async () => {
+
+    try {
+  
+      const send = await emailSend(formData.email);
+  
+      if (send) {
+  
+  
+        alert('인증번호가 전송되었습니다.');
+  
+      } else {
+  
+        alert('인증번호 전송에 실패했습니다.');
+      }
+  
+    } catch(error) {
+  
+      console.error('전송 도중 오류가 발생했습니다', error);
+      throw error;
+      
+    }
+  }
+   
+  
+
+  // 발송된 인증번호와 비교하여 일치하는지 확인
+  const codeCheck = async () => {
+
+    try {
+
+      const code = await emailCheck(codeNumber);
+
+      if (code) {
+        codeNumberChecked = true;
+        alert('인증번호가 일치합니다.');
+
+      } else {
+        codeNumberChecked = false;
+        alert('인증번호가 일치하지 않습니다.');
+
+      }
+      return code;
+
+    } catch(error) {
+      console.error('인증 도중에 오류가 발생했습니다.', error);
+      throw error;
+      
+    }
+  }
   const handleIdCheck = async () => {
 
     try {
+      
       const isDuplicated = await checkId(formData.id);
 
       if(isDuplicated) {
 
+        setIsCheckedId(false);
+
         setErrors((prev) => ({...prev, id: '중복된 아이디 입니다.'}));
+
       } else {
+
         setErrors((prev) => ({...prev, id: ''}));
-        setIsIdChecked(true);
+
+        setIsCheckedId(true);
+
         alert('아이디 사용가능');
       }
 
@@ -154,21 +244,24 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
     
     <div className="signUpForm">
       <h1 className="title">회원가입</h1>
-      <div className="subtitle">회원이 되어 다양한 혜택을 경험해 보세요!</div>
-
-      <NickName nickName={formData.nickName || ''} onChange={handleChange('nickName')} />
-
-      <Id id={formData.id || ''} onChange={handleChange('id')} onClick={handleIdCheck} />{errors.id && <span>{errors.id}</span>}
-
-      <Password password={formData.password || ''} passwordCheck={formData.passwordcheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} />{errors.password && <span>{errors.password}</span>}
-      {/* <input className="passwordCheck" type="password" placeholder="비밀번호 재입력" value={formData.passwordCheck || ''} onChange={handleChange('passwordCheck')} />{errors.passwordCheck && <span>{errors.passwordCheck}</span>} */}
-
-      <Email email={formData.email || ''} onChange={handleChange('email')} codeNumber={formData.codeNumber || ''} />{errors.email && <span>{errors.email}</span>}
-
-      <Phone phone={formData.phone || ''} onChange={handleChange('phone')} />
-
-      <PostCode postcode={formData.postCode || ''} onClick={} />
-        <button className="signUp" type="button" onClick={handleSubmit}>회원가입</button>
+        <div className="sub_title">회원이 되어 다양한 혜택을 경험해 보세요!</div>
+          <div className="input-wrapper">
+            <h3 className="sub_Header">닉네임</h3>
+            <NickName nickName={formData.nickName || ''} onChange={handleChange('nickName')} />
+            <h3 className="sub_Header">아이디</h3>
+            <Id id={formData.id || ''} onChange={handleChange('id')} onClick={handleIdCheck} isCheckId={isCheckId} errors={errors.id}  />
+            <h3 className="sub_Header">비밀번호</h3>
+            <Password password={formData.password || ''} passwordCheck={formData.passwordcheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} />
+            <h3 className="sub_Header">이메일</h3>
+            <Email email={formData.email || ''} onChange1={handleChange('email')} onClick1={codeSend} onChange2={handleCode} codeNumber={codeNumber} onClick2={codeCheck} codeChecked={codeNumberChecked} accessChecked={accessChecked} errors={errors.email} />
+            <h3 className="sub_Header">휴대폰</h3>
+            <Phone phone={formData.phone || ''} onChange={handleChange('phone')} />
+            <h3 className="sub_Header">생년월일</h3>
+            <BirthDay BirthDate={{year:formData.year, month:formData.month, day:formData.day}} handleChange={handleBirthDateChange} />
+            <h3 className="sub_Header">주소</h3>
+            <PostCode postcode={formData.postCode || ''} address={formData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={formData.extraAddress || ''} postChange={handleChange('postCode')} addressChange={handleChange('address')} detailChange={handleChange('detailAddress')} extraChange={handleChange('extraAddress')} />
+          </div>
+        <button className="submit-button" type="button" onClick={handleSubmit}>회원가입</button>
     </div>
   )
 }
