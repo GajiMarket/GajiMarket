@@ -12,22 +12,26 @@ interface GeolocationError {
 
 const useLocation = () => {
   const [location, setLocation] = useState<Location | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
       if (!navigator.geolocation) {
         setError("Geolocation is not supported by your browser.");
+        setLoading(false);
         return;
       }
 
       navigator.geolocation.getCurrentPosition(
         ({ coords: { latitude, longitude } }) => {
           setLocation({ lat: latitude, lng: longitude });
+          setLoading(false)
           // console.log("Location fetched:", { lat: latitude, lng: longitude });
         },
         (err: GeolocationError) => {
           // console.error(`Error (${err.code}): ${err.message}`);
           setError(`위치 정보 조회 실패 (${err.code}): ${err.message}`);
+          setLoading(false)
         },
         {
             // 정확도를 올리는 작업
@@ -38,7 +42,7 @@ const useLocation = () => {
       );
   }, []);
 
-  return { location, error };
+  return { location, error, loading };
 };
 
 export default useLocation;
