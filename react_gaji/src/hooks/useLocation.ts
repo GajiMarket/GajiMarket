@@ -23,10 +23,10 @@ const useLocation = () => {
       navigator.geolocation.getCurrentPosition(
         ({ coords: { latitude, longitude } }) => {
           setLocation({ lat: latitude, lng: longitude });
-          console.log("Location fetched:", { lat: latitude, lng: longitude });
+          // console.log("Location fetched:", { lat: latitude, lng: longitude });
         },
         (err: GeolocationError) => {
-          console.error(`Error (${err.code}): ${err.message}`);
+          // console.error(`Error (${err.code}): ${err.message}`);
           setError(`위치 정보 조회 실패 (${err.code}): ${err.message}`);
         },
         {
