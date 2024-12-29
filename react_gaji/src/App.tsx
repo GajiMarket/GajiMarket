@@ -1,4 +1,5 @@
 import './App.css'
+
 import Chatlist from "./pages/Chatlist";
 import Chatpage from "./pages/Chatpage";
 import Login from "./pages/Login";
@@ -12,7 +13,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <div className='app-container'>
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Mainpage/>} />
@@ -26,7 +27,7 @@ function App() {
         <Route path="/mypage" element={<Mypage/>} />
       </Routes>
     </BrowserRouter>
-    </>
+    </div>
   )
 }
 

@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 
 // 타입 정의
 interface Location {
-    lat: number;
-    lng: number;
+  lng: number;
+  lat: number;
 }
 interface GeolocationError {
     code: number;
@@ -23,13 +23,11 @@ const useLocation = () => {
       }
 
       navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) => {
-          setLocation({ lat: latitude, lng: longitude });
+        ({ coords: { longitude, latitude } }) => {
+          setLocation({ lng: longitude, lat: latitude });
           setLoading(false)
-          // console.log("Location fetched:", { lat: latitude, lng: longitude });
         },
         (err: GeolocationError) => {
-          // console.error(`Error (${err.code}): ${err.message}`);
           setError(`위치 정보 조회 실패 (${err.code}): ${err.message}`);
           setLoading(false)
         },
