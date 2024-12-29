@@ -1,5 +1,5 @@
 import React from 'react'
-import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, PostCodeData} from '../../hooks/sign';
+import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, PostCodeData, executeDaumPostCode} from '../../hooks/useSign';
 import Email from './Email';
 import NickName from './NickName';
 import Id from './Id';
@@ -28,6 +28,9 @@ interface SignupFormProps {
   codeNumberChecked: boolean;
   selectData: Record<string, string>;
   setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  postCodeData: PostCodeData;
+  setPostCodeData: React.Dispatch<React.SetStateAction<PostCodeData>>;
+  
   
   // setAccessChecked: React.Dispatch<React.SetStateAction<boolean>>;
   // codeNumber: string;
@@ -38,11 +41,12 @@ interface SignupFormProps {
 
 
 
-export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess, isCheckId, setIsCheckedId, accessChecked, codeNumberChecked, codeNumber, setCodeNumber, errors, setErrors}) => {
+export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess, isCheckId, setIsCheckedId, accessChecked, codeNumberChecked, codeNumber, setCodeNumber, errors, setErrors, postCodeData, setPostCodeData}) => {
 
   // const [errors, setErrors] = React.useState<Record<string, string>>({});
   // const [isIdChecked, setIsIdChecked] = React.useState<boolean>(false);
 
+ 
  
 
 
@@ -69,6 +73,47 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
     const { name, value} = event.target;
     // const [name, value] = {event.target.name, event.target.value};
     setFormData({...formData, [name]: value});
+  }
+
+  const handleKakaoPost = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    setPostCodeData({...postCodeData, [field]: event?.target.value})
+  }
+
+  const handlePostCode = async () => {
+
+    try {
+
+      const postcode = await executeDaumPostCode();
+
+      if(postcode) {
+
+
+        setPostCodeData({
+          zonecode: postcode.zonecode,
+          address: postcode.address,
+          extraAddress: postcode.extraAddress,
+        });
+        console.log('성공');
+        
+
+        
+      } else {
+
+        console.log('불러오기 실패패');
+        
+      }
+    } catch(error) {
+
+      console.error('실행 에러', error);
+      throw error;
+      
+    }
+
+
+
+
+    
   }
 
 
@@ -259,7 +304,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
             <h3 className="sub_Header">생년월일</h3>
             <BirthDay BirthDate={{year:formData.year, month:formData.month, day:formData.day}} handleChange={handleBirthDateChange} />
             <h3 className="sub_Header">주소</h3>
-            <PostCode postcode={formData.postCode || ''} address={formData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={formData.extraAddress || ''} postChange={handleChange('postCode')} addressChange={handleChange('address')} detailChange={handleChange('detailAddress')} extraChange={handleChange('extraAddress')} />
+            <PostCode postcode={postCodeData.zonecode || ''} address={postCodeData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={postCodeData.extraAddress || ''} postChange={handleKakaoPost('zonecode')} addressChange={handleKakaoPost('address')} detailChange={handleChange('detailAddress')} extraChange={handleKakaoPost('extraAddress')} handleClick={handlePostCode}/>
           </div>
         <button className="submit-button" type="button" onClick={handleSubmit}>회원가입</button>
     </div>

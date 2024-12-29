@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { NNIP } from '../components/signup/NNIP';
+import { PostCodeData } from '../hooks/useSign';
 
 const Signup:React.FC = () => {
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -20,6 +21,12 @@ const Signup:React.FC = () => {
 
   })
 
+  const [postCodeData, setPostCodeData] = useState<PostCodeData>({
+    zonecode: '',
+    address: '',
+    extraAddress: '',
+  })
+
   const handleSuccess = () => {
 
     alert('회원가입이 완료 되었습니다.');
@@ -29,7 +36,7 @@ const Signup:React.FC = () => {
 
   return (
     <div>
-      <NNIP formData={formData} setFormData={setFormData} onSuccess={handleSuccess} errors={errors} setErrors={setErrors} />
+      <NNIP formData={formData} setFormData={setFormData} onSuccess={handleSuccess} errors={errors} setErrors={setErrors} postCodeData={postCodeData} setPostCodeData={setPostCodeData} />
     </div>
   )
 }
