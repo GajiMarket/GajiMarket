@@ -10,7 +10,6 @@ interface GeolocationError {
     message: string;
 }
 
-
 const useLocation = () => {
   const [location, setLocation] = useState<Location | null>(null);
   const [error, setError] = useState<string | null>(null);
