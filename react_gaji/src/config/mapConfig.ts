@@ -5,10 +5,12 @@ export interface mapConfig {
     defaultLanguage: string;
 }
 
+export const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-export const mapConfig: mapConfig = {
-    defaultStyle: 'mapbox://styles/mapbox/streets-v11',
-    initialCenter: [127.0463292,37.4926982],
-    initialZoom: 15,
-    defaultLanguage: 'ko',
+export const mapConfig = {
+    defaultStyle : 'mapbox://styles/mapbox/streets-v11' as string,
+    initialCenter : [126.878302 , 37.494589] as [number, number],
+    initialZoom : 15 as number,
+    dafaultLanguage: 'ko' as string,
+    attributionControl: false,
 }
