@@ -1,45 +1,65 @@
-import { useEffect, RefObject } from "react";
+import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
-import type { mapConfig } from "../../config/mapConfig";
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { MAPBOX_TOKEN, mapConfig } from "../../config/mapConfig"
+import { mapMarker, mapPopup } from "../../utils/mapUtils";
 
-// env 타입선언 후 사용하기
-declare global {
-    interface ImportMetaEnv {
-        VITE_MAPBOX_ACCESS_TOKEN: string;
-    }
+mapboxgl.accessToken = MAPBOX_TOKEN;
+
+interface MapConfig {
+  initialCenter: [number, number];
+  initialZoom: number;
+  defaultLanguage: string;
 }
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-// mapbox 타입 선언
-type useMapProps = {
-    mapContainerRef: RefObject<HTMLDivElement>;
-    style: string;
-    config: mapConfig;
-};
+const useMap = ({ mapContainerRef, style, config}: MapConfig) => {
+  const clickMarkerRef = useRef<mapboxgl.Marker>(null);
 
-//// mapbox 사용하기 ////
-const useMap = ({ mapContainerRef, style, config }: useMapProps): void => {
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: style,
+      center: config.initialCenter,
+      zoom: config.initialZoom,
+      attributionControl: false,
+    });
+    mapMarker(map, config.initialCenter);
     
-    useEffect(() => {
-        if (!mapContainerRef.current) return;
+    const language = new MapboxLanguage({
+      defaultLanguage: config.defaultLanguage,
+    });
+    map.addControl(language)
 
-        const map = new mapboxgl.Map({
-            container: mapContainerRef.current,
-            style,
-            center: config.initialCenter,
-            zoom: config.initialZoom,
-            attributionControl: false, // 맵박스 기본 컨트롤러 삭제
-        });
-
-        const language = new MapboxLanguage({
-            defaultLanguage: config.dafaultLanguage,
-        });
-
-        map.addControl(language);
-
-        return () => map.remove();
-    }, [mapContainerRef, style, config])
-};
+    // 클릭 이벤트 핸들러
+    const handleMapClick = (e: mapboxgl.MapMouseEvent) => {
+      const { lngLat } = e;
+      // 기존 클릭 마커가 있다면 삭제
+      if (clickMarkerRef.current) {
+        clickMarkerRef.current.remove();
+      }
+      // 클릭시 새로운 마커 생성
+      clickMarkerRef.current = new mapboxgl.Marker({
+        color: '#dc2626',
+        draggable: false,
+      })
+      .setLngLat(lngLat)
+      .addTo(map)
+      console.log(lngLat)
+    };
+    // 맵이 완전히 로딩 될 때 마커가 찍히도록 설정
+    map.on('load', () => {
+      map.on('click', handleMapClick);
+    });
+    // 언마운트시 내용 전부 리셋
+    return () => {
+      if (clickMarkerRef.current) {
+        clickMarkerRef.current.remove();
+      }
+      map.remove();
+    }
+}, [mapContainerRef, style, config])};
 
 export default useMap;

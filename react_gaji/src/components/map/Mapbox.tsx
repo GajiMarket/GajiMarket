@@ -1,22 +1,24 @@
-import React, { useRef } from "react";
-import useMap from "../../hooks/map/useMap";
+import { useRef } from "react";
+import useMap from '../../hooks/map/useMap'
+import useLocation from "../../hooks/useLocation";
 import { mapConfig } from "../../config/mapConfig";
 
-const Mapbox:React.FC = () => {
-    const mapContainer = useRef<HTMLDivElement>(null);
+const Map = () => {
+    const mapContainerRef = useRef<HTMLDivElement>(null);
+    const { location, error, loading } = useLocation();
 
     useMap({
-        mapContainerRef: mapContainer,
+        mapContainerRef,
         style: mapConfig.defaultStyle,
-        config: mapConfig
+        config: {
+            ...mapConfig,
+            initialCenter: location 
+                ? [location.lng, location.lat]
+                : mapConfig.initialCenter
+        }
     });
 
-    return (
-        <div 
-            ref={mapContainer}
-            style={{ width: '100%', height: '100vh'}}
-        />
-    );
+    return <div ref={mapContainerRef} style={{ width: '100%', height: '100vh' }} />
 }
 
-export default Mapbox;
+export default Map;
