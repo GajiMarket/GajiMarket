@@ -1,10 +1,25 @@
 import React, {useState} from 'react'
 import { NNIP } from '../components/signup/NNIP';
 import { PostCodeData } from '../hooks/useSign';
+import { useNavigate } from 'react-router-dom';
 
-const Signup:React.FC = () => {
-  const [errors, setErrors] = React.useState<Record<string, string>>({});
-  const [isIdChecked, setIsIdChecked] = React.useState<boolean>(false);
+interface PageProps {
+  postCodeData: PostCodeData
+}
+
+
+const Signup:React.FC<PageProps> = ({postCodeData}) => {
+  const navigate: any = useNavigate();
+  
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
+
+  //이메일 인증코드
+  const [codeNumber, setCodeNumber] = useState<string>('');
+  const [inputCode, setInputCode] = useState<string>('');
+  const [codeNumberChecked, setCodeNumberChecked] = useState<boolean>(false);
+  const [accessChecked, setAccessChecked] = useState<boolean>(false);
+
 
   const [formData, setFormData] = useState<Record<string, string>>({
     nickName: '',
@@ -13,30 +28,54 @@ const Signup:React.FC = () => {
     passwordCheck: '',
     email: '',
     phone: '',
-    address: '',
-    detailAddress: '',
     year: '',
     month: '',
     day: '',
-
-  })
-
-  const [postCodeData, setPostCodeData] = useState<PostCodeData>({
     zonecode: '',
     address: '',
     extraAddress: '',
+    detailAddress: '',
+
   })
 
-  const handleSuccess = () => {
+  const handleSuccess = async () => {
 
-    alert('회원가입이 완료 되었습니다.');
-    console.log('회원가입 데이터:', formData);
+    try {
+
+      alert('회원가입이 완료 되었습니다.');
+      console.log('회원가입 데이터:', formData);
+
+      return navigate('/login');
+    } catch {
+
+      console.error('회원가입 실패');
+      throw Error
+      
+    }
+
     
   }
 
   return (
     <div>
-      <NNIP formData={formData} setFormData={setFormData} onSuccess={handleSuccess} errors={errors} setErrors={setErrors} postCodeData={postCodeData} setPostCodeData={setPostCodeData} />
+      <NNIP 
+      formData={formData} 
+      setFormData={setFormData} 
+      onSuccess={handleSuccess} 
+      errors={errors} 
+      setErrors={setErrors}
+      isCheckId={isIdChecked}
+      setIsCheckedId={setIsIdChecked}
+      codeNumber={codeNumber}
+      setCodeNumber={setCodeNumber}
+      inputCode={inputCode}
+      setInputCode={setInputCode}
+      codeNumberChecked={codeNumberChecked}
+      setCodeNumberChecked={setCodeNumberChecked}
+      accessChecked={accessChecked}
+      setAccessChecked={setAccessChecked}
+      postCodeData={postCodeData}
+       />
     </div>
   )
 }

@@ -11,7 +11,7 @@ interface EmailProps {
     codeChecked: boolean;
     accessChecked: boolean;
     errors?: string;
-    onClick1: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    onClick1: () => void;
     onClick2: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -31,7 +31,7 @@ const Email:React.FC<EmailProps> = ({email, errors, codeNumber, onChange1, onCha
                         </div>
           }
        
-        {accessChecked ? <span>인증이 완료 되었습니다.</span> : ''}
+        {accessChecked &&<div>인증이 완료 되었습니다.</div>}
       </div>
       {errors && <span>{errors}</span>}
     </div>

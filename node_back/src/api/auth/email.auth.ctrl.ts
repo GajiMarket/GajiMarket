@@ -10,6 +10,9 @@ const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
         // const email: string = String(testEmail);
         const email: string = req.body.email;
 
+        console.log('ctrl에서 받은 이메일', email);
+        
+
         const auth = await emailCode.emailCode(email);
 
         console.log("인증코드:", auth);

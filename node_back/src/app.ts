@@ -2,9 +2,20 @@ import express from 'express'
 import compression from 'compression'
 import helmet from 'helmet'
 import path from 'path'
-import mountRoutes from ''
+import mountRoutes from './api/routes'
+import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const app = express();
+
+const corsOptions: any = {
+    origins: [process.env.FRONT_PORT],
+    credentials: true
+}
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 

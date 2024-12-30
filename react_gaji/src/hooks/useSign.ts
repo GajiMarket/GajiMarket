@@ -4,6 +4,7 @@ declare global {
   }
 }
 
+
 export interface PostCodeData {
   zonecode: string;
   address: string;
@@ -66,7 +67,7 @@ export const executeDaumPostCode = (): Promise<PostCodeData> => {
   });
 };
 
-const api = `http://localhost:3000`;
+const api = 'http://localhost:3000';
 
 // 이메일 유효성 검증
 export const validateEmail = (email: string): string | null => {
@@ -119,7 +120,7 @@ export const checkId = async (id: string): Promise<boolean> => {
 
 // 이메일 인증
 
-export const emailCheck = async (code: string): Promise<boolean> => {
+export const emailCheck = async (code: string): Promise<{validate: boolean, codeNum: string}> => {
   try {
     const response = await fetch(`${api}/auth/emailCheck`, {
       method: "post",
@@ -133,7 +134,7 @@ export const emailCheck = async (code: string): Promise<boolean> => {
 
     const results = await response.json();
 
-    return results.isCheck;
+    return results;
   } catch (error) {
     console.error(`코드번호가 맞지 않습니다.`, error);
 
@@ -143,9 +144,9 @@ export const emailCheck = async (code: string): Promise<boolean> => {
 
 //이메일 인증번호 전송
 
-export const emailSend = async (email: string): Promise<boolean> => {
+export const emailSend = async (email: string): Promise<{success: boolean, code: string}> => {
   try {
-    const response = await fetch(`${api}/auth/emailSend`, {
+    const response = await fetch(`http://localhost:3000/auth/emailSend`, {
       method: "post",
       headers: { "Content-Type": "application.json" },
       body: JSON.stringify({ email }),
@@ -157,7 +158,7 @@ export const emailSend = async (email: string): Promise<boolean> => {
 
     const results = await response.json();
 
-    return results.isCheck;
+    return results;
   } catch (error) {
     console.error(`코드 전송이 실패 했습니다`, error);
 
@@ -167,13 +168,16 @@ export const emailSend = async (email: string): Promise<boolean> => {
 
 //회원가입
 
-export const signUp = async (data: Record<string, string>) => {
+export const signUp = async (data: Record<string, string>): Promise<any> => {
   try {
     const response = await fetch(`${api}/auth/signUp`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
+    console.log('입력된 데이터:', response.body);
+    
 
     if (!response.ok) {
       throw new Error(`Server Error: ${response.status}`);

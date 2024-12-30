@@ -1,9 +1,9 @@
 import {Express} from 'express'
-import email from './auth'
+import auth from './auth'
 
 const mountRoutes = (app:Express) => {
 
-    app.use('/auth', email);
+    app.use('/auth', auth);
 }
 
 export default mountRoutes;

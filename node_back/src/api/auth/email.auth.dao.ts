@@ -5,6 +5,11 @@ dotenv.config();
 
 const emailCode = async(email:string): Promise<number> => {
 
+    try {
+
+        console.log('받은 이메일:',email);
+        
+
     const code:number = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
 
     const transporter = nodemailer.createTransport({
@@ -29,6 +34,12 @@ const emailCode = async(email:string): Promise<number> => {
     });
 
     return code;
+} catch (error) {
+
+    console.error('코드 전송중 서버에서 오류 발생:', error);
+    throw error
+    
+}
 }
 
 export default {emailCode}

@@ -22,36 +22,33 @@ interface SignupFormProps {
   onSuccess: () => void;
   codeNumber: string;
   setCodeNumber: React.Dispatch<React.SetStateAction<string>>;
+  inputCode: string;
+  setInputCode: React.Dispatch<React.SetStateAction<string>>;
   isCheckId: boolean;
   setIsCheckedId: React.Dispatch<React.SetStateAction<boolean>>;
   accessChecked: boolean;
+  setAccessChecked: React.Dispatch<React.SetStateAction<boolean>>;
   codeNumberChecked: boolean;
-  selectData: Record<string, string>;
-  setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  setCodeNumberChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  // selectData: Record<string, string>;
+  // setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   postCodeData: PostCodeData;
-  setPostCodeData: React.Dispatch<React.SetStateAction<PostCodeData>>;
   
   
-  // setAccessChecked: React.Dispatch<React.SetStateAction<boolean>>;
-  // codeNumber: string;
-  // setCodeNumber: React.Dispatch<React.SetStateAction<string>>;
   
 
 }
 
 
 
-export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess, isCheckId, setIsCheckedId, accessChecked, codeNumberChecked, codeNumber, setCodeNumber, errors, setErrors, postCodeData, setPostCodeData}) => {
+export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId, setIsCheckedId, accessChecked, setAccessChecked, codeNumberChecked, setCodeNumberChecked, codeNumber, setCodeNumber, errors, setErrors, inputCode, setInputCode}) => {
 
   // const [errors, setErrors] = React.useState<Record<string, string>>({});
   // const [isIdChecked, setIsIdChecked] = React.useState<boolean>(false);
 
- 
- 
 
 
 
-    
 
 
   //input 태그에서 값을 입력하면 해당 매개변수에 담긴다.
@@ -62,11 +59,6 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
 
   };
 
-  const handleCode = () => (event: React.ChangeEvent<HTMLInputElement>) => {
-
-    setCodeNumber(event.target.value);
-
-  }
 
   const handleBirthDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 
@@ -75,10 +67,10 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
     setFormData({...formData, [name]: value});
   }
 
-  const handleKakaoPost = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  // const handleKakaoPost = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
 
-    setPostCodeData({...postCodeData, [field]: event?.target.value})
-  }
+  //   setPostCodeData({...postCodeData, [field]: event?.target.value})
+  // }
 
   const handlePostCode = async () => {
 
@@ -89,7 +81,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
       if(postcode) {
 
 
-        setPostCodeData({
+        setFormData({
           zonecode: postcode.zonecode,
           address: postcode.address,
           extraAddress: postcode.extraAddress,
@@ -164,14 +156,22 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
     try {
   
       const send = await emailSend(formData.email);
+
+      console.log(send);
+      
   
-      if (send) {
-  
+      if (send?.success) {
+        //이메일 발송시 같이 보내진 코드
+        setCodeNumber(send.code)
+
+        setCodeNumberChecked(true)
   
         alert('인증번호가 전송되었습니다.');
   
       } else {
   
+
+        setCodeNumberChecked(false)
         alert('인증번호 전송에 실패했습니다.');
       }
   
@@ -190,18 +190,19 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
 
     try {
 
-      const code = await emailCheck(codeNumber);
+      const code = await emailCheck(inputCode);
+      
 
-      if (code) {
-        codeNumberChecked = true;
+      if (code.codeNum === codeNumber) {
+        setAccessChecked(true)
         alert('인증번호가 일치합니다.');
 
       } else {
-        codeNumberChecked = false;
+        setAccessChecked(false)
         alert('인증번호가 일치하지 않습니다.');
 
       }
-      return code;
+      return setInputCode(code.codeNum);;
 
     } catch(error) {
       console.error('인증 도중에 오류가 발생했습니다.', error);
@@ -269,14 +270,24 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
 
     if(!validateForm()) {
       
-      alert('중복체크와 유효성검사를 실행해 주세요');
+      alert('유효성검사를 실행해 주세요');
 
-    } 
+    }
+
+    if(!accessChecked) {
+
+      alert('이메일 인증을 해주세요');
+
+    }
+
+    if(!handleIdCheck) {
+
+      alert('아이디 중복 체크를 해주세요');
+    }
 
     try {
 
       await signUp(formData);
-      onSuccess();
 
     } catch {
 
@@ -298,13 +309,13 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, onSuccess
             <h3 className="sub_Header">비밀번호</h3>
             <Password password={formData.password || ''} passwordCheck={formData.passwordcheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} />
             <h3 className="sub_Header">이메일</h3>
-            <Email email={formData.email || ''} onChange1={handleChange('email')} onClick1={codeSend} onChange2={handleCode} codeNumber={codeNumber} onClick2={codeCheck} codeChecked={codeNumberChecked} accessChecked={accessChecked} errors={errors.email} />
+            <Email email={formData.email || ''} onChange1={handleChange('email')} onClick1={codeSend} onChange2={(e) => setInputCode(e.target.value)} codeNumber={inputCode} onClick2={codeCheck} codeChecked={codeNumberChecked} accessChecked={accessChecked} errors={errors.email} />
             <h3 className="sub_Header">휴대폰</h3>
             <Phone phone={formData.phone || ''} onChange={handleChange('phone')} />
             <h3 className="sub_Header">생년월일</h3>
             <BirthDay BirthDate={{year:formData.year, month:formData.month, day:formData.day}} handleChange={handleBirthDateChange} />
             <h3 className="sub_Header">주소</h3>
-            <PostCode postcode={postCodeData.zonecode || ''} address={postCodeData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={postCodeData.extraAddress || ''} postChange={handleKakaoPost('zonecode')} addressChange={handleKakaoPost('address')} detailChange={handleChange('detailAddress')} extraChange={handleKakaoPost('extraAddress')} handleClick={handlePostCode}/>
+            <PostCode postcode={formData.zonecode || ''} address={formData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={formData.extraAddress || ''} postChange={handleChange('zonecode')} addressChange={handleChange('address')} detailChange={handleChange('detailAddress')} extraChange={handleChange('extraAddress')} handleClick={handlePostCode}/>
           </div>
         <button className="submit-button" type="button" onClick={handleSubmit}>회원가입</button>
     </div>
