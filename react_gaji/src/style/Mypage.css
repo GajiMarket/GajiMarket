@@ -1,0 +1,164 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.mypage-container {
+  font-family: Arial, sans-serif;
+  /* max-width: 500px; */
+  /* margin: 0 auto; */
+  background-color: #F7F8FA;
+  padding-bottom: 16px;
+  height: 100%;
+  display: flex;
+}
+
+.mypage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px;
+}
+
+.mypage-title-btn {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.mypage-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.notification-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.profile-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  margin: 0 16px 12px;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.smile-icon {
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
+}
+
+.profile-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile-edit-btn {
+  background-color: #8a2be2;
+  color: #ffffff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+}
+
+.mypage-menu {
+  padding: 16px 0;
+}
+
+.menu-group {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  margin: 0 16px 12px;
+}
+
+.menu-group h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.menu-group ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-group li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.menu-group li span {
+  display: flex;
+  align-items: center;
+}
+
+.menu-group li span img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.menu-arrow {
+  width: 16px;
+  height: 16px;
+}
+
+.logout-section {
+  padding: 16px 0;
+  text-align: center;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #999;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer-background {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 8px 0;
+  bottom: 0;
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+}
+
+.footer-item img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+
+.footer-item span {
+  font-size: 12px;
+  color: #555;
+}
+
+.footer-item.active span {
+  color: #000000;
+}
+
+.footer-item.active img {
+  filter: brightness(0.8);
+}

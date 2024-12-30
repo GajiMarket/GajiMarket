@@ -9,6 +9,7 @@ import Productlistpage from "./pages/Productlistpage";
 import Productpage from "./pages/Productpage";
 import Signup from "./pages/Signup";
 import Mypage from "./pages/Mypage";
+import MypageProfileEdit from './pages/Mypage_profileedit';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/productpage" element={<Productpage/>} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/mypage" element={<Mypage/>} />
+        <Route path="/mypage_profileedit" element={<MypageProfileEdit/>} />
       </Routes>
     </BrowserRouter>
     </div>
