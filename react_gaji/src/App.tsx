@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Mypage from "./pages/Mypage";
 import MypageProfileEdit from './pages/Mypage_profileedit';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Navigation from './pages/Navigation';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/signup" element={<Signup/>} />
         <Route path="/mypage" element={<Mypage/>} />
         <Route path="/mypage_profileedit" element={<MypageProfileEdit/>} />
+        <Route path="/navigation" element={<Navigation />} />
       </Routes>
     </BrowserRouter>
     </>

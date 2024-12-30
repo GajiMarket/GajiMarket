@@ -24,7 +24,7 @@ const useMap = ({ mapContainerRef, style, config}: MapConfig) => {
       style: style,
       center: config.initialCenter,
       zoom: config.initialZoom,
-      attributionControl: false,
+      attributionControl: config.attributionControl,
     });
     mapMarker(map, config.initialCenter);
     
