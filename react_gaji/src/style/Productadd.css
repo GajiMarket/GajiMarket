@@ -1,0 +1,190 @@
+.product-add-container {
+  font-family: Arial, sans-serif;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  padding: 16px;
+}
+
+.product-add-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-add-back-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.product-add-save-draft {
+  font-size: 14px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+}
+
+.image-list-container {
+  display: flex; /* 가로 정렬 */
+  flex-wrap: nowrap; /* 줄 바꿈 방지 */
+  gap: 12px; /* 각 이미지 간 간격 */
+  overflow-x: auto; /* 스크롤 가능 */
+  align-items: flex-start; /* 이미지 상단 정렬 */
+}
+
+.uploaded-image-wrapper {
+  display: flex;
+  flex-direction: column; /* 버튼이 이미지 아래로 배치되도록 설정 */
+  align-items: center; /* 가운데 정렬 */
+}
+
+.representative-badge {
+  margin-top: 8px; /* 이미지와 버튼 간격 */
+  background-color: #6c63ff;
+  color: white;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.representative-badge.active {
+  background-color: #4a3cce; /* 활성 상태 색상 */
+}
+
+
+.image-upload-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+  justify-content: center;
+}
+
+.image-upload-label {
+  display: flex;
+  /* align-items: flex-end;
+  justify-content: center; */
+  justify-content: center; /* 가로 중심 */
+  align-items: center; /* 세로 중심 */
+  flex-direction: column; /* 세로 정렬 */
+  width: 100px;
+  height: 100px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+/* .image-placeholder {
+  font-size: 14px;
+  color: #666;
+  text-align: left;
+  margin-left: 0;
+  justify-content: center; 
+  align-items: center; 
+} */
+
+.image-placeholder {
+  display: flex; /* flexbox 활성화 */
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  gap: 4px; /* 아이콘과 텍스트 간격 */
+}
+
+.uploaded-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  position: relative;
+}
+
+/* .uploaded-image-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+
+.representative-badge {
+  position: absolute;
+  bottom: -10px;
+  background-color: #8a2be2;
+  color: white;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 12px;
+}
+
+.product-add-form-section {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 8px 0px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+}
+
+.categories {
+  display: flex;
+  /* justify-content: space-between; */
+  margin-bottom: 16px;
+}
+
+.categories button {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.categories button:hover {
+  background-color: #ddd;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #8a2be2;
+  color: #ffffff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #6f1bb8;
+}
