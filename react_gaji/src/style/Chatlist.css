@@ -1,0 +1,72 @@
+/* Chatlist CSS */
+.chatlist {
+    font-family: Arial, sans-serif;
+  }
+
+
+/* ChatlistHeader CSS */
+.chatlist-header {
+  margin: 20px 10px 10px 10px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  /* border-bottom: 1px solid #ddd; */
+  text-align: left;
+}
+
+
+/* ChatlistForm CSS */
+.chatlist-form {
+  padding: 16px;
+  cursor: pointer;
+}
+
+.chatlist-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.chatlist-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 30%;
+  margin-right: 12px;
+}
+
+.chatlist-info {
+  flex: 1;
+}
+
+.chatlist-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  width: 55%;
+}
+
+.chatlist-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  width: 40%;
+}
+
+.chatlist-time {
+  margin-top: 5px;
+  color: #aaa;
+  font-size: 12px;  
+}
+
+.chatlist-location {
+  margin-top: 5px;
+  color: #888;
+  font-size: 12px;
+}
+
+.chatlist-message {
+  padding: 0px 0px 0px 15px;
+  display: flex;
+  color: #9e9999;
+}
+  

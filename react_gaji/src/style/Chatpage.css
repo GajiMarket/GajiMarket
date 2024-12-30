@@ -1,0 +1,169 @@
+/* Chatpage CSS */
+.chatpage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* background-color: #f9f9f9; */
+}
+
+
+/* ChatHeader CSS */
+.chat-header {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    padding: 15px;
+    background-color: #ffffff;
+}
+  
+.chat-back-button {
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.chat-header-name {
+    padding: 5px;
+}
+
+.chat-response-time {
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 8px;
+    color: #888;
+}
+
+
+/* ChatProduct CSS */
+.chat-product {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-product-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-product-header2 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+  
+.chat-product-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+  
+.sell-reserv-end {
+    /* color: red; */
+    /* position: absolute; */
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+}
+  
+.chat-product-title {
+    /* margin-left: 60px; */
+    font-size: 15px;
+}
+  
+.chat-product-price {
+    font-weight: bold;
+    color: black;
+    margin: 5px 0px 5px 0px;
+}
+  
+.chat-product-location {
+    font-size: 12px;
+    color: #888;
+}
+
+
+/* Chatting CSS */
+.chatting-container {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+  
+.chat-bubble {
+    max-width: 70%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.chat-time {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    font-size: 10px;
+    color: #888;
+    /* text-align: center; */
+    /* margin: 5px 0; */
+}
+
+.chat-bubble.sent {
+    align-self: flex-end;
+    background-color: #8142D6;
+    color: white;
+}
+  
+.chat-bubble.received {
+    align-self: flex-start;
+    background-color: #e7e5e5;
+    border: 1px solid #ddd;
+}
+
+
+/* ChatSend CSS */
+.chat-bubble.received {
+    justify-content: space-around;
+}
+.chat-plus-button {
+    font-size: 35px;
+    cursor: pointer;
+    margin: 8px 8px 15px 5px;
+    background-color: white;
+    color: #d4d2d2;
+}
+.chat-send {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+}
+  
+.chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+  
+.chat-send-button {
+    background-color: #8142D6;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+

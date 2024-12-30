@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Mainpage/>} />
         <Route path="/chatlist" element={<Chatlist/>} />
-        <Route path="/chatpage" element={<Chatpage/>} />
+        <Route path="/chatpage/:id" element={<Chatpage/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/productadd" element={<Productadd/>} />
         <Route path="/productlistpage" element={<Productlistpage/>} />
