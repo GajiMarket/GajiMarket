@@ -1,0 +1,14 @@
+.SerchBar{
+    position: absolute;
+    top: 10%;
+}
+.SerchBar_SerchInput{
+    border-radius: 10px;
+    border:0px solid;
+    padding: 10px;
+    max-width: 1000px;
+    min-width: 400px;
+}
+.SerchBar_SerchInput:focus{
+    outline: none;
+}

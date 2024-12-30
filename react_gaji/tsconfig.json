@@ -5,6 +5,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "types": ["mapbox-gl", "@mapbox/mapbox-gl-language"]
+    "typeRoots": ["./node_modules/@types", "./custom.d.ts"]
   }
 }
+

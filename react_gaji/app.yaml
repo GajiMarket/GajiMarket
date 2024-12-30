@@ -1,0 +1,15 @@
+service: test-shpark
+runtime: nodejs20
+instance_class: F1
+env_variables:
+  PORT: 8080
+  NODE_ENV: production
+
+handlers:
+  - url: /
+    static_files: dist/index.html
+    upload: dist/index.html
+
+  - url: /(.*)
+    static_files: dist/\1
+    upload: dist/(.*)
