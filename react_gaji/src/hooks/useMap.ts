@@ -1,17 +1,24 @@
 import { useEffect } from "react";
 import mapboxgl from 'mapbox-gl'
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
+import { mapConfig } from "../config/mapConfig";
+
+declare global {
+    interface ImportMetaEnv {
+        VITE_MAPBOX_ACCESS_TOKEN: string;
+    }
+}
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 
-const useMap = (mapContainerRef: React.RefObject<HTMLDivElement>, style:any, config:any) => {
+const useMap = (mapContainerRef: React.RefObject<HTMLDivElement>, style:string, config:mapConfig) => {
     useEffect(() => {
         if (!mapContainerRef.current) return;
 
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
-            style: style,
+            style,
             center: config.initialCenter,
             zoom: config.initialZoom,
         });

@@ -17,22 +17,21 @@ const Footer: React.FC = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    if (activeIndex === 0)  {
-      navigate('/');
+    const routes = [
+        '/', 
+        '/productlistpage', 
+        '/productadd', 
+        '/chatlist', 
+        '/mypage'
+    ];
+
+    for (let i = 0; i < routes.length; i++) {
+        if (activeIndex === i) {
+            navigate(routes[i]);
+            break;
+        }
     }
-    if (activeIndex === 1)  {
-      navigate('/productlistpage');
-    }
-    if (activeIndex === 2)  {
-      navigate('/productadd');
-    }
-    if (activeIndex === 3)  {
-      navigate('/chatlist');
-    }
-    if (activeIndex === 4)  {
-      navigate('/mypage');
-    }
-  },[activeIndex])
+}, [activeIndex]);
   
   const handleItemClick = (index: number) => {
     setActiveIndex(index);

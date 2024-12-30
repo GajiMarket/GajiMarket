@@ -6,7 +6,7 @@ const SerchBar:React.FC = () => {
     <div className='SerchBar'>
       <input
         type='text'
-        className='SerchInput'
+        className='SerchBar_SerchInput'
         placeholder='serch'
       />
     </div>

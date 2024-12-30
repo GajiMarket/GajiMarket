@@ -2,13 +2,13 @@
     position: absolute;
     top: 10%;
 }
-.SerchInput{
-    border-radius: 20px;
+.SerchBar_SerchInput{
+    border-radius: 10px;
     border:0px solid;
     padding: 10px;
     max-width: 1000px;
     min-width: 400px;
 }
-.SerchInput:focus{
+.SerchBar_SerchInput:focus{
     outline: none;
 }
