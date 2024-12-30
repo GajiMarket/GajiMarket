@@ -1,5 +1,5 @@
 import React from 'react'
-import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, PostCodeData, executeDaumPostCode} from '../../hooks/useSign';
+import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, executeDaumPostCode} from '../../hooks/useSign';
 import Email from './Email';
 import NickName from './NickName';
 import Id from './Id';
@@ -32,7 +32,7 @@ interface SignupFormProps {
   setCodeNumberChecked: React.Dispatch<React.SetStateAction<boolean>>;
   // selectData: Record<string, string>;
   // setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-  postCodeData: PostCodeData;
+  // postCodeData: PostCodeData;
   
   
   
