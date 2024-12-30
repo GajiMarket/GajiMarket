@@ -1,0 +1,254 @@
+
+/* sign.css */
+
+/* 기본 구조 */
+.signUpForm {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.sub_Header {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.sub_title {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.input-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* NickName */
+.nickName input {
+  width: 80%;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.nickName input:focus {
+  border-color: #7d4fff;
+  box-shadow: 0 0 4px rgba(125, 79, 255, 0.5);
+}
+
+/* ID */
+.id-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.idForm {
+  flex: 1;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.idButton {
+  height: 55px;
+  padding: 0 15px;
+  background-color: #7d4fff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.idButton:hover {
+  background-color: #6c3fe4;
+}
+
+.checkedId {
+  margin-top: 5px;
+  font-size: 12px;
+  color: green;
+}
+
+/* Password */
+.pw input {
+  width: 80%;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.pw input:focus {
+  border-color: #7d4fff;
+  box-shadow: 0 0 4px rgba(125, 79, 255, 0.5);
+}
+
+.pw span {
+  font-size: 12px;
+  color: red;
+}
+
+/* Email */
+.emailForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.email-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.email,
+.codeAccess {
+  flex: 1;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.email:focus,
+.codeAccess:focus {
+  border-color: #7d4fff;
+  box-shadow: 0 0 4px rgba(125, 79, 255, 0.5);
+}
+
+#access,
+#codeCheck {
+  height: 55px;
+  padding: 0 15px;
+  background-color: #7d4fff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#access:hover,
+#codeCheck:hover {
+  background-color: #6c3fe4;
+}
+
+/* Phone */
+.phone input {
+  width: 80%;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.phone input:focus {
+  border-color: #7d4fff;
+  box-shadow: 0 0 4px rgba(125, 79, 255, 0.5);
+}
+
+/* PostCode */
+.postCode input {
+  width: 80%;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.postCode input:focus {
+  border-color: #7d4fff;
+  box-shadow: 0 0 4px rgba(125, 79, 255, 0.5);
+}
+
+.postCode input[type="button"] {
+  height: 40px;
+  background-color: #7d4fff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.postCode input[type="button"]:hover {
+  background-color: #6c3fe4;
+}
+
+/* Error message */
+.error-message,
+span {
+  font-size: 12px;
+  color: red;
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #7d4fff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #6c3fe4;
+}
+
+.birhDayForm {
+  display: flex;
+  gap: 2px;
+}
+
+.year {
+  border: 1px solid #ccc;
+}
+
+.month {
+  border: 1px solid #ccc;
+}
+
+.day {
+  border: 1px solid #ccc;
+}

@@ -1,8 +1,11 @@
 import React from 'react'
+import Mapbox from '../components/map/Mapbox.tsx'
 
 const Mainpage:React.FC = () => {
   return (
-    <div>Mainpage</div>
+    <div>
+      <Mapbox />
+    </div>
   )
 }
 
