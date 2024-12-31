@@ -5,6 +5,7 @@ import path from 'path'
 import mountRoutes from './api/routes'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import chatRoutes from './api/chat'
 
 dotenv.config();
 
@@ -24,6 +25,8 @@ app.use(helmet());
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api/chat', chatRoutes);
 
 mountRoutes(app);
 

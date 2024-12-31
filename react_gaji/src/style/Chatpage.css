@@ -135,13 +135,7 @@
 .chat-bubble.received {
     justify-content: space-around;
 }
-.chat-plus-button {
-    font-size: 35px;
-    cursor: pointer;
-    margin: 8px 8px 15px 5px;
-    background-color: white;
-    color: #d4d2d2;
-}
+
 .chat-send {
     display: flex;
     align-items: center;
@@ -149,13 +143,21 @@
     background-color: #ffffff;
     border-top: 1px solid #ddd;
 }
+
+.chat-plus-button {
+    font-size: 35px;
+    cursor: pointer;
+    margin: 3px 3px 15px 5px;
+    background-color: white;
+    color: #d4d2d2;
+}
   
 .chat-input {
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-right: 10px;
+    margin: 10px;
 }
   
 .chat-send-button {
