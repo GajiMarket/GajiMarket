@@ -10,26 +10,29 @@ import Signup from "./pages/Signup";
 import Mypage from "./pages/Mypage";
 import MypageProfileEdit from './pages/Mypage_profileedit';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { FooterProvider } from './components/all/FooterContext';
 
-function App() {
+const App:React.FC =() => {
   return (
-    <>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Mainpage/>} />
-        <Route path="/chatlist" element={<Chatlist/>} />
-        <Route path="/chatpage/:id" element={<Chatpage/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/productadd" element={<Productadd/>} />
-        <Route path="/productlistpage" element={<Productlistpage/>} />
-        <Route path="/productpage" element={<Productpage/>} />
-        <Route path="/signup" element={<Signup/>} />
-        <Route path="/mypage" element={<Mypage/>} />
-        <Route path="/mypage_profileedit" element={<MypageProfileEdit/>} />
-      </Routes>
-    </BrowserRouter>
-    </>
-  )
-}
+    <FooterProvider>
+      <BrowserRouter>
+        <div className='App'>
+          <Routes>
+            <Route path="/" element={<Mainpage/>} />
+            <Route path="/chatlist" element={<Chatlist/>} />
+            <Route path="/chatpage/:id" element={<Chatpage/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/productadd" element={<Productadd/>} />
+            <Route path="/productlistpage" element={<Productlistpage/>} />
+            <Route path="/productpage" element={<Productpage/>} />
+            <Route path="/signup" element={<Signup/>} />
+            <Route path="/mypage" element={<Mypage/>} />
+            <Route path="/mypage_profileedit" element={<MypageProfileEdit/>} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </FooterProvider>
+  );
+};
 
 export default App
