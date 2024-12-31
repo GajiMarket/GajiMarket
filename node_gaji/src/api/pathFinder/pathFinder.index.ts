@@ -1,6 +1,8 @@
 import express from "express";
-import dao from "./pathFinder.dao";
+import testPath from "./pathFinder.ctrl";
 
 const router = express.Router();
 
-router.get('/path_finder', dao)
+router.get('/testpath', testPath)
+
+export default router;
