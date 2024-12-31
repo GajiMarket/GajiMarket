@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/Productlistpage.css";
+import Footer from "../components/all/Footer";
 
 interface Product {
   id: number;
@@ -18,15 +19,7 @@ const ProductList: React.FC = () => {
       location: "가산동",
       distance: "4.5km",
       time: "10분전",
-      imageUrl: "/path/to/image1.jpg",
-    },
-    {
-      id: 2,
-      title: "패딩팔아요~~",
-      location: "가산동",
-      distance: "4.5km",
-      time: "10분전",
-      imageUrl: "/path/to/image2.jpg",
+      imageUrl: "/path/to/image1.jpg"
     },
     // Add more products as needed
   ];
@@ -55,6 +48,7 @@ const ProductList: React.FC = () => {
           </li>
         ))}
       </ul>
+      <Footer />
     </div>
   );
 };
