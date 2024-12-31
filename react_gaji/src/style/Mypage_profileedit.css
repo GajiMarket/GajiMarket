@@ -1,79 +1,51 @@
 .profileedit-container {
     max-width: 500px;
     margin: 0 auto;
-    background-color: #f7f8fa;
+    background-color: #ffffff;
     padding-bottom: 16px;
     font-family: Arial, sans-serif;
-  }
-  
-  .profileedit-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 16px;
-  }
-  
-  .profileedit-title-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .profileedit-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #000000;
-  }
-  
-  .profileedit-notification-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .profileedit-section {
+}
+
+.profileedit-section {
     padding: 16px;
     background-color: #ffffff;
     border-radius: 20px;
     margin: 0 16px 12px;
-  }
-  
-  .profileedit-smile-icon {
+}
+
+.profileedit-smile-icon {
     width: 100px;
     height: 100px;
     margin-bottom: 8px;
-  }
-  
-  .profileedit-image-edit-btn {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profileedit-image-edit-btn {
     background-color: #8a2be2;
     color: #ffffff;
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-  }
-  
-  .profileedit-nickname-edit-btn {
+    display: inline-block;
+    text-align: center;
+}
+
+.profileedit-nickname-edit-btn,
+.profileedit-nickname-save-btn {
     background-color: #8a2be2;
     color: #ffffff;
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-  }
-  
-  .profileedit-menu-arrow {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-  }
-  
-  .profileedit-logout-btn {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: #999;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
+    margin-left: 8px;
+}
+
+.profileedit-nickname-input {
+    width: calc(100% - 110px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
