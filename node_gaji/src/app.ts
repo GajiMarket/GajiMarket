@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions: any = {
-    origins: [process.env.FRONT_PORT],
+    origins: [`http://localhst:${process.env.FRONT_PORT}`],
     credentials: true
 }
 

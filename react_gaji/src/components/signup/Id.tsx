@@ -11,10 +11,13 @@ interface IdProps {
 
 const Id:React.FC<IdProps> = ({id, onChange, onClick, errors, isCheckId}) => {
   return (
+    <div className="id">
     <div className="id-input-group">
         <input className="idForm" type="text" placeholder="아이디 입력(6~20자)" value={id} onChange={onChange} />
        <button className="idButton" type="button" onClick={onClick} >중복확인</button>
-       {isCheckId == false ? <span className="checkedId">사용 가능한 아이디 입니다.</span> : ''}
+       
+    </div>
+       {isCheckId && <span className="checkedId">사용 가능한 아이디 입니다.</span>}
        {errors && <span>{errors}</span>}
     </div>
   )
