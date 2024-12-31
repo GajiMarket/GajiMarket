@@ -12,6 +12,9 @@ interface ChatItem {
 }
 
 const ChatlistForm:React.FC<{ chats: ChatItem[] }> = ({ chats }) => {
+  if(!chats || chats.length === 0) {
+    return <div className="no-chats">대화가 없습니다.</div>
+  }
 
   const navigate = useNavigate();
 
@@ -25,9 +28,10 @@ const ChatlistForm:React.FC<{ chats: ChatItem[] }> = ({ chats }) => {
         <div key={chat.id} className="chatlist-item" onClick={() => handleChatClick(chat.id, chat.name)}>
           <img src={chat.avatar} alt={`${chat.name} 프로필`} className="chatlist-avatar" />
           <div className="chatlist-info">
-            <div className="chatlist-header">
+            <div className="chatlist-Form-header">
               <p className="chatlist-name">{chat.name}</p>
-              <p className="chatlist-location">{chat.location} ㆍ</p>
+              <p className="chatlist-location">{chat.location}</p>
+              <p className="chatlist-point">ㆍ</p>
               <p className="chatlist-time">{chat.time}</p>  
             </div>
             <div className="chatlist-message">{chat.message}</div>

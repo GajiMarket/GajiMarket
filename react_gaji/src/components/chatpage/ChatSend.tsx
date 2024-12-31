@@ -1,13 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "../../style/Chatpage.css"
 
-const ChatSend:React.FC = () => {
+interface ChatSendProps {
+  onSendMessage: (message: string) => void;
+}
+
+const ChatSend:React.FC<ChatSendProps> = ({ onSendMessage }) => {
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(message.trim()) {
+      onSendMessage(message)
+      setMessage('');
+    }
+  }
+
   return (
-    <div className="chat-send">
-      <button className="chat-plus-button">+</button>
-      <input type="text" className="chat-input" placeholder="메시지 보내기" />
-      <button className="chat-send-button">➤</button>
-    </div>
+    <form className="chat-send" onSubmit={handleSubmit}>
+    <button className="chat-plus-button">+</button>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="메시지를 입력하세요."
+        className="chat-input"
+      />
+      <button type="submit" className="chat-send-button">전송</button>
+    </form>
   )
 }
 

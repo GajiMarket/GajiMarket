@@ -1,8 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
+import LoginAccess from '../components/login/Login'
+import '../style/Login.css'
+
+
 
 const Login:React.FC = () => {
+
+  const [formData, setFormData] = useState<Record<string, string>>({
+    id: '',
+    password: '',
+  });
+
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
+
   return (
-    <div>Login</div>
+    <LoginAccess formData={formData} setFormData={setFormData} loginSuccess={loginSuccess} setLoginSuccess={setLoginSuccess}  />
   )
 }
 

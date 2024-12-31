@@ -1,72 +1,95 @@
-/* Chatlist CSS */
 .chatlist {
-    font-family: Arial, sans-serif;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
 
+.chatlist-scroll-container {
+  flex: 1;
+  overflow-y: auto;
+}
 
 /* ChatlistHeader CSS */
 .chatlist-header {
-  margin: 20px 10px 10px 10px;
-  padding: 10px;
+  margin: 15px 15px 10px 15px;
+  padding: 10px 10px 20px 10px;
   font-size: 20px;
   font-weight: bold;
-  /* border-bottom: 1px solid #ddd; */
+  border-bottom: 1px solid #bebebe;
   text-align: left;
 }
 
-
 /* ChatlistForm CSS */
 .chatlist-form {
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 16px 16px 16px;
   cursor: pointer;
 }
 
 .chatlist-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+.chatlist-item:hover {
+  background-color: #f0f0f0; /* 회색 음영 */
 }
 
 .chatlist-avatar {
   width: 48px;
   height: 48px;
   border-radius: 30%;
-  margin-right: 12px;
 }
 
 .chatlist-info {
   flex: 1;
+  overflow: hidden; /* 넘치는 부분 숨기기 */
 }
 
-.chatlist-header {
+.chatlist-Form-header {
   display: flex;
-  justify-content: space-between;
   font-size: 14px;
-  width: 55%;
+  margin: 5px 10px 7px 15px;
 }
 
 .chatlist-name {
   font-size: 1.1rem;
   font-weight: bold;
-  width: 40%;
-}
-
-.chatlist-time {
-  margin-top: 5px;
-  color: #aaa;
-  font-size: 12px;  
 }
 
 .chatlist-location {
-  margin-top: 5px;
+  margin: 4px 0px 0px 10px;
   color: #888;
   font-size: 12px;
+}
+
+.chatlist-point {
+  padding-top: 4px;
+  color: #888;
+}
+
+.chatlist-time {
+  margin-top: 4px;
+  color: #aaa;
+  font-size: 12px;  
 }
 
 .chatlist-message {
   padding: 0px 0px 0px 15px;
   display: flex;
   color: #9e9999;
+  white-space: nowrap; /* 한 줄까지만 보이게 설정 */
+  overflow: hidden; /* 넘치는 부분 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
 }
-  
+ 
+.no-chats {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+}

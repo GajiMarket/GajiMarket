@@ -16,6 +16,6 @@
             "*": ["*"]
         }
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "src/logger.ts"],
     "exclude": ["node_modules"]
 }

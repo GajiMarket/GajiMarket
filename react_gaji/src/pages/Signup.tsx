@@ -1,14 +1,16 @@
 import React, {useState} from 'react'
 import { NNIP } from '../components/signup/NNIP';
-import { PostCodeData } from '../hooks/useSign';
 import { useNavigate } from 'react-router-dom';
+import '../style/Signup.css';
 
-interface PageProps {
-  postCodeData: PostCodeData
-}
+// interface PageProps {
+//   postCodeData: PostCodeData
+// }
 
 
-const Signup:React.FC<PageProps> = ({postCodeData}) => {
+
+
+const Signup:React.FC = () => {
   const navigate: any = useNavigate();
   
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -57,7 +59,7 @@ const Signup:React.FC<PageProps> = ({postCodeData}) => {
   }
 
   return (
-    <div>
+    <div className="pagesSignup">
       <NNIP 
       formData={formData} 
       setFormData={setFormData} 
@@ -74,7 +76,6 @@ const Signup:React.FC<PageProps> = ({postCodeData}) => {
       setCodeNumberChecked={setCodeNumberChecked}
       accessChecked={accessChecked}
       setAccessChecked={setAccessChecked}
-      postCodeData={postCodeData}
        />
     </div>
   )
