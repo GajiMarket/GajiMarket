@@ -2,8 +2,8 @@
     background-color: #ffffff;
     position: absolute;
     bottom: 0;
-    min-width: 450px;
-    max-width: 1280px;
+    min-width: 390px;
+    max-width: 430px;
     width: 50%;
     height: 75px;
     display: flex;
