@@ -1,0 +1,33 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 16px;
+    background-color: #f7f8fa;
+  }
+  
+  .header-title-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .header-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .header-notification-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .header-bell-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
