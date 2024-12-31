@@ -1,36 +1,35 @@
 import React, { useState } from 'react';
+import { useProfile } from '../components/mypage/ProfileContext'; // Context import
 import '../style/Mypage_profileedit.css';
 import Header from '../components/mypage/Header.tsx';
 import Footer from '../components/all/Footer.tsx';
-import smileIcon from '../assets/icons/smile-icon.png';
+import smileIcon from '../assets/icons/smile-icon.png'; // 기본 이미지
 
 const MypageProfileEdit: React.FC = () => {
-  // State to manage profile image and nickname
-  const [profileImage, setProfileImage] = useState<string>(smileIcon);
-  const [nickname, setNickname] = useState<string>('홍길동');
+  const { name, setName, profileImage, setProfileImage } = useProfile(); // Context에서 상태 가져오기
+  const [newName, setNewName] = useState<string>(name); // 로컬 상태로 이름 관리
   const [isEditingNickname, setIsEditingNickname] = useState<boolean>(false);
 
-  // Handle profile image upload
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result) {
-          setProfileImage(reader.result as string);
+          setProfileImage(reader.result as string); // Context에 새 이미지 저장
         }
       };
       reader.readAsDataURL(event.target.files[0]);
     }
   };
 
-  // Handle nickname edit
   const handleNicknameEdit = () => {
     setIsEditingNickname(true);
   };
 
-  // Handle nickname save
   const handleNicknameSave = () => {
+    setName(newName); // Context에 이름 저장
     setIsEditingNickname(false);
+    alert('닉네임을 변경하였습니다!');
   };
 
   return (
@@ -38,23 +37,24 @@ const MypageProfileEdit: React.FC = () => {
       <div className="profileedit-container">
         <Header />
         <div className="profileedit-section">
+          <h1 className="profileedit-title">프로필 수정</h1> {/* 프로필 수정 문구 추가 */}
           {/* Profile Image Section */}
           <div className="profileedit-image-wrapper">
-            <div className="profileedit-image">
-              <img className="profileedit-smile-icon" src={profileImage} alt="프로필 이미지" />
-            </div>
-            <div className="profileedit-image-edit-wrapper">
-              <label htmlFor="profile-image-upload" className="profileedit-image-edit-btn">
-                이미지 변경
-              </label>
-              <input
-                id="profile-image-upload"
-                type="file"
-                accept="image/*"
-                style={{ display: 'none' }}
-                onChange={handleImageUpload}
-              />
-            </div>
+            <img
+              className="profileedit-smile-icon"
+              src={profileImage || smileIcon} // 기본 이미지 또는 변경된 이미지 표시
+              alt="프로필 이미지"
+            />
+            <label htmlFor="profile-image-upload" className="profileedit-image-edit-btn">
+              이미지 변경
+            </label>
+            <input
+              id="profile-image-upload"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleImageUpload}
+            />
           </div>
 
           {/* Nickname Edit Section */}
@@ -66,8 +66,8 @@ const MypageProfileEdit: React.FC = () => {
                   <input
                     type="text"
                     id="nickname"
-                    value={nickname}
-                    onChange={(e) => setNickname(e.target.value)}
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
                     className="profileedit-nickname-input"
                   />
                   <button
@@ -82,7 +82,7 @@ const MypageProfileEdit: React.FC = () => {
                   <input
                     type="text"
                     id="nickname"
-                    value={nickname}
+                    value={newName}
                     readOnly
                     className="profileedit-nickname-input"
                   />

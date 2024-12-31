@@ -1,0 +1,92 @@
+.mypage-love {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .mypage-love h1 {
+    font-size: 20px; /* 글씨 크기 */
+    font-weight: bold; /* 볼드 체 */
+    margin-bottom: 20px;
+  }
+  
+  .item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .item-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .item-info {
+    flex: 1;
+  }
+  
+  .item-info h2 {
+    margin: 0 0 5px;
+    font-size: 18px;
+  }
+  
+  .item-info p {
+    margin: 0 0 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .price {
+    color: #000;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .item-actions {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    gap: 10px; /* 위아래 간격 */
+  }
+  
+  .heart-action {
+    text-align: center;
+  }
+  
+  .chat-action {
+    text-align: center;
+  }
+  
+  .heart-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .heart-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .chat-button {
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .chat-button:hover {
+    background-color: #5a4dbd;
+  }
+  

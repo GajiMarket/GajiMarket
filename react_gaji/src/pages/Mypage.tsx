@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../components/mypage/ProfileContext'; // Context를 불러옴
 import '../style/Mypage.css';
-import Header from '../components/mypage/Header.tsx'; // Header 불러오기
+import Header from '../components/mypage/Header.tsx';
 import Footer from '../components/all/Footer.tsx';
 
 import smileIcon from '../assets/icons/smile-icon.png';
@@ -17,9 +18,22 @@ import arrowIcon from '../assets/icons/arrow.png';
 
 const Mypage: React.FC = () => {
   const navigate = useNavigate();
+  const { name } = useProfile(); // Context에서 이름 가져오기
 
   const handleProfileEdit = () => {
-    navigate('/mypage_profileedit');
+    navigate('/mypage_profileedit'); // 프로필 수정 페이지로 이동
+  };
+
+  const handleNavigateToLove = () => {
+    navigate('/mypage_love'); // 관심목록 페이지로 이동
+  };
+
+  const handleNavigateToSell = () => {
+    navigate('/mypage_sell'); // 판매내역 페이지로 이동
+  };
+
+  const handleNavigateToBuy = () => {
+    navigate('/mypage_buy'); // 구매내역 페이지로 이동
   };
 
   const handleLogout = () => {
@@ -29,11 +43,11 @@ const Mypage: React.FC = () => {
   return (
     <div className="Mypage">
       <div className="mypage-container">
-        <Header /> {/* Header 컴포넌트 사용 */}
+        <Header /> {/* Header 컴포넌트 */}
         <div className="profile-section">
           <div className="profile-info">
             <img className="smile-icon cursor-pointer" src={smileIcon} alt="프로필 이미지" />
-            <div className="profile-name">홍길동</div>
+            <div className="profile-name">{name}</div> {/* Context에서 가져온 이름 */}
           </div>
           <button className="profile-edit-btn cursor-pointer" onClick={handleProfileEdit}>
             프로필 수정
@@ -43,19 +57,19 @@ const Mypage: React.FC = () => {
           <div className="menu-group">
             <h2>나의 거래</h2>
             <ul>
-              <li>
+              <li onClick={handleNavigateToLove}>
                 <span className="cursor-pointer">
                   <img src={heartIcon} alt="관심목록" /> 관심목록
                 </span>
                 <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
               </li>
-              <li>
+              <li onClick={handleNavigateToSell}>
                 <span className="cursor-pointer">
                   <img src={clipboardIcon} alt="판매내역" /> 판매내역
                 </span>
                 <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
               </li>
-              <li>
+              <li onClick={handleNavigateToBuy}>
                 <span className="cursor-pointer">
                   <img src={bagIcon} alt="구매내역" /> 구매내역
                 </span>
@@ -110,7 +124,7 @@ const Mypage: React.FC = () => {
           </button>
         </div>
       </div>
-      <Footer />
+      <Footer /> {/* Footer 컴포넌트 */}
     </div>
   );
 };

@@ -1,16 +1,40 @@
+.Mypage_profileedit {
+    padding: 0px;
+    font-family: Arial, sans-serif;
+  }
+
+
 .profileedit-container {
     max-width: 500px;
     margin: 0 auto;
     background-color: #ffffff;
     padding-bottom: 16px;
     font-family: Arial, sans-serif;
+    text-align: center;
 }
 
 .profileedit-section {
     padding: 16px;
     background-color: #ffffff;
     border-radius: 20px;
-    margin: 0 16px 12px;
+    margin: 0 auto;
+    margin-top: 4px;
+    width: 90%; /* 섹션 가로폭 조정 */
+}
+
+/* 프로필 수정 제목 스타일 */
+.profileedit-title {
+    font-size: 20px; /* 제목 글씨 크기 */
+    font-weight: bold; /* 제목 굵게 */
+    margin-bottom: 24px; /* 제목 하단 여백 */
+    text-align: left; /* 가운데 정렬 */
+}
+
+.profileedit-image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 이미지와 버튼 가운데 정렬 */
+    margin-bottom: 24px; /* 간격 추가 */
 }
 
 .profileedit-smile-icon {
@@ -28,24 +52,53 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    display: inline-block;
-    text-align: center;
+    font-size: 16px;
+    height: 24px; /* 버튼 높이 동일 */
+    width: 88px; /* 버튼 가로 크기 고정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileedit-nickname-section {
+    text-align: left;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.profileedit-nickname-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: left; /* 닉네임 레이블 왼쪽 정렬 */
+    font-size: 20px; /* 닉네임 글씨 크기 */
+}
+
+.profileedit-nickname-input-group {
+    display: flex;
+    gap: 12px; /* 요소 간 간격 */
+}
+
+.profileedit-nickname-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 24px; /* 높이 통일 */
+    font-size: 20px; /* 홍길동 글씨 크기 */
 }
 
 .profileedit-nickname-edit-btn,
 .profileedit-nickname-save-btn {
     background-color: #8a2be2;
     color: #ffffff;
-    padding: 8px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-left: 8px;
-}
-
-.profileedit-nickname-input {
-    width: calc(100% - 110px);
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    height: 40px; /* 닉네임 버튼 높이 통일 */
+    width: 120px; /* 버튼 가로 크기 고정 */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
