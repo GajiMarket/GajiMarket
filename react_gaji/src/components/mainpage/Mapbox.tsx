@@ -1,7 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import useMap from "../../hooks/map/useMap";
 import { mapConfig } from "../../config/mapConfig";
 import useLocation from "../../hooks/useLocation";
+import { pathFinder } from "../../api/pathFinderApi";
 import "../../style/Mapbox.css";
 
 const Mapbox:React.FC = () => {
@@ -19,6 +20,24 @@ const Mapbox:React.FC = () => {
                 : mapConfig.initialCenter
         }
     });
+
+    useEffect(() => {
+        const fetchLocation = async () => {
+            if (location) {
+                try {
+                    const startData = await pathFinder(location)
+                    console.log('받은 데이터:', startData);
+                } catch (error) {
+                    console.error('위치 전송 실패:', error);
+                }
+            }
+        };
+        try {
+            fetchLocation();
+        } catch (error) {
+            console.error('fetchLocation running error:', error)
+        }
+    }, [location])
 
     return (
         <div 

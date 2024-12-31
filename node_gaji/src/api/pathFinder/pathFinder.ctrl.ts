@@ -3,12 +3,14 @@ import axios from "axios";
 import { findPath } from "./pathFinder.api";
 import { IPathFinderParams } from "./pathFinder.model";
 
-const testPath = async (_req: Request, res: Response): Promise<void> => {
+const testPath = async (req: Request, res: Response): Promise<void> => {
+
+    const { startX, startY } = req.query;
 
     try {
         const pathParams: Partial<IPathFinderParams> = {
-            startX: 127.1052186,
-            startY: 37.3595316,
+            startX: parseInt(startX as string),
+            startY: parseInt(startY as string),
             endX: 127.1064876,
             endY: 37.3591839,
             option: 'short',

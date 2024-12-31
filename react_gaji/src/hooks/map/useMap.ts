@@ -34,25 +34,25 @@ const useMap = ({ mapContainerRef, style, config}: MapConfig) => {
     map.addControl(language)
 
     // 클릭 이벤트 핸들러
-    const handleMapClick = (e: mapboxgl.MapMouseEvent) => {
-      const { lngLat } = e;
-      // 기존 클릭 마커가 있다면 삭제
-      if (clickMarkerRef.current) {
-        clickMarkerRef.current.remove();
-      }
-      // 클릭시 새로운 마커 생성
-      clickMarkerRef.current = new mapboxgl.Marker({
-        color: '#dc2626',
-        draggable: false,
-      })
-      .setLngLat(lngLat)
-      .addTo(map)
-      console.log(lngLat)
-    };
+    // const handleMapClick = (e: mapboxgl.MapMouseEvent) => {
+    //   const { lngLat } = e;
+    //   // 기존 클릭 마커가 있다면 삭제
+    //   if (clickMarkerRef.current) {
+    //     clickMarkerRef.current.remove();
+    //   }
+    //   // 클릭시 새로운 마커 생성
+    //   clickMarkerRef.current = new mapboxgl.Marker({
+    //     color: '#dc2626',
+    //     draggable: false,
+    //   })
+    //   .setLngLat(lngLat)
+    //   .addTo(map)
+    //   console.log(lngLat)
+    // };
     // 맵이 완전히 로딩 될 때 마커가 찍히도록 설정
-    map.on('load', () => {
-      map.on('click', handleMapClick);
-    });
+    // map.on('load', () => {
+    //   map.on('click', handleMapClick);
+    // });
     // 언마운트시 내용 전부 리셋
     return () => {
       if (clickMarkerRef.current) {

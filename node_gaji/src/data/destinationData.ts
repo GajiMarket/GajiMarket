@@ -38,4 +38,7 @@ const description: Destination[] = [
     }
 ]
 
-export default description;
+export {
+    Destination,
+    description,
+}
