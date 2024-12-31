@@ -1,6 +1,7 @@
 import React from 'react'
 import Id from './Id'
 import Password from './Password'
+import Api from './api'
 import {login} from '../../hooks/useLogin';
 
 
@@ -41,11 +42,14 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
     
   }
 
+  
+
   return (
-    <div>
+    <div className="login_container">
     <Id id={formData.id || ''} setId={handleForm('id')} />
     <Password password={formData.password || ''} setPassword={handleForm('password')} />
-    <button type="button" onClick={handleLogin}>로그인</button>
+    <button className="loginButton"  type="button" onClick={handleLogin}>로그인</button>
+    {/* <Api kakaoApi={} naverApi={} googleApi={}/>  */}
     </div>
   )
 }

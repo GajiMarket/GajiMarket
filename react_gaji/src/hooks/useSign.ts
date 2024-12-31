@@ -144,22 +144,32 @@ export const emailCheck = async (code: string): Promise<{validate: boolean, code
 
 //이메일 인증번호 전송
 
-export const emailSend = async (email: string): Promise<{success: boolean, code: string}> => {
+export const emailSend = async (email: string): Promise<{success: boolean, code: number}> => {
   try {
     const response = await fetch(`http://localhost:3000/auth/emailSend`, {
-      method: "post",
-      headers: { "Content-Type": "application.json" },
-      body: JSON.stringify({ email }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({email}),
     });
 
+
+    console.log('프런트에서 가져온 body값:', response);
+    
+    
     if (!response.ok) {
       throw new Error(`Server Error: ${response.status}`);
     }
 
     const results = await response.json();
+    
+
+    console.log('서버에서 가져온 results값:', results);
+    
 
     return results;
   } catch (error) {
+    console.log('useSign에서 받은 이메일:', email);
+    
     console.error(`코드 전송이 실패 했습니다`, error);
 
     throw error;

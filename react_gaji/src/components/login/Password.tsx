@@ -8,8 +8,8 @@ interface LoginPasswordProps {
 
 const Password:React.FC<LoginPasswordProps> = ({password, setPassword}) => {
   return (
-    <div className="input-wrapper">
-      <input type="password" value={password} onChange={setPassword}  />
+    <div className="login_password">
+      <input id="form_password" type="password" placeholder='비밀번호' value={password} onChange={setPassword}  />
     </div>
   )
 }

@@ -132,13 +132,13 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-label {
+/* label {
   display: block;
   font-size: 14px;
   margin-bottom: 8px;
-}
+} */
 
-input[type="text"],
+/* input[type="text"],
 input[type="number"],
 textarea {
   width: 100%;
@@ -153,7 +153,7 @@ textarea {
 textarea {
   resize: none;
   height: 100px;
-}
+} */
 
 .categories {
   display: flex;

@@ -8,8 +8,8 @@ interface LoginIdProps {
 
 const Id: React.FC<LoginIdProps> = ({id, setId}) => {
   return (
-    <div className="input-wrapper">
-        <input type="text" value={id} onChange={setId} />
+    <div className="login_id">
+        <input id="form_id" placeholder="아이디" type="text" value={id} onChange={setId} />
     </div>
   )
 }

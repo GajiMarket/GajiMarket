@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import LoginAccess from '../components/login/Login'
+import '../style/Login.css'
 
 
 

@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
 import { NNIP } from '../components/signup/NNIP';
 import { useNavigate } from 'react-router-dom';
+import '../style/Signup.css';
 
 // interface PageProps {
 //   postCodeData: PostCodeData
 // }
+
+
 
 
 const Signup:React.FC = () => {
@@ -56,7 +59,7 @@ const Signup:React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="pagesSignup">
       <NNIP 
       formData={formData} 
       setFormData={setFormData} 
