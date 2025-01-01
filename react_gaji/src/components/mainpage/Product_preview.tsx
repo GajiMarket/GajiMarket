@@ -1,26 +1,35 @@
-import React from 'react';
-import '../../style/Product_preview.css';
-import preview_icon from '../../img/preview_icon.png';
-import test from '../../img/test.png';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../style/Product_preview.css';
+import { Destination, getProductsList } from '../../api/products.api';
 
-const Product_preview:React.FC = () => {
+const Product_preview: React.FC = () => {
+
     const navigate = useNavigate();
 
-    const Directions = () => {
+    const Directions = async () => {
         navigate('/navigation');
     }
 
-    return (
-        <div className='product_preview'>
-            <img src={preview_icon} className='product_preview_icon'/>
-            <img src={test} className='product_preview_img' />
-            <h3 className='product_preview_name'>뜨끈한패딩</h3>
-            <p className='product_preview_explanation'>설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라설명쌸라쌸라</p>
-            <p className='product_preview_price'>19000원</p>
-            <p className='product_preview_distance'>나와거리19M</p>
-            <button className='product_preview_navigation' onClick={Directions}>길찾기</button>
-        </div>
-    )
+    const [products, setProducts] = useState<Destination[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getProductsList();
+                setProducts(data);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+        // console.log(fetchData);
+        fetchData();
+    }, [])
+
 }
-export default Product_preview
+
+export default Product_preview;

@@ -12,32 +12,34 @@ const Mapbox:React.FC = () => {
     useMap({
         mapContainerRef,
         style: mapConfig.defaultStyle,
+        center: mapConfig.initialCenter,
         // mapConfig
-        config: {
-            ...mapConfig,
-            initialCenter: location 
-                ? [location.lng, location.lat]
-                : mapConfig.initialCenter
-        }
+        // config: {
+            // ...mapConfig,
+            // initialCenter: mapConfig.initialCenter,
+            // initialCenter: location 
+            //     ? [location.lng, location.lat]
+            //     : mapConfig.initialCenter
+        // }
     });
 
-    useEffect(() => {
-        const fetchLocation = async () => {
-            if (location) {
-                try {
-                    const startData = await pathFinder(location)
-                    console.log('받은 데이터:', startData);
-                } catch (error) {
-                    console.error('위치 전송 실패:', error);
-                }
-            }
-        };
-        try {
-            fetchLocation();
-        } catch (error) {
-            console.error('fetchLocation running error:', error)
-        }
-    }, [location])
+    // useEffect(() => {
+    //     const fetchLocation = async () => {
+    //         if (location) {
+    //             try {
+    //                 const startData = await pathFinder(location)
+    //                 console.log('받은 데이터:', startData);
+    //             } catch (error) {
+    //                 console.error('위치 전송 실패:', error);
+    //             }
+    //         }
+    //     };
+    //     try {
+    //         fetchLocation();
+    //     } catch (error) {
+    //         console.error('fetchLocation running error:', error)
+    //     }
+    // }, [location])
 
     return (
         <div 

@@ -9,13 +9,13 @@ const testPath = async (req: Request, res: Response): Promise<void> => {
 
     try {
         const pathParams: Partial<IPathFinderParams> = {
-            startX: parseInt(startX as string),
-            startY: parseInt(startY as string),
-            endX: 127.1064876,
-            endY: 37.3591839,
+            startX: 126.882218,
+            startY: 37.479545,
+            endX: 126.8804951,
+            endY: 37.4814917,
             option: 'short',
             service: 'AR',
-            srid: 4326   
+            srid: 4326
         };
 
         const result = await findPath(pathParams as IPathFinderParams);
