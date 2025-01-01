@@ -1,8 +1,10 @@
-import ctrl from './email.auth.ctrl'
-import express from 'express'
+import ctrl from './email.auth.ctrl';
+import express from 'express';
 
 const router = express.Router();
 
-router.post('/emailSend', ctrl.accountAuthEmail)
+router.post('/accountAuthEmail', ctrl.accountAuthEmail);
+
 
 export default router;
+
