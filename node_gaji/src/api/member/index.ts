@@ -1,4 +1,4 @@
-import ctrl from './email.auth.ctrl';
+import ctrl from './controller/email.auth.ctrl';
 import express from 'express';
 
 const router = express.Router();

@@ -1,7 +1,6 @@
 import {Express} from 'express'
 // import pathFinder from './pathFinder/pathFinder.index';
-import user from './user'
-import auth from './auth'
+import member from './member'
 
 const mountRoutes = (app:Express) => {
 

@@ -23,6 +23,7 @@
     "pg": "^8.13.1"
   },
   "devDependencies": {
+    "@google-cloud/pino-logging-gcp-config": "^1.0.2",
     "@types/app-root-path": "^1.2.8",
     "@types/axios": "^0.14.4",
     "@types/compression": "^1.7.5",
