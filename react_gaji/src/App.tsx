@@ -33,9 +33,9 @@ const App: React.FC = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/mypage" element={<Mypage />} />
               <Route path="/mypage_profileedit" element={<MypageProfileEdit />} />
-              <Route path="/mypage_love" element={<MypageLove />} /> {/* 관심목록 경로 추가 */}
-              <Route path="/mypage_sell" element={<MypageSell />} /> {/* 판매내역 경로 추가 */}
-              <Route path="/mypage_buy" element={<MypageBuy />} /> {/* 구매내역 경로 추가 */}
+              <Route path="/mypage_love" element={<MypageLove />} />
+              <Route path="/mypage_sell" element={<MypageSell />} />
+              <Route path="/mypage_buy" element={<MypageBuy />} />
             </Routes>
           </div>
         </BrowserRouter>

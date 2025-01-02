@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const Product_preview:React.FC = () => {
     const navigate = useNavigate();
 
-    const Directions = () => {
+    const Directions = async () => {
+        
         navigate('/navigation');
     }
 
