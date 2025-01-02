@@ -24,6 +24,7 @@ export const productMarker = (map: mapboxgl.Map, destination: Destination[]) => 
           <p>${item.product_preview_explanation}</p>
           <p>가격: ${item.product_preview_price}</p>
           <p>거리: ${item.product_preview_distance}</p>
+          <DirectionButton latitude={item.coordinates.latitude} longitude={item.coordinates.longitude} />
         </div>
       `);
 
