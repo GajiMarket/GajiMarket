@@ -10,7 +10,7 @@ export interface MapConfig {
 export const mapConfig: MapConfig = {
     defaultStyle : 'mapbox://styles/mapbox/streets-v11',
     initialCenter : [126.8821177, 37.4808173],
-    initialZoom : 16,
+    initialZoom : 15,
     defaultLanguage: 'ko',
     attributionControl: false,
 }
