@@ -1,5 +1,3 @@
-export const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-
 export interface MapConfig {
     defaultStyle: string;
     initialCenter: [number, number];
