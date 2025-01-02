@@ -1,4 +1,18 @@
-export interface IWalk {
+interface Node {
+    type: string;
+    properties?: any;
+    geometry?: any;
+    features?: any;
+}
+
+export interface ICoordinates {
+    startX: number;
+    startY: number;
+    endX: number;
+    endY: number;
+}
+
+export interface IPathFinderParams {
     startX: number;
     startY: number;
     endX: number;
@@ -23,4 +37,16 @@ export interface IWalk {
     pathType: number;
     time: number;
     guide: string;
+}
+
+export interface IPathResponse {
+    routes: Array<{
+        paths: Array<{
+            coordinates: number[][];
+        }>;
+    }>;
+}
+
+export interface IPathFinderAPI {
+    getPath: (req: Request, res: Response) => Promise<void>;
 }

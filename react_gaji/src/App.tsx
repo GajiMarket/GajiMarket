@@ -13,6 +13,7 @@ import MypageLove from './components/mypage/Mypage_love'; // MypageLove 추가
 import MypageSell from './components/mypage/Mypage_sell'; // MypageSell 추가
 import MypageBuy from './components/mypage/Mypage_buy'; // MypageBuy 추가
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 
@@ -36,6 +37,7 @@ const App: React.FC = () => {
               <Route path="/mypage_love" element={<MypageLove />} /> {/* 관심목록 경로 추가 */}
               <Route path="/mypage_sell" element={<MypageSell />} /> {/* 판매내역 경로 추가 */}
               <Route path="/mypage_buy" element={<MypageBuy />} /> {/* 구매내역 경로 추가 */}
+              <Route path="/navigation" element={<Navigation />} />
             </Routes>
           </div>
         </BrowserRouter>

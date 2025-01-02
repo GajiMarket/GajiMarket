@@ -1,8 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../style/Product_preview.css';
 import preview_icon from '../../img/preview_icon.png';
 import test from '../../img/test.png';
-import { useNavigate } from 'react-router-dom';
 
 const Product_preview:React.FC = () => {
     const navigate = useNavigate();
