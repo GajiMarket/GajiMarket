@@ -1,34 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../style/Product_preview.css';
-import { Destination, getProductsList } from '../../api/products.api';
+import useProducts from '../../hooks/map/useProducts';
 
 const Product_preview: React.FC = () => {
 
     const navigate = useNavigate();
+    const { products } = useProducts();
 
     const Directions = async () => {
         navigate('/navigation');
     }
 
-    const [products, setProducts] = useState<Destination[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getProductsList();
-                setProducts(data);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        }
-        // console.log(fetchData);
-        fetchData();
-    }, [])
+    return (
+        <div>
+            {products.map((item) => (
+                <div key={item.id} className='product_preview'>
+                    <p>{item.product_preview_name}</p>
+                    <p>{item.product_preview_price}</p>
+                    <p>{item.product_preview_explanation}</p>
+                    <p>{item.product_preview_distance}</p>
+                </div>
+            ))}
+            <button onClick={Directions} className='product_preview_navigation'>길찾기</button>
+        </div>
+    );
 
 }
 

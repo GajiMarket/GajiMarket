@@ -1,43 +1,27 @@
 import { useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl";
-import { productMarker } from '../../utils/mapUtils';
-import { getProductsList, Destination } from "../../api/products.api";
+// import { productMarker } from '../../utils/mapUtils';
+import { Destination, getProductsList } from "../../api/products.api";
 
-export const useProducts = (map: mapboxgl.Map | null) => {
+const useProducts = () => {
+    const [products, setProducts] = useState<Destination[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // 서버에서 불러온 상품 목록 state
-    const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]); // Marker 배열
-
-    newMarkers = productMarker(map, products);
-    setMarkers(newMarkers);
-
-    
     useEffect(() => {
-        if (!map) return;
-
-        let newMarkers: mapboxgl.Marker[] = []; // 새롭게 생성된 마커들을 잠시 저장해둘 배열
-        
-        const loadProducts = async () => {
-            console.log("loadProdcts start");
-
+        const fetchData = async () => {
             try {
-                const products = await getProductsList();
-                setProducts(products)
-
-                newMarkers = productMarker(map, products);
-            } catch (error) {
-                console.error("Failed to load product markers:", error)
+                const data = await getProductsList();
+                setProducts(data);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
             }
-        };
+        }
+        fetchData();
+    }, [])
 
-        loadProducts();
-
-        return () => {
-            newMarkers.forEach((marker) => marker.remove());
-        };
-    }, [map])
-
-    return { products, markers };
-}
+    return { products, loading, error };
+};
 
 export default useProducts;
