@@ -1,74 +1,73 @@
 .Mypage_faq {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .faq-container {
-    flex: 1;
-    overflow-y: auto; /* 스크롤 활성화 */
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 16px;
-    text-align: left; /* 왼쪽 정렬 */
-  }
-  
-  .faq-container::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .faq-container::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
-    border-radius: 4px;
-  }
-  
-  .faq-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    text-align: left; /* 왼쪽 정렬 */
-  }
-  
-  .faq-subtitle {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 24px;
-    text-align: left; /* 왼쪽 정렬 */
-  }
-  
-  .faq-list {
-    border-top: 1px solid #ddd;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .faq-item {
-    padding: 12px 0;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-    text-align: left; /* 왼쪽 정렬 */
-  }
-  
-  .faq-question {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-    text-align: left; /* 왼쪽 정렬 */
-  }
-  
-  .faq-answer {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.8; /* 자간 추가 */
-    margin-top: 8px; /* 문단 간격 추가 */
-    text-align: left; /* 왼쪽 정렬 */
-  }
-  
-  .faq-footer-space {
-    height: 80px; /* Footer와 내용 간 여백 */
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.faq-container {
+  flex: 1;
+  overflow-y: auto; /* 스크롤 활성화 */
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.faq-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.faq-container::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 4px;
+}
+
+.faq-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.faq-subtitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.faq-list {
+  border-top: 1px solid #ddd;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.faq-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.faq-question {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.faq-answer {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.8; /* 자간 추가 */
+  margin-top: 8px; /* 문단 간격 추가 */
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.faq-footer-space {
+  height: 80px; /* Footer와 내용 간 여백 */
+}

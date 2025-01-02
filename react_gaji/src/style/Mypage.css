@@ -7,10 +7,12 @@
 .mypage-container {
   font-family: Arial, sans-serif;
   background-color: #F7F8FA;
-  padding-bottom: 16px;
-  /* height: 100%;
-  display: flex; */
+  /* padding-bottom: 16px; */
+  height: 100vh;
+  display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  /* margin-bottom: 75px; */
 }
 
 .mypage-title-btn {
