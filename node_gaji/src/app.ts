@@ -5,13 +5,14 @@ import path from 'path'
 import mountRoutes from './api/routes'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import chatRoutes from './api/chat'
 
 dotenv.config();
 
 const app = express();
 
 const corsOptions: any = {
-    origin: [process.env.FRONT_PORT],
+    origins: [`http://localhst:${process.env.FRONT_PORT}`],
     credentials: true
 }
 
@@ -24,6 +25,8 @@ app.use(helmet());
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api/chat', chatRoutes);
 
 mountRoutes(app);
 

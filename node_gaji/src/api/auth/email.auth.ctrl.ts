@@ -21,7 +21,7 @@ const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
 
             success: true,
             message: "Authentication email sent successfully",
-            data: auth === 0 ? '' : auth,
+            data: Number(auth) === 0 ? '' : Number(auth),
         });
 
         

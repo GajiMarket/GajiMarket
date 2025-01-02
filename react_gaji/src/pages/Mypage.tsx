@@ -1,7 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../components/mypage/ProfileContext'; // Context를 불러옴
 import '../style/Mypage.css';
-import bellIcon from '../assets/icons/bell-icon.png';
+import Header from '../components/mypage/Header.tsx';
+import Footer from '../components/all/Footer.tsx';
+
 import smileIcon from '../assets/icons/smile-icon.png';
 import heartIcon from '../assets/icons/heart-icon.png';
 import clipboardIcon from '../assets/icons/clipboard-icon.png';
@@ -11,22 +14,26 @@ import gearIcon from '../assets/icons/gear-icon.png';
 import keywordIcon from '../assets/icons/keyword-icon.png';
 import headsetIcon from '../assets/icons/headset-icon.png';
 import termsIcon from '../assets/icons/terms-icon.png';
-import homeIcon from '../assets/icons/home-icon.png';
-import listIcon from '../assets/icons/list-icon.png';
-import plusIcon from '../assets/icons/plus-icon.png';
-import chatIcon from '../assets/icons/chat-icon.png';
-import infoIcon from '../assets/icons/info-icon.png';
 import arrowIcon from '../assets/icons/arrow.png';
 
 const Mypage: React.FC = () => {
   const navigate = useNavigate();
-
-  const handleNavigateToMain = () => {
-    navigate('/');
-  };
+  const { name } = useProfile(); // Context에서 이름 가져오기
 
   const handleProfileEdit = () => {
-    navigate('/mypage_profileedit');
+    navigate('/mypage_profileedit'); // 프로필 수정 페이지로 이동
+  };
+
+  const handleNavigateToLove = () => {
+    navigate('/mypage_love'); // 관심목록 페이지로 이동
+  };
+
+  const handleNavigateToSell = () => {
+    navigate('/mypage_sell'); // 판매내역 페이지로 이동
+  };
+
+  const handleNavigateToBuy = () => {
+    navigate('/mypage_buy'); // 구매내역 페이지로 이동
   };
 
   const handleLogout = () => {
@@ -34,116 +41,90 @@ const Mypage: React.FC = () => {
   };
 
   return (
-    <div className="mypage-container">
-      <header className="mypage-header">
-        <button className="cursor-pointer mypage-title-btn" onClick={handleNavigateToMain}>
-          <h1 className="mypage-title">나의 가지</h1>
-        </button>
-        <button className="notification-icon cursor-pointer">
-          <img src={bellIcon} alt="알림 아이콘" />
-        </button>
-      </header>
-      <div className="profile-section">
-        <div className="profile-info">
-          <img className="smile-icon cursor-pointer" src={smileIcon} alt="프로필 이미지" />
-          <div className="profile-name">홍길동</div>
+    <div className="Mypage">
+      <div className="mypage-container">
+        <Header /> {/* Header 컴포넌트 */}
+        <div className="profile-section">
+          <div className="profile-info">
+            <img className="smile-icon cursor-pointer" src={smileIcon} alt="프로필 이미지" />
+            <div className="profile-name">{name}</div> {/* Context에서 가져온 이름 */}
+          </div>
+          <button className="profile-edit-btn cursor-pointer" onClick={handleProfileEdit}>
+            프로필 수정
+          </button>
         </div>
-        <button className="profile-edit-btn cursor-pointer" onClick={handleProfileEdit}>
-          프로필 수정
-        </button>
+        <section className="mypage-menu">
+          <div className="menu-group">
+            <h2>나의 거래</h2>
+            <ul>
+              <li onClick={handleNavigateToLove}>
+                <span className="cursor-pointer">
+                  <img src={heartIcon} alt="관심목록" /> 관심목록
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+              <li onClick={handleNavigateToSell}>
+                <span className="cursor-pointer">
+                  <img src={clipboardIcon} alt="판매내역" /> 판매내역
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+              <li onClick={handleNavigateToBuy}>
+                <span className="cursor-pointer">
+                  <img src={bagIcon} alt="구매내역" /> 구매내역
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+            </ul>
+          </div>
+          <div className="menu-group">
+            <h2>설정</h2>
+            <ul>
+              <li>
+                <span className="cursor-pointer">
+                  <img src={locationIcon} alt="나의동네설정" /> 나의동네설정
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+              <li>
+                <span className="cursor-pointer">
+                  <img src={gearIcon} alt="나의동네인증" /> 나의동네인증
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+              <li>
+                <span className="cursor-pointer">
+                  <img src={keywordIcon} alt="키워드알림설정" /> 키워드알림설정
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+            </ul>
+          </div>
+          <div className="menu-group">
+            <h2>고객지원</h2>
+            <ul>
+              <li>
+                <span className="cursor-pointer">
+                  <img src={headsetIcon} alt="고객센터" /> 고객센터
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+              <li>
+                <span className="cursor-pointer">
+                  <img src={termsIcon} alt="이용 및 약관" /> 이용 및 약관
+                </span>
+                <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
+              </li>
+            </ul>
+          </div>
+        </section>
+        <div className="logout-section">
+          <button className="logout-btn cursor-pointer" onClick={handleLogout}>
+            로그아웃
+          </button>
+        </div>
       </div>
-      <section className="mypage-menu">
-        <div className="menu-group">
-          <h2>나의 거래</h2>
-          <ul>
-            <li>
-              <span className="cursor-pointer">
-                <img src={heartIcon} alt="관심목록" /> 관심목록
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-            <li>
-              <span className="cursor-pointer">
-                <img src={clipboardIcon} alt="판매내역" /> 판매내역
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-            <li>
-              <span className="cursor-pointer">
-                <img src={bagIcon} alt="구매내역" /> 구매내역
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-          </ul>
-        </div>
-        <div className="menu-group">
-          <h2>설정</h2>
-          <ul>
-            <li>
-              <span className="cursor-pointer">
-                <img src={locationIcon} alt="나의동네설정" /> 나의동네설정
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-            <li>
-              <span className="cursor-pointer">
-                <img src={gearIcon} alt="나의동네인증" /> 나의동네인증
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-            <li>
-              <span className="cursor-pointer">
-                <img src={keywordIcon} alt="키워드알림설정" /> 키워드알림설정
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-          </ul>
-        </div>
-        <div className="menu-group">
-          <h2>고객지원</h2>
-          <ul>
-            <li>
-              <span className="cursor-pointer">
-                <img src={headsetIcon} alt="고객센터" /> 고객센터
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-            <li>
-              <span className="cursor-pointer">
-                <img src={termsIcon} alt="이용 및 약관" /> 이용 및 약관
-              </span>
-              <img src={arrowIcon} alt="화살표" className="menu-arrow cursor-pointer" />
-            </li>
-          </ul>
-        </div>
-      </section>
-      <div className="logout-section">
-        <button className="logout-btn cursor-pointer" onClick={handleLogout}>
-          로그아웃
-        </button>
-      </div>
-      <footer className="footer-background">
-        <div className="footer-item cursor-pointer">
-          <img src={homeIcon} alt="홈" />
-          <span>홈</span>
-        </div>
-        <div className="footer-item cursor-pointer">
-          <img src={listIcon} alt="리스트" />
-          <span>리스트</span>
-        </div>
-        <div className="footer-item cursor-pointer">
-          <img src={plusIcon} alt="등록" />
-          <span>등록</span>
-        </div>
-        <div className="footer-item cursor-pointer">
-          <img src={chatIcon} alt="채팅" />
-          <span>채팅</span>
-        </div>
-        <div className="footer-item cursor-pointer active">
-          <img src={infoIcon} alt="내정보" />
-          <span>내정보</span>
-        </div>
-      </footer>
+      <Footer /> {/* Footer 컴포넌트 */}
     </div>
   );
 };

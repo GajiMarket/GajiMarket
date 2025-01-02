@@ -2,16 +2,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/Productadd.css";
+import Mapbox from "../components/map/Mapbox";
 
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
+  // const [location, setLocation] = useState<string | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [representativeIndex, setRepresentativeIndex] = useState<number | null>(
     null
   );
+  const [showMap, setShowMap] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ const ProductAdd: React.FC = () => {
       setImages((prevImages) => {
         const updatedImages = [...prevImages, ...uploadedFiles];
 
-        // 대표 사진이 없으면 첫 번째 이미지를 대표로 설정
+        // 최초 업로드된 경우에만 대표사진 설정
         if (representativeIndex === null && updatedImages.length > 0) {
           setRepresentativeIndex(0);
         }
@@ -52,6 +54,11 @@ const ProductAdd: React.FC = () => {
     // 상품 등록 완료 후 상세 페이지로 리다이렉트
     navigate("/productpage", { state: productData });
   };
+
+  // const handleMapSelect = (selectedLocation: string) => {
+  //   setLocation(selectedLocation);
+  //   setShowMap(false); // 지도 닫기.
+  // };
 
   return (
     <div className="product-add-container">
@@ -85,14 +92,16 @@ const ProductAdd: React.FC = () => {
                 alt={`uploaded-${index}`}
                 className="uploaded-image"
               />
+              {representativeIndex === index && (
+                <span className="representative-badge">대표사진</span>
+              )}
               <button
-                className={`representative-badge ${
-                  representativeIndex === index ? "active" : ""
-                }`}
+                className="set-representative-button"
                 onClick={() => handleSetRepresentative(index)}
-              >
-                {representativeIndex === index ? "대표사진" : "대표 설정"}
-              </button>
+                style={{
+                  display: representativeIndex === index ? "none" : "block",
+                }}
+              ></button>
             </div>
           ))}
         </div>
@@ -106,6 +115,7 @@ const ProductAdd: React.FC = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="제목"
+            className="product-title-input"
           />
         </label>
         <div className="categories">
@@ -120,25 +130,35 @@ const ProductAdd: React.FC = () => {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             placeholder="가격을 입력해주세요"
+            className="product-price-input"
           />
         </label>
-        <label>
+        <label className="product-description-label">
           상품 상세설명
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="올릴 게시글 내용을 작성해주세요. (판매 금지 물품은 게시가 제한될 수 있어요.)"
+            className="product-description-input"
           />
         </label>
         <label>
           거래 희망 장소
           <input
             type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="장소선택"
+            // value={location || ""}
+            onClick={() => setShowMap(true)}
+            placeholder="위치 추가"
+            readOnly
+            className="product-location-input"
           />
         </label>
+
+        {showMap && (
+          <div className="map-container">
+            <Mapbox />
+          </div>
+        )}
       </div>
 
       <button className="submit-button" onClick={handleSubmit}>

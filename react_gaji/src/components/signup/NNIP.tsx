@@ -1,5 +1,5 @@
 import React from 'react'
-import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, PostCodeData, executeDaumPostCode} from '../../hooks/useSign';
+import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, executeDaumPostCode} from '../../hooks/useSign';
 import Email from './Email';
 import NickName from './NickName';
 import Id from './Id';
@@ -7,7 +7,6 @@ import Password from './Password';
 import Phone from './Phone';
 import PostCode from './PostCode';
 import BirthDay from './BirthDay';
-import '../../style/Signup.css';
 
 
 
@@ -32,7 +31,7 @@ interface SignupFormProps {
   setCodeNumberChecked: React.Dispatch<React.SetStateAction<boolean>>;
   // selectData: Record<string, string>;
   // setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-  postCodeData: PostCodeData;
+  // postCodeData: PostCodeData;
   
   
   
@@ -156,15 +155,16 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
     try {
   
       const send = await emailSend(formData.email);
-
-      console.log(send);
       
   
       if (send?.success) {
         //이메일 발송시 같이 보내진 코드
-        setCodeNumber(send.code)
+        setCodeNumber(String(send.code))
 
         setCodeNumberChecked(true)
+
+        console.log('현재 코드 번호:', codeNumber);
+        
   
         alert('인증번호가 전송되었습니다.');
   
@@ -177,6 +177,8 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
   
     } catch(error) {
   
+      console.log('현재 이메일:', formData.email);
+      
       console.error('전송 도중 오류가 발생했습니다', error);
       throw error;
       
@@ -299,9 +301,8 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
   return (
     
     <div className="signUpForm">
-      <h1 className="title">회원가입</h1>
+      <h1 className="sign_title">회원가입</h1>
         <div className="sub_title">회원이 되어 다양한 혜택을 경험해 보세요!</div>
-          <div className="input-wrapper">
             <h3 className="sub_Header">닉네임</h3>
             <NickName nickName={formData.nickName || ''} onChange={handleChange('nickName')} />
             <h3 className="sub_Header">아이디</h3>
@@ -316,8 +317,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
             <BirthDay BirthDate={{year:formData.year, month:formData.month, day:formData.day}} handleChange={handleBirthDateChange} />
             <h3 className="sub_Header">주소</h3>
             <PostCode postcode={formData.zonecode || ''} address={formData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={formData.extraAddress || ''} postChange={handleChange('zonecode')} addressChange={handleChange('address')} detailChange={handleChange('detailAddress')} extraChange={handleChange('extraAddress')} handleClick={handlePostCode}/>
-          </div>
-        <button className="submit-button" type="button" onClick={handleSubmit}>회원가입</button>
+        <button className="formSubmit-button" type="button" onClick={handleSubmit}>회원가입</button>
     </div>
   )
 }

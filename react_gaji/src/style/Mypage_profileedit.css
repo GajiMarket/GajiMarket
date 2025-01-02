@@ -1,58 +1,48 @@
-.profileedit-container {
+.Mypage_profileedit {
+    padding: 0px;
     font-family: Arial, sans-serif;
+  }
+
+
+.profileedit-container {
     max-width: 500px;
     margin: 0 auto;
-    background-color: #f7f8fa;
-    padding-bottom: 16px;
-    height: 100%;
-    display: flex;
-}
-
-.profileedit-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 16px;
-}
-
-.profileedit-title {
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer; /* 핸드 효과 */
-}
-
-.profileedit-notification-icon img {
-    width: 24px;
-    height: 24px;
-}
-
-.profileedit-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px;
     background-color: #ffffff;
-    border-radius: 20px;
-    margin: 0 16px 12px;
-}
-
-.profileedit-image-section {
+    padding-bottom: 16px;
+    font-family: Arial, sans-serif;
     text-align: center;
 }
 
-.profileedit-previous {
-    text-align: left;
+.profileedit-section {
+    padding: 16px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    margin: 0 auto;
+    margin-top: 4px;
+    width: 90%; /* 섹션 가로폭 조정 */
 }
 
-.profileedit-previous-button {
-    text-align: left;
+/* 프로필 수정 제목 스타일 */
+.profileedit-title {
+    font-size: 20px; /* 제목 글씨 크기 */
+    font-weight: bold; /* 제목 굵게 */
+    margin-bottom: 24px; /* 제목 하단 여백 */
+    text-align: left; /* 가운데 정렬 */
 }
 
+.profileedit-image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 이미지와 버튼 가운데 정렬 */
+    margin-bottom: 24px; /* 간격 추가 */
+}
 
 .profileedit-smile-icon {
     width: 100px;
     height: 100px;
     margin-bottom: 8px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .profileedit-image-edit-btn {
@@ -62,133 +52,53 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 8px;
+    font-size: 16px;
+    height: 24px; /* 버튼 높이 동일 */
+    width: 88px; /* 버튼 가로 크기 고정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profileedit-nickname-section {
-    margin-top: 16px;
-    width: 100%;
+    text-align: left;
+    margin: 0 auto;
+    width: 90%;
 }
 
 .profileedit-nickname-label {
-    font-size: 14px;
+    display: block;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+    text-align: left; /* 닉네임 레이블 왼쪽 정렬 */
+    font-size: 20px; /* 닉네임 글씨 크기 */
 }
 
 .profileedit-nickname-input-group {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    gap: 12px; /* 요소 간 간격 */
 }
 
 .profileedit-nickname-input {
     flex: 1;
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 4px;
+    height: 24px; /* 높이 통일 */
+    font-size: 20px; /* 홍길동 글씨 크기 */
 }
 
-.profileedit-nickname-edit-btn {
+.profileedit-nickname-edit-btn,
+.profileedit-nickname-save-btn {
     background-color: #8a2be2;
     color: #ffffff;
-    padding: 8px 10px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-}
-
-.profileedit-settings-container {
-    margin: 0 16px;
-}
-
-.profileedit-settings-group,
-.profileedit-support-group {
-    background-color: #ffffff;
-    padding: 16px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-}
-
-.profileedit-settings-group ul,
-.profileedit-support-group ul {
-    list-style: none;
-    padding: 0;
-}
-
-.profileedit-settings-group li,
-.profileedit-support-group li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    cursor: pointer; /* 핸드 효과 */
-}
-
-.profileedit-settings-group li span,
-.profileedit-support-group li span {
-    display: flex;
-    align-items: center;
-}
-
-.profileedit-settings-group li span img,
-.profileedit-support-group li span img {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-}
-
-.profileedit-menu-arrow {
-    width: 16px;
-    height: 16px;
-}
-
-.profileedit-logout-section {
-    text-align: center;
-    margin: 16px 0;
-}
-
-.profileedit-logout-btn {
-    background: none;
-    border: none;
+    height: 40px; /* 닉네임 버튼 높이 통일 */
+    width: 120px; /* 버튼 가로 크기 고정 */
     font-size: 16px;
-    color: #999;
-    cursor: pointer; /* 핸드 효과 */
-    text-decoration: underline;
-    text-underline-offset: 4px;
-}
-
-.profileedit-footer-background {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    background-color: #ffffff;
-    padding: 8px 0;
-}
-
-.profileedit-footer-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 20%;
-    cursor: pointer; /* 핸드 효과 */
-}
-
-.profileedit-footer-item img {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 4px;
-}
-
-.profileedit-footer-item span {
-    font-size: 12px;
-    color: #555;
-}
-
-.profileedit-footer-item.active span {
-    color: #000000;
-}
-
-.profileedit-footer-item.active img {
-    filter: brightness(0.8);
+    justify-content: center;
 }

@@ -18,7 +18,7 @@ const emailCode = async(email:string): Promise<number> => {
         port: Number(process.env.ADMIN_PORT),
         secure: false,
         auth: {
-            user: process.env.ADMIM_USER,
+            user: process.env.ADMIN_USER,
             pass: process.env.ADMIN_PASSWORD,
         },
 
