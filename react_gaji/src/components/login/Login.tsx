@@ -1,7 +1,10 @@
 import React from 'react'
 import Id from './Id'
 import Password from './Password'
-import Api from './api'
+import Find from './Find'
+// import IdFind from './IdFind'
+// import PwFind from './PwFind'
+// import Api from './api'
 import {login} from '../../hooks/useLogin';
 
 
@@ -10,9 +13,10 @@ interface ILoginProps {
   setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   loginSuccess: boolean;
   setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  handleTest: () => void;
 }
 
-const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLoginSuccess}) => {
+const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLoginSuccess, handleTest}) => {
 
  const handleForm = (data: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -42,6 +46,14 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
     
   }
 
+  // const handleIdFind = async () => {
+
+  //   try {
+
+      
+  //   }
+  // }
+
   
 
   return (
@@ -49,7 +61,10 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
     <Id id={formData.id || ''} setId={handleForm('id')} />
     <Password password={formData.password || ''} setPassword={handleForm('password')} />
     <button className="loginButton"  type="button" onClick={handleLogin}>로그인</button>
+    <Find idFind={handleTest} pwFind={handleTest} signUp={handleTest} />
+    <div className="api_login">
     {/* <Api kakaoApi={} naverApi={} googleApi={}/>  */}
+    </div>
     </div>
   )
 }
