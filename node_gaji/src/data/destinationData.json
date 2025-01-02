@@ -3,7 +3,7 @@
         "id": "1",
         "product_preview_name": "뜨끈한 패딩",
         "product_preview_explanation": "물건상태 양호. 쿨거래 바람",
-        "product_preview_price": "80,000원",
+        "product_preview_price": "80,000",
         "coordinates": {
             "longitude": 126.8804951,
             "latitude": 37.4814917
@@ -14,7 +14,7 @@
         "id": "2",
         "product_preview_name": "오븐",
         "product_preview_explanation": "8시 이후 거래 희망",
-        "product_preview_price": "100,000원",
+        "product_preview_price": "100,000",
         "coordinates": {
             "longitude": 126.8793169,
             "latitude": 37.4810097
@@ -25,7 +25,7 @@
         "id": "3",
         "product_preview_name": "어그부츠",
         "product_preview_explanation": "8시 이후 거래 희망",
-        "product_preview_price": "30,000원",
+        "product_preview_price": "30,000",
         "coordinates": {
             "longitude": 126.8814954,
             "latitude": 37.4794186

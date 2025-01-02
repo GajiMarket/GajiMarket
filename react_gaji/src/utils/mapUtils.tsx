@@ -13,23 +13,27 @@ export const productMarker = (map: mapboxgl.Map, destination: Destination[]) => 
     throw new Error("Invalid Mapbox map instance");
   }
 
-  destination.forEach((destination) => {
+  // 생성된 마커들을 담을 배열
+  const markers: mapboxgl.Marker[] = [];
+
+  destination.forEach((item) => {
     const marker = new mapboxgl.Marker()
-      .setLngLat([
-        destination.coordinates.longitude,
-        destination.coordinates.latitude
-      ])
+      .setLngLat([item.coordinates.longitude, item.coordinates.latitude])
       .setPopup(
         new mapboxgl.Popup({ offset: 25 }).setHTML(`
           <div>
-            <h3>${destination.product_preview_name}</h3>
-            <p>${destination.product_preview_explanation}</p>
-            <p>가격: ${destination.product_preview_price}</p>
-            <p>거리: ${destination.product_preview_distance}</p>
+            <h3>${item.product_preview_name}</h3>
+            <p>${item.product_preview_explanation}</p>
+            <p>가격: ${item.product_preview_price}</p>
+            <p>거리: ${item.product_preview_distance}</p>
           </div>
         `)
       )
-      .addTo(map)
-      return marker;
-  })
+      .addTo(map);
+    
+    markers.push(marker);
+  });
+
+  // 생성된 마커 배열을 반환 (필요하면 사용)
+  return markers;
 };

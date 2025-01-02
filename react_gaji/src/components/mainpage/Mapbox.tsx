@@ -1,26 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import useMap from "../../hooks/map/useMap";
 import { mapConfig } from "../../config/mapConfig";
-import useLocation from "../../hooks/useLocation";
-import { pathFinder } from "../../api/pathFinderApi";
+// import useLocation from "../../hooks/useLocation";
+// import { pathFinder } from "../../api/pathFinderApi";
 import "../../style/Mapbox.css";
 
 const Mapbox:React.FC = () => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
-    const { location, error, loading } = useLocation();
+    // const { location, error, loading } = useLocation();
 
     useMap({
         mapContainerRef,
-        style: mapConfig.defaultStyle,
-        center: mapConfig.initialCenter,
-        // mapConfig
-        // config: {
-            // ...mapConfig,
-            // initialCenter: mapConfig.initialCenter,
-            // initialCenter: location 
-            //     ? [location.lng, location.lat]
-            //     : mapConfig.initialCenter
-        // }
+        config: mapConfig,
     });
 
     // useEffect(() => {
