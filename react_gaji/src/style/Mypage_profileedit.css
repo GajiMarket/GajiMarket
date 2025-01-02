@@ -85,7 +85,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     height: 24px; /* 높이 통일 */
-    font-size: 20px; /* 홍길동 글씨 크기 */
+    font-size: 16px; /* 홍길동 글씨 크기 */
 }
 
 .profileedit-nickname-edit-btn,

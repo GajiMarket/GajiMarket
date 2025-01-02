@@ -1,0 +1,48 @@
+.TermsPage {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .termsPage-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 16px;
+    background-color: #ffffff;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+  }
+  
+  .termsPage-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: black;
+    text-align: left; /* 제목 왼쪽 정렬 */
+  }
+  
+  .termsPage-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .termsPage-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+  
+  .termsPage-text {
+    font-size: 16px; /* 리스트 항목 글씨 크기 */
+    color: black;
+  }
+  
+  .termsPage-arrow {
+    font-size: 16px;
+    color: #888;
+  }
+  
