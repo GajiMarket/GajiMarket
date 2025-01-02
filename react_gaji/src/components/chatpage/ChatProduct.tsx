@@ -8,7 +8,7 @@ const ChatProduct:React.FC = () => {
       <div className="chat-product-info">
         <div className="chat-product-header2">
             <p className="sell-reserv-end">판매중</p>
-            <p className="chat-product-title">패딩 팔아요</p>
+            <p className="chat-product-title">파리에서 입은 패딩 팔아요 ~</p>
         </div>
         <p className="chat-product-price">96,000원</p>
         <p className="chat-product-location">판매자와 10M 거리에 있습니다</p>

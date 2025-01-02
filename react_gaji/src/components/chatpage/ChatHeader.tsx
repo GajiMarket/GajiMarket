@@ -18,7 +18,7 @@ const ChatHeader:React.FC<ChatHeaderProps> = ({ chatId, chatName }) => {
     <div className='chat-header'>
       <button className="chat-back-button" onClick={handleBackClick}>←</button>
       <h2 className="chat-header-name">{chatName}</h2>
-      <p className="chat-response-time">1분 내 응답</p>
+      {/* <p className="chat-response-time">1분 내 응답</p> */}
     </div>
   )
 }
