@@ -308,7 +308,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
             <h3 className="sub_Header">아이디</h3>
             <Id id={formData.id || ''} onChange={handleChange('id')} onClick={handleIdCheck} isCheckId={isCheckId} errors={errors.id}  />
             <h3 className="sub_Header">비밀번호</h3>
-            <Password password={formData.password || ''} passwordCheck={formData.passwordcheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} />
+            <Password password={formData.password || ''} passwordCheck={formData.passwordCheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} />
             <h3 className="sub_Header">이메일</h3>
             <Email email={formData.email || ''} onChange1={handleChange('email')} onClick1={codeSend} onChange2={(e) => setInputCode(e.target.value)} codeNumber={inputCode} onClick2={codeCheck} codeChecked={codeNumberChecked} accessChecked={accessChecked} errors={errors.email} />
             <h3 className="sub_Header">휴대폰</h3>

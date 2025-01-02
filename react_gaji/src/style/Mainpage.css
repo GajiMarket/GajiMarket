@@ -5,5 +5,5 @@
     height: 100vh;
     width: 100%;
     position: relative;
-    
 }
+.mapboxgl-ctrl-bottom-left { display: none; }

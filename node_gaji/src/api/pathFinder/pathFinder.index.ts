@@ -1,5 +1,5 @@
 import express from "express";
-import dao from "./pathFinder.dao";
+import testPath from "./pathFinder.ctrl";
 
 const router = express.Router();
 

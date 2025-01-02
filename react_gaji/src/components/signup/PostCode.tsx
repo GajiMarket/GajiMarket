@@ -23,7 +23,7 @@ const PostCode: React.FC<PostCodeProps> = ({postcode, address, extraAddress, det
       </div>
         <input id="address" placeholder='주소' type="text" value={address} onChange={addressChange}  /><br/>
         <input id="detailAddress" placeholder="상세주소" type="text" value={detailAddress} onChange={detailChange}/>
-        <input id="extraAddress" placeholder="" type="text" value={extraAddress} onChange={extraChange}/>
+        <input id="extraAddress" placeholder="참고항목" type="text" value={extraAddress} onChange={extraChange}/>
     </div>
   )
 }

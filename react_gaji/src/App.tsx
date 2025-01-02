@@ -16,8 +16,9 @@ import MypageFAQ from "./components/mypage/Mypage_faq";
 import MypageTerms from "./components/mypage/Mypage_terms"; // 이용 및 약관 페이지 추가
 import MypageTermsDetail from "./components/mypage/Mypage_terms_detail"; // 위치기반서비스 세부 약관 페이지 추가
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { FooterProvider } from "./components/all/FooterContext";
-import { ProfileProvider } from "./components/mypage/ProfileContext";
+import Navigation from './pages/Navigation';
+import { FooterProvider } from './components/all/FooterContext';
+import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 
 const App: React.FC = () => {
   return (
@@ -42,6 +43,7 @@ const App: React.FC = () => {
               <Route path="/mypage_faq" element={<MypageFAQ />} />
               <Route path="/mypage_terms" element={<MypageTerms />} />
               <Route path="/mypage_terms_detail" element={<MypageTermsDetail />} /> {/* 위치기반서비스 세부 약관 경로 추가 */}
+              <Route path="/navigation" element={<Navigation />} />
             </Routes>
           </div>
         </BrowserRouter>

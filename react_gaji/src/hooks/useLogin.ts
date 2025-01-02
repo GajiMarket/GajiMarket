@@ -1,6 +1,7 @@
 
 const api: string = `http://localhost:3000` 
 
+//로그인 함수
 export const login = async (data: Record<string, string>): Promise<{loginCheck: boolean, loginData: string}> => {
 
 
@@ -29,3 +30,11 @@ export const login = async (data: Record<string, string>): Promise<{loginCheck: 
     }
 
 };
+
+const kakaoKey: string = import.meta.env.VITE_KAKAO_LOGIN;
+const redirectUri: string = import.meta.env.VITE_REDIRECT_URL;
+const localUri: string = import.meta.env.VITE_REDIRECT_LOCAL_URI;
+
+// export const kakaoLogin = async ():Promise<> => {
+
+// }

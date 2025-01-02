@@ -1,5 +1,5 @@
 import {Request, Response} from 'express'
-import emailCode from './email.auth.dao'
+import emailCode from '../service/email.auth.service'
 
 const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
 
