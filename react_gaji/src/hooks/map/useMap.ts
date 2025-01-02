@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
 import { MAPBOX_TOKEN, MapConfig } from "../../config/mapConfig"
@@ -11,6 +11,7 @@ interface UseMapProps {
 }
 
 const useMap = ({ mapContainerRef, config }: UseMapProps) => {
+  const [map, setMap] = useState<mapboxgl.Map | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -31,6 +32,7 @@ const useMap = ({ mapContainerRef, config }: UseMapProps) => {
       zoom: initialZoom,
       attributionControl,
     });
+    setMap(map);
 
     if (defaultLanguage) {
       const languageControl = new MapboxLanguage({defaultLanguage})
@@ -42,6 +44,8 @@ const useMap = ({ mapContainerRef, config }: UseMapProps) => {
       map.remove();
     }
   }, [mapContainerRef, config])
+
+  return { map };
 
 };
 

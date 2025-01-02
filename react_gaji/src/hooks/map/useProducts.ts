@@ -6,8 +6,10 @@ import { getProductsList, Destination } from "../../api/products.api";
 export const useProducts = (map: mapboxgl.Map | null) => {
 
     // 서버에서 불러온 상품 목록 state
-    const [products, setProducts] = useState<Destination[]>([]);
     const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]); // Marker 배열
+
+    newMarkers = productMarker(map, products);
+    setMarkers(newMarkers);
 
     
     useEffect(() => {
@@ -16,6 +18,8 @@ export const useProducts = (map: mapboxgl.Map | null) => {
         let newMarkers: mapboxgl.Marker[] = []; // 새롭게 생성된 마커들을 잠시 저장해둘 배열
         
         const loadProducts = async () => {
+            console.log("loadProdcts start");
+
             try {
                 const products = await getProductsList();
                 setProducts(products)
@@ -26,7 +30,6 @@ export const useProducts = (map: mapboxgl.Map | null) => {
             }
         };
 
-        console.log(loadProducts);
         loadProducts();
 
         return () => {
