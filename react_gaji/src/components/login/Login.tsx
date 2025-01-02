@@ -58,13 +58,14 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
 
   return (
     <div className="login_container">
+      <div className="login_logo">
+        <img src='../../public/img/image 16.png' />
+      </div>
     <Id id={formData.id || ''} setId={handleForm('id')} />
     <Password password={formData.password || ''} setPassword={handleForm('password')} />
     <button className="loginButton"  type="button" onClick={handleLogin}>로그인</button>
     <Find idFind={handleTest} pwFind={handleTest} signUp={handleTest} />
-    <div className="api_login">
     {/* <Api kakaoApi={} naverApi={} googleApi={}/>  */}
-    </div>
     </div>
   )
 }
