@@ -1,4 +1,4 @@
-import {db, schema} from '../../../config/dbConfig'
+import {db, schema} from '../../config/dbConfig'
 import {QueryResult} from 'pg';
 import {IMemberTbl} from '../models/member_tbl'
 
