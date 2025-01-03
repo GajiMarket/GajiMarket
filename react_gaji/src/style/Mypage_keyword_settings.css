@@ -1,0 +1,104 @@
+.keyword-settings-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f7f8fa;
+  }
+  
+  .keyword-settings-content {
+    flex: 1;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    margin: 20px; /* 전체 컨테이너에 여유 있는 margin 추가 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .keyword-settings-header {
+    margin-bottom: 30px; /* 헤더 아래 여유 공간 추가 */
+  }
+  
+  .keyword-settings-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .keyword-search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 인풋과 아이콘 사이 간격 추가 */
+  }
+  
+  .keyword-search-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .keyword-search-input::placeholder {
+    color: #aaa;
+  }
+  
+  .keyword-search-btn {
+    background-color: #ffffff;
+    border: none; /* 테두리 제거 */
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .keyword-search-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .keyword-search-btn:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .keyword-section {
+    margin-bottom: 36px; /* 각 섹션 간 더 넓은 간격 추가 */
+  }
+  
+  .keyword-section-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .keyword-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px; /* 키워드 간 여유 공간 증가 */
+  }
+  
+  .keyword-item {
+    background-color: #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333; /* 키워드 글씨를 검은색으로 설정 */
+  }
+  
+  .keyword-remove-btn {
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .keyword-remove-btn:hover {
+    color: #d9534f;
+  }
+  
