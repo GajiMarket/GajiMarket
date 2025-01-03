@@ -117,12 +117,12 @@ const ProductAdd: React.FC = () => {
             className="product-title-input"
           />
         </label>
-        <div className="categories">
+        {/* <div className="categories">
           <button>디지털/가전</button>
           <button>게임기</button>
           <button>기타</button>
-        </div>
-        <label>
+        </div> */}
+        <label className="product-price-label">
           가격
           <input
             type="number"
@@ -141,7 +141,7 @@ const ProductAdd: React.FC = () => {
             className="product-description-input"
           />
         </label>
-        <label>
+        <label className="product-location-label">
           거래 희망 장소
           <input
             type="text"
@@ -161,7 +161,7 @@ const ProductAdd: React.FC = () => {
       </button>
       {showMap && (
           <Mapcontainer onClose={() => setShowMap(false)} />
-        )}
+      )}
     </div>
   );
 };

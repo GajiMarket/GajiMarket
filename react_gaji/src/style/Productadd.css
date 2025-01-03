@@ -133,15 +133,15 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-label {
+.product-price-label {
   display: block;
   font-size: 14px;
   margin-bottom: 8px;
 }
 
-input[type="text"],
-input[type="number"],
-textarea {
+.product-location-input[type="text"],
+.product-price-input[type="number"],
+.product-description-input {
   width: 100%;
   padding: 8px 0px;
   margin-bottom: 16px;

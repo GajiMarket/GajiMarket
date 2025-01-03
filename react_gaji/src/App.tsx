@@ -20,6 +20,7 @@ import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 import Lodingpage from "./pages/lodingpage";
+import KakaoLogin from "./components/login/KakaoLogin";
 
 const App: React.FC = () => {
   return (
@@ -46,6 +47,7 @@ const App: React.FC = () => {
               <Route path="/mypage_terms" element={<MypageTerms />} />
               <Route path="/mypage_terms_detail" element={<MypageTermsDetail />} /> {/* 위치기반서비스 세부 약관 경로 추가 */}
               <Route path="/navigation" element={<Navigation />} />
+              <Route path="/auth/kakao" element={<KakaoLogin />} />
             </Routes>
           </div>
         </BrowserRouter>
