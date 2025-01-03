@@ -18,6 +18,36 @@ const useMap = (mapContainerRef: React.RefObject<HTMLDivElement>, style: string,
 
     useEffect(() => {
         if (!mapContainerRef.current) return;
+    
+        const map = new mapboxgl.Map({
+            container: mapContainerRef.current,
+            style,
+            center: config.initialCenter,
+            zoom: config.initialZoom,
+        });
+    
+        setMapInstance(map);
+    
+        const newMarker = new mapboxgl.Marker()
+            .setLngLat(config.initialCenter)
+            .addTo(map);
+        setMarker(newMarker);
+    
+        return () => {
+            map.remove(); // 기존 맵 정리
+        };
+    }, [mapContainerRef, style, config.initialCenter]);
+    
+    useEffect(() => {
+        if (mapInstance && marker) {
+            marker.setLngLat(config.initialCenter);
+            mapInstance.flyTo({ center: config.initialCenter, essential: true });
+        }
+    }, [config.initialCenter]);
+
+
+    const initializeMap = () => {
+        if (!mapContainerRef.current) return;
 
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
@@ -41,7 +71,7 @@ const useMap = (mapContainerRef: React.RefObject<HTMLDivElement>, style: string,
         return () => {
             map.remove();
         };
-    }, [mapContainerRef, style, config]);
+    };
 
     const updateLocation = (longitude: number, latitude: number) => {
         if (mapInstance && marker) {
@@ -50,7 +80,8 @@ const useMap = (mapContainerRef: React.RefObject<HTMLDivElement>, style: string,
         }
     };
 
-    return { updateLocation };
+    return { updateLocation, initializeMap };
 };
+
 
 export default useMap;
