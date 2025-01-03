@@ -1,8 +1,8 @@
 import express from "express";
-import { sendProductData } from "./service/product.api";
+import { getProducts } from "./DAO/productPath.dao";
 
 const router = express.Router();
 
-router.get('/', sendProductData)
+router.get('/', getProducts)
 
 export default router;

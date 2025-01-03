@@ -1,4 +1,6 @@
 
+import axios from 'axios';
+
 const api: string = `http://localhost:3000` 
 
 //로그인 함수
@@ -31,10 +33,25 @@ export const login = async (data: Record<string, string>): Promise<{loginCheck: 
 
 };
 
-const kakaoKey: string = import.meta.env.VITE_KAKAO_LOGIN;
-const redirectUri: string = import.meta.env.VITE_REDIRECT_URL;
-const localUri: string = import.meta.env.VITE_REDIRECT_LOCAL_URI;
 
-// export const kakaoLogin = async ():Promise<> => {
+export const getAccessToken = async (token: string): Promise<void> => {
 
-// }
+    try {
+
+        const response = await axios.post(`${api}/auth/kako`, {
+            authorizationCode: token,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const accessToken = response.data.accessToken;
+        console.log("카카오 accessToken:", accessToken);
+        
+
+    } catch(error) {
+
+        console.error("카카오 에러:",error);
+        
+    }
+}
