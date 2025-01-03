@@ -1,5 +1,5 @@
 import express from "express";
-import testPath from "./pathFinder.ctrl";
+import testPath from "./controller/pathFinder.ctrl";
 
 const router = express.Router();
 
