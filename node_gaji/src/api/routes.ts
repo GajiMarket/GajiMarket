@@ -1,13 +1,10 @@
-import {Express} from 'express'
-import auth from './auth'
-import path from './pathFinder/pathFinder.index';
-import product from './products/product.index';
+import { Express } from 'express'
+import path from './pathFinder.index';
+import products from './product.index';
 
 const mountRoutes = (app:Express) => {
 
-    app.use('/', product)
-    app.use('/auth', auth)
-
+    app.use('/', products)
     app.use('/navigation', path)
     
 }
