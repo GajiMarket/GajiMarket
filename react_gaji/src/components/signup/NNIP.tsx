@@ -53,8 +53,8 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
   //input 태그에서 값을 입력하면 해당 매개변수에 담긴다.
   const handleChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
 
-    //기존 formData 값에 field[]값 추가
-    setFormData({...formData, [field]: event.target.value});
+     //기존 formData 값에 field[]값 추가
+     setFormData({...formData, [field]: event.target.value});
 
   };
 
