@@ -1,4 +1,4 @@
-export interface mapConfig {
+export interface MapConfig {
     defaultStyle: string;
     initialCenter: [number, number];
     initialZoom: number;

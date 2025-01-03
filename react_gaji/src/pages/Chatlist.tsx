@@ -3,7 +3,7 @@ import axios from 'axios';
 import "../style/Chatlist.css"
 import ChatlistHeader from '../components/chatlist/ChatlistHeader'
 import ChatlistForm from '../components/chatlist/ChatlistForm'
-// import Footer from '../components/all/Footer'
+import Footer from '../components/all/Footer'
 
 interface ChatItem {
   id: number;
@@ -119,7 +119,7 @@ const Chatlist:React.FC = () => {
       <div className="chatlist-scroll-container">
         <ChatlistForm chats={chats} />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

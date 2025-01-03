@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import Chatlist from "./pages/Chatlist";
 import Chatpage from "./pages/Chatpage";
 import Login from "./pages/Login";
@@ -8,17 +8,21 @@ import Productlistpage from "./pages/Productlistpage";
 import Productpage from "./pages/Productpage";
 import Signup from "./pages/Signup";
 import Mypage from "./pages/Mypage";
-import MypageProfileEdit from './pages/Mypage_profileedit';
-import MypageLove from './components/mypage/Mypage_love'; // MypageLove 추가
-import MypageSell from './components/mypage/Mypage_sell'; // MypageSell 추가
-import MypageBuy from './components/mypage/Mypage_buy'; // MypageBuy 추가
+import MypageProfileEdit from "./pages/Mypage_profileedit";
+import MypageLove from "./components/mypage/Mypage_love";
+import MypageSell from "./components/mypage/Mypage_sell";
+import MypageBuy from "./components/mypage/Mypage_buy";
+import MypageFAQ from "./components/mypage/Mypage_faq";
+import MypageTerms from "./components/mypage/Mypage_terms"; // 이용 및 약관 페이지 추가
+import MypageTermsDetail from "./components/mypage/Mypage_terms_detail"; // 위치기반서비스 세부 약관 페이지 추가
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 
 const App: React.FC = () => {
   return (
-    <ProfileProvider> {/* ProfileProvider로 감싸기 */}
+    <ProfileProvider>
       <FooterProvider>
         <BrowserRouter>
           <div className="App">
@@ -36,6 +40,10 @@ const App: React.FC = () => {
               <Route path="/mypage_love" element={<MypageLove />} />
               <Route path="/mypage_sell" element={<MypageSell />} />
               <Route path="/mypage_buy" element={<MypageBuy />} />
+              <Route path="/mypage_faq" element={<MypageFAQ />} />
+              <Route path="/mypage_terms" element={<MypageTerms />} />
+              <Route path="/mypage_terms_detail" element={<MypageTermsDetail />} /> {/* 위치기반서비스 세부 약관 경로 추가 */}
+              <Route path="/navigation" element={<Navigation />} />
             </Routes>
           </div>
         </BrowserRouter>

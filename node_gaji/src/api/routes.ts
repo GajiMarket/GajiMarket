@@ -1,12 +1,15 @@
 import {Express} from 'express'
-// import pathFinder from './pathFinder/pathFinder.index';
 import auth from './auth'
+import path from './pathFinder/pathFinder.index';
+import product from './products/product.index';
 
 const mountRoutes = (app:Express) => {
 
+    app.use('/', product)
     app.use('/auth', auth)
+
+    app.use('/navigation', path)
     
-    // app.use('/path_finder', pathFinder)
 }
 
 export default mountRoutes;
