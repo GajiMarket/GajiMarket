@@ -19,6 +19,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
+import Lodingpage from "./pages/lodingpage";
 import KakaoLogin from "./components/login/KakaoLogin";
 
 const App: React.FC = () => {
@@ -29,6 +30,7 @@ const App: React.FC = () => {
           <div className="App">
             <Routes>
               <Route path="/" element={<Mainpage />} />
+              <Route path="/lodingpage" element={<Lodingpage/>} />
               <Route path="/chatlist" element={<Chatlist />} />
               <Route path="/chatpage/:id" element={<Chatpage />} />
               <Route path="/login" element={<Login />} />

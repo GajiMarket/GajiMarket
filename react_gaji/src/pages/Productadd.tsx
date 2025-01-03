@@ -161,8 +161,7 @@ const ProductAdd: React.FC = () => {
       </button>
       {showMap && (
           <Mapcontainer onClose={() => setShowMap(false)} />
-        
-        )}
+      )}
     </div>
   );
 };
