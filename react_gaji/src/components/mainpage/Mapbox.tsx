@@ -4,7 +4,13 @@ import { mapConfig } from "../../config/mapConfig";
 import "../../style/Mapbox.css";
 import gps_icon from "../../img/gps_icon.png";
 
-const Mapbox: React.FC = () => {
+interface MapboxProps {
+    showMyLocationButton?: boolean; // 내 위치 버튼 표시 여부
+    longitude: number;
+    latitude: number;
+}
+
+const Mapbox: React.FC<MapboxProps> = ({showMyLocationButton=true}) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const [initialCenter, setInitialCenter] = useState<[number, number]>(mapConfig.initialCenter); // 초기값 설정
     const { updateLocation, initializeMap } = useMap(mapContainerRef, mapConfig.defaultStyle, {
@@ -40,24 +46,11 @@ const Mapbox: React.FC = () => {
 
     // 내 위치 버튼 클릭 핸들러
     const handleMyLocation = () => {
-        if ("geolocation" in navigator) {
-            const watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    updateLocation(longitude, latitude);
-                },
-                (error) => {
-                    console.error("Error fetching location:", error.message);
-                    alert("위치를 가져올 수 없습니다.");
-                },
-                { enableHighAccuracy: true }
-            );
-    
-            return () => {
-                navigator.geolocation.clearWatch(watchId);
-            };
+        if (initialCenter) {
+            const [longitude, latitude] = initialCenter;
+            updateLocation(longitude, latitude); // 저장된 초기 위치로 포커스 이동
         } else {
-            alert("브라우저에서 위치 정보를 지원하지 않습니다.");
+            alert("초기 위치를 가져오지 못했습니다.");
         }
     };
     
@@ -65,9 +58,11 @@ const Mapbox: React.FC = () => {
     return (
         <>
             <div ref={mapContainerRef} className="Mapbox_Googlemap" />
+            {showMyLocationButton && (
             <button onClick={handleMyLocation} className="Mapbox_Googlemap_myLocation">
                 <img src={gps_icon} className="Mapbox_Googlemap_gps_icon" />
             </button>
+            )}
         </>
     );
 };

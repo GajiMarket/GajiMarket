@@ -1,5 +1,5 @@
 import express from "express";
-import { sendProductData } from "./product.api";
+import { sendProductData } from "./service/product.api";
 
 const router = express.Router();
 
