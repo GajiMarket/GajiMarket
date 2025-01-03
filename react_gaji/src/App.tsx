@@ -20,9 +20,11 @@ import MypageNeighborhoodAuth from "./components/mypage/Mypage_neighborhood_auth
 import MypageKeywordSettings from "./components/mypage/Mypage_keyword_settings";
 import MypageAlarm from "./components/mypage/Mypage_alarm"; // 알림 페이지 추가
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Navigation from "./pages/Navigation";
-import { FooterProvider } from "./components/all/FooterContext";
-import { ProfileProvider } from "./components/mypage/ProfileContext";
+import Navigation from './pages/Navigation';
+import { FooterProvider } from './components/all/FooterContext';
+import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
+import Lodingpage from "./pages/lodingpage";
+import KakaoLogin from "./components/login/KakaoLogin";
 
 const App: React.FC = () => {
   return (
@@ -32,6 +34,7 @@ const App: React.FC = () => {
           <div className="App">
             <Routes>
               <Route path="/" element={<Mainpage />} />
+              <Route path="/lodingpage" element={<Lodingpage/>} />
               <Route path="/chatlist" element={<Chatlist />} />
               <Route path="/chatpage/:id" element={<Chatpage />} />
               <Route path="/login" element={<Login />} />
@@ -61,6 +64,7 @@ const App: React.FC = () => {
               />
               <Route path="/mypage_alarm" element={<MypageAlarm />} /> {/* 알림 페이지 추가 */}
               <Route path="/navigation" element={<Navigation />} />
+              <Route path="/auth/kakao" element={<KakaoLogin />} />
             </Routes>
           </div>
         </BrowserRouter>

@@ -5,5 +5,4 @@ export interface IChatMessage {
     created_at: Date;
     chat_room_id: number;
     member_no: number;
-    
 }

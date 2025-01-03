@@ -8,10 +8,9 @@ const Product_preview:React.FC = () => {
     const navigate = useNavigate();
 
     const Directions = async () => {
-        
         navigate('/navigation');
     }
-
+    
     return (
         <div className='product_preview'>
             <img src={preview_icon} className='product_preview_icon'/>

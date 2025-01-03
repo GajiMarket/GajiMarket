@@ -2,13 +2,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/Productadd.css";
-import Mapbox from "../components/map/Mapbox";
+import Mapcontainer from "../components/map/Mapcontainer";
 
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  // const [location, setLocation] = useState<string | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [representativeIndex, setRepresentativeIndex] = useState<number | null>(
     null
@@ -118,12 +117,12 @@ const ProductAdd: React.FC = () => {
             className="product-title-input"
           />
         </label>
-        <div className="categories">
+        {/* <div className="categories">
           <button>디지털/가전</button>
           <button>게임기</button>
           <button>기타</button>
-        </div>
-        <label>
+        </div> */}
+        <label className="product-price-label">
           가격
           <input
             type="number"
@@ -142,7 +141,7 @@ const ProductAdd: React.FC = () => {
             className="product-description-input"
           />
         </label>
-        <label>
+        <label className="product-location-label">
           거래 희망 장소
           <input
             type="text"
@@ -154,16 +153,15 @@ const ProductAdd: React.FC = () => {
           />
         </label>
 
-        {showMap && (
-          <div className="map-container">
-            <Mapbox />
-          </div>
-        )}
+        
       </div>
 
       <button className="submit-button" onClick={handleSubmit}>
         작성 완료
       </button>
+      {showMap && (
+          <Mapcontainer onClose={() => setShowMap(false)} />
+      )}
     </div>
   );
 };
