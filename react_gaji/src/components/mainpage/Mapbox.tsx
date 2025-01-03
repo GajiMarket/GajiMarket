@@ -4,7 +4,10 @@ import { mapConfig } from "../../config/mapConfig";
 import "../../style/Mapbox.css";
 import gps_icon from "../../img/gps_icon.png";
 
-const Mapbox: React.FC = () => {
+interface MapboxProps {
+    showMyLocationButton?: boolean; // 내 위치 버튼 표시 여부
+}
+const Mapbox: React.FC<MapboxProps> = ({showMyLocationButton=true}) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const [initialCenter, setInitialCenter] = useState<[number, number]>(mapConfig.initialCenter); // 초기값 설정
     const { updateLocation, initializeMap } = useMap(mapContainerRef, mapConfig.defaultStyle, {
@@ -65,9 +68,11 @@ const Mapbox: React.FC = () => {
     return (
         <>
             <div ref={mapContainerRef} className="Mapbox_Googlemap" />
+            {showMyLocationButton && (
             <button onClick={handleMyLocation} className="Mapbox_Googlemap_myLocation">
                 <img src={gps_icon} className="Mapbox_Googlemap_gps_icon" />
             </button>
+            )}
         </>
     );
 };
