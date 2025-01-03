@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const db = {
+const dbConfig = {
     host: process.env.CODELAB_HOST,
     port: Number(process.env.CODELAB_PORT),
     database: process.env.CODELAB_DB,
@@ -12,7 +12,7 @@ const db = {
 
 }
 
- export const data = new pg.Pool(db);
+ export const db = new pg.Pool(dbConfig);
  export const schema = process.env.CODELAB_SCEHMA;
 
 

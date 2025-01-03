@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiConfig } from '../../config/apiConfig';
-import { IPathFinderParams, IPathResponse } from './pathFinder.model';
+import { IPathFinderParams, IPathResponse, ICoordinates } from './pathFinder.model';
 
 export const findPath = async (params: IPathFinderParams): Promise<IPathResponse> => {
 

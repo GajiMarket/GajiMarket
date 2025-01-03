@@ -1,4 +1,4 @@
-import { IPathFinderParams } from "api/pathFinder/pathFinder.model";
+import { IPathFinderParams } from "../../src/api/models/pathFinder.model";
 
 export interface PathFinderConfig {
     headers: {
