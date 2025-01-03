@@ -1,0 +1,42 @@
+.neighborhood-settings-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f7f8fa;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    margin: 16px;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .content h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .content p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .settings-btn {
+    background-color: #8a2be2;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .settings-btn:hover {
+    background-color: #6c1cb3;
+  }
+  

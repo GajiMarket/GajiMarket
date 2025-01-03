@@ -36,6 +36,18 @@ const Mypage: React.FC = () => {
     navigate("/mypage_buy"); // 구매내역 페이지로 이동
   };
 
+  const handleNavigateToNeighborhoodSettings = () => {
+    navigate("/mypage_neighborhood_settings"); // 나의 동네 설정 페이지로 이동
+  };
+
+  const handleNavigateToNeighborhoodAuth = () => {
+    navigate("/mypage_neighborhood_auth"); // 나의 동네 인증 페이지로 이동
+  };
+
+  const handleNavigateToKeywordSettings = () => {
+    navigate("/mypage_keyword_settings"); // 키워드 알림 설정 페이지로 이동
+  };
+
   const handleNavigateToFAQ = () => {
     navigate("/mypage_faq"); // FAQ 페이지로 이동
   };
@@ -51,7 +63,7 @@ const Mypage: React.FC = () => {
   return (
     <div className="Mypage">
       <div className="mypage-container">
-        <Header /> {/* Header 컴포넌트 */}
+        <Header />
         <div className="profile-section">
           <div className="profile-info">
             <img
@@ -59,7 +71,7 @@ const Mypage: React.FC = () => {
               src={smileIcon}
               alt="프로필 이미지"
             />
-            <div className="profile-name">{name}</div> {/* Context에서 가져온 이름 */}
+            <div className="profile-name">{name}</div>
           </div>
           <button
             className="profile-edit-btn cursor-pointer"
@@ -107,7 +119,7 @@ const Mypage: React.FC = () => {
           <div className="menu-group">
             <h2>설정</h2>
             <ul>
-              <li>
+              <li onClick={handleNavigateToNeighborhoodSettings}>
                 <span className="cursor-pointer">
                   <img src={locationIcon} alt="나의동네설정" /> 나의 동네 설정
                 </span>
@@ -117,7 +129,7 @@ const Mypage: React.FC = () => {
                   className="menu-arrow cursor-pointer"
                 />
               </li>
-              <li>
+              <li onClick={handleNavigateToNeighborhoodAuth}>
                 <span className="cursor-pointer">
                   <img src={gearIcon} alt="나의동네인증" /> 나의 동네 인증
                 </span>
@@ -127,7 +139,7 @@ const Mypage: React.FC = () => {
                   className="menu-arrow cursor-pointer"
                 />
               </li>
-              <li>
+              <li onClick={handleNavigateToKeywordSettings}>
                 <span className="cursor-pointer">
                   <img src={keywordIcon} alt="키워드알림설정" /> 키워드 알림 설정
                 </span>
@@ -166,15 +178,12 @@ const Mypage: React.FC = () => {
           </div>
         </section>
         <div className="logout-section">
-          <button
-            className="logout-btn cursor-pointer"
-            onClick={handleLogout}
-          >
+          <button className="logout-btn cursor-pointer" onClick={handleLogout}>
             로그아웃
           </button>
         </div>
       </div>
-      <Footer /> {/* Footer 컴포넌트 */}
+      <Footer />
     </div>
   );
 };
