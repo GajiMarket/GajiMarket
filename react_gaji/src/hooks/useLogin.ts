@@ -9,25 +9,30 @@ export const login = async (data: Record<string, string>): Promise<{loginCheck: 
 
     try {
 
-        const response = await fetch(`${api}/auth/login`, {
-            method: 'POST',
-            headers: {"Content-Type": "aplication/json"},
-            body: JSON.stringify({data}),
+        const response = await axios.post(`${api}/auth/login`, {
+            header: {
+                "Content-Type": "application/json"
+            },
+            data: {
+                id: data.id,
+                pw: data.pw
+            }
         });
 
-        if(!response.ok) {
+        if(response.status === 500) {
 
-            throw new Error(`서버 에러: ${response.status}`);
+            throw Error(`서버 에러: ${response.status}`);
         }
 
-        const results = await response.json();
+        const results = await response.data;
 
         return results;
+
     } catch(error) {
 
-        console.error('서버와 연결하는데 오류가 발생했습니다.', error);
+        console.error(error);
 
-        throw error;
+        throw new Error('서버와 연결하는데 오류가 발생했습니다.');
         
     }
 

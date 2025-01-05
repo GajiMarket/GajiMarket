@@ -1,9 +1,9 @@
 import React from 'react'
 
 interface IFindeProps {
-    idFind: () => void;
-    pwFind: () => void;
-    signUp: () => void;
+    idFind: (e:React.MouseEvent<HTMLButtonElement>) => void;
+    pwFind: (e:React.MouseEvent<HTMLButtonElement>) => void;
+    signUp: (e:React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Find: React.FC<IFindeProps> = ({idFind, pwFind, signUp}) => {
@@ -17,3 +17,5 @@ const Find: React.FC<IFindeProps> = ({idFind, pwFind, signUp}) => {
 }
 
 export default Find
+
+// gpt보면서 api 적용시키기 보면 이 주석 지우셈

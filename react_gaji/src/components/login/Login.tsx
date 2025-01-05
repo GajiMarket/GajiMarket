@@ -19,11 +19,17 @@ interface ILoginProps {
 
 const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLoginSuccess, handleTest}) => {
 
-  const kakaoKey: string = import.meta.env.VITE_KAKAO_LOGIN;
+  const kakaoKey: string = import.meta.env.VITE_KAKAO_KEY;
   // const redirectUri: string = import.meta.env.VITE_REDIRECT_URL;
   const localUri: string = import.meta.env.VITE_REDIRECT_LOCAL_URI;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${localUri}&response_type=code`;
   const navigate = useNavigate();
+  // 
+  const routeMap: {[key: string]: string} = {
+    id_find: "/idFind",
+    password_find: "/pwFind",
+    signup_button:"/signup",
+  };
 
  const handleForm = (data: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -56,18 +62,29 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
   // 누르면 인가 코드 페이지 이동
   const handleKakao = () => {
 
-    navigate(kakaoURL);
+    // navigate(kakaoURL);
+    if (kakaoKey === '') {
+      alert('키가 없습니다.')
+    }
+    window.location.href = kakaoURL;
 
   
   } 
 
-  // const handleIdFind = async () => {
+  // 클릭하면 해당하는 className의 라우트 주소로 이동
+  const moveFind = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
-  //   try {
+    const className = e.currentTarget.className;
+    const path = routeMap[className];
 
+    if(path) {
+      navigate(path);
+    } else {
+      console.warn("해당 라우트는 없는 주소입니다.");
       
-  //   }
-  // }
+    }
+
+  };
 
   
 
@@ -79,10 +96,13 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
     <Id id={formData.id || ''} setId={handleForm('id')} />
     <Password password={formData.password || ''} setPassword={handleForm('password')} />
     <button className="loginButton"  type="button" onClick={handleLogin}>로그인</button>
-    <Find idFind={handleTest} pwFind={handleTest} signUp={handleTest} />
+    <Find idFind={moveFind} pwFind={moveFind} signUp={moveFind} />
     <Api kakaoApi={handleKakao} naverApi={handleTest} googleApi={handleTest}/> 
     </div>
   )
 }
 
 export default Login
+
+
+// gpt보면서 api 적용시키기 보면 이 주석 지우셈
