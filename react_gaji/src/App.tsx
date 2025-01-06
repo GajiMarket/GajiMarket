@@ -23,7 +23,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
-import Lodingpage from "./pages/lodingpage";
+import Lodingpage from "./pages/Lodingpage";
 import KakaoLogin from "./components/login/KakaoLogin";
 
 const App: React.FC = () => {

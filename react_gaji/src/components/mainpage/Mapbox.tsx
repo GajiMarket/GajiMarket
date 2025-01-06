@@ -6,8 +6,6 @@ import gps_icon from "../../img/gps_icon.png";
 
 interface MapboxProps {
     showMyLocationButton?: boolean; // 내 위치 버튼 표시 여부
-    longitude: number;
-    latitude: number;
 }
 
 const Mapbox: React.FC<MapboxProps> = ({showMyLocationButton=true}) => {
@@ -25,6 +23,7 @@ const Mapbox: React.FC<MapboxProps> = ({showMyLocationButton=true}) => {
                 (position) => {
                     const { latitude, longitude } = position.coords;
                     setInitialCenter([longitude, latitude]); // 초기 위치 업데이트
+                    console.log(longitude, latitude);     
                 },
                 (error) => {
                     console.error("Error fetching initial location:", error.message);
