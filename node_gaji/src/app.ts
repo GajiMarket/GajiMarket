@@ -6,6 +6,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import chatRoutes from './api/chat'
 import pinoHttp from 'pino-http'
+import cookieParser from 'cookie-parser'
 import mountRoutes from './api/routes'
 import logger from './logger'
 
@@ -21,6 +22,8 @@ const corsOptions: any = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use(helmet());
 

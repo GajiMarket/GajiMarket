@@ -24,7 +24,7 @@ import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 import Lodingpage from "./pages/Lodingpage";
-import KakaoLogin from "./components/login/KakaoLogin";
+import KakaoLogin from "./pages/KakaoLogin";
 
 const App: React.FC = () => {
   return (
