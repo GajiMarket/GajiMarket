@@ -44,7 +44,7 @@ export const getAccessToken = async (code: string): Promise<string | undefined> 
 
     try {
 
-        const response = await axios.post(`${api}/auth/kako`, {
+        const response = await axios.post(`${api}/auth/kakaotoken`, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -75,10 +75,39 @@ export const getAccessToken = async (code: string): Promise<string | undefined> 
     }
 }
 
-export const kakaoUserInfo = async (data: Record<string, string>): Promise<boolean> => {
+// 사용자 정보 받아오기
+export const kakaoUserInfo = async (data: Record<string, string>): Promise<void> => {
 
     try {
-        const response = await axios.post(`${api}/`)
+        // id, email, nickname은 기본값
+        const response = await axios.post(`${api}/auth/kakaoinfo`, {
+            data: {
+                id: data.id,
+                pw: data.pw,
+                email: data.email,
+                phone: data.phone,
+                nickname: data.nickName,
+                name: data.name,
+                addr: data.addr,
+                birth: data.birth,
+            },
+        });
+
+        if (!data) {
+
+            console.log('formData 전송 실패');
+            
+        }
+
+        // 회원가입 완료시 status값
+        const result = response.status
+
+    } catch (error) {
+
+        console.error(error);
+        
+
+        throw new Error('kakaoUserInfo: 사용자 정보 함수 실행중 오류 발생')
     }
 }
 

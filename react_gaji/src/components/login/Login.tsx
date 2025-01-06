@@ -24,6 +24,7 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
   const localUri: string = import.meta.env.VITE_REDIRECT_LOCAL_URI;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${localUri}&response_type=code`;
   const navigate = useNavigate();
+
   // 버튼 클릭하면 해당 페이지로 이동
   const routeMap: {[key: string]: string} = {
     id_find: "/idFind",
@@ -78,8 +79,11 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
     const path = routeMap[className];
 
     if(path) {
+
       navigate(path);
+
     } else {
+      
       console.warn("해당 라우트는 없는 주소입니다.");
       
     }

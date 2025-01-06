@@ -1,6 +1,6 @@
 import React from 'react'
 
-const IdFind = () => {
+const FindMain = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const IdFind = () => {
   )
 }
 
-export default IdFind
+export default FindMain

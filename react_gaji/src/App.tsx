@@ -25,6 +25,7 @@ import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 import Lodingpage from "./pages/Lodingpage";
 import KakaoLogin from "./pages/KakaoLogin";
+import FindMain from './pages/FindMain';
 
 const App: React.FC = () => {
   return (
@@ -38,6 +39,7 @@ const App: React.FC = () => {
               <Route path="/chatlist" element={<Chatlist />} />
               <Route path="/chatpage/:id" element={<Chatpage />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/find" element={<FindMain />} />
               <Route path="/productadd" element={<Productadd />} />
               <Route path="/productlistpage" element={<Productlistpage />} />
               <Route path="/productpage" element={<Productpage />} />

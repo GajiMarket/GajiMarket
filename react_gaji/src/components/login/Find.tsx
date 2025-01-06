@@ -17,5 +17,3 @@ const Find: React.FC<IFindeProps> = ({idFind, pwFind, signUp}) => {
 }
 
 export default Find
-
-// gpt보면서 api 적용시키기 보면 이 주석 지우셈
