@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import useMap from "../../hooks/useMap";
 import { mapConfig } from "../../config/mapConfig";
-import { postLocation } from '../../api/location.api';
 import "../../style/Mapbox.css";
 import gps_icon from "../../img/gps_icon.png";
 
@@ -26,7 +25,6 @@ const Mapbox: React.FC<MapboxProps> = ({showMyLocationButton=true}) => {
                 (position) => {
                     const { latitude, longitude } = position.coords;
                     setInitialCenter([longitude, latitude]); // 초기 위치 업데이트
-                    postLocation(longitude, latitude); // location api롤 좌표 전송
                 },
                 (error) => {
                     console.error("Error fetching initial location:", error.message);
