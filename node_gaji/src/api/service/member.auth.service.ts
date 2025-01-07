@@ -1,12 +1,21 @@
 import axios from 'axios';
 import {login, signUpDAO, saveOrUpdateUser} from '../DAO/member.auth.dao';
 import { IMemberTbl } from '../models/member_tbl';
+import logger from '../../logger';
 
-type loginType = Pick<IMemberTbl, "member_id" | "member_pwd">;
+// type loginType = Pick<IMemberTbl, "member_id" | "member_pwd" | "member_email">;
 type signUpType = Omit<IMemberTbl, "accessToken" | "created_at">;
+type loginType = Partial<IMemberTbl>;
 
 
 export const loginService = async (id: string, password:string): Promise<loginType> => {
+    
+    
+
+    if (id == '' && password == '') {
+        
+        logger.error("loginService: Not Parameter")
+    }
 
     return await login(id, password);
 }
@@ -39,7 +48,7 @@ export const generateToken = async(code: string) => {
 
   } catch (error) {
 
-    console.error('kakao generateToken 에러:', error);
+    logger.error('kakao generateToken 에러:', error);
     return null;
   }
 }

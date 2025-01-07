@@ -5,4 +5,5 @@ export const getProducts = async (lng: number, lat: number, distance: number = 5
     const response = `
         SELECT * FROM ${schema}.product AS 
     `
+
 };

@@ -4,29 +4,43 @@ import axios from 'axios';
 const api: string = `http://localhost:3000` 
 
 //로그인 함수
-export const login = async (data: Record<string, string>): Promise<{loginCheck: boolean, loginData: string}> => {
+
+
+export const login = async (formData: Record<string, string>): Promise<{isChecked:boolean, data: string}> => {
 
 
     try {
+        console.log(formData);
+        console.log(formData.id);
+        console.log(formData.password);
+        
+        
 
         const response = await axios.post(`${api}/auth/login`, {
-            header: {
-                "Content-Type": "application/json"
+            data:{
+                id: formData.id,
+                pw: formData.password,
             },
-            data: {
-                id: data.id,
-                pw: data.pw
-            }
+            
         });
 
-        if(response.status === 500) {
+        
+
+        if(response.status === 500 || response.status === 400) {
 
             throw Error(`서버 에러: ${response.status}`);
         }
+        
+        const results = response.data;
+        
+        console.log("results.data 값", results.data);
+        console.log("results.success 값", results.success);
+        
+        
 
-        const results = await response.data;
+        return {isChecked: results.success, data: results.data};
+        
 
-        return results;
 
     } catch(error) {
 
@@ -37,6 +51,34 @@ export const login = async (data: Record<string, string>): Promise<{loginCheck: 
     }
 
 };
+
+// 토큰 유효성 검증
+export const tokenValidate = async ():Promise<boolean> => {
+
+    try {
+        const response = await axios.get(`${api}/auth/tokenvali`, {
+            withCredentials:true,
+        });
+
+        if(!response.data.success) {
+
+
+            console.log("토큰이 일치하지 않습니다.");
+            return false;
+            
+        }
+
+        return true;
+
+    } catch (error) {
+
+        
+        console.error('토큰 검증 오류:', error);
+        throw new Error("tokenValidate 함수 실행 중 문제가 발생했습니다.")
+
+        
+    }
+}
 
 
 //인가 코드를 전송하고 토큰을 발급받는다.

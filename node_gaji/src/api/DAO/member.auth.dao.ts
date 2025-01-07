@@ -1,15 +1,20 @@
 import {db, schema} from '../../config/dbConfig'
 import {QueryResult} from 'pg';
 import {IMemberTbl} from '../models/member_tbl'
+import logger from '../../logger';
 
-type loginType = Pick<IMemberTbl, "member_id" | "member_pwd">;
+// type loginType = Pick<IMemberTbl, "member_id" | "member_pwd" | "member_email">;
 // type kakaoLoginType = Pick<IMemberTbl, "member_id" | "member_nick" | "member_email">;
 type signUpType = Omit<IMemberTbl, "accessToken" | "created_at">;
+type loginType = Partial<IMemberTbl>;
 
 // 폴더 별로 역할을 나눌 경우
 export const login = async (id: string, password: string): Promise<loginType> => {
 
-    const response =  await db.query(`SELECT member_id, member_pwd FROM ${schema}.member_tbl WHERE member_id = $1 AND member_pwd = $2`, [id, password]);
+
+    const response =  await db.query(`SELECT member_no, member_id, member_nick, member_pwd, member_email FROM ${schema}.member_tbl WHERE member_id = $1 AND member_pwd = $2`, [String(id), String(password)]);
+
+    logger.info(response.rows[0]);
 
     return response.rows[0] as loginType;
 

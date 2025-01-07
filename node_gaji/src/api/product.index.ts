@@ -3,6 +3,6 @@ import { getProducts } from "./DAO/productPath.dao";
 
 const router = express.Router();
 
-router.get('/', getProducts)
+// router.get('/', getProducts)
 
 export default router;

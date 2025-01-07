@@ -1,28 +1,63 @@
 import {Request, Response} from 'express'
+import jwt, {JwtPayload} from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import {loginService, signUpService, generateToken, getUserInfo, signKakao } from '../service/member.auth.service'
+import logger from '../../logger';
 
 
 
 
+
+// 로그인
 export const userCtrl = async (req:Request, res: Response) => {
 
-        try {
-            const id = req.body.id;
-            const password  = req.body.password;
     
+        try {
+            // 요청 값 받는 부분
+            const id: string = String(req.body.data.id);
+            const password: string = String(req.body.data.pw);
+
+            logger.info(id);
+            logger.info(password);
+    
+            // 받은 요청값 유효성 검증
             if(id == '' && password == '') {
-                res.status(400).json({
-                    message: 'userCtrl: 값을 가져오지 못했습니다.'
-                });
+
+                logger.error("Data not success.")
                 
             }
+
+            // 요청값 보내고, 서비스에서 반환값 받음
     
             const response = await loginService(id, password);
+
+            
+
+            if (!response) {
+                logger.error("userCtrl: Data valid false");
+            }
+
+            // 토큰 생성
+            const key: string = process.env.TOKEN_KEY || "GajiMarket_login";
+            const token = jwt.sign(
+                { id: response.member_no, email: response.member_email, nickname: response.member_nick},
+                key,
+                {expiresIn: '1h'}
+            );
+
+            logger.debug(token);
+            
+
+            // HttpOnly 쿠키 토큰 저장
+            // res.cookie('token', token, {
+            //     httpOnly: true,//자바스립립트로 접근 불가
+            //     sameSite: 'strict', // 동일 사이트 요청만 허용
+            // })
     
             res.status(200).json({
                 success: true,
-                data: response,
-                message: 'success',
+                data: token,
+                message: 'Login successfully',
     
             });
         } catch (error) {
@@ -34,7 +69,26 @@ export const userCtrl = async (req:Request, res: Response) => {
             // console.error('로그인 도중 오류 발생');
         }
     }
+
+// 로그아웃
+export const logout = async (req:Request, res:Response) => {
+
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+
+    })
     
+    logger.info("logout successd")
+
+    res.status(200).json({ 
+        success: true,
+        message: "logout successed",
+    });
+}
+
+// 회원가입
 export const signCtrl = async (req: Request, res: Response) => {
     
         try {
@@ -61,6 +115,54 @@ export const signCtrl = async (req: Request, res: Response) => {
             })
         }
     }
+
+// token 유효성 검증
+// req값이 pino에 안나옴
+export const validateToken = (req: Request, res: Response) => {
+
+    const token: string = req.body.token;
+
+    logger.info("req.cookie:", token);
+
+    if(!token) {
+
+        res.status(400).json({
+            message: '인증 되지 않은 사용자'
+        });
+    }
+    
+    const key: string = process.env.TOKEN_KEY || "GajiMarket_login" 
+    jwt.verify(token, key, (err: Error | null, decoded: string | JwtPayload | undefined) => {
+        if (err) {
+            logger.error(err);
+
+            res.status(400).json({
+                message: "유효 하지 않은 토큰"
+            });
+        }
+
+        if(decoded && typeof decoded === 'object') {
+            const user = decoded as JwtPayload;
+            logger.debug(user);
+
+            res.json({
+                success: true,
+                user
+            });
+        }
+
+        if (!decoded) {
+            logger.error("토큰 디코딩 실패");
+            res.status(400).json({
+                message: '토큰 디코딩 실패'
+            });
+        }
+    })
+
+
+}
+
+// Cannot set headers after they are sent to the client 해당 오류는 res중복
 
 export const kakaoTokenCtrl = async (req:Request, res:Response) => {
 
@@ -143,5 +245,10 @@ export const kakaoSignUp = async (req: Request, res: Response) => {
 
         const userUpdate = await signKakao(formData);
 
+    } catch (error) {
+        
+        console.error(error);
+        
     }
+
 }

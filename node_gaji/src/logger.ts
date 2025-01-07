@@ -64,8 +64,8 @@ const logger = pino({
 
 
 //logger 테스트
-logger.debug('This is a debug log');
-logger.info('This is a info log');
-logger.error('This is a error log');
+// logger.debug('This is a debug log');
+// logger.info('This is a info log');
+// logger.error('This is a error log');
 
 export default logger;

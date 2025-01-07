@@ -14,30 +14,37 @@ dotenv.config();
 
 const app = express();
 
-const corsOptions: any = {
-    origins: [`http://localhst:${process.env.FRONT_PORT}`],
-    credentials: true
-}
 
-app.use(cors(corsOptions));
 
 app.use(express.json());
 
+
+
+app.use(cors({
+    origin: [`http://localhost:${process.env.FRONT_PORT}`],
+    credentials: true
+}));
+
 app.use(cookieParser());
+
+
 
 app.use(helmet());
 
 app.use(compression());
 
-app.use(pinoHttp({logger, // logger를 연결
-    customLogLevel: (req, res, err) => {
-        if (res.statusCode >= 500 || err) return 'error';
-        if (res.statusCode >= 400) return 'warn';
+// app.use(pinoHttp({logger, // logger를 연결
+//     customLogLevel: (req, res, err) => {
+//         if (res.statusCode >= 500 || err) return 'error';
+//         if (res.statusCode >= 400) return 'warn';
 
-        return 'info';
-        },
-    })
-);
+
+//         return 'info';
+//         },
+//     })
+// );
+
+app.use(pinoHttp({logger}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
