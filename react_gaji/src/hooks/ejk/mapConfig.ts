@@ -13,7 +13,7 @@ export const mapConfig: mapConfig = {
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [126.8821177, 37.4808173],
-    zoom: 15,
+    zoom: 16,
     defaultLanguage: 'ko',
     attributionControl: false,
 };
