@@ -1,25 +1,47 @@
-import React, { useEffect, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
-import useMap from "../../hooks/map/useMap.ej";
-import { mapConfig } from "../../config/mapConfig";
-import { getPathFinder } from "../../api/pathFinder.api";
+import React, { useState, useEffect } from "react";
+import useMap from '../../hooks/ejk/useMap.ej';
+import { IPathResponse, getPathFinder } from "../../api/pathFinder.api";
+import { mapMarker, mapRoute } from "../../utils/mapUtils";
 
 const MapComponent: React.FC = () => {
-    const mapContainerRef = useRef<HTMLDivElement>(null);
-    const [pathCoordinates, setPathCoordinates] = useState<number[][]>([]);
+    const map = useMap();
+    const [pathData, setPathData] = useState<{ coordinates: [number, number][]} | null>(null);
 
-    useMap({
-        mapContainerRef,
-        style: mapConfig.defaultStyle,
-        initialCenter: mapConfig.initialCenter,
-        initialZoom: mapConfig.initialZoom,
-        defaultLanguage: 'ko',
-        onClick: (lngLat) => {
-            // console.log("Clicked coordinates:", lngLat);
+    // useEffect(() => {
+    //     if (map) {
+    //         console.log('Map initialized:', map);
+    //     }
+    // }, [map]);
+
+    useEffect(() => {
+        const getPathData = async () => {
+            try {
+                const data = await getPathFinder();
+                const coordinates = data.features
+                    .filter((feature) => feature.geometry.type === 'Point')
+                    .map((feature) => feature.geometry.coordinates);
+                if (coordinates.length > 0) {
+                    setPathData({ coordinates });
+                } else {
+                    console.warn('No coordinates found in path data');
+                }
+            } catch (error) {
+                console.error('Failed to fetch path data:', error);
+            }
+        };
+
+        getPathData();
+    }, []);
+
+    useEffect(() => {
+        if (map && pathData) {
+            mapMarker(map, pathData.coordinates[0], 'green');
+            mapMarker(map, pathData.coordinates[pathData.coordinates.length - 1], 'red');
+            mapRoute(map, pathData);
         }
-    });
+    }, [map, pathData]);
 
-    return <div ref={mapContainerRef} style={{ width: "100%", height: "100vh"}} />;
+    return <div id="map" style={{ width: '100%', height: '100vh' }}/>
 }
 
 export default MapComponent;

@@ -8,19 +8,16 @@ const api = axios.create({
 })
 
 export interface IPathResponse {
-    coordinates: number[][];
+    coordinates: [number, number][];
 }
 
 export const getPathFinder = async (): Promise<IPathResponse> => {
     try {
         const response = await api.get<IPathResponse>('/navigation');
-        console.log('서버 응답:', response.data);
+        // console.log('API connected!', response.data);
         return response.data;
-
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            throw new Error(error.response?.data.error || error.message);
-        }
-        throw new Error("Unexpected error occurred");
+        console.log('Error fetching path data:', error);
+        throw error;
     }
 };
