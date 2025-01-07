@@ -26,6 +26,7 @@ import { ProfileProvider } from './components/mypage/ProfileContext'; // Profile
 import Lodingpage from "./pages/Lodingpage";
 import KakaoLogin from "./pages/KakaoLogin";
 import FindMain from './pages/FindMain';
+import ZustandTest from "./pages/ZustandTest";
 
 const App: React.FC = () => {
   return (
@@ -67,6 +68,7 @@ const App: React.FC = () => {
               <Route path="/mypage_alarm" element={<MypageAlarm />} /> {/* 알림 페이지 추가 */}
               <Route path="/navigation" element={<Navigation />} />
               <Route path="/auth/kakao" element={<KakaoLogin />} />
+              <Route path="/zustandtest" element={<ZustandTest />} />
             </Routes>
           </div>
         </BrowserRouter>

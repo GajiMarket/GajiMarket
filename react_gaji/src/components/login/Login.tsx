@@ -7,6 +7,7 @@ import Find from './Find'
 // import PwFind from './PwFind'
 import Api from './Api'
 import {login, tokenValidate} from '../../hooks/useLogin';
+import loginStore from '../../utils/loginStore';
 
 
 interface ILoginProps {
@@ -26,6 +27,13 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
   const localUri: string = import.meta.env.VITE_REDIRECT_LOCAL_URI;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${localUri}&response_type=code`;
   const navigate = useNavigate();
+  // const { login: useLoginStore, logoutMethod, isAuthenticated } = loginStore();
+
+  // zustand 상태에서 필요한 값, 메서드 가져오기
+  const isAuthenticated = loginStore((state) => state.isAuthenticated);
+  const token = loginStore((state) => state.token);
+  const setFormDataStore = loginStore((state) => state.setFormData);
+  const loginMethod = loginStore((state) => state.loginMethod);
 
   // 버튼 클릭하면 해당 페이지로 이동
   const routeMap: {[key: string]: string} = {
@@ -37,6 +45,7 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
  const handleForm = (data: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
 
   setFormData ({...formData, [data]: e.target.value});
+  setFormDataStore(data, e.target.value );
 
  }
 
