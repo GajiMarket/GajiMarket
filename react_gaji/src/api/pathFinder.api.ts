@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Feature, Geometry, GeoJsonProperties } from "geojson";
 
 const api = axios.create({
     baseURL: 'http://localhost:3000',
@@ -8,7 +9,8 @@ const api = axios.create({
 })
 
 export interface IPathResponse {
-    coordinates: [number, number][];
+    type: string;
+    features: Feature<Geometry, GeoJsonProperties>[];
 }
 
 export const getPathFinder = async (): Promise<IPathResponse> => {

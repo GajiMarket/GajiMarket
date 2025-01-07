@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Map } from "mapbox-gl";
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
 import { mapConfig } from "./mapConfig";

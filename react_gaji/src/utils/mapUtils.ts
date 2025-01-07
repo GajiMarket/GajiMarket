@@ -1,5 +1,5 @@
 import mapboxgl, { Map } from "mapbox-gl";
-import { IPathResponse } from "../api/pathFinder.api";
+import { Feature, LineString, GeoJsonProperties, Geometry } from "geojson";
 
 export const mapMarker = (map: mapboxgl.Map, position: [number, number]) => {
   const marker = new mapboxgl.Marker({
@@ -21,7 +21,7 @@ export const mapPopup = (map: mapboxgl.Map, position: [number, number]) => {
 }
 
 export const mapRoute = (map: Map, pathData: { coordinates: [number, number][]}) => {
-  const routeGeoJSON = {
+  const routeGeoJSON: Feature<LineString> = {
     type: 'Feature',
     properties: {},
     geometry: {
@@ -54,4 +54,17 @@ export const mapRoute = (map: Map, pathData: { coordinates: [number, number][]})
       },
     });
   }
+}
+
+export const processCoordinates = (features: Feature<Geometry, GeoJsonProperties>[]): [number, number][] => {
+  return features.flatMap((feature) => {
+    const { geometry } = feature;
+
+    if (geometry.type === "Point") {
+      return [geometry.coordinates as [number, number]];
+    } else if (geometry.type === "LineString") {
+      return geometry.coordinates as [number, number][];
+    }
+    return [];
+  })
 }

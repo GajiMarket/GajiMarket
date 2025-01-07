@@ -1,26 +1,29 @@
-import { useState } from "react";
-import { getPathFinder, IPathResponse } from '../../api/pathFinder.api';
+import { useState, useEffect } from "react";
+import { getPathFinder } from '../../api/pathFinder.api';
+import { processCoordinates } from "../../utils/mapUtils";
 
-const usePathData = () => {
-    const [path, setPath] = useState<number[][]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+export const usePathData = () => {
+    const [pathData, setPathData] = useState<{ coordinates: [number, number][]} | null>(null);
 
-    const getPath = async (start: [number, number], end: [number, number]) => {
-        setLoading(true);
-        setError(null);
+    useEffect(() => {
+        const fetchPathData = async () => {
+            try {
+                const data = await getPathFinder();
 
-        try {
-            const response: IPathResponse = await getPathFinder(start, end);
-            setPath(response.coordinates);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Unknown error");
-        } finally {
-            setLoading(false);
-        }
-    };
+                const coordinates = processCoordinates(data.features);
 
-    return { path, getPath, loading, error};
+                if (coordinates.length > 0) {
+                    setPathData({ coordinates });
+                } else {
+                    console.warn('No valid coordinates found in path data');
+                }
+            } catch (error) {
+                console.error('Failed to fetch path data:', error)
+            }
+        };
+
+        fetchPathData();
+    }, []);
+
+    return pathData;
 }
-
-export default usePathData;
