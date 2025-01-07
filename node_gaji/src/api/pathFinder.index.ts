@@ -3,6 +3,6 @@ import testPath from "./controller/pathFinder.ctrl";
 
 const router = express.Router();
 
-router.get('/path_finder', testPath)
+router.get('/', testPath)
 
 export default router
