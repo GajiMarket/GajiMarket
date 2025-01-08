@@ -6,7 +6,7 @@ interface ChatMessage {
   sender: 'buyer' | 'seller'
   message: string
   timestamp: string
-  image?: string
+  images?: string[]
 }
 
 const Chatting:React.FC<{ messages: ChatMessage[] }> = ({ messages }) => {
@@ -41,7 +41,16 @@ const Chatting:React.FC<{ messages: ChatMessage[] }> = ({ messages }) => {
             <div className={`chat-bubble ${msg.sender}`}>
               <div className="chat-message">
                 {msg.message}
-                {msg.image && <img src={msg.image} alt="첨부 이미지" className="chat-image" />}
+                {/* 이미지 첨부시 1장씩 전송 */}
+                {/* {msg.image && <img src={msg.image} alt="첨부 이미지" className="chat-image" />} */}
+                {/* 이미지 첨부시 최대 10장씩 묶음 전송 */}
+                {msg.images && (
+                  <div className="chat-images-grid">
+                    {msg.images.map((image, index) => (
+                      <img key={index} src={image} alt="첨부 이미지" className="chat-image-grid-item" />
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="chat-timestamp">{formatTime(msg.timestamp)}</div>
             </div>
