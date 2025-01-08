@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import Mapbox from "../../components/mainpage/Mapbox";
+// import Mapbox from "../../components/all/Mapbox";
+import ClickMap from "./ClickMap";
 import "../../style/Mapcontainer.css";
 
 interface MapcontainerProps {
@@ -40,7 +41,8 @@ const Mapcontainer: React.FC<MapcontainerProps> = (props) => {
             <p>만나서 거래할 때는 누구나 찾기 쉬운 공공장소가 좋아요.</p>
           </div>
           <div className="map-container">
-            <Mapbox showMyLocationButton={false} />
+            {/* <Mapbox showMyLocationButton={false} /> */}
+            <ClickMap showMyLocationButton={false} />
             <button
               className="map-container-button"
               onClick={handleMapSelection}
