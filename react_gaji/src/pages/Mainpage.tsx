@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '../style/Mainpage.css'
 import SearchBar from '../components/mainpage/SearchBar.tsx';
 import Footer from '../components/all/Footer.tsx';
-import Product_preview from '../components/mainpage/Product_preview';
 import Mapbox from '../components/mainpage/Mapbox';
 import { useLocation } from 'react-router-dom'
 import loginStore from '../utils/loginStore.ts';
@@ -13,6 +12,8 @@ interface LocationState {
 }
 
 const Mainpage:React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
 
   const navigate = useNavigate();
   const {isAuthenticated} = loginStore();
@@ -37,9 +38,8 @@ const Mainpage:React.FC = () => {
   
   return (
     <div className='Mainpage'>
-      <Mapbox />
-      <Product_preview />
-      <SearchBar />
+      <Mapbox searchTerm={searchTerm}/>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
       <Footer />
     </div>
   )
