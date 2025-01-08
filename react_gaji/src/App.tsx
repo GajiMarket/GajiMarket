@@ -23,8 +23,10 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
-import Lodingpage from "./pages/lodingpage";
-import KakaoLogin from "./components/login/KakaoLogin";
+import Lodingpage from "./pages/Lodingpage";
+import KakaoLogin from "./pages/KakaoLogin";
+import FindMain from './pages/FindMain';
+import ZustandTest from "./pages/ZustandTest";
 
 const App: React.FC = () => {
   return (
@@ -38,6 +40,7 @@ const App: React.FC = () => {
               <Route path="/chatlist" element={<Chatlist />} />
               <Route path="/chatpage/:id" element={<Chatpage />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/find" element={<FindMain />} />
               <Route path="/productadd" element={<Productadd />} />
               <Route path="/productlistpage" element={<Productlistpage />} />
               <Route path="/productpage" element={<Productpage />} />
@@ -65,6 +68,7 @@ const App: React.FC = () => {
               <Route path="/mypage_alarm" element={<MypageAlarm />} /> {/* 알림 페이지 추가 */}
               <Route path="/navigation" element={<Navigation />} />
               <Route path="/auth/kakao" element={<KakaoLogin />} />
+              <Route path="/zustandtest" element={<ZustandTest />} />
             </Routes>
           </div>
         </BrowserRouter>

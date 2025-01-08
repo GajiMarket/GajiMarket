@@ -2,8 +2,11 @@ import { Express } from 'express'
 import path from './pathFinder.index';
 import products from './product.index';
 import { userLocation } from './controller/userLocation.ctrl';
+import member from './member.index';
 
 const mountRoutes = (app:Express) => {
+
+    app.use('/auth', member);
     
     app.post('/', userLocation)
 
