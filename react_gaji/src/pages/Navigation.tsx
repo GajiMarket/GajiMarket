@@ -1,6 +1,6 @@
 import React from 'react'
 import '../style/Mainpage.css'
-import Mapbox from '../components/mainpage/Mapbox';
+import Mapbox from '../components/navigation/MapComponent';
 
 const Navigation:React.FC = () => {
 

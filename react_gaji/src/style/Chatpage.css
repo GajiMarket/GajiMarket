@@ -115,11 +115,6 @@
 }
   
 .chat-bubble {
-    /* max-width: 70%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 10px;
-    font-size: 14px; */
     display: flex;
     align-items: center;
     margin: 5px 0;
@@ -202,8 +197,10 @@
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 25px;
     margin: 10px;
+    background-color: #f1f1f1;
+    font-size: 13px;
 }
   
 .chat-send-button {
@@ -215,15 +212,54 @@
     cursor: pointer;
 }
 
+/* 채팅 이미지 첨부 미리보기 칸 */
 .chat-image-preview-container {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    margin: 0px 3.4% 10px 3.4%;
 }
-  
+
+/* 채팅 이미지 첨부 미리보기 1장 사이즈 */
 .chat-image-preview {
-    max-width: 70px;
-    max-height: 70px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    max-width: 80px;
+    max-height: 80px;
+    /* margin-right: 10px;
+    margin-bottom: 10px; */
+}
+
+/* 채팅 이미지 첨부 미리보기 칸 감싸기 */
+.chat-image-preview-wrapper {
+    position: relative;
+}
+
+/* 채팅 이미지 첨부 제거 버튼 */
+.chat-image-remove-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(158, 157, 157, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 채팅 이미지 첨부 후 전송시 이미지 묶음 전송 */
+.chat-images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+/* 채팅 이미지 첨부 후 전송시 이미지 묶음 전송 */
+.chat-image-grid-item {
+    width: 100%;
+    height: auto;
+    max-width: 100px;
+    max-height: 100px;
 }

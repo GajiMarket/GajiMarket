@@ -1,144 +1,112 @@
 .neighbor-settings-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #f7f8fa; /* 페이지 배경색 */
-  }
-  
-  .neighbor-settings-content {
-    flex: 1;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 16px;
-    margin: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .neighbor-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .neighbor-map-container {
-    width: 360px;
-    height: 500px;
-    background-color: #ddd;
-    border-radius: 0px;
-    margin-bottom: 20px;
-    margin-left: 0px;
-    position: relative; /* 자식 요소의 위치 기준 */
-    display: flex;
-    align-items: left;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  /* 지도 표시 영역 */
-  .neighbor-map-placeholder {
-    width: calc(100% - 40px); /* "나의 동네 설정" div 내부에 맞도록 조정 */
-    height: 100%;
-    font-size: 16px;
-    color: #555;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 16px;
-    position: relative;
-  }
-  
-  /* current-location-icon.png 버튼 위치 */
-  .neighbor-current-location-btn {
-    position: absolute;
-    bottom: 8px; /* 지도 영역의 아래쪽에 배치 */
-    left: -4px; /* 지도 영역의 왼쪽에 배치 */
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0; /* 기본 padding 제거 */
-  }
-  
-  .neighbor-current-location-icon {
-    width: 40px; /* 아이콘 크기 */
-    height: 40px;
-    transition: transform 0.2s ease;
-  }
-  
-  .neighbor-current-location-btn:hover .neighbor-current-location-icon {
-    transform: scale(1.1); /* 호버 시 확대 */
-  }
-  
-  /* 오른쪽 배치 버튼 그룹 */
-  .neighbor-actions-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* 오른쪽 정렬 */
-    gap: 16px;
-    margin-top: 16px; /* 지도 아래 간격 */
-  }
-  
-  .neighbor-set-location-btn {
-    background-color: #ffffff;
-    border: 2px solid #8a2be2;
-    color: #8a2be2;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .neighbor-set-location-btn:hover {
-    background-color: #6c1cb3;
-    color: #ffffff;
-  }
-  
-  /* 동네 태그 */
-  .neighbor-tag {
-    background-color: #8a2be2;
-    color: white;
-    padding: 14px 18px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-  
-  .neighbor-tag .neighbor-delete-icon {
-    font-size: 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    color: white;
-  }
-  
-  .neighbor-tag:hover {
-    background-color: #6c1cb3;
-  }
-  
-  /* 기본 동네 표시 */
-  .neighbor-default {
-    font-size: 14px;
-    color: white;
-    background-color: #8a2be2;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .neighbor-default:hover {
-    background-color: #6c1cb3;
-    color: white;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f7f8fa; /* 페이지 배경색 */
+}
+
+.neighbor-settings-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  margin: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neighbor-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.neighbor-map-container {
+  width: 100%; /* 부모 요소에 맞게 전체 너비로 확장 */
+  height: 500px; /* 지도 높이 유지 */
+  position: relative; /* 자식 요소의 위치 기준 */
+  overflow: hidden; /* 넘침 방지 */
+  background-color: #ddd; /* 임시 배경색 */
+  margin: 0; /* 모든 외부 여백 제거 */
+  padding: 0; /* 내부 여백 제거 */
+}
+
+.neighbor-map-placeholder {
+  width: 100%; /* 지도 영역 전체 너비 */
+  height: 100%; /* 지도 영역 전체 높이 */
+  position: absolute; /* 부모 요소 기준으로 절대 위치 */
+  top: 0;
+  left: 0;
+  border-radius: 0; /* 둥근 모서리 제거 */
+  overflow: hidden; /* 넘침 방지 */
+}
+
+.neighbor-current-location-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.neighbor-current-location-icon {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s ease;
+}
+
+.neighbor-current-location-btn:hover .neighbor-current-location-icon {
+  transform: scale(1.1);
+}
+
+.neighbor-actions-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.neighbor-set-location-btn {
+  background-color: #ffffff;
+  border: 2px solid #8a2be2;
+  color: #8a2be2;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.neighbor-set-location-btn:hover {
+  background-color: #6c1cb3;
+  color: #ffffff;
+}
+
+.neighbor-tag {
+  background-color: #8a2be2;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.neighbor-tag .neighbor-delete-icon {
+  font-size: 16px;
+  margin-left: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.neighbor-tag:hover {
+  background-color: #6c1cb3;
+}

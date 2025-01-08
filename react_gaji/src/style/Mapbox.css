@@ -5,6 +5,8 @@
 }
 
 .Mapbox_Googlemap_myLocation{
+    width: 30px;
+    height: 30px;
     position: absolute;
     bottom: 88px;
     left: 15px;

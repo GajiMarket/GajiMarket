@@ -8,7 +8,7 @@ const Product_preview:React.FC = () => {
     const navigate = useNavigate();
 
     const Directions = async () => {
-        navigate('/navigation');
+        navigate('/chatpage/:id');
     }
     
     return (

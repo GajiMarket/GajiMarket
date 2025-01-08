@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import useMap from '../../hooks/map/useMap.ej'
+import useMap from '../../hooks/ejk/useMap.ej'
 import useLocation from "../../hooks/useLocation";
 import { mapConfig } from "../../config/mapConfig";
 
