@@ -15,7 +15,6 @@ interface ILoginProps {
   setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   loginSuccess: boolean;
   setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-  // handleTest: () => void;
   handleGoogle: () => void;
   handleNaver: () => void;
 }
@@ -27,13 +26,14 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
   const localUri: string = import.meta.env.VITE_REDIRECT_LOCAL_URI;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${localUri}&response_type=code`;
   const navigate = useNavigate();
-  // const { login: useLoginStore, logoutMethod, isAuthenticated } = loginStore();
+
+  const { loginMethod } = loginStore(); 
 
   // zustand 상태에서 필요한 값, 메서드 가져오기
-  const isAuthenticated = loginStore((state) => state.isAuthenticated);
-  const token = loginStore((state) => state.token);
-  const setFormDataStore = loginStore((state) => state.setFormData);
-  const loginMethod = loginStore((state) => state.loginMethod);
+  // const isAuthenticated = loginStore((state) => state.isAuthenticated);
+  // const token = loginStore((state) => state.token);
+  // const setFormDataStore = loginStore((state) => state.setFormData);
+  // const loginMethod = loginStore((state) => state.loginMethod);
 
   // 버튼 클릭하면 해당 페이지로 이동
   const routeMap: {[key: string]: string} = {
@@ -45,7 +45,6 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
  const handleForm = (data: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
 
   setFormData ({...formData, [data]: e.target.value});
-  setFormDataStore(data, e.target.value );
 
  }
 
@@ -86,13 +85,13 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
 
       if(form.isChecked) {
 
+        loginMethod(form.data);
         setLoginSuccess(true);
-
-        sessionStorage.setItem("loginToken", form.data);
+      
         
         alert('로그인 성공')
 
-        navigate("/", {state:{loginSuccess}});
+        navigate("/");
 
       } else {
 
@@ -150,7 +149,6 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
       <div className="login_logo">
         <img src='../../public/img/image 16.png' />
       </div>
-      {loginSuccess ? <div>지금 true 상태야({loginSuccess})</div> : <div>지금 false 상태야({loginSuccess})</div>}
     <Id id={formData.id || ''} setId={handleForm('id')} />
     <Password password={formData.password || ''} setPassword={handleForm('password')} />
     <button className="loginButton"  type="button" onClick={handleLogin}>로그인</button>
