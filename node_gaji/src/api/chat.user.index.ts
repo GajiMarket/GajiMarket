@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getUser } from '../api/controller/chat.user.ctrl';
+import { getUser } from './controller/chat.ctrl';
 
 const router = Router();
 
