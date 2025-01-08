@@ -13,6 +13,7 @@
     overflow-y: auto;
     padding: 16px;
     text-align: left;
+    margin-bottom: 75px;
   }
   
   .MypageTermsDetail-container::-webkit-scrollbar {
@@ -53,7 +54,7 @@
     color: #333;
   }
   
-  .MypageTermsDetail-footer-space {
+  /* .MypageTermsDetail-footer-space {
     height: 80px;
   }
-  
+   */

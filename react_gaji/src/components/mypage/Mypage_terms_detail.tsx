@@ -99,7 +99,7 @@ const MypageTermsDetail: React.FC = () => {
               - 기타 중대한 사유로 회사가 서비스 제공을 지속하는 것이 부적당하다고 인정하는 경우
             </p>
           </section>
-          <div className="MypageTermsDetail-footer-space"></div>
+          {/* <div className="MypageTermsDetail-footer-space"></div> */}
         </div>
       </div>
       <Footer />

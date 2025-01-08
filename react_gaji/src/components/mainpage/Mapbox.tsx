@@ -5,7 +5,11 @@ import { mapConfig } from "../../config/mapConfig";
 import "../../style/Mapbox.css";
 import gps_icon from "../../img/gps_icon.png";
 
-const Mapbox: React.FC = () => {
+interface MapboxProps {
+    searchTerm: string;
+}
+
+const Mapbox: React.FC<MapboxProps> = ({ searchTerm }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const { mapInstance, updateCenter } = useMap(mapContainerRef, mapConfig);
     const { productLocations, fetchProductLocations, renderMarkers } = useMarkers();
@@ -16,12 +20,15 @@ const Mapbox: React.FC = () => {
             fetchProductLocations(); // 데이터 가져오기
     }, [mapInstance]);
 
-    // 상품 데이터 변경 시 마커 렌더링
+    // 상품 데이터 변경 또는 검색어 변경 시 마커 렌더링
     useEffect(() => {
-        if (mapInstance && productLocations.length > 0) {
-            renderMarkers(mapInstance, productLocations); // 마커 렌더링
+        if (mapInstance) {
+            const filteredLocations = productLocations.filter((product) =>
+                product.title.toLowerCase().includes(searchTerm.toLowerCase()) // 검색어로 필터링
+            );
+            renderMarkers(mapInstance, filteredLocations); // 필터링된 데이터로 마커 렌더링
         }
-    }, [mapInstance, productLocations]);
+    }, [mapInstance, productLocations, searchTerm]);
 
     // "내 위치" 버튼 클릭 핸들러
     const handleMyLocation = () => {
