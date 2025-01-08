@@ -23,7 +23,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
 import Lodingpage from "./pages/Lodingpage";
-import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
+// import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 import FindMain from './pages/FindMain';
 import ZustandTest from "./pages/ZustandTest";
 

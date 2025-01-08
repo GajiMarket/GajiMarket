@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useProfile } from '../components/mypage/ProfileContext'; // Context import
+// import { useProfile } from '../components/mypage/ProfileContext'; // Context import
 import '../style/Mypage_profileedit.css';
 import Header from '../components/mypage/Header.tsx';
 import Footer from '../components/all/Footer.tsx';
 import smileIcon from '../assets/icons/smile-icon.png'; // 기본 이미지
 
 const MypageProfileEdit: React.FC = () => {
-  const { name, setName, profileImage, setProfileImage } = useProfile(); // Context에서 상태 가져오기
-  const [newName, setNewName] = useState<string>(name); // 로컬 상태로 이름 관리
+  const [profileImage, setProfileImage] = useState<string>(smileIcon); // 로컬 상태로 대체
+  const [newName, setNewName] = useState<string>('홍길동'); // 로컬 상태로 대체
   const [isEditingNickname, setIsEditingNickname] = useState<boolean>(false);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,10 +26,15 @@ const MypageProfileEdit: React.FC = () => {
     setIsEditingNickname(true);
   };
 
+  // const handleNicknameSave = () => {
+  //   setName(newName); // Context에 이름 저장
+  //   setIsEditingNickname(false);
+  //   alert('닉네임을 변경하였습니다!');
+  // };
+
   const handleNicknameSave = () => {
-    setName(newName); // Context에 이름 저장
+    alert(`닉네임이 '${newName}'로 변경되었습니다!`);
     setIsEditingNickname(false);
-    alert('닉네임을 변경하였습니다!');
   };
 
   return (
