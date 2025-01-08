@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {login, signUpDAO, saveOrUpdateUser} from '../DAO/member.auth.dao';
+import {login, signUpDAO, saveOrUpdateUser, idCheckDAO} from '../DAO/member.auth.dao';
 import { IMemberTbl } from '../models/member_tbl';
 import logger from '../../logger';
 
@@ -20,15 +20,33 @@ export const loginService = async (id: string, password:string): Promise<loginTy
     return await login(id, password);
 }
 
-export const signUpService = async (formData: Record<string, string>): Promise<signUpType> => {
+export const signUpService = async (formData: Record<string, string>, password: string): Promise<signUpType> => {
 
     if(!formData) {
         throw new Error('formData를 갖고 오지 못했습니다.')
         
     }
 
-    return await signUpDAO(formData);
+    return await signUpDAO(formData, password);
 }
+
+export const idCheck = async(id: string) => {
+    try {
+        if (!id) {
+            logger.error("idCheck: parameter not found")
+        }
+
+        logger.info("parameter to dao send:", id );
+        const response = await idCheckDAO(id);
+
+        return response;
+    } catch (error) {
+
+        logger.error(error);
+    }
+}
+
+
 
 // 카카오 토큰 발급
 export const generateToken = async(code: string) => {
@@ -73,7 +91,7 @@ export const getUserInfo = async (accessToken: string) => {
     }
 }
 
-export const signKakao = async (formData: Record<string, string>) => {
+export const signKakao = async (formData: Record<string, string>, password: string) => {
 
     try {
 
@@ -81,7 +99,7 @@ export const signKakao = async (formData: Record<string, string>) => {
             throw new Error('signKakao: formData값을 받아오지 못했습니다.')
         }
 
-        const response = await saveOrUpdateUser(formData);
+        const response = await saveOrUpdateUser(formData, password);
 
 
     } catch (error) {

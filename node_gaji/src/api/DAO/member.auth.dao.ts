@@ -21,24 +21,35 @@ export const login = async (id: string, password: string): Promise<loginType> =>
 }
 
 
-export const signUpDAO = async (formData: Record<string, string>): Promise<signUpType> => {
+export const signUpDAO = async (formData: Record<string, string>, password: string): Promise<signUpType> => {
 
-    const response = await db.query(`INSERT INTO ${schema} (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 0)`, [formData.id, formData.pw, Number(formData.phone), formData.email, formData.nick, formData.name, formData.addr, Number(formData.birth)]);
+    const response = await db.query(`INSERT INTO ${schema} (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 0)`, [formData.id, password, Number(formData.phone), formData.email, formData.nick, formData.name, formData.addr, Number(formData.birth)]);
 
     return response.rows[0] as signUpType;
 }
 
 // 카카오는 1번
-export const saveOrUpdateUser = async (formData: Record<string, string>): Promise<signUpType> => {
+export const saveOrUpdateUser = async (formData: Record<string, string>, password: string): Promise<signUpType> => {
 
     if (!formData) {
         throw new Error('saveOrUpdateUser: formData값을 받아오지 못했습니다.')
     }
 
-    const response = await db.query(`INSERT INTO ${schema} (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 1) ON CONFLCT (member_id) DO UPDATE SET member_email = $4, member_nick = $5 RETURNING member_id`, [formData.id, formData.pw, Number(formData.phone), formData.email, formData.nick, formData.name, formData.addr, Number(formData.birth)])
+    const response = await db.query(`INSERT INTO ${schema}.member_tbl (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 1) ON CONFLCT (member_id) DO UPDATE SET member_email = $4, member_nick = $5 RETURNING member_id`, [formData.id, password, Number(formData.phone), formData.email, formData.nick, formData.name, formData.addr, Number(formData.birth)])
 
     return response.rows[0] as signUpType
 
+}
+
+export const idCheckDAO = async (id: string) => {
+    try {
+        const response = await db.query(`SELECT member_id FROM ${schema}.member_tbl WHERE member_id = $1`, [id]);
+
+        return response.rows[0] as string;
+    } catch(error) {
+
+        logger.error(error);
+    }
 }
 
 

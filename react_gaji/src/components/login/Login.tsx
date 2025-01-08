@@ -13,13 +13,13 @@ import loginStore from '../../utils/loginStore';
 interface ILoginProps {
   formData: Record<string, string>;
   setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-  loginSuccess: boolean;
-  setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  // loginSuccess: boolean;
+  // setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
   handleGoogle: () => void;
   handleNaver: () => void;
 }
 
-const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLoginSuccess, handleGoogle, handleNaver}) => {
+const Login:React.FC<ILoginProps> = ({formData, setFormData, handleGoogle, handleNaver}) => {
 
   const kakaoKey: string = import.meta.env.VITE_KAKAO_KEY;
   // const redirectUri: string = import.meta.env.VITE_REDIRECT_URL;
@@ -86,12 +86,10 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, loginSuccess, setLo
       if(form.isChecked) {
 
         loginMethod(form.data);
-        setLoginSuccess(true);
       
-        
         alert('로그인 성공')
 
-        navigate("/");
+        navigate("/map");
 
       } else {
 

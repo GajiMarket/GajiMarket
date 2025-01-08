@@ -7,6 +7,7 @@ import Password from './Password';
 import Phone from './Phone';
 import PostCode from './PostCode';
 import BirthDay from './BirthDay';
+import Name from './Name';
 
 
 
@@ -240,29 +241,6 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
     }
   }
 
-  //아이디 중복
-
-  // const duplicatedId = async (id: string) => {
-
-  //   try {
-
-  //     const isDuplicated = await checkId(id);
-
-  //     if (isDuplicated) {
-
-  //       alert('아이디 중복');
-
-  //     } else {
-
-  //       onSuccess();
-  //     }
-
-  //   } catch {
-
-  //     alert('전송 실패 되었습니다.')
-  //   }
-  // };
-
   
 
   //form 전송
@@ -288,7 +266,8 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
 
     try {
 
-      await signUp(formData);
+      const response = await signUp(formData);
+
 
     } catch {
 
@@ -302,6 +281,8 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
     <div className="signUpForm">
       <h1 className="sign_title">회원가입</h1>
         <div className="sub_title">회원이 되어 다양한 혜택을 경험해 보세요!</div>
+            <h3 className="sub_Header">이름</h3>
+            <Name name={formData.name || ''} onChange={handleChange('name')} />
             <h3 className="sub_Header">닉네임</h3>
             <NickName nickName={formData.nickName || ''} onChange={handleChange('nickName')} />
             <h3 className="sub_Header">아이디</h3>

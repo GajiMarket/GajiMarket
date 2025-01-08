@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 declare global {
   interface Window {
     daum: any; // 카카오 api
@@ -98,19 +100,19 @@ export const validatePhone = (phone: string): string | null => {
 
 export const checkId = async (id: string): Promise<boolean> => {
   try {
-    const response = await fetch(`${api}/user/validateId`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
+    const response = await axios.post(`${api}/user/validateId`, {
+      data: {
+        id: id,
+      }
     });
 
-    if (!response.ok) {
+    if (response.data.success === 'false') {
       throw new Error(`Server error: ${response.status}`);
     }
 
-    const results = await response.json();
+    const results = response.data.success;
 
-    return results.isCheck;
+    return results;
   } catch (error) {
     console.error("중복된 아이디 입니다.", error);
 
@@ -122,17 +124,17 @@ export const checkId = async (id: string): Promise<boolean> => {
 
 export const emailCheck = async (code: string): Promise<{validate: boolean, codeNum: string}> => {
   try {
-    const response = await fetch(`${api}/user/emailCheck`, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code }),
+    const response = await axios.get(`${api}/user/emailCheck`, {
+      data: {
+        code: code,
+      },
     });
 
-    if (!response.ok) {
+    if (response.data.success === 'false') {
       throw new Error(`Server Error: ${response.status}`);
     }
 
-    const results = await response.json();
+    const results = {validate: response.data.success, codeNum: response.data.code};
 
     return results;
   } catch (error) {
@@ -146,28 +148,30 @@ export const emailCheck = async (code: string): Promise<{validate: boolean, code
 
 export const emailSend = async (email: string): Promise<{success: boolean, code: number}> => {
   try {
-    const response = await fetch(`http://localhost:3000/user/emailSend`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({email}),
+    const response = await axios.get(`http://localhost:3000/user/emailSend`, {
+      data:{
+        email: email,
+      },
     });
 
 
     console.log('프런트에서 가져온 body값:', response);
     
     
-    if (!response.ok) {
+    if (response.data.success === 'false') {
       throw new Error(`Server Error: ${response.status}`);
     }
 
-    const results = await response.json();
+    const results = {success: response.data.success, code: response.data.code};
     
 
     console.log('서버에서 가져온 results값:', results);
     
 
     return results;
+
   } catch (error) {
+
     console.log('useSign에서 받은 이메일:', email);
     
     console.error(`코드 전송이 실패 했습니다`, error);
@@ -178,22 +182,21 @@ export const emailSend = async (email: string): Promise<{success: boolean, code:
 
 //회원가입
 
-export const signUp = async (data: Record<string, string>): Promise<any> => {
+export const signUp = async (formData: Record<string, string>): Promise<boolean> => {
   try {
-    const response = await fetch(`${api}/user/signUp`, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+    const response = await axios.post(`${api}/user/signUp`, {
+      data: formData,
     });
 
-    console.log('입력된 데이터:', response.body);
+    console.log('입력된 데이터:', response.data.success);
     
 
-    if (!response.ok) {
+    if (response.data.success === 'false') {
       throw new Error(`Server Error: ${response.status}`);
     }
 
-    return await response.json();
+    return response.data.success
+
   } catch (error) {
     console.error("데이터 전송 실패:", error);
 
