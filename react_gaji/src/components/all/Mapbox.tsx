@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import useMap from "../../hooks/useMap";
+import alluseMap from "../../hooks/allusemap";
 import { mapConfig } from "../../config/mapConfig";
 import "../../style/Mapbox.css";
 import gps_icon from "../../img/gps_icon.png";
@@ -10,7 +10,7 @@ interface MapboxProps {
 
 const Mapbox: React.FC<MapboxProps> = ({ showMyLocationButton = true }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null); // 지도 렌더링할 DOM 요소 참조
-    const { updateLocation } = useMap(mapContainerRef, mapConfig.defaultStyle, {
+    const { updateLocation } = alluseMap(mapContainerRef, mapConfig.defaultStyle, {
         ...mapConfig,
         initialCenter: mapConfig.initialCenter, // 초기 위치 설정
     });
