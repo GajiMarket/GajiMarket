@@ -5,11 +5,6 @@
   font-family: Arial, sans-serif;
 }
 
-.chatlist-scroll-container {
-  flex: 1;
-  overflow-y: auto;
-}
-
 /* ChatlistHeader CSS */
 .chatlist-header {
   margin: 15px 15px 10px 15px;
@@ -81,7 +76,7 @@
 
 .chatlist-message {
   padding: 0px 0px 0px 15px;
-  display: flex;
+  display: block;
   color: #9e9999;
   white-space: nowrap; /* 한 줄까지만 보이게 설정 */
   overflow: hidden; /* 넘치는 부분 숨기기 */
@@ -92,4 +87,11 @@
   text-align: center;
   padding: 20px;
   color: #888;
+}
+
+.chatlist-scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 75px; /* 푸터 높이만큼 여백 추가 */
+  scrollbar-width: none; /* 스크롤바 숨기기 */
 }

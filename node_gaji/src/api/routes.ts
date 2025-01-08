@@ -1,12 +1,19 @@
-import {Express} from 'express'
-// import pathFinder from './pathFinder/pathFinder.index';
-import auth from './auth'
+import { Express } from 'express'
+import path from './pathFinder.index';
+import products from './product.index';
+import { userLocation } from './controller/userLocation.ctrl';
+import member from './member.index';
 
 const mountRoutes = (app:Express) => {
 
-    app.use('/auth', auth)
+    app.use('/auth', member);
     
-    // app.use('/path_finder', pathFinder)
+    app.post('/', userLocation)
+
+    app.use('/product', products)
+    app.use('/navigation', path)
+
+
 }
 
 export default mountRoutes;

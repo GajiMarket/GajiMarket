@@ -98,7 +98,7 @@ export const validatePhone = (phone: string): string | null => {
 
 export const checkId = async (id: string): Promise<boolean> => {
   try {
-    const response = await fetch(`${api}/auth/validateId`, {
+    const response = await fetch(`${api}/user/validateId`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
@@ -122,7 +122,7 @@ export const checkId = async (id: string): Promise<boolean> => {
 
 export const emailCheck = async (code: string): Promise<{validate: boolean, codeNum: string}> => {
   try {
-    const response = await fetch(`${api}/auth/emailCheck`, {
+    const response = await fetch(`${api}/user/emailCheck`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ code }),
@@ -146,7 +146,7 @@ export const emailCheck = async (code: string): Promise<{validate: boolean, code
 
 export const emailSend = async (email: string): Promise<{success: boolean, code: number}> => {
   try {
-    const response = await fetch(`http://localhost:3000/auth/emailSend`, {
+    const response = await fetch(`http://localhost:3000/user/emailSend`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({email}),
@@ -180,7 +180,7 @@ export const emailSend = async (email: string): Promise<{success: boolean, code:
 
 export const signUp = async (data: Record<string, string>): Promise<any> => {
   try {
-    const response = await fetch(`${api}/auth/signUp`, {
+    const response = await fetch(`${api}/user/signUp`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

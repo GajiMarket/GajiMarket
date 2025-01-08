@@ -26,7 +26,7 @@ const Chatpage: React.FC = () => {
     const fetchMessages = async () => {
       try {
         console.log(`Fetching messages for chat ID: ${id}`);
-        const response = await axios.get(`http://localhost:3000/api/chat/${id}`);
+        const response = await axios.get(`http://localhost:5000/api/chat/${id}`);
         console.log('Fetched messages:', response.data);
         setMessages(response.data);
       } catch (error) {
@@ -37,6 +37,7 @@ const Chatpage: React.FC = () => {
     fetchMessages();
   }, [id]);
 
+  // // 1:1 채팅방 채팅글 임시 데이터
   // useEffect(() => {
   //   // 임시 데이터를 사용하여 페이지가 제대로 렌더링되는지 확인합니다.
   //   const fetchMessages = async () => {
@@ -54,13 +55,13 @@ const Chatpage: React.FC = () => {
   //       console.error('Failed to fetch messages:', error);
   //     }
   //   };
-
   //   fetchMessages();
   // }, [id]);
 
-  const handleSendMessage = async (message: string) => {
+  // 메시지 전송 핸들러
+  const handleSendMessage = async (message: string, image?: string) => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/chat/${id}`, { message });
+      const response = await axios.post(`http://localhost:3000/api/chat/${id}`, { message, image });
       setMessages([...messages, response.data]);
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -79,6 +80,6 @@ const Chatpage: React.FC = () => {
       <ChatSend onSendMessage={handleSendMessage} />
     </div>
   );
-}
+};
 
 export default Chatpage;

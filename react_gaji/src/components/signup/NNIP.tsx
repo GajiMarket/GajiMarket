@@ -10,6 +10,8 @@ import BirthDay from './BirthDay';
 
 
 
+/*package.json에 --host 입력하면 네트워크 주소나옴 */
+
 interface SignupFormProps {
 
   //회원가입 데이터
@@ -33,9 +35,6 @@ interface SignupFormProps {
   // setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   // postCodeData: PostCodeData;
   
-  
-  
-
 }
 
 
@@ -53,8 +52,8 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
   //input 태그에서 값을 입력하면 해당 매개변수에 담긴다.
   const handleChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
 
-    //기존 formData 값에 field[]값 추가
-    setFormData({...formData, [field]: event.target.value});
+     //기존 formData 값에 field[]값 추가
+     setFormData({...formData, [field]: event.target.value});
 
   };
 
@@ -308,7 +307,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
             <h3 className="sub_Header">아이디</h3>
             <Id id={formData.id || ''} onChange={handleChange('id')} onClick={handleIdCheck} isCheckId={isCheckId} errors={errors.id}  />
             <h3 className="sub_Header">비밀번호</h3>
-            <Password password={formData.password || ''} passwordCheck={formData.passwordcheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} />
+            <Password password={formData.password || ''} passwordCheck={formData.passwordCheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} />
             <h3 className="sub_Header">이메일</h3>
             <Email email={formData.email || ''} onChange1={handleChange('email')} onClick1={codeSend} onChange2={(e) => setInputCode(e.target.value)} codeNumber={inputCode} onClick2={codeCheck} codeChecked={codeNumberChecked} accessChecked={accessChecked} errors={errors.email} />
             <h3 className="sub_Header">휴대폰</h3>

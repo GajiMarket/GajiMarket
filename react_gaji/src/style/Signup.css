@@ -308,8 +308,7 @@ h1.sign_title {
 }
 
 /* Error message */
-.error-message,
-span {
+.error-message span {
   font-size: 12px;
   color: red;
 }

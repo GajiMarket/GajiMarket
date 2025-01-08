@@ -11,7 +11,9 @@ const Login:React.FC = () => {
     password: '',
   });
 
+  //  로그인 여부
   const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
+
 
   return (
     <LoginAccess formData={formData} setFormData={setFormData} loginSuccess={loginSuccess} setLoginSuccess={setLoginSuccess}  />

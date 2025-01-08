@@ -10,10 +10,17 @@
 /* ChatHeader CSS */
 .chat-header {
     display: flex;
-    align-items: center;
+    margin: 5px 15px 0px 15px;
+    padding: 10px 10px 20px 0px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+
+    
+    /* align-items: center; */
     /* justify-content: space-between; */
-    padding: 15px;
-    background-color: #ffffff;
+    /* padding: 15px; */
+    /* background-color: #ffffff; */
 }
   
 .chat-back-button {
@@ -21,7 +28,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 0px 5px 0px 0px;
 }
 
 .chat-header-name {
@@ -40,10 +47,16 @@
 .chat-product {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
     background-color: #ffffff;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-product:hover {
+    background-color: #f0f0f0; /* 회색 음영 */
 }
 
 .chat-product-info {
@@ -69,7 +82,7 @@
     /* color: red; */
     /* position: absolute; */
     display: flex;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
   
@@ -81,7 +94,7 @@
 .chat-product-price {
     font-weight: bold;
     color: black;
-    margin: 5px 0px 5px 0px;
+    margin: 5px 0px 7px 0px;
 }
   
 .chat-product-location {
@@ -95,17 +108,45 @@
     flex: 1;
     padding: 10px;
     overflow-y: auto;
-    background-color: #f9f9f9;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    color: #888;
 }
   
 .chat-bubble {
-    max-width: 70%;
-    padding: 10px;
+    display: flex;
+    align-items: center;
     margin: 5px 0;
+    padding: 10px;
     border-radius: 10px;
-    font-size: 14px;
+    max-width: 60%;
+}
+
+.chat-bubble.buyer {
+    background-color: #f1f0f0;
+    align-self: flex-start;
+}
+
+.chat-bubble.seller {
+    background-color: #d1e7dd;
+    align-self: flex-end;
+}
+
+.chat-message {
+    flex: 1;
+}
+
+.chat-timestamp {
+    font-size: 0.8em;
+    color: #888;
+    margin-left: 10px;
+}
+
+.chat-image {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 10px;
 }
 
 .chat-time {
@@ -114,7 +155,7 @@
     justify-content: center;
     font-size: 10px;
     color: #888;
-    /* text-align: center; */
+    text-align: center;
     /* margin: 5px 0; */
 }
 
@@ -156,8 +197,10 @@
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 25px;
     margin: 10px;
+    background-color: #f1f1f1;
+    font-size: 13px;
 }
   
 .chat-send-button {
@@ -169,3 +212,54 @@
     cursor: pointer;
 }
 
+/* 채팅 이미지 첨부 미리보기 칸 */
+.chat-image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* margin-bottom: 10px; */
+    margin: 0px 3.4% 10px 3.4%;
+}
+
+/* 채팅 이미지 첨부 미리보기 1장 사이즈 */
+.chat-image-preview {
+    max-width: 80px;
+    max-height: 80px;
+    /* margin-right: 10px;
+    margin-bottom: 10px; */
+}
+
+/* 채팅 이미지 첨부 미리보기 칸 감싸기 */
+.chat-image-preview-wrapper {
+    position: relative;
+}
+
+/* 채팅 이미지 첨부 제거 버튼 */
+.chat-image-remove-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(158, 157, 157, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 채팅 이미지 첨부 후 전송시 이미지 묶음 전송 */
+.chat-images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+/* 채팅 이미지 첨부 후 전송시 이미지 묶음 전송 */
+.chat-image-grid-item {
+    width: 100%;
+    height: auto;
+    max-width: 100px;
+    max-height: 100px;
+}
