@@ -3,7 +3,7 @@ import "../../style/Mypage_neighborhood_auth.css"; // 스타일 파일
 import Header from "./Header.tsx"; // Header 컴포넌트
 import Footer from "../all/Footer.tsx"; // Footer 컴포넌트
 import currentLocationIcon from "../../assets/icons/current-location-icon.png"; // 현재 위치 아이콘
-import ClickMap from "../map/ClickMap.tsx"; // Mapbox 컴포넌트 불러오기
+import ClickMap from "../mainpage/Mapbox"; // Mapbox 컴포넌트 불러오기
 
 const MypageNeighborhoodAuth: React.FC = () => {
   const [neighborhood, setNeighborhood] = useState<string | null>("가산동");

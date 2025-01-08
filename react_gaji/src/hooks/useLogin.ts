@@ -52,7 +52,7 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
 
 };
 
-// 토큰 유효성 검증
+// 토큰 유효성 검증(쿠키 전용)
 export const tokenValidate = async ():Promise<boolean> => {
 
     try {
@@ -76,6 +76,26 @@ export const tokenValidate = async ():Promise<boolean> => {
         console.error('토큰 검증 오류:', error);
         throw new Error("tokenValidate 함수 실행 중 문제가 발생했습니다.")
 
+        
+    }
+}
+
+// token전송, 디코딩 시켜 사용자 정보 전송
+export const getUserInfo = async (token: string) => {
+
+    try {
+        const response = await axios.get(`${api}/auth/getuserinfo`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        
+        return response.data;
+
+    } catch (error) {
+
+        console.error('유저 정보 요청 실패:', error);
+        return null;
         
     }
 }
@@ -116,6 +136,37 @@ export const getAccessToken = async (code: string): Promise<string | undefined> 
         
     }
 }
+
+//사용자 프로필(닉네임) 업데이트
+export const nicknameUpdate = async(token: string, nickname: string) => {
+
+    try {
+        const response = await axios.post(`${api}/auth/profileupdate`, {
+            headers: {
+                Authorizaion: `Bearer ${token}`
+            },
+            data: {
+                nickname: nickname,
+            },
+        });
+
+        if (!response.data.token) {
+            throw new Error('토큰을 받아오지 못했습니다.')
+        }
+
+        const newtoken = response.data.token;
+
+        return newtoken;
+
+    } catch (error) {
+
+        console.error('닉네임 변경 실패:', error);
+        throw error;
+        
+    }
+}
+
+
 
 // 사용자 정보 받아오기
 export const kakaoUserInfo = async (data: Record<string, string>): Promise<void> => {

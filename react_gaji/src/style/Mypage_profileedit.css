@@ -1,15 +1,15 @@
-.Mypage_profileedit {
-    padding: 0px;
+.mypage_profileedit {
+    /* display: flex;  
+    flex-direction: column; */
+    height: 100vh;
     font-family: Arial, sans-serif;
   }
 
 
 .profileedit-container {
-    max-width: 500px;
-    margin: 0 auto;
+    /* max-width: 500px; */
+    margin-bottom: 75px;
     background-color: #ffffff;
-    padding-bottom: 16px;
-    font-family: Arial, sans-serif;
     text-align: center;
 }
 

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProfile } from "../components/mypage/ProfileContext"; // Context를 불러옴
+// import { useProfile } from "../components/mypage/ProfileContext"; // Context를 불러옴
 import "../style/Mypage.css";
 import Header from "../components/mypage/Header.tsx";
 import Footer from "../components/all/Footer.tsx";
@@ -16,9 +16,30 @@ import headsetIcon from "../assets/icons/headset-icon.png";
 import termsIcon from "../assets/icons/terms-icon.png";
 import arrowIcon from "../assets/icons/arrow.png";
 
+import loginStore from "../utils/loginStore.ts";
+import { getUserInfo } from "../hooks/useLogin.ts";
+
 const Mypage: React.FC = () => {
+  // store와 token 생성
+  const {isAuthenticated, logoutMethod} = loginStore(); 
+  const token = loginStore.getState().token;
+
+
   const navigate = useNavigate();
-  const { name } = useProfile(); // Context에서 이름 가져오기
+
+  // 로그인 아니면 로그인 페이지로
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log('로그인 해야 접근할수있습니다.');
+      navigate('/');
+      
+    }
+  })
+
+  const [nickname, setNickName] = useState<string>('');
+
+  // const { name } = useProfile(); // Context에서 이름 가져오기
+  const [name] = useState<string>("홍길동"); // 로컬 상태로 대체
 
   const handleProfileEdit = () => {
     navigate("/mypage_profileedit"); // 프로필 수정 페이지로 이동
@@ -56,14 +77,47 @@ const Mypage: React.FC = () => {
     navigate("/mypage_terms"); // 이용 및 약관 페이지로 이동
   };
 
+  // store logoutMethod 추가, 아래 nickname으로 변경
   const handleLogout = () => {
+
+    logoutMethod();
     alert("로그아웃 되었습니다.");
+    navigate('/');
   };
 
+  useEffect(() => {
+
+    const userInfo = async () => {
+      try {
+        const info = await getUserInfo(token as string);
+  
+        if(!info.data.nickname) {
+          
+          console.log('해당 사용자의 닉네임이 없습니다.');
+          
+        }
+        
+        if(info && info.data.nickname !== nickname) {
+            
+          setNickName(info.data.nickname);
+        }
+        
+      } catch {
+
+        console.error('사용자 정보를 불러오는 도중에 오류가 일어났습니다.');
+        
+      }
+    }
+
+    userInfo();
+
+  }, [nickname])
+
   return (
-    <div className="Mypage">
+    <div className="mypage">
+      <Header />
       <div className="mypage-container">
-        <Header />
+        
         <div className="profile-section">
           <div className="profile-info">
             <img
@@ -71,7 +125,7 @@ const Mypage: React.FC = () => {
               src={smileIcon}
               alt="프로필 이미지"
             />
-            <div className="profile-name">{name}</div>
+            <div className="profile-name">{nickname}</div>
           </div>
           <button
             className="profile-edit-btn cursor-pointer"

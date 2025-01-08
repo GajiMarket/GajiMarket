@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
     <div className='FooterBar'>
       <button
         className={`footer_home_icon ${activeIndex === 0 ? 'active' : ''}`}
-        onClick={() => handleNavigation(0, '/')}
+        onClick={() => handleNavigation(0, '/map')}
       >
         <img src={activeIndex === 0 ? homeicon : nc_homeicon} alt="Example" className='footer_home_icon_img' />홈
       </button>
