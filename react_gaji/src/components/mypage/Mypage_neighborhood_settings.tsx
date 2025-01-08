@@ -3,23 +3,29 @@ import "../../style/Mypage_neighborhood_settings.css"; // 스타일 파일
 import Header from "./Header.tsx";
 import Footer from "../all/Footer.tsx";
 import currentLocationIcon from "../../assets/icons/current-location-icon.png"; // 현재 위치 아이콘
+import ClickMap from "../map/Mapbox"; // Mapbox 컴포넌트 불러오기
 
 const MypageNeighborhoodSettings: React.FC = () => {
   const [neighborhood, setNeighborhood] = useState<string | null>("신갈동");
 
   const handleCurrentLocationClick = () => {
-    alert("현재 위치로 설정되었습니다.");
+    console.log("지도가 현재 위치로 이동합니다."); // Mapbox 내부 로직에서 처리됨
   };
 
   const handleDeleteNeighborhood = (e: React.MouseEvent) => {
     e.stopPropagation(); // 부모 버튼 클릭 이벤트 방지
-    setNeighborhood(null);
+    setNeighborhood(null); // 동네 정보 삭제
   };
 
   const handleSetNeighborhood = () => {
-    // Mock: 위치 설정 후 행정구역 정보를 가져온다고 가정
-    const newNeighborhood = "가산동"; // 예시: 실제로는 API 호출로 설정
+    const newNeighborhood = "가산동"; // Mock: 위치 설정 후 행정구역 정보 가져오기
     setNeighborhood(newNeighborhood);
+  };
+
+  const handleSetNeighborhoodWithAlert = () => {
+    // "현재 위치로 설정되었습니다." 알림창 호출 포함
+    handleSetNeighborhood();
+    alert("현재 위치로 설정되었습니다.");
   };
 
   return (
@@ -30,7 +36,7 @@ const MypageNeighborhoodSettings: React.FC = () => {
         <div className="neighbor-map-container">
           {/* 지도 표시 영역 */}
           <div className="neighbor-map-placeholder">
-            [지도 표시 영역]
+            <ClickMap /> {/* Mapbox 컴포넌트 렌더링 */}
             <button
               className="neighbor-current-location-btn"
               onClick={handleCurrentLocationClick}
@@ -44,13 +50,18 @@ const MypageNeighborhoodSettings: React.FC = () => {
           </div>
         </div>
         <div className="neighbor-actions-right">
-          <button className="neighbor-set-location-btn">현재 위치로 설정하기</button>
+          <button
+            className="neighbor-set-location-btn"
+            onClick={handleSetNeighborhoodWithAlert}
+          >
+            현재 위치로 설정하기
+          </button>
           {neighborhood ? (
             <button className="neighbor-tag">
               {neighborhood}
               <span
                 className="neighbor-delete-icon"
-                onClick={handleDeleteNeighborhood}
+                onClick={handleDeleteNeighborhood} // 삭제만 수행
               >
                 ×
               </span>
