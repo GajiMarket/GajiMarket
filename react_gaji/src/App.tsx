@@ -22,15 +22,14 @@ import MypageAlarm from "./components/mypage/Mypage_alarm"; // 알림 페이지 
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navigation from './pages/Navigation';
 import { FooterProvider } from './components/all/FooterContext';
-import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 import Lodingpage from "./pages/Lodingpage";
-import KakaoLogin from "./pages/KakaoLogin";
+import KakaoLogin from "./components/login/KakaoLogin";
+import { ProfileProvider } from './components/mypage/ProfileContext'; // ProfileProvider 추가
 import FindMain from './pages/FindMain';
 import ZustandTest from "./pages/ZustandTest";
 
 const App: React.FC = () => {
   return (
-    <ProfileProvider>
       <FooterProvider>
         <BrowserRouter>
           <div className="App">
@@ -73,7 +72,6 @@ const App: React.FC = () => {
           </div>
         </BrowserRouter>
       </FooterProvider>
-    </ProfileProvider>
   );
 };
 
