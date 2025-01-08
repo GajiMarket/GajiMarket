@@ -2,16 +2,19 @@ import {devtools, persist} from 'zustand/middleware'
 import { create } from 'zustand'
 import { PersistStorage } from 'zustand/middleware';
 
+// 사용할 타입 정의
 interface LoginProps {
     // formData: Record<string, string>;
     isAuthenticated: boolean;
     token: string | null;
-    formData: Record<string, string>;
-    setFormData: (field: string, value: string) => void;
+    // formData: Record<string, string>;
+    // setFormData: (field: string, value: string) => void;
     loginMethod: (token: string) => void;
     logoutMethod: () => void;
+    // setName: 
 }
 
+// 테스트용 사용안함
 interface SessionStorage {
     getItem: (name: string) => string | null;
     setItem: (name: string, value: string) => void;
@@ -34,20 +37,21 @@ interface SessionStorage {
 //     removeItem: (name: string) => sessionStorage.removeItem(name)
 // }
 
+//  setFormData: (field: string, value: string) => set((state) => ({ formData: {...state.formData, [field]: value}})),
+
 
 // token 저장
-//
+// logoutMethod: 로그아웃시 false로 바꾸고 token을 null로 변경
+// loginMethod: 함수 실행 후 true로 바꾸고 서버에서 갖고온 token값 저장
 const loginStore = create<LoginProps>()(
         persist((set) => ({
             isAuthenticated: false,
             token: null,
-            formData: {id: '', password: ''},
-            setFormData: (field: string, value: string) => set((state) => ({ formData: {...state.formData, [field]: value}})),
             loginMethod: (token) => set({ isAuthenticated: true, token }),
             logoutMethod: () => set({ isAuthenticated: false, token: null }),
-        }),
+        }), // 여기까지 초기화
 
-        {
+        { // 세션에 저장할 키이름과 storage 설정
             name: 'login-storage',
             storage: {
                 getItem: (name: string) => {

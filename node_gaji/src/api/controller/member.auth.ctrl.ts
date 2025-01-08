@@ -3,6 +3,7 @@ import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import {loginService, signUpService, generateToken, getUserInfo, signKakao } from '../service/member.auth.service'
 import logger from '../../logger';
+import { decode } from 'punycode';
 
 
 
@@ -104,6 +105,7 @@ export const signCtrl = async (req: Request, res: Response) => {
     
             res.status(200).json({
                 success: true,
+                data: response,
                 message: 'success'
     
             })
@@ -116,11 +118,11 @@ export const signCtrl = async (req: Request, res: Response) => {
         }
     }
 
-// token 유효성 검증
+// 쿠키 token 유효성 검증
 // req값이 pino에 안나옴
 export const validateToken = (req: Request, res: Response) => {
 
-    const token: string = req.body.token;
+    const token: string = req.cookies.token;
 
     logger.info("req.cookie:", token);
 
@@ -162,6 +164,63 @@ export const validateToken = (req: Request, res: Response) => {
 
 }
 
+
+// 일반 로그인 사용자 정보
+export const getLoginInfo = async(req: Request, res: Response) => {
+
+    const token = req.headers.authorization?.split(' ')[1] as string; // Bearer 토큰에서 추출
+    const key: string = process.env.TOKEN_KEY || "GajiMarket_login" 
+
+    logger.info("token:", token);
+
+    if(!token) {
+
+        res.status(400).json({
+            success: false,
+            data: token,
+            message: '토큰이 제공 되지 않았습니다.'
+        })
+    }
+
+    try {
+
+        // jwt.verify(token, key, (err, decoded) => {
+
+
+        //     if (err) {
+        //         logger.error(err);
+
+        //         res.status(400).json({message: '유효하지 않은 토큰'});
+        //     }
+
+        //     const user = decoded as JwtPayload
+
+            // logger.debug(user); 
+            
+        // });
+
+            const decoded = jwt.verify(token, key) as JwtPayload
+
+            logger.debug(decoded);
+
+            res.status(200).json({
+                success: true,
+                data: decoded
+        });
+
+       
+    } catch(err) {
+
+        logger.error(err);
+        
+        res.status(500).json({
+            success: false,
+            message: '유효하지 않은 토큰입니다.'
+        });
+    };
+}
+
+
 // Cannot set headers after they are sent to the client 해당 오류는 res중복
 
 export const kakaoTokenCtrl = async (req:Request, res:Response) => {
@@ -200,7 +259,7 @@ export const kakaoTokenCtrl = async (req:Request, res:Response) => {
 
         console.error('kakaoCtrl 에러 발생', error);
         
-        res.status(500).json({
+        res.status(400).json({
             message: 'ctrl: 서버 에러',
         })
     }
