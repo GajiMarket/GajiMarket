@@ -3,6 +3,9 @@ import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheck } from '../service/member.auth.service'
 import logger from '../../logger';
+import { IMemberTbl } from 'api/models/member_tbl';
+
+type MemberModel = Partial<IMemberTbl>;
 
 
 
@@ -101,7 +104,7 @@ export const signCtrl = async (req: Request, res: Response) => {
                 });
             };
 
-            const encryptedPW = bcrypt.hashSync(formData.password, 10);
+            const encryptedPW = bcrypt.hashSync(formData.password, 10) as string;
 
             logger.debug("password_bcrypt:", encryptedPW);
 
@@ -110,11 +113,12 @@ export const signCtrl = async (req: Request, res: Response) => {
 
             if(formData.id === idCheckCtrl) {
                 logger.info("이미 사용중인 아이디입니다.")
-                return res.status(400).json({
+                res.status(400).json({
                     success: false,
-                    data: idCheckCtrl,
+                    data: idCheckCtrl as MemberModel,
                     message:"이미 사용중인 아이디 입니다."
                 })
+
             }
     
             
@@ -131,12 +135,15 @@ export const signCtrl = async (req: Request, res: Response) => {
                 message: 'success'
     
             })
+
         } catch(error) {
     
             res.status(500).json({
                 success: false,
                 message: 'false',
             })
+
+            
         }
     }
 
