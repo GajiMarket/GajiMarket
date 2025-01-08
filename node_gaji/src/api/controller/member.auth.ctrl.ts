@@ -110,7 +110,7 @@ export const signCtrl = async (req: Request, res: Response) => {
 
             if(formData.id === idCheckCtrl) {
                 logger.info("이미 사용중인 아이디입니다.")
-                return res.status(400).json({
+                res.status(400).json({
                     success: false,
                     data: idCheckCtrl,
                     message:"이미 사용중인 아이디 입니다."

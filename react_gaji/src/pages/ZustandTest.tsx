@@ -15,26 +15,26 @@ const ZustandTest: React.FC = () => {
     const [nickname ,setNickName] = useState<string | ''>('');
     const navigate = useNavigate();
     
-    useEffect(() => {
+    // useEffect(() => {
       
 
-      if(!isAuthenticated) {
+    //   // if(!isAuthenticated) {
           
-        alert('로그인이 필요합니다.');
-        navigate('/login');
-        return;
-      }
-    }, [isAuthenticated])
+    //   //   alert('로그인이 필요합니다.');
+    //   //   navigate('/login');
+    //   //   return;
+    //   // }
+    // }, [isAuthenticated])
 
     useEffect(() => {
 
 
-        if(!isAuthenticated) {
+        // if(!isAuthenticated) {
           
-          alert('로그인이 필요합니다.');
-          navigate('/login');
-          return;
-        }
+        //   alert('로그인이 필요합니다.');
+        //   navigate('/login');
+        //   return;
+        // }
       
 
       // 현재 loginStore에 따라 사용자 이름 변경 
