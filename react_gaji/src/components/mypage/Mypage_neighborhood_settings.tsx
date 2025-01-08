@@ -3,7 +3,7 @@ import "../../style/Mypage_neighborhood_settings.css"; // 스타일 파일
 import Header from "./Header.tsx";
 import Footer from "../all/Footer.tsx";
 import currentLocationIcon from "../../assets/icons/current-location-icon.png"; // 현재 위치 아이콘
-import ClickMap from "../map/Mapbox"; // Mapbox 컴포넌트 불러오기
+import ClickMap from "../mainpage/Mapbox"; // Mapbox 컴포넌트 불러오기
 
 const MypageNeighborhoodSettings: React.FC = () => {
   const [neighborhood, setNeighborhood] = useState<string | null>("신갈동");

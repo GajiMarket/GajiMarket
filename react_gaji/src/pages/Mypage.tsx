@@ -114,9 +114,10 @@ const Mypage: React.FC = () => {
   }, [nickname])
 
   return (
-    <div className="Mypage">
+    <div className="mypage">
+      <Header />
       <div className="mypage-container">
-        <Header />
+        
         <div className="profile-section">
           <div className="profile-info">
             <img

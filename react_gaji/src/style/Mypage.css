@@ -4,15 +4,19 @@
   color: black;
 }
 
-.mypage-container {
-  font-family: Arial, sans-serif;
-  background-color: #F7F8FA;
-  /* padding-bottom: 16px; */
-  height: 100vh;
-  display: flex;
+.mypage {
+  display: flex;  
   flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.mypage-container {
+  flex: 1;
   overflow-y: auto;
-  margin-bottom: 75px;
+  margin-bottom: 75px; /* 푸터 높이만큼 여백 추가 */
+  scrollbar-width: none;
+  background-color: #F7F8FA;
 }
 
 .mypage-title-btn {
