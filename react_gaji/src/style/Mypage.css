@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  /* margin-bottom: 75px; */
+  margin-bottom: 75px;
 }
 
 .mypage-title-btn {
