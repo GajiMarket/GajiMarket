@@ -1,14 +1,20 @@
 import express from "express";
-import { Product_preview } from "./DAO/Product_preview.dao";
+import { getProductPreviews } from "./DAO/Product_preview.dao";
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+// 상품 미리보기 API
+router.get('/product_preview', async (req, res) => {
     try {
-        const product = await Product_preview(); // 비동기 함수 호출
-        res.json(product); // 결과를 JSON 형식으로 응답
+        const products = await getProductPreviews();
+        res.status(200).json({
+            success: true,
+            data: products,
+        });
     } catch (error) {
-        next(error); // 에러를 Express 에러 핸들러로 전달
+        res.status(500).json({
+            success: false,
+        });
     }
 });
 
