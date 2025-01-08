@@ -1,6 +1,7 @@
 import { useState } from "react";
 import mapboxgl from "mapbox-gl";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface ProductLocation {
     product_id: number;
@@ -25,6 +26,7 @@ interface ApiResponse {
 const useMarkers = () => {
     const [productLocations, setProductLocations] = useState<ProductLocation[]>([]);
     const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]);
+    const navigate = useNavigate();
 
     // 상품 데이터 가져오기
     const fetchProductLocations = async () => {
@@ -58,21 +60,49 @@ const useMarkers = () => {
         
         clearMarkers(); // 기존 마커 제거
 
-        const newMarkers = locations.map((product) =>
-            new mapboxgl.Marker({ color: "purple" })
+        // const newMarkers = locations.map((product) =>
+        //     new mapboxgl.Marker({ color: "purple" })
+        //         .setLngLat([product.longitude, product.latitude])
+        //         .setPopup(
+        //             new mapboxgl.Popup().setHTML(`
+        //                 <div class="popup">
+        //                     <h3>${product.title}</h3>
+        //                     <p>${product.description}</p>
+        //                     <p>가격: ${product.sell_price}원</p>
+        //                     <p>올린시간: ${product.time_elapsed}</p>
+        //                     <button class="navigate-btn">길찾기</button>
+        //                 </div>
+        //             `)
+        //         )
+        //         .addTo(map)
+        // );
+
+        const newMarkers = locations.map((product) => {
+            const popupContent = document.createElement("div");
+
+            popupContent.innerHTML = `
+                <div class="popup">
+                    <h3>${product.title}</h3>
+                    <p>${product.description}</p>
+                    <p>가격: ${product.sell_price}원</p>
+                    <p>올린시간: ${product.time_elapsed}</p>
+                    <button class="navigate-btn">길찾기</button>
+                </div>
+            `;
+
+            // 버튼 클릭 이벤트 처리
+            const navigateButton = popupContent.querySelector(".navigate-btn");
+            navigateButton?.addEventListener("click", () => {
+                navigate("/navigation", {
+                    state: { product }, // 클릭한 마커의 데이터만 전달
+                });
+            });
+
+            return new mapboxgl.Marker({ color: "purple" })
                 .setLngLat([product.longitude, product.latitude])
-                .setPopup(
-                    new mapboxgl.Popup().setHTML(`
-                        <div class="popup">
-                            <h3>${product.title}</h3>
-                            <p>${product.description}</p>
-                            <p>가격: ${product.sell_price}원</p>
-                            <p>올린시간: ${product.time_elapsed}</p>
-                        </div>
-                    `)
-                )
-                .addTo(map)
-        );
+                .setPopup(new mapboxgl.Popup().setDOMContent(popupContent)) // HTML 팝업 추가
+                .addTo(map);
+        });
 
         setMarkers(newMarkers);
     };
