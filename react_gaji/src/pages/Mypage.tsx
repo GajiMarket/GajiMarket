@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProfile } from "../components/mypage/ProfileContext"; // Context를 불러옴
+// import { useProfile } from "../components/mypage/ProfileContext"; // Context를 불러옴
 import "../style/Mypage.css";
 import Header from "../components/mypage/Header.tsx";
 import Footer from "../components/all/Footer.tsx";
@@ -18,7 +18,8 @@ import arrowIcon from "../assets/icons/arrow.png";
 
 const Mypage: React.FC = () => {
   const navigate = useNavigate();
-  const { name } = useProfile(); // Context에서 이름 가져오기
+  // const { name } = useProfile(); // Context에서 이름 가져오기
+  const [name] = useState<string>("홍길동"); // 로컬 상태로 대체
 
   const handleProfileEdit = () => {
     navigate("/mypage_profileedit"); // 프로필 수정 페이지로 이동
