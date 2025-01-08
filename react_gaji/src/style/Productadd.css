@@ -1,11 +1,3 @@
-.product-add-container {
-  font-family: Arial, sans-serif;
-  max-width: 500px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-  padding: 16px;
-}
-
 .product-add-header {
   display: flex;
   justify-content: space-between;
@@ -13,92 +5,65 @@
   padding: 16px;
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
+  margin-bottom: 0px;
 }
 
-.product-add-back-button {
+.product-add-back-button,
+.product-add-save-draft {
   background: none;
   border: none;
   font-size: 16px;
   cursor: pointer;
+  margin-right: 12px;
 }
 
 .product-add-save-draft {
-  font-size: 14px;
-  background: none;
-  border: none;
   color: #999;
-  cursor: pointer;
+}
+
+.product-add-image-upload {
+  padding: 16px;
+  background-color: #f9f9f9;
+  margin-bottom: 0px;
 }
 
 .image-list-container {
-  display: flex; /* 가로 정렬 */
-  flex-wrap: nowrap; /* 줄 바꿈 방지 */
-  gap: 12px; /* 각 이미지 간 간격 */
-  overflow-x: auto; /* 스크롤 가능 */
-  align-items: flex-start; /* 이미지 상단 정렬 */
-}
-
-.uploaded-image-wrapper {
-  position: relative; 
   display: flex;
-  flex-direction: column; /* 버튼이 이미지 아래로 배치되도록 설정 */
-  align-items: center; /* 가운데 정렬 */
-}
-
-.representative-badge {
-  margin-top: 8px; /* 이미지와 버튼 간격 */
-  background-color: #6c63ff;
-  color: white;
-  font-size: 12px;
-  border: none;
-  border-radius: 4px;
-  padding: 4px 8px;
-  cursor: pointer;
-}
-
-.representative-badge.active {
-  background-color: #4a3cce; /* 활성 상태 색상 */
-}
-
-
-.image-upload-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 16px 0;
-  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0px;
+  overflow-x: auto;
+  margin-bottom: 0px;
 }
 
 .image-upload-label {
   display: flex;
-  /* align-items: flex-end;
-  justify-content: center; */
-  justify-content: center; /* 가로 중심 */
-  align-items: center; /* 세로 중심 */
-  flex-direction: column; /* 세로 정렬 */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100px;
   height: 100px;
   border: 1px dashed #ccc;
   border-radius: 8px;
   background-color: #ffffff;
   cursor: pointer;
+  margin-right: 12px;
 }
 
-/* .image-placeholder {
-  font-size: 14px;
-  color: #666;
-  text-align: left;
-  margin-left: 0;
-  justify-content: center; 
-  align-items: center; 
-} */
-
 .image-placeholder {
-  display: flex; /* flexbox 활성화 */
-  flex-direction: column; /* 세로 정렬 */
-  align-items: center; /* 가로 중앙 정렬 */
-  justify-content: center; /* 세로 중앙 정렬 */
-  gap: 4px; /* 아이콘과 텍스트 간격 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.uploaded-image-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 12px;
+  margin-bottom: 16px;
 }
 
 .uploaded-image {
@@ -106,73 +71,263 @@
   height: 100px;
   border-radius: 8px;
   object-fit: cover;
-  position: relative;
 }
-
-/* .uploaded-image-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
 
 .representative-badge {
   position: absolute;
   bottom: -10px;
-  background-color: #8a2be2;
+  background-color: #6c63ff;
   color: white;
-  padding: 2px 8px;
   font-size: 12px;
   border-radius: 12px;
+  padding: 4px 8px;
 }
 
-.product-add-form-section {
-  background-color: #ffffff;
+.set-representative-button {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.product-add-form {
   padding: 16px;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
 }
 
-.product-price-label {
+.form-label {
+  margin-top: 8px;
   display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+  margin-right: 3px;
+}
+
+.form-input {
+  margin-top: 8px;
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   font-size: 14px;
+  background-color: #f9f9f9;
+  margin-bottom: 5px;
+}
+
+.form-textarea {
+  margin-top: 8px;
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  resize: none;
+  height: 100px;
+}
+
+.transaction-method {
+  margin-top: 14px;
+  margin-bottom: 16px;
+}
+
+.transaction-method h2 {
+  font-size: 18px;
   margin-bottom: 8px;
 }
 
-.product-location-input[type="text"],
-.product-price-input[type="number"],
-.product-description-input {
-  width: 100%;
-  padding: 8px 0px;
+.transaction-method-buttons {
+  display: flex;
+  gap: 0px;
   margin-bottom: 16px;
+}
+
+.transaction-method-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2eaff;
+  cursor: pointer;
+  font-size: 16px;
+  color: #4b0082;
+  margin-right: 12px;
+}
+
+.transaction-method-buttons button.selected {
+  background-color: #7a00e6;
+  color: #fff;
+}
+
+.title-section {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+.title-section h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.title-section-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.title-section-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2eaff;
+  cursor: pointer;
+  font-size: 16px;
+  color: #4b0082;
+  margin-right: 12px;
+}
+
+.title-section-buttons button.selected {
+  background-color: #7a00e6;
+  color: #fff;
+}
+
+/* .price-section {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+.price-section h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.price-section-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.price-section-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2eaff;
+  cursor: pointer;
+  font-size: 16px;
+  color: #4b0082;
+  margin-right: 12px;
+} */
+
+.price-section {
+  margin-bottom: 16px; /* 전체 가격 섹션 간격 */
+}
+
+.price-section .form-label {
+  margin-bottom: 8px; /* label과 input 사이 간격 */
+}
+
+.price-section .form-input {
+  margin-top: 8px; /* input과 체크박스 사이 간격 */
+  width: calc(100% - 16px);
+  padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
   background-color: #f9f9f9;
 }
 
-textarea {
-  resize: none;
-  height: 100px;
+.accept-price-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  margin-top: 8px;
 }
 
-.categories {
-  display: flex;
-  /* justify-content: space-between; */
+
+.price-section-buttons button.selected {
+  background-color: #7a00e6;
+  color: #fff;
+}
+
+.description-section {
+  margin-top: 20px;
   margin-bottom: 16px;
 }
 
-.categories button {
-  background-color: #f1f1f1;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 16px;
-  font-size: 14px;
-  cursor: pointer;
+.description-section h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-.categories button:hover {
-  background-color: #ddd;
+.description-section-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.description-section-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2eaff;
+  cursor: pointer;
+  font-size: 16px;
+  color: #4b0082;
+  margin-right: 12px;
+}
+
+.description-section-buttons button.selected {
+  background-color: #7a00e6;
+  color: #fff;
+}
+
+.location-section {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+.location-section h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.location-section-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.location-section-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2eaff;
+  cursor: pointer;
+  font-size: 16px;
+  color: #4b0082;
+  margin-right: 12px;
+}
+
+.location-section-buttons button.selected {
+  background-color: #7a00e6;
+  color: #fff;
+}
+
+.accept-price-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 16px;
 }
 
 .submit-button {
@@ -184,8 +339,6 @@ textarea {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 16px;
 }
-
-/* .submit-button:hover {
-  background-color: #6f1bb8;
-} */

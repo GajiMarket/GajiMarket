@@ -135,3 +135,36 @@
 .map {
   height: 100px;
 }
+
+/* 가격과 좋아요 아이콘을 가로 정렬 */
+.price-like-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 좋아요 버튼 스타일 */
+.like-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* 좋아요 버튼 - 클릭 시 색상 변경 */
+.like-button.liked {
+  color: red;
+}
+
+/* 가격 텍스트 스타일 */
+.product-price {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.like-button img {
+  width: 24px;
+  height: 24px;
+}
+
