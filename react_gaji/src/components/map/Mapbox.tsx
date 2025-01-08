@@ -1,24 +1,25 @@
-import { useRef } from "react";
-import useMap from '../../hooks/ejk/useMap.ej'
-import useLocation from "../../hooks/useLocation";
-import { mapConfig } from "../../config/mapConfig";
+import React, { useRef } from "react";
+import useMap from "../../hooks/useMap";
+import "../../style/Mapbox.css";
 
-const clickMap = () => {
-    const mapContainerRef = useRef<HTMLDivElement>(null);
-    const { location } = useLocation();
+interface MapboxProps {
+  onLocationSelect?: (location: { lng: number; lat: number }) => void;
+}
 
-    useMap({
-        mapContainerRef,
-        style: mapConfig.defaultStyle,
-        config: {
-            ...mapConfig,
-            initialCenter: location 
-                ? [location.lng, location.lat]
-                : mapConfig.initialCenter
-        }
-    });
+const Mapbox: React.FC<MapboxProps> = ({ onLocationSelect }) => {
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
-    return <div ref={mapContainerRef} style={{ width: '100%', height: '100vh' }} />
+  useMap({
+    mapContainerRef,
+    style: "mapbox://styles/mapbox/streets-v11",
+    config: {
+      initialCenter: [126.9784, 37.5665], // 서울 좌표 (경도, 위도)
+      initialZoom: 10,
+      defaultLanguage: "ko",
+    },
+  });
+
+  return <div ref={mapContainerRef} className="mapbox-container" />;
 };
 
-export default clickMap;
+export default Mapbox;
