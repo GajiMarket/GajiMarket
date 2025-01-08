@@ -14,17 +14,17 @@ const ZustandTest: React.FC = () => {
     const token = loginStore.getState().token;
     const [nickname ,setNickName] = useState<string | ''>('');
     const navigate = useNavigate();
-
-    // const handleChange = (value: string) => {
-    //   setName(value);
-    // }
-
-    // 로그인 상태가 아니면 로그인 페이지로
-
-    // useEffect(() => {
+    
+    useEffect(() => {
       
-      
-    // },[isAuthenticated, navigate])
+
+      if(!isAuthenticated) {
+          
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+    }, [isAuthenticated])
 
     useEffect(() => {
 
