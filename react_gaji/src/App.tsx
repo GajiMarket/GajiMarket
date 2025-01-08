@@ -33,11 +33,11 @@ const App: React.FC = () => {
         <BrowserRouter>
           <div className="App">
             <Routes>
-              <Route path="/" element={<Mainpage />} />
+              <Route path="/map" element={<Mainpage />} />
               <Route path="/lodingpage" element={<Lodingpage/>} />
               <Route path="/chatlist" element={<Chatlist />} />
               <Route path="/chatpage/:id" element={<Chatpage />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Login />} />
               <Route path="/find" element={<FindMain />} />
               <Route path="/productadd" element={<Productadd />} />
               <Route path="/productlistpage" element={<Productlistpage />} />

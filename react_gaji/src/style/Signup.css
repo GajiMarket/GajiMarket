@@ -374,3 +374,8 @@ h1.sign_title {
   display: none;
 }
 
+.name_form {
+  display: flex;
+  flex-direction: column;
+}
+
