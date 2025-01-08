@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "../../style/Chatpage.css"
 
 interface ChatSendProps {
-  onSendMessage: (message: string, images?: string) => void;
+  onSendMessage: (message: string, images?: string[]) => void;
 }
 
 const ChatSend: React.FC<ChatSendProps> = ({ onSendMessage }) => {
@@ -24,6 +24,12 @@ const ChatSend: React.FC<ChatSendProps> = ({ onSendMessage }) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
+      const totalImages = images.length + filesArray.length;
+      if (totalImages > 10) {
+        alert('파일은 10개까지만 선택 가능합니다.');
+        return;
+      }
+
       const imagesArray = filesArray.map(file => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -43,13 +49,20 @@ const ChatSend: React.FC<ChatSendProps> = ({ onSendMessage }) => {
     }
   };
 
+  const handleRemoveImage = (index: number) => {
+    setImages(prevImages => prevImages.filter((_, i) => i !== index));
+  };
+
   return (
     <div>
       {images.length > 0 && (  // 이미지 미리보기 창 별도 표시
         <div className="chat-image-preview-container">
-          {images.map((image, index) => (
-            <img key={index} src={image} alt="첨부 이미지" className="chat-image-preview" />
-          ))}
+          {images.slice(0, 10).map((image, index) => (
+            <div key={index} className="chat-image-preview-wrapper">
+              <img src={image} alt="첨부 이미지" className="chat-image-preview" />
+              <button className="chat-image-remove-button" onClick={() => handleRemoveImage(index)}>x</button>
+          </div>
+        ))}
         </div>
       )}
       <form className="chat-send" onSubmit={handleSubmit}>

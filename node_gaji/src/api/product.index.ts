@@ -1,8 +1,8 @@
 import express from "express";
-import { getProducts } from "./DAO/productPath.dao";
+import { getProducts } from './DAO/product.dao';
 
 const router = express.Router();
 
-router.get('/', getProducts)
+router.get('/', getProducts);
 
 export default router;

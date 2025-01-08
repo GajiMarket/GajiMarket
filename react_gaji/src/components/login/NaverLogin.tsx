@@ -1,6 +1,6 @@
 import React from 'react'
 
-const IdFind = () => {
+const NaverLogin = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const IdFind = () => {
   )
 }
 
-export default IdFind
+export default NaverLogin

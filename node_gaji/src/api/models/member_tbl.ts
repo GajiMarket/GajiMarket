@@ -1,5 +1,5 @@
 export interface IMemberTbl {
-    member_no: number;
+    member_no: number | string;
     member_id: string;
     member_pwd: string;
     member_phone: number;

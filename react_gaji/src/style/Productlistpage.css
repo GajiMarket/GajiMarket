@@ -1,82 +1,73 @@
-/* ProductList.css */
-
+/* 리스트 컨테이너 스타일 */
 .product-list-container {
-  font-family: Arial, sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-  padding: 16px;
+  padding: 20px;
 }
 
+/* 헤더 스타일 */
 .product-list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.dropdown-button {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
+/* 리스트 스타일 */
 .product-list {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
+/* 리스트 아이템 스타일 */
 .product-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid #ddd;
-  background-color: #ffffff;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #eaeaea;
+  padding: 25px 0;
 }
 
+/* 이미지 스타일 */
 .product-image {
-  width: 80px;
-  height: 80px;
+  width: 60px !important; /* 이미지 크기 조정 */
+  height: auto; /* 비율 유지 */
   border-radius: 8px;
+  margin-right: 12px;
   object-fit: cover;
 }
 
+/* 텍스트 정보 영역 확장 */
 .product-info {
-  flex: 1;
-  margin-left: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+/* 제목 스타일 */
 .product-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  margin: 0 0 8px;
+  margin: 0 0 5px 0;
 }
 
+/* 메타 정보 스타일 */
 .product-meta {
-  font-size: 14px;
   color: #777;
-  margin: 0;
+  font-size: 15px;
 }
 
+/* 채팅하기 버튼 스타일 */
 .chat-button {
-  padding: 8px 16px;
-  background-color: #8a2be2;
-  color: #ffffff;
-  font-size: 14px;
+  background-color: #6c63ff;
+  color: white;
   border: none;
-  border-radius: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .chat-button:hover {
-  background-color: #6f1bb8;
+  background-color: #5a54d4;
 }
-

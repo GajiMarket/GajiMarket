@@ -1,7 +1,7 @@
 import {Request, Response} from 'express'
 import emailCode from '../service/email.auth.service'
 
-const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
+export const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
 
     try{
 
@@ -39,5 +39,3 @@ const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
         
     }
 }
-
-export default {accountAuthEmail}

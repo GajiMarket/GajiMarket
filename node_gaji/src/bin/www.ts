@@ -2,7 +2,7 @@ import app from '../app'
 
 const main = async() => {
 
-    const PORT = process.env.PORT || '8000'
+    const PORT = process.env.PORT || '3000'
 
     app.listen(parseInt(PORT, 10), () => {
 

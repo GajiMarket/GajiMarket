@@ -10,6 +10,8 @@ import BirthDay from './BirthDay';
 
 
 
+/*package.json에 --host 입력하면 네트워크 주소나옴 */
+
 interface SignupFormProps {
 
   //회원가입 데이터
@@ -33,9 +35,6 @@ interface SignupFormProps {
   // setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   // postCodeData: PostCodeData;
   
-  
-  
-
 }
 
 

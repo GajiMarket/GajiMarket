@@ -1,9 +1,9 @@
 import React from 'react'
 
 interface IFindeProps {
-    idFind: () => void;
-    pwFind: () => void;
-    signUp: () => void;
+    idFind: (e:React.MouseEvent<HTMLButtonElement>) => void;
+    pwFind: (e:React.MouseEvent<HTMLButtonElement>) => void;
+    signUp: (e:React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Find: React.FC<IFindeProps> = ({idFind, pwFind, signUp}) => {

@@ -19,7 +19,15 @@ const ProductList: React.FC = () => {
       location: "가산동",
       distance: "4.5km",
       time: "10분전",
-      imageUrl: "/path/to/image1.jpg"
+      imageUrl: "/path/to/image1.jpg",
+    },
+    {
+      id: 2,
+      title: "패딩팔아요~~",
+      location: "가산동",
+      distance: "4.5km",
+      time: "10분전",
+      imageUrl: "/path/to/image2.jpg",
     },
     // Add more products as needed
   ];
@@ -35,7 +43,6 @@ const ProductList: React.FC = () => {
           <li key={product.id} className="product-item">
             <img
               src={product.imageUrl}
-              alt={product.title}
               className="product-image"
             />
             <div className="product-info">

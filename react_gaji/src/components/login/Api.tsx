@@ -17,12 +17,12 @@ const Api:React.FC<IApiProps> = ({kakaoApi, naverApi, googleApi}) => {
         </button>
       </div>
       <div className="naver">
-        <button type="button" className="naver_button" onClick={kakaoApi}>
+        <button type="button" className="naver_button" onClick={naverApi}>
          <img src="../../public/img/naver_button.png" />
         </button>
       </div>
       <div className="kakao">
-        <button type="button" className="kakao_button" onClick={naverApi}>
+        <button type="button" className="kakao_button" onClick={kakaoApi}>
           <img src="../../public/img/Kakao_button.png" />
         </button>
       </div>
