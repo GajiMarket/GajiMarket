@@ -5,7 +5,7 @@ import { IPathFinderParams } from "../models/pathFinder.model";
 
 const testPath = async (req: Request, res: Response): Promise<void> => {
 
-    const { startX, startY } = req.query;
+    // const { startX, startY } = req.query;
 
     try {
         const pathParams: Partial<IPathFinderParams> = {
