@@ -8,7 +8,7 @@ interface INameProps {
 const Name:React.FC<INameProps> = ({name, onChange}) => {
   return (
     <div className="name_form">
-      <input type="text" value={name} onChange={onChange} />
+      <input type="text" placeholder='이름 입력' value={name} onChange={onChange} />
     </div>
   )
 }

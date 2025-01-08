@@ -1,21 +1,21 @@
 import {Request, Response} from 'express'
 import jwt from 'jsonwebtoken'
-import 
+// import 
 
 
 //사용자 프로필 업데이트
-export const updatePrfile = async (req: Request, res: Response) => {
+// export const updatePrfile = async (req: Request, res: Response) => {
 
 
-    try {
+//     try {
 
-        const nickName = req.body.nickname as string;
-        const token = req.headers.authorization?.split(' ')[1] as string;
+//         const nickName = req.body.nickname as string;
+//         const token = req.headers.authorization?.split(' ')[1] as string;
 
-        const newNickname = updateService(nickName);
+//         const newNickname = updateService(nickName);
 
         
         
 
-    }
-}
+//     }
+// }

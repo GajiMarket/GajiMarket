@@ -100,10 +100,8 @@ export const validatePhone = (phone: string): string | null => {
 
 export const checkId = async (id: string): Promise<boolean> => {
   try {
-    const response = await axios.post(`${api}/user/validateId`, {
-      data: {
+    const response = await axios.post(`${api}/auth/validateId`, {
         id: id,
-      }
     });
 
     if (response.data.success === 'false') {
@@ -111,6 +109,9 @@ export const checkId = async (id: string): Promise<boolean> => {
     }
 
     const results = response.data.success;
+
+    console.log("results값:", results);
+    
 
     return results;
   } catch (error) {
@@ -148,7 +149,7 @@ export const emailCheck = async (code: string): Promise<{validate: boolean, code
 
 export const emailSend = async (email: string): Promise<{success: boolean, code: number}> => {
   try {
-    const response = await axios.get(`http://localhost:3000/user/emailSend`, {
+    const response = await axios.get(`http://localhost:3000/auth/emailSend`, {
       data:{
         email: email,
       },

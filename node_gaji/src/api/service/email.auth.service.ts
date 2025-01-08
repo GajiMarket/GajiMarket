@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-const emailCode = async(email:string): Promise<number> => {
+export const emailCode = async(email:string): Promise<number> => {
 
     try {
 
@@ -41,5 +41,3 @@ const emailCode = async(email:string): Promise<number> => {
     
 }
 }
-
-export default {emailCode}

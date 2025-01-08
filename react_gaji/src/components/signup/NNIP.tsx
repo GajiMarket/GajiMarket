@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, executeDaumPostCode} from '../../hooks/useSign';
 import Email from './Email';
 import NickName from './NickName';
@@ -47,6 +48,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
 
 
 
+const navigate= useNavigate();
 
 
 
@@ -218,9 +220,14 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
       
       const isDuplicated = await checkId(formData.id);
 
-      if(isDuplicated) {
+      console.log("isDuplicated값:", isDuplicated);
+      
+
+      if(!isDuplicated) {
 
         setIsCheckedId(false);
+        
+        console.log("isDuplicated값:", isDuplicated);
 
         setErrors((prev) => ({...prev, id: '중복된 아이디 입니다.'}));
 
@@ -275,6 +282,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
     }
 
   };
+
   
   return (
     
@@ -297,6 +305,7 @@ export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId
             <BirthDay BirthDate={{year:formData.year, month:formData.month, day:formData.day}} handleChange={handleBirthDateChange} />
             <h3 className="sub_Header">주소</h3>
             <PostCode postcode={formData.zonecode || ''} address={formData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={formData.extraAddress || ''} postChange={handleChange('zonecode')} addressChange={handleChange('address')} detailChange={handleChange('detailAddress')} extraChange={handleChange('extraAddress')} handleClick={handlePostCode}/>
+        <button className="formSubmit-button" type="button" onClick={() => navigate('/')} >로그인</button>
         <button className="formSubmit-button" type="button" onClick={handleSubmit}>회원가입</button>
     </div>
   )

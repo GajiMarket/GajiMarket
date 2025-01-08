@@ -11,7 +11,7 @@ import '../style/Signup.css';
 
 
 const Signup:React.FC = () => {
-  const navigate: any = useNavigate();
+  const navigate = useNavigate();
   
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
@@ -37,6 +37,7 @@ const Signup:React.FC = () => {
     address: '',
     extraAddress: '',
     detailAddress: '',
+    name: '',
 
   })
 
@@ -47,7 +48,7 @@ const Signup:React.FC = () => {
       alert('회원가입이 완료 되었습니다.');
       console.log('회원가입 데이터:', formData);
 
-      return navigate('/login');
+      navigate('/');
     } catch {
 
       console.error('회원가입 실패');

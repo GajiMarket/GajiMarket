@@ -1,7 +1,7 @@
 import {Request, Response} from 'express'
 import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheck } from '../service/member.auth.service'
+import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheckService } from '../service/member.auth.service'
 import logger from '../../logger';
 import { IMemberTbl } from 'api/models/member_tbl';
 
@@ -9,6 +9,43 @@ type MemberModel = Partial<IMemberTbl>;
 
 
 
+
+
+// 아이디 중복
+export const duplicatedId = async (req: Request, res: Response) => {
+    try {
+        const id = req.body;
+
+        logger.info(req.body);
+
+        if(!id) {
+            logger.error("req.id값이 없습니다.")
+            res.status(400).json({
+                success: false,
+                message: "요청 값 전송 실패"
+            });
+        }
+
+        const response = await idCheckService(id);
+
+        logger.info(response);
+
+        if(!response) {
+            logger.error("아이디 중복 값 반환 실패");
+            
+        }
+
+        res.status(200).json({
+            success: true,
+            message:"중복된 아이디가 없습니다."
+        })
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            message:"서버 오류 발생"
+        })
+    }
+}
 
 
 // 로그인
@@ -107,23 +144,6 @@ export const signCtrl = async (req: Request, res: Response) => {
             const encryptedPW = bcrypt.hashSync(formData.password, 10) as string;
 
             logger.debug("password_bcrypt:", encryptedPW);
-
-            const idCheckCtrl = await idCheck(formData.id);
-            
-
-            if(formData.id === idCheckCtrl) {
-                logger.info("이미 사용중인 아이디입니다.")
-                res.status(400).json({
-                    success: false,
-                    data: idCheckCtrl as MemberModel,
-                    message:"이미 사용중인 아이디 입니다."
-                })
-
-            }
-    
-            
-
-
 
             
     
@@ -340,7 +360,7 @@ export const kakaoSignUp = async (req: Request, res: Response) => {
 
         const encryptedKakao = await bcrypt.hashSync(formData.password, 10);
 
-        const idCheckKakao = await idCheck(formData.id) as string;
+        const idCheckKakao = await idCheckService(formData.id) as string;
         
         if(idCheckKakao === formData.id) {
             logger.info("already exit member")

@@ -1,5 +1,6 @@
 import {Request, Response} from 'express'
-import emailCode from '../service/email.auth.service'
+import {emailCode} from '../service/email.auth.service'
+import logger from '../../logger'
 
 export const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
 
@@ -8,12 +9,23 @@ export const accountAuthEmail = async(req:Request, res:Response): Promise<void> 
         // const testEmail = process.env.ADMIN_USER
 
         // const email: string = String(testEmail);
-        const email: string = req.body.email;
+        const email: string = req.body;
 
         console.log('ctrl에서 받은 이메일', email);
         
 
-        const auth = await emailCode.emailCode(email);
+        const auth = await emailCode(email);
+
+        console.log(auth);
+        
+
+        if(!auth) {
+            logger.error("전송실패")
+            res.status(400).json({
+                success: false,
+                message: "전송실패",
+            })
+        }
 
         console.log("인증코드:", auth);
 
@@ -21,7 +33,7 @@ export const accountAuthEmail = async(req:Request, res:Response): Promise<void> 
 
             success: true,
             message: "Authentication email sent successfully",
-            data: Number(auth) === 0 ? '' : Number(auth),
+            data: Number(auth),
         });
 
         

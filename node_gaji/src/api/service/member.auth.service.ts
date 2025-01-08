@@ -8,6 +8,15 @@ type signUpType = Omit<IMemberTbl, "accessToken" | "created_at">;
 type loginType = Partial<IMemberTbl>;
 
 
+export const idCheckService = async (id: string): Promise<loginType> => {
+    if(!id && id == '') {
+        logger.error("idCheckService: 파라미터가 전달되지 못했습니다.")
+    }
+
+    return await idCheckDAO(id) as loginType;
+}
+
+
 export const loginService = async (id: string, password:string): Promise<loginType> => {
     
     
@@ -30,21 +39,21 @@ export const signUpService = async (formData: Record<string, string>, password: 
     return await signUpDAO(formData, password);
 }
 
-export const idCheck = async(id: string) => {
-    try {
-        if (!id) {
-            logger.error("idCheck: parameter not found")
-        }
+// export const idCheck = async(id: string) => {
+//     try {
+//         if (!id) {
+//             logger.error("idCheck: parameter not found")
+//         }
 
-        logger.info("parameter to dao send:", id );
-        const response = await idCheckDAO(id);
+//         logger.info("parameter to dao send:", id );
+//         const response = await idCheckDAO(id);
 
-        return response;
-    } catch (error) {
+//         return response;
+//     } catch (error) {
 
-        logger.error(error);
-    }
-}
+//         logger.error(error);
+//     }
+// }
 
 
 
