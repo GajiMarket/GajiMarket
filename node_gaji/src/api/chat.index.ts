@@ -1,9 +1,12 @@
 import express from 'express';
 import { db } from '../config/dbConfig';
+import { getUser } from './controller/chat.ctrl';
+import { getMessages, sendMessage } from '../api/controller/chat.ctrl';
 
 const router = express.Router();
 
 // 채팅 메시지 조회
+//router.get('/:id', getUser);
 router.get('/:id', async (req, res) => {
   const chatId = req.params.id;
   try {
@@ -16,6 +19,8 @@ router.get('/:id', async (req, res) => {
 });
 
 // 채팅 메시지 추가
+// router.get('/:userId1/:userId2', getMessages);
+// router.post('/', sendMessage);
 router.post('/:id', async (req, res) => {
   const chatId = req.params.id;
   const { message, sender } = req.body;
