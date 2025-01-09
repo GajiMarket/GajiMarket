@@ -13,7 +13,14 @@ import '../style/Signup.css';
 const Signup:React.FC = () => {
   const navigate = useNavigate();
   
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({
+    id: '',
+    password: '',
+    passwordCheck: '',
+    email: '',
+    phone: '',
+    nickName: '',
+  });
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
 
   //이메일 인증코드

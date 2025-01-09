@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PwFind = () => {
+const PwFind: React.FC = () => {
   return (
     <div>
       

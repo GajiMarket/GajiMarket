@@ -1,4 +1,4 @@
-import {devtools, persist} from 'zustand/middleware'
+import {persist} from 'zustand/middleware'
 import { create } from 'zustand'
 import { PersistStorage } from 'zustand/middleware';
 
@@ -15,16 +15,16 @@ interface LoginProps {
 }
 
 // 테스트용 사용안함
-interface SessionStorage {
-    getItem: (name: string) => string | null;
-    setItem: (name: string, value: string) => void;
-    removeItem: (name: string) => void;
+// interface SessionStorage {
+//     getItem: (name: string) => string | null;
+//     setItem: (name: string, value: string) => void;
+//     removeItem: (name: string) => void;
 
     //아래는 기능상 동일한 기능, 시그니처 정의
     // getItem(name: string): string | null;
     // setItem(name: string, value: string): void;
     // removeItem(name: string): void;
-}
+// }
 
 
 // getItem: (token) => sessionStorage.getItem(token) as string, // 세션 스토리지에서 가져오기

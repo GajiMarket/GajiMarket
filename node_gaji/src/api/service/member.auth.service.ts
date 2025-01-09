@@ -8,12 +8,14 @@ type signUpType = Omit<IMemberTbl, "accessToken" | "created_at">;
 type loginType = Partial<IMemberTbl>;
 
 
-export const idCheckService = async (id: string): Promise<loginType> => {
+export const idCheckService = async (id: string): Promise<loginType | null> => {
     if(!id && id == '') {
         logger.error("idCheckService: 파라미터가 전달되지 못했습니다.")
     }
 
-    return await idCheckDAO(id) as loginType;
+    const idCheck = await idCheckDAO(id);
+
+    return idCheck;
 }
 
 
@@ -26,17 +28,36 @@ export const loginService = async (id: string, password:string): Promise<loginTy
         logger.error("loginService: Not Parameter")
     }
 
-    return await login(id, password);
+    const memberLogin = await login(id, password);
+
+    return memberLogin;
 }
 
-export const signUpService = async (formData: Record<string, string>, password: string): Promise<signUpType> => {
+export const signUpService = async (formData: Record<string, string>, password: string): Promise<boolean | void> => {
 
-    if(!formData) {
-        throw new Error('formData를 갖고 오지 못했습니다.')
+    console.log("service받아온값:", formData);
+    
+
+
+    if(!formData || !password) {
+
+        logger.error("파라미터를 갖고 오지 못했습니다.")
         
+        return;
+
+    }
+    
+    const successSign = await signUpDAO(formData, password);
+
+    if(!successSign) {
+
+        logger.error("DAO에서 전달받지 못했습니다.")
+
+        return;
+
     }
 
-    return await signUpDAO(formData, password);
+    return successSign;
 }
 
 // export const idCheck = async(id: string) => {

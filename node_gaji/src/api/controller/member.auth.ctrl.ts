@@ -14,9 +14,9 @@ type MemberModel = Partial<IMemberTbl>;
 // 아이디 중복
 export const duplicatedId = async (req: Request, res: Response) => {
     try {
-        const id = req.body;
+        const id = req.body.id;
 
-        logger.info(req.body);
+        logger.info("가져온 req값", req.body);
 
         if(!id) {
             logger.error("req.id값이 없습니다.")
@@ -24,26 +24,32 @@ export const duplicatedId = async (req: Request, res: Response) => {
                 success: false,
                 message: "요청 값 전송 실패"
             });
+            return;
         }
 
         const response = await idCheckService(id);
 
-        logger.info(response);
+        if(response === id) {
 
-        if(!response) {
             logger.error("아이디 중복 값 반환 실패");
-            
+            res.status(400).json({
+                success: false,
+                message: "아이디 중복값 반환 실패"
+            });
+            return;
         }
-
+        
         res.status(200).json({
             success: true,
             message:"중복된 아이디가 없습니다."
-        })
+        });
+
     } catch (error) {
         logger.error(error);
         res.status(500).json({
-            message:"서버 오류 발생"
+            message:"실행 중 오류"
         })
+        return;
     }
 }
 
@@ -133,21 +139,41 @@ export const signCtrl = async (req: Request, res: Response) => {
     
         try {
 
-            const formData:Record<string, string> = req.body;
+            const formData = req.body;
+
+            console.log("받아온값:", formData);
+            
+
+            logger.info({"받아온값": req.body.data});
             
             if(!formData) {
                 res.status(400).json({
                     message: 'signCtrl: formData를 받아오지 못했습니다.'
                 });
+
+                return;
             };
 
             const encryptedPW = bcrypt.hashSync(formData.password, 10) as string;
+
+            console.log("패스워드:", encryptedPW);
+            
 
             logger.debug("password_bcrypt:", encryptedPW);
 
             
     
             const response = await signUpService(formData, encryptedPW);
+
+            if(response == false) {
+                logger.error("반환값 전달 실패");
+                res.status(400).json({
+                    success: false,
+                    message: "반환값 전달 실패",
+                });
+
+                return;
+            }
     
             res.status(200).json({
                 success: true,
@@ -161,7 +187,9 @@ export const signCtrl = async (req: Request, res: Response) => {
             res.status(500).json({
                 success: false,
                 message: 'false',
-            })
+            });
+
+            return;
 
             
         }
@@ -360,7 +388,7 @@ export const kakaoSignUp = async (req: Request, res: Response) => {
 
         const encryptedKakao = await bcrypt.hashSync(formData.password, 10);
 
-        const idCheckKakao = await idCheckService(formData.id) as string;
+        const idCheckKakao = await idCheckService(formData.id);
         
         if(idCheckKakao === formData.id) {
             logger.info("already exit member")

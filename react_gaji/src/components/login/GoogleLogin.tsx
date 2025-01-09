@@ -1,6 +1,6 @@
 import React from 'react'
 
-const googleLogin = () => {
+const googleLogin:React.FC = () => {
   return (
     <div>
       

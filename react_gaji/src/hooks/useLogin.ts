@@ -169,31 +169,26 @@ export const nicknameUpdate = async(token: string, nickname: string) => {
 
 
 // 사용자 정보 받아오기
-export const kakaoUserInfo = async (data: Record<string, string>): Promise<void> => {
+export const kakaoUserInfo = async (token: string): Promise<{success: boolean, userInfo: Record<string, any>}> => {
 
     try {
         // id, email, nickname은 기본값
         const response = await axios.post(`${api}/auth/kakaoinfo`, {
-            data: {
-                id: data.id,
-                pw: data.pw,
-                email: data.email,
-                phone: data.phone,
-                nickname: data.nickName,
-                name: data.name,
-                addr: data.addr,
-                birth: data.birth,
-            },
+            headers: {
+                Authorization: `Beaer ${token}`
+            }
         });
 
-        if (!data) {
+        if (!token) {
 
-            console.log('formData 전송 실패');
+            console.log('token 전송 실패');
             
         }
 
         // 회원가입 완료시 status값
-        const result = response.status
+        const result = {userInfo:{email: response.data.data.email, nickname: response.data.data.nickname}, success: response.data.success};
+       
+        return result
 
     } catch (error) {
 

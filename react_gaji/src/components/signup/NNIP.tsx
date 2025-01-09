@@ -33,19 +33,12 @@ interface SignupFormProps {
   setAccessChecked: React.Dispatch<React.SetStateAction<boolean>>;
   codeNumberChecked: boolean;
   setCodeNumberChecked: React.Dispatch<React.SetStateAction<boolean>>;
-  // selectData: Record<string, string>;
-  // setSelectData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-  // postCodeData: PostCodeData;
   
 }
 
 
 
 export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId, setIsCheckedId, accessChecked, setAccessChecked, codeNumberChecked, setCodeNumberChecked, codeNumber, setCodeNumber, errors, setErrors, inputCode, setInputCode}) => {
-
-  // const [errors, setErrors] = React.useState<Record<string, string>>({});
-  // const [isIdChecked, setIsIdChecked] = React.useState<boolean>(false);
-
 
 
 const navigate= useNavigate();
@@ -64,14 +57,10 @@ const navigate= useNavigate();
   const handleBirthDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 
     const { name, value} = event.target;
-    // const [name, value] = {event.target.name, event.target.value};
     setFormData({...formData, [name]: value});
   }
 
-  // const handleKakaoPost = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-
-  //   setPostCodeData({...postCodeData, [field]: event?.target.value})
-  // }
+ 
 
   const handlePostCode = async () => {
 
@@ -82,7 +71,7 @@ const navigate= useNavigate();
       if(postcode) {
 
 
-        setFormData({
+        setFormData({...formData,
           zonecode: postcode.zonecode,
           address: postcode.address,
           extraAddress: postcode.extraAddress,
@@ -109,65 +98,26 @@ const navigate= useNavigate();
     
   }
 
-
-
-  //유효성 검증, 아이디 중복
-  const validateForm = (): boolean => {
-
-    const newErrors: Record<string, string> = {};
-
-    if (validateEmail(formData.email)) newErrors.email = validateEmail(formData.email) as string;
-
-    if (validatePassword(formData.password)) newErrors.password = validatePassword(formData.password) as string;
-
-    if (formData.password !== formData.passwordCheck) newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
-
-    if (validatePhone(formData.phone)) newErrors.phone = validatePhone(formData.phone) as string;
-
-    // try {
-      
-    //   const isDuplicated = await checkId(formData.id);
-
-    //   if (isDuplicated) {
-
-    //     alert('아이디 중복');
-      
-    //   } else {
-  
-    //     newErrors.id = '';
-  
-    //   }
-
-    // } catch(error) {
-
-    //   console.error('아이디 중복 체크 실패', error);
-    //   alert('아이디 중복 체크 중 오류가 발생했습니다.');
-      
-    // }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
+ 
 
 
   // 이메일 인증번호 발송
   const codeSend = async () => {
 
     try {
+
   
       const send = await emailSend(formData.email);
       
   
       if (send?.success) {
         //이메일 발송시 같이 보내진 코드
-        setCodeNumber(String(send.code))
+        setCodeNumber(send.code)
 
         setCodeNumberChecked(true)
 
         console.log('현재 코드 번호:', codeNumber);
         
-  
         alert('인증번호가 전송되었습니다.');
   
       } else {
@@ -194,19 +144,23 @@ const navigate= useNavigate();
 
     try {
 
-      const code = await emailCheck(inputCode);
+      const code = await emailCheck(formData.email, inputCode);
       
 
-      if (code.codeNum === codeNumber) {
-        setAccessChecked(true)
+      if (code) {
+        
+        setAccessChecked(code)
         alert('인증번호가 일치합니다.');
+        return code;
 
       } else {
-        setAccessChecked(false)
+
+        setAccessChecked(code)
         alert('인증번호가 일치하지 않습니다.');
+        return code;
 
       }
-      return setInputCode(code.codeNum);;
+
 
     } catch(error) {
       console.error('인증 도중에 오류가 발생했습니다.', error);
@@ -217,33 +171,36 @@ const navigate= useNavigate();
   const handleIdCheck = async () => {
 
     try {
+
+      if(formData.id == '') {
+        setErrors((prev) => ({...prev, id: '아이디가 비어있습니다.'}))
+      }
       
       const isDuplicated = await checkId(formData.id);
 
       console.log("isDuplicated값:", isDuplicated);
       
 
-      if(!isDuplicated) {
-
-        setIsCheckedId(false);
-        
-        console.log("isDuplicated값:", isDuplicated);
-
-        setErrors((prev) => ({...prev, id: '중복된 아이디 입니다.'}));
-
-      } else {
+      if(isDuplicated) {
 
         setErrors((prev) => ({...prev, id: ''}));
 
         setIsCheckedId(true);
 
         alert('아이디 사용가능');
+
+
       }
+      
 
     } catch(error) {
 
+      setIsCheckedId(false);
+
+      setErrors((prev) => ({...prev, id: '중복된 아이디 입니다.'}));
+
       console.error('아이디 중복 체크 실패', error);
-      alert('아이디 중복 체크 중 오류가 발생했습니다.');
+      alert('중복된 아이디 입니다..');
       
     }
   }
@@ -253,27 +210,22 @@ const navigate= useNavigate();
   //form 전송
   const handleSubmit = async () => {
 
-
-    if(!validateForm()) {
-      
-      alert('유효성검사를 실행해 주세요');
-
-    }
-
-    if(!accessChecked) {
-
-      alert('이메일 인증을 해주세요');
-
-    }
-
-    if(!handleIdCheck) {
-
-      alert('아이디 중복 체크를 해주세요');
-    }
-
     try {
 
       const response = await signUp(formData);
+
+      if(response === false) {
+
+        console.error('실패');
+        console.log(response);
+
+        return;
+        
+      }
+
+      alert("회원가입 성공, 로그인 페이지로 이동합니다.")
+      
+      return navigate('/');
 
 
     } catch {
@@ -294,9 +246,9 @@ const navigate= useNavigate();
             <h3 className="sub_Header">닉네임</h3>
             <NickName nickName={formData.nickName || ''} onChange={handleChange('nickName')} />
             <h3 className="sub_Header">아이디</h3>
-            <Id id={formData.id || ''} onChange={handleChange('id')} onClick={handleIdCheck} isCheckId={isCheckId} errors={errors.id}  />
+            <Id id={formData.id || ''} onChange={handleChange('id')} onClick={handleIdCheck} isCheckId={isCheckId} errors={errors.id} />
             <h3 className="sub_Header">비밀번호</h3>
-            <Password password={formData.password || ''} passwordCheck={formData.passwordCheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} />
+            <Password password={formData.password || ''} passwordCheck={formData.passwordCheck || ''} onChange1={handleChange('password')} onChange2={handleChange('passwordCheck')} errors={errors.password} checkErrors={errors.passwordCheck} />
             <h3 className="sub_Header">이메일</h3>
             <Email email={formData.email || ''} onChange1={handleChange('email')} onClick1={codeSend} onChange2={(e) => setInputCode(e.target.value)} codeNumber={inputCode} onClick2={codeCheck} codeChecked={codeNumberChecked} accessChecked={accessChecked} errors={errors.email} />
             <h3 className="sub_Header">휴대폰</h3>

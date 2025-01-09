@@ -102,11 +102,16 @@ h1.sign_title {
 }
 
 /* ID */
+
+.id {
+  margin-bottom: 10px;
+}
+
 .id-input-group {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 13px;
+  margin-bottom: 3px;
 }
 
 .idForm {
@@ -138,6 +143,21 @@ h1.sign_title {
   font-size: 12px;
   color: green;
 }
+
+.validateCode{
+  margin-top: 5px;
+  font-size: 12px;
+  color: green;
+}
+
+.errorMessage {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: red;
+}
+
+
 
 /* Password */
 .pw {

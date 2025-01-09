@@ -18,7 +18,7 @@ const Id:React.FC<IdProps> = ({id, onChange, onClick, errors, isCheckId}) => {
        
     </div>
        {isCheckId && <span className="checkedId">사용 가능한 아이디 입니다.</span>}
-       {errors && <span>{errors}</span>}
+       {errors && <span className="errorMessage">{errors}</span>}
     </div>
   )
 }
