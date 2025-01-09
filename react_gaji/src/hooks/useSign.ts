@@ -149,7 +149,7 @@ export const emailCheck = async (code: string): Promise<{validate: boolean, code
 
 export const emailSend = async (email: string): Promise<{success: boolean, code: number}> => {
   try {
-    const response = await axios.get(`http://localhost:3000/auth/emailSend`, {
+    const response = await axios.post(`http://localhost:3000/auth/emailSend`, {
       data:{
         email: email,
       },

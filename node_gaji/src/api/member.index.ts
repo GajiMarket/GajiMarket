@@ -4,7 +4,7 @@ import {signCtrl, userCtrl, validateToken, getLoginInfo, duplicatedId} from './c
 
 const router = express.Router();
 
-    router.get('/emailSend', accountAuthEmail);
+    router.post('/emailSend', accountAuthEmail);
     router.post('/signup', signCtrl);
     router.post('/login', userCtrl);
     router.get('/tokenvali', validateToken);

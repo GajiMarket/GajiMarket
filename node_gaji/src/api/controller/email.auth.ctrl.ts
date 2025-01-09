@@ -9,7 +9,7 @@ export const accountAuthEmail = async(req:Request, res:Response): Promise<void> 
         // const testEmail = process.env.ADMIN_USER
 
         // const email: string = String(testEmail);
-        const email: string = req.body;
+        const email: string = req.body.email;
 
         console.log('ctrl에서 받은 이메일', email);
         
