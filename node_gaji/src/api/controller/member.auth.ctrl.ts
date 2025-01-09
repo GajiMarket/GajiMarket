@@ -1,9 +1,8 @@
 import {Request, Response} from 'express'
 import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {loginService, signUpService, generateToken, getUserInfo, signKakao } from '../service/member.auth.service'
+import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheck } from '../service/member.auth.service'
 import logger from '../../logger';
-import { decode } from 'punycode';
 
 
 
@@ -93,15 +92,38 @@ export const logout = async (req:Request, res:Response) => {
 export const signCtrl = async (req: Request, res: Response) => {
     
         try {
+
             const formData:Record<string, string> = req.body;
-    
+            
             if(!formData) {
                 res.status(400).json({
                     message: 'signCtrl: formData를 받아오지 못했습니다.'
                 });
             };
+
+            const encryptedPW = bcrypt.hashSync(formData.password, 10);
+
+            logger.debug("password_bcrypt:", encryptedPW);
+
+            const idCheckCtrl = await idCheck(formData.id);
+            
+
+            if(formData.id === idCheckCtrl) {
+                logger.info("이미 사용중인 아이디입니다.")
+                res.status(400).json({
+                    success: false,
+                    data: idCheckCtrl,
+                    message:"이미 사용중인 아이디 입니다."
+                })
+            }
     
-            const response = await signUpService(formData);
+            
+
+
+
+            
+    
+            const response = await signUpService(formData, encryptedPW);
     
             res.status(200).json({
                 success: true,
@@ -221,6 +243,9 @@ export const getLoginInfo = async(req: Request, res: Response) => {
 }
 
 
+
+
+
 // Cannot set headers after they are sent to the client 해당 오류는 res중복
 
 export const kakaoTokenCtrl = async (req:Request, res:Response) => {
@@ -298,15 +323,42 @@ export const kakaoSignUp = async (req: Request, res: Response) => {
     try {
         const formData = req.body;
 
-        if (!formData) {
-            
+        if(!formData.password) {
+            logger.info("not password")
+            res.status(400).json({
+                success: false,
+                message: "패스워드가 존재 하지 않습니다."
+            })
         }
 
-        const userUpdate = await signKakao(formData);
+        const encryptedKakao = await bcrypt.hashSync(formData.password, 10);
+
+        const idCheckKakao = await idCheck(formData.id) as string;
+        
+        if(idCheckKakao === formData.id) {
+            logger.info("already exit member")
+            return res.status(400).json({
+                success: false,
+                data: idCheckKakao,
+                message: "이미 있는 아이디입니다."
+            })
+        }
+
+        const userUpdate = await signKakao(formData, encryptedKakao);
+
+        return res.status(200).json({
+            success: true,
+
+        })
 
     } catch (error) {
         
         console.error(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "서버 요청 실패"
+        })
         
     }
 
