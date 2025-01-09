@@ -20,3 +20,69 @@
     height: 30px;
     cursor: pointer;
 }
+
+.custom-marker {
+    width: 10px;
+    height: 10px;
+    background-color: #007aff; /* 마커 색상 */
+    border: 2px solid #fff; /* 테두리 */
+    border-radius: 50%; /* 원형 마커 */
+    box-shadow: 0 2px 6px #000;
+    position: relative;
+}
+
+
+.map_popup{
+    position: relative;
+    width: 200px;
+    height: 100px;
+}
+
+.popup_img{
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 10px;
+    left: 0;
+}
+.popup_title{
+    position: absolute;
+    top: 0px;
+    left: 80px;
+    font-weight: bold;
+}
+.popup_description{
+    position: absolute;
+    top: 20px;
+    left: 80px;
+    font-size: 9px;
+    line-height: 9px;
+    height: 54px;
+    overflow: hidden;
+}
+.popup_sell_price{
+    position: absolute;
+    bottom: 4px;
+    left: 80px;
+    font-weight: bold;
+}
+.popup_time{
+    position: absolute;
+    bottom: 0;
+    left: 80px;
+    font-size: 6px;
+    color: #d9d9d9;
+    height: 10px;
+}
+.navigate-btn{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    border-radius: 4px;
+    background: #8142D6;
+    color: #fff;
+}
+
+.mapboxgl-popup{
+    z-index: 1000;
+}
