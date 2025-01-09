@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Feature, Geometry, GeoJsonProperties } from "geojson";
+// import { useLocation } from "react-router-dom";
 
 const api = axios.create({
     baseURL: 'http://localhost:3000',
