@@ -33,30 +33,29 @@ const ProductList: React.FC = () => {
   ];
 
   return (
-    <div className="product-list-container">
-      <header className="product-list-header">
-        <h1>가산동</h1>
-        <button className="dropdown-button">▼</button>
-      </header>
-      <ul className="product-list">
-        {products.map((product) => (
-          <li key={product.id} className="product-item">
-            <img
-              src={product.imageUrl}
-              className="product-image"
-            />
-            <div className="product-info">
-              <h2 className="product-title">{product.title}</h2>
-              <p className="product-meta">
-                {product.distance} · {product.location} · {product.time}
-              </p>
-            </div>
-            <button className="chat-button">채팅하기</button>
-          </li>
-        ))}
-      </ul>
+    <>
+      <div className="product-list-container">
+        <header className="product-list-header">
+          <h1>가산동</h1>
+          <button className="dropdown-button">▼</button>
+        </header>
+        <ul className="product-list">
+          {products.map((product) => (
+            <li key={product.id} className="product-item">
+              <img src={product.imageUrl} className="product-image" />
+              <div className="product-info">
+                <h2 className="product-title">{product.title}</h2>
+                <p className="product-meta">
+                  {product.distance} · {product.location} · {product.time}
+                </p>
+              </div>
+              <button className="chat-button">채팅하기</button>
+            </li>
+          ))}
+        </ul>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 };
 
