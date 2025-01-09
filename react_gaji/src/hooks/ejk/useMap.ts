@@ -3,7 +3,7 @@ import mapboxgl, { Map } from "mapbox-gl";
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
 import { mapConfig } from "../../hooks/ejk/mapConfig";
 
-const useMapbox = () => {
+const useMap = () => {
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const clickMarkerRef = useRef<mapboxgl.Marker | null>(null);
 
@@ -50,4 +50,4 @@ const useMapbox = () => {
   return map;
 };
 
-export default useMapbox;
+export default useMap;
