@@ -24,7 +24,8 @@
     "jsonwebtoken": "^9.0.2",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.9.16",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "websocket": "^1.0.35"
   },
   "devDependencies": {
     "@google-cloud/pino-logging-gcp-config": "^1.0.2",
@@ -39,6 +40,7 @@
     "@types/node": "^22.10.2",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.11.10",
+    "@types/websocket": "^1.0.10",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "helmet": "^8.0.0",

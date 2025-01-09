@@ -32,7 +32,8 @@ export const signUpDAO = async (formData: Record<string, string>, password: stri
     const phone = Number(formData.phone);
     const birth = Number(formData.birth);
 
-    const response = await db.query(`INSERT INTO ${schema}.member_tbl (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 0)`, [formData.id, password, phone, formData.email, formData.nick, formData.name, formData.addr, birth]);
+
+    const response = await db.query(`INSERT INTO ${schema}.member_tbl (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 0)`, [formData.id, password, phone, formData.email, formData.nick, formData.name, formData.postcode, birth]);
 
     if(response){
         logger.info("데이터 입력 성공");
@@ -65,7 +66,7 @@ export const saveOrUpdateUser = async (formData: Record<string, string>, passwor
 
 }
 
-export const idCheckDAO = async (id: string): Promise<loginType | null> => {
+export const idCheckDAO = async (id: string): Promise<loginType | void> => {
     try {
         const response = await db.query(`SELECT member_id FROM ${schema}.member_tbl WHERE member_id = $1`, [id]);
 
@@ -74,12 +75,12 @@ export const idCheckDAO = async (id: string): Promise<loginType | null> => {
         console.log("데이터베이스 결과", dataId.member_id);
         
 
-        if(dataId.member_id === id) {
+        if(dataId === id) {
 
             console.log(dataId.member_id);
             
             logger.error("아이디가 중복 되었습니다.")
-            return dataId.member_id;
+            return dataId
         }
 
         return dataId.member_id;
@@ -87,7 +88,7 @@ export const idCheckDAO = async (id: string): Promise<loginType | null> => {
     } catch(error) {
 
         logger.error(error);
-        return null;
+        return;
     }
 }
 

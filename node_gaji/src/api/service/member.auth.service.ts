@@ -8,24 +8,27 @@ type signUpType = Omit<IMemberTbl, "accessToken" | "created_at">;
 type loginType = Partial<IMemberTbl>;
 
 
-export const idCheckService = async (id: string): Promise<loginType | null> => {
+export const idCheckService = async (id: string): Promise<loginType | void> => {
     if(!id && id == '') {
         logger.error("idCheckService: 파라미터가 전달되지 못했습니다.")
     }
 
     const idCheck = await idCheckDAO(id);
 
-    return idCheck;
+    return idCheck as loginType;
 }
 
 
-export const loginService = async (id: string, password:string): Promise<loginType> => {
+export const loginService = async (id: string, password:string): Promise<loginType | void> => {
     
     
 
     if (id == '' && password == '') {
         
         logger.error("loginService: Not Parameter")
+
+        return;
+
     }
 
     const memberLogin = await login(id, password);

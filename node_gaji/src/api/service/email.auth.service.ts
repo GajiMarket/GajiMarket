@@ -51,34 +51,40 @@ export const emailCode = async(email:string): Promise<number> => {
 
 export const emailCheckService = (email: string, inputCode: number): boolean => {
 
-    const storeCode = cache.get<number>(email);
+    const storeCode = cache.get<number>(email) as number;
 
-    logger.debug("갖고온 email 파라미터", storeCode)
+    console.log("갖고온 email 파라미터:", storeCode);
+
+    
 
     if(!storeCode) {
         logger.error("인증 코드가 만료되었거나 존재하지 않습니다.");
         return false;
     }
 
+    console.log(storeCode === inputCode);
+    console.log("storeCode의 타입:", typeof storeCode);
+    console.log("inputCode의 타입:", typeof inputCode);
     
-    if(storeCode !== inputCode) {
+    
+    
+
+    if(storeCode === Number(inputCode)) {
+
+        logger.info('인증 성공');
+
+        cache.del(email);
+
+        return true;
+        
+    } else {
+        console.log("storeCode랑 inputCode:", storeCode, "", inputCode);
+        
         logger.error('인증 실패');
+
         return false;
     }
+    
 
-    // if (storeCode === inputCode) {
-    //     logger.info('인증 성공');
-
-    //     cache.del(email);
-
-    //     return true;
-        
-    // } 
-
-    logger.info('인증 성공');
-
-    cache.del(email);
-
-    return true;
         
 }

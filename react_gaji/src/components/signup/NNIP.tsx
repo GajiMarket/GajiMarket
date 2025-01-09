@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, executeDaumPostCode} from '../../hooks/useSign';
 import Email from './Email';
@@ -115,14 +115,11 @@ const navigate= useNavigate();
         setCodeNumber(send.code)
 
         setCodeNumberChecked(true)
-
-        console.log('현재 코드 번호:', codeNumber);
         
         alert('인증번호가 전송되었습니다.');
   
       } else {
   
-
         setCodeNumberChecked(false)
         alert('인증번호 전송에 실패했습니다.');
       }
@@ -145,21 +142,23 @@ const navigate= useNavigate();
     try {
 
       const code = await emailCheck(formData.email, inputCode);
-      
 
-      if (code) {
+      
+      if (code === true) {
+
         
         setAccessChecked(code)
         alert('인증번호가 일치합니다.');
-        return code;
 
-      } else {
+      } 
 
-        setAccessChecked(code)
+      if (!code) {
+
+        setAccessChecked(false);
         alert('인증번호가 일치하지 않습니다.');
-        return code;
-
+        
       }
+      
 
 
     } catch(error) {
@@ -168,6 +167,8 @@ const navigate= useNavigate();
       
     }
   }
+
+  // 아이디 중복
   const handleIdCheck = async () => {
 
     try {
@@ -205,6 +206,8 @@ const navigate= useNavigate();
     }
   }
 
+
+
   
 
   //form 전송
@@ -212,7 +215,16 @@ const navigate= useNavigate();
 
     try {
 
-      const response = await signUp(formData);
+      const {year, month, day, zonecode, address, extraAddress, detailAddress, ...prev} = formData;
+      const birth = year && month && day ? `${year}${month}${day}` : '';
+
+      const {} = formData;
+      const postcode = zonecode && address && extraAddress && detailAddress ? [`${zonecode}`, `${address}`, `${extraAddress}`, `${detailAddress}`].join(" ") : '';
+
+      const updateFormData = {...prev, birth, postcode};
+
+      
+      const response = await signUp(updateFormData);
 
       if(response === false) {
 

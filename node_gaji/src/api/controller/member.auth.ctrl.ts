@@ -5,7 +5,7 @@ import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCh
 import logger from '../../logger';
 import { IMemberTbl } from 'api/models/member_tbl';
 
-type MemberModel = Partial<IMemberTbl>;
+type loginType = Partial<IMemberTbl>;
 
 
 
@@ -14,9 +14,9 @@ type MemberModel = Partial<IMemberTbl>;
 // 아이디 중복
 export const duplicatedId = async (req: Request, res: Response) => {
     try {
-        const id = req.body.id;
+        const id: string = req.body.id;
 
-        logger.info("가져온 req값", req.body);
+        console.log("가져온 아이디:", id);
 
         if(!id) {
             logger.error("req.id값이 없습니다.")
@@ -29,7 +29,12 @@ export const duplicatedId = async (req: Request, res: Response) => {
 
         const response = await idCheckService(id);
 
+        console.log("갖고온 아이디:", response);
+        
+
         if(response === id) {
+
+            
 
             logger.error("아이디 중복 값 반환 실패");
             res.status(400).json({
@@ -75,7 +80,7 @@ export const userCtrl = async (req:Request, res: Response) => {
 
             // 요청값 보내고, 서비스에서 반환값 받음
     
-            const response = await loginService(id, password);
+            const response = await loginService(id, password) as loginType;
 
             
 
@@ -86,7 +91,7 @@ export const userCtrl = async (req:Request, res: Response) => {
             // 토큰 생성
             const key: string = process.env.TOKEN_KEY || "GajiMarket_login";
             const token = jwt.sign(
-                { id: response.member_no, email: response.member_email, nickname: response.member_nick},
+                { id: response.member_no , email: response.member_email, nickname: response.member_nick},
                 key,
                 {expiresIn: '1h'}
             );
@@ -139,14 +144,14 @@ export const signCtrl = async (req: Request, res: Response) => {
     
         try {
 
-            const formData = req.body;
+            const signData = req.body.formData;
 
-            console.log("받아온값:", formData);
+            console.log("받아온값:", signData);
             
 
             logger.info({"받아온값": req.body.data});
             
-            if(!formData) {
+            if(!signData) {
                 res.status(400).json({
                     message: 'signCtrl: formData를 받아오지 못했습니다.'
                 });
@@ -154,16 +159,16 @@ export const signCtrl = async (req: Request, res: Response) => {
                 return;
             };
 
-            const encryptedPW = bcrypt.hashSync(formData.password, 10) as string;
+            const encryptedPW = bcrypt.hashSync(signData.password, 10) as string;
 
             console.log("패스워드:", encryptedPW);
             
 
             logger.debug("password_bcrypt:", encryptedPW);
-
+            
             
     
-            const response = await signUpService(formData, encryptedPW);
+            const response = await signUpService(signData, encryptedPW);
 
             if(response == false) {
                 logger.error("반환값 전달 실패");
@@ -183,6 +188,8 @@ export const signCtrl = async (req: Request, res: Response) => {
             })
 
         } catch(error) {
+
+            logger.error("서버 실행중 오류 발생")
     
             res.status(500).json({
                 success: false,

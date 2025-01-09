@@ -136,11 +136,10 @@ export const emailCheck = async (email:string, code: string): Promise<boolean> =
       },
     });
 
-    if (response.data.success === 'false') {
-      throw new Error(`Server Error: ${response.status}`);
-    }
-
     const results = response.data.success;
+
+    console.log("가져온 results:", results);
+    
 
     return results;
   } catch (error) {
@@ -195,8 +194,11 @@ export const emailSend = async (email: string): Promise<{success: boolean, code:
 export const signUp = async (formData: Record<string, string>): Promise<boolean> => {
   try {
     const response = await axios.post(`${api}/auth/signUp`, {
-      data: formData,
+      formData,
     });
+
+    console.log("갖고온 formData:", formData);
+    
 
     console.log('입력된 데이터:', response.data.success);
     

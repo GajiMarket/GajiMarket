@@ -58,17 +58,34 @@ export const emailCheck = async(req: Request, res: Response) => {
         const code = req.body.data.code;
         const email = req.body.data.email;
 
-        logger.info("받아온 코드:", {code});
+        console.log("code랑 email:", code, "",email);
 
         if(!code) {
             logger.error("코드를 받아오지 못했습니다.");
             res.status(400).json({
                 success: false,
                 message: "코드 반환 실패"
-            })
+            });
+
+            return;
         }
 
         const validateCode = await emailCheckService(email, code);
+
+        console.log("validateCode boolean 값:", validateCode);
+
+        if(validateCode === false) {
+
+            res.status(400).json({
+                success: false,
+                message: "값이 일치하지 않거나 코드가 만료되었습니다..",
+            });
+
+            logger.error("값이 일치하지 않거나 코드가 만료되었습니다..")
+
+            return;
+        }
+        
 
         logger.debug("입력 성공");
 
@@ -86,5 +103,7 @@ export const emailCheck = async(req: Request, res: Response) => {
             success: false,
             message: "서버 요청 실패"
         });
+
+        return;
     }
 }

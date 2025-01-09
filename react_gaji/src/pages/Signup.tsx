@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { NNIP } from '../components/signup/NNIP';
 import { useNavigate } from 'react-router-dom';
 import '../style/Signup.css';
@@ -47,6 +47,9 @@ const Signup:React.FC = () => {
     name: '',
 
   })
+
+  // 하나의 문자열로 합치기
+
 
   const handleSuccess = async () => {
 
