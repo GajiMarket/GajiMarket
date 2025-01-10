@@ -46,6 +46,11 @@ const ProductPage: React.FC = () => {
     navigate("/"); // "Main" 경로로 이동
   };
 
+  // 채팅 메세지 함수
+  const handleChat = () => {
+    navigate('/chatpage');
+  };
+
   return (
     <div className="product-page-container">
       <div className="product-image-slider" style={{ position: "relative" }}>
@@ -107,7 +112,7 @@ const ProductPage: React.FC = () => {
             {parseInt(product.price).toLocaleString()}원
           </span>
         </div>
-        <button className="chat-button">채팅하기</button>
+        <button className="chat-button" onClick={handleChat}>채팅하기</button>
       </div>
     </div>
   );
