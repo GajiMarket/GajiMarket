@@ -157,7 +157,7 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData}) => {
   return (
     <div className="login_container">
       <div className="login_logo">
-        <img src='../../public/img/image 16.png' />
+        <img src='https://storage.cloud.google.com/codelab_gajigaji/userProfile/image%2016.png' />
       </div>
     <Id id={formData.id || ''} setId={handleForm('id')} />
     <Password password={formData.password || ''} setPassword={handleForm('password')} />
