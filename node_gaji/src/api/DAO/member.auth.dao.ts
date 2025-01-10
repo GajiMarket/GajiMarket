@@ -9,13 +9,31 @@ type loginType = Partial<IMemberTbl>;
 // 폴더 별로 역할을 나눌 경우
 export const login = async (id: string, password: string): Promise<loginType> => {
 
+    console.log("가지고 온 파라미터:", id,"" , password);
+    
 
     const response =  await db.query(`SELECT member_no, member_id, member_nick, member_pwd, member_email FROM ${schema}.member_tbl WHERE member_id = $1 AND member_pwd = $2`, [String(id), String(password)]);
 
-    logger.info(response.rows[0]);
+    const hashPassword = response.rows[0] as loginType
+
+    console.log("내가 불러온 정보:", hashPassword.member_pwd as string);
+
+
+    return hashPassword;
+
+}
+
+export const pwCheckDAO = async (id: string): Promise<loginType> => {
+
+    console.log("가지고 온 파라미터:", id);
+
+    const response = await db.query(`SELECT member_pwd FROM ${schema}.member_tbl WHERE member_id = $1`, [id]);
+
+    console.log("내가 가져온 비밀번호:", response.rows[0] as loginType);
 
     return response.rows[0] as loginType;
-
+    
+    
 }
 
 
@@ -33,10 +51,11 @@ export const signUpDAO = async (formData: Record<string, string>, password: stri
     const birth = Number(formData.birth);
 
 
-    const response = await db.query(`INSERT INTO ${schema}.member_tbl (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 0)`, [formData.id, password, phone, formData.email, formData.nick, formData.name, formData.postcode, birth]);
+    const response = await db.query(`INSERT INTO ${schema}.member_tbl (member_id, member_pwd, member_phone, member_email, member_nick, member_name, member_addr, member_birth, member_login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 0)`, [formData.id, password, phone, formData.email, formData.nickName, formData.name, formData.postcode, birth]);
 
     if(response){
         logger.info("데이터 입력 성공");
+        logger.info({"저장된 데이터:": response.rows[0] as loginType});
     }
 
     return true;

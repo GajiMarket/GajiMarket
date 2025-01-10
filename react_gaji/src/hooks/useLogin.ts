@@ -44,8 +44,6 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
 
     } catch(error) {
 
-        console.error(error);
-
         throw new Error('서버와 연결하는데 오류가 발생했습니다.');
         
     }

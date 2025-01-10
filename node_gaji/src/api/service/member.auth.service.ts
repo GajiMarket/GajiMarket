@@ -1,21 +1,40 @@
 import axios from 'axios';
-import {login, signUpDAO, saveOrUpdateUser, idCheckDAO} from '../DAO/member.auth.dao';
+import {login, signUpDAO, saveOrUpdateUser, idCheckDAO, pwCheckDAO} from '../DAO/member.auth.dao';
 import { IMemberTbl } from '../models/member_tbl';
 import logger from '../../logger';
 
-// type loginType = Pick<IMemberTbl, "member_id" | "member_pwd" | "member_email">;
-type signUpType = Omit<IMemberTbl, "accessToken" | "created_at">;
 type loginType = Partial<IMemberTbl>;
 
 
 export const idCheckService = async (id: string): Promise<loginType | void> => {
     if(!id && id == '') {
         logger.error("idCheckService: 파라미터가 전달되지 못했습니다.")
+        return;
     }
 
     const idCheck = await idCheckDAO(id);
 
+    if(!idCheck) {
+        logger.error("idCheckService: 값을 받아오지 못했습니다.");
+        return;
+    }
+
     return idCheck as loginType;
+}
+
+export const pwCheckService = async (id: string): Promise<loginType> => {
+
+    if(!id && id == '') {
+        logger.error("pwCheckService: 파라미터가 전달되지 못했습니다.");
+    }
+
+    const pwCheck = await pwCheckDAO(id);
+
+    if(!pwCheck) {
+        logger.error("pwCheckService: 값을 불러오지 못했습니다.")
+    }
+
+    return pwCheck
 }
 
 
@@ -32,6 +51,10 @@ export const loginService = async (id: string, password:string): Promise<loginTy
     }
 
     const memberLogin = await login(id, password);
+
+    if(memberLogin) {
+        logger.error("loginService: 받은 데이터 값이 없습니다.");
+    }
 
     return memberLogin;
 }

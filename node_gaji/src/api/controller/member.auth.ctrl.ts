@@ -1,7 +1,7 @@
 import {Request, Response} from 'express'
 import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheckService } from '../service/member.auth.service'
+import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheckService, pwCheckService} from '../service/member.auth.service'
 import logger from '../../logger';
 import { IMemberTbl } from 'api/models/member_tbl';
 
@@ -78,25 +78,55 @@ export const userCtrl = async (req:Request, res: Response) => {
                 
             }
 
+            const hashCheck = await pwCheckService(id);
+
+            console.log("hashCheck:", hashCheck);
+
+            const dataPassword = hashCheck.member_pwd as string;
+
+            console.log("dataPassword:", dataPassword);
+            
+            const hashPassword = await bcrypt.compare(password, dataPassword);
+
+            console.log("hasPassword 검증:", hashPassword);
+
             // 요청값 보내고, 서비스에서 반환값 받음
     
-            const response = await loginService(id, password) as loginType;
+            const response = await loginService(id, dataPassword) as loginType;
 
+            logger.info("받아온 response:", response as string);
             
 
             if (!response) {
-                logger.error("userCtrl: Data valid false");
+
+                console.log("현재 response:", response as string);
+                
+                logger.error("userCtrl: 데이터 확인 실패");
             }
 
-            // 토큰 생성
-            const key: string = process.env.TOKEN_KEY || "GajiMarket_login";
-            const token = jwt.sign(
-                { id: response.member_no , email: response.member_email, nickname: response.member_nick},
-                key,
-                {expiresIn: '1h'}
-            );
+            
 
-            logger.debug(token);
+            if(hashPassword) { 
+                // 토큰 생성
+                const key: string = process.env.TOKEN_KEY || "GajiMarket_login";
+                const token = jwt.sign(
+                    { id: response.member_no, email: response.member_email, nickname: response.member_nick},
+                    key,
+                    {expiresIn: '1h'}
+                );
+    
+                logger.debug("생성된 토큰:", token);
+
+                res.status(200).json({
+                    success: true,
+                    data: token,
+                    message: '로그인 성공',
+        
+                });
+            }
+
+           
+           
             
 
             // HttpOnly 쿠키 토큰 저장
@@ -105,12 +135,6 @@ export const userCtrl = async (req:Request, res: Response) => {
             //     sameSite: 'strict', // 동일 사이트 요청만 허용
             // })
     
-            res.status(200).json({
-                success: true,
-                data: token,
-                message: 'Login successfully',
-    
-            });
         } catch (error) {
     
             res.status(500).json({
@@ -124,12 +148,14 @@ export const userCtrl = async (req:Request, res: Response) => {
 // 로그아웃
 export const logout = async (req:Request, res:Response) => {
 
-    res.clearCookie('token', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+    // 쿠키 삭제
 
-    })
+    // res.clearCookie('token', {
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === 'production',
+    //     sameSite: 'strict',
+
+    // })
     
     logger.info("logout successd")
 
@@ -149,7 +175,7 @@ export const signCtrl = async (req: Request, res: Response) => {
             console.log("받아온값:", signData);
             
 
-            logger.info({"받아온값": req.body.data});
+            logger.info({"받아온값": signData});
             
             if(!signData) {
                 res.status(400).json({
