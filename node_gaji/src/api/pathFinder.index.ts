@@ -1,8 +1,8 @@
 import express from "express";
-import testPath from "./controller/pathFinder.ctrl";
+import pathFinderAPI from "./service/pathFinder.service";
 
 const router = express.Router();
 
-router.get('/', testPath)
+router.get('/', pathFinderAPI)
 
 export default router

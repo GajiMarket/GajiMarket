@@ -1,24 +1,24 @@
 import { Request, Response } from "express";
 import axios from "axios";
-import { findPath } from "../service/pathFinder.api";
+import { findPathService } from "../service/pathFinder.service";
 import { IPathFinderParams } from "../models/pathFinder.model";
 
-const testPath = async (req: Request, res: Response): Promise<void> => {
-
-    // const { startX, startY } = req.query;
+const pathFinderAPI = async (req: Request, res: Response) => {
 
     try {
-        const pathParams: Partial<IPathFinderParams> = {
-            startX: 126.882218,
-            startY: 37.479545,
-            endX: 126.8804951,
-            endY: 37.4814917,
-            option: 'short',
-            service: 'AR',
-            srid: 4326
-        };
+        const { longitude, latitude } = req.query;
+        if (!longitude || !latitude) {
+            return res.status(400).json({
+                success: false,
+                message: "lng, lat parameters are required",
+            });
+        }
 
-        const result = await findPath(pathParams as IPathFinderParams);
+        const params: IPathFinderParams = {
+            endX: longitude,
+            endY: latitude,
+        }
+
         res.json(result);
 
     } catch (error) {
@@ -32,4 +32,4 @@ const testPath = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-export default testPath;
+export default pathFinderAPI;

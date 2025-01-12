@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiConfig } from '../../config/apiConfig';
 import { IPathFinderParams, IPathResponse } from '../models/pathFinder.model';
 
-export const findPath = async (params: IPathFinderParams): Promise<IPathResponse> => {
+export const findPathService = async (params: IPathFinderParams): Promise<IPathResponse> => {
 
     try {
         const response = await axios.get<IPathResponse>(
@@ -16,7 +16,6 @@ export const findPath = async (params: IPathFinderParams): Promise<IPathResponse
             }
         )
         console.log('API Connected Success!');
-        // console.log('Response data:', JSON.stringify(response.data, null, 2));
         return response.data;
 
     } catch (error) {

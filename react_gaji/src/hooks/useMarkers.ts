@@ -2,6 +2,8 @@ import { useState } from "react";
 import mapboxgl from "mapbox-gl";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useProductStore } from "../utils/pathStore";
+import { sendPathData } from "../api/pathFinder.api";
 
 interface ProductLocation {
     product_id: number;
@@ -13,7 +15,7 @@ interface ProductLocation {
     status: string;
     created_at: string;
     view_count: number;
-    emd_id: number;
+    // emd_id: number;
     member_no: number;
     time_elapsed: string;
 }
@@ -26,6 +28,7 @@ interface ApiResponse {
 const useMarkers = () => {
     const [productLocations, setProductLocations] = useState<ProductLocation[]>([]);
     const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]);
+    const setProduct = useProductStore((state) => state.setProduct); // product_id, lng, lat 상태관리
     const navigate = useNavigate();
 
     // 상품 데이터 가져오기
@@ -92,10 +95,21 @@ const useMarkers = () => {
 
             // 버튼 클릭 이벤트 처리
             const navigateButton = popupContent.querySelector(".navigate-btn");
-            navigateButton?.addEventListener("click", () => {
-                navigate("/navigation", {
-                    state: { product }, // 클릭한 마커의 데이터만 전달
-                });
+            navigateButton?.addEventListener("click", async () => {
+                setProduct(product.product_id, product.longitude, product.latitude);
+
+                try {
+                    await sendPathData(product.product_id, product.longitude, product.latitude);
+                    console.log("Navigation 페이지로 넘어가는 중...")
+                    navigate("/navigation");
+                } catch (error) {
+                    console.error("데이터 전송 실패:", error)
+                    alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
+                }
+
+                // navigate("/navigation", {
+                //     state: { product }, // 클릭한 마커의 데이터만 전달
+                // });
             });
 
             return new mapboxgl.Marker({ color: "purple" })
