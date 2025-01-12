@@ -21,7 +21,7 @@ import { getUserInfo } from "../hooks/useLogin.ts";
 
 const Mypage: React.FC = () => {
   // store와 token 생성
-  const {isAuthenticated, logoutMethod, nickname, setNickname} = loginStore(); 
+  const {isAuthenticated, logoutMethod, nickname, setNickname, setUserNo} = loginStore(); 
   const token = loginStore.getState().token;
 
 
@@ -96,10 +96,21 @@ const Mypage: React.FC = () => {
           console.log('해당 사용자의 닉네임이 없습니다.');
           
         }
+
+        if(!info.data.id) {
+
+          console.log("해당 사용자의 아이디가 없습니다.");
+          
+        }
+
         
-        if(info && info.data.nickname !== nickname) {
+        if(info && info.data.nickname !== nickname && info.data.id) {
             
+          // store에 있는 nickname에 저장
           setNickname(info.data.nickname);
+
+          // store에 있는 userNo에 저장
+          setUserNo(info.data.id);
         }
         
       } catch {

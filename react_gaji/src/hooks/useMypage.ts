@@ -2,19 +2,35 @@ import axios from 'axios';
 
 const api = `http://localhost:3000`;
 
-export const imageUpload = async(data: FormData): Promise<string | void> => {
+export const imageUpload = async(formData: FormData): Promise<string | void> => {
+
 
     try {
-        if(!data) {
+
+        //formData는 log로 조회 불가능
+        // console.log("현재 formData:", formData.get('profileImage'));
+
+        // 반복문으로 데이터 조회
+        let values = formData.values();
+
+        for (const pair of values) {
+            console.log(pair);
+            
+        }
+
+        if(!formData) {
+            
             console.error("imageUpload:데이터를 불러오지 못했습니다.");
 
             return;
             
         }
 
-        const response = await axios.post(`${api}/product/imageupload`, data, {
+        const response = await axios.post(`${api}/mypage/uploadimage`, formData,
+            {
+            
             headers: {
-                'Cotnet-Type': 'multipart/form-data',
+                'Content-Type':'multipart/form-data'
             },
         });
 
@@ -23,7 +39,7 @@ export const imageUpload = async(data: FormData): Promise<string | void> => {
             
         }
 
-        return response.data.data.image;
+        return response.data.data;
 
     } catch (error) {
 

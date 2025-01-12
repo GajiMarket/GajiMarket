@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import logger from '../../logger';
-import { uploadImageService } from 'api/service/mypage.service';
+import { uploadImageService } from '../service/mypage.service';
 
 
 // 사용자 프로필 업데이트
@@ -9,8 +9,11 @@ export const uploadImage = {
 
         try {
             const formData = req.files as Express.Multer.File[]; //업로드된 파일들
+            const userNo = req.body.userNo
 
-            console.log("갖고온 formData:", formData);
+            console.log("갖고온 formData:", req.files);
+            console.log("갖고온 userNo:", req.body);
+            
 
             
 
@@ -18,7 +21,8 @@ export const uploadImage = {
             
     
         if(!formData || formData.length === 0) {
-            logger.error({"formData 파일을 받아오지 못했습니다.": formData});
+            logger.error("formData 파일을 받아오지 못했습니다:", {"formData":formData});
+            logger.error({"userNo 파일을 받아오지 못했습니다": userNo});
     
             res.status(400).json({
                 success: false,
@@ -28,7 +32,7 @@ export const uploadImage = {
             return;
         }
     
-        const response = await uploadImageService.uploadFilesToStorage(formData);
+        const response = await uploadImageService.uploadFilesToStorage(formData, userNo);
     
         if(!response) {
             
@@ -49,6 +53,8 @@ export const uploadImage = {
         })
     
         } catch (error) {
+            console.error("500 에러 발생",error);
+            
             logger.error({"uploadImage 500 오류": error});
             res.status(500).json({
                 success: false,

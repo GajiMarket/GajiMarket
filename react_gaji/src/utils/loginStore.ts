@@ -7,6 +7,8 @@ interface LoginProps {
     isAuthenticated: boolean;
     token: string | null;
     nickname: string | null;
+    userNo: string | null;
+    setUserNo: (userNo: string) => void;
     setNickname: (nickname: string) => void;
     loginMethod: (token: string) => void;
     logoutMethod: () => void;
@@ -52,6 +54,8 @@ const loginStore = create<LoginProps>()(
             isAuthenticated: false,
             token: null,
             nickname: null,
+            userNo: null,
+            setUserNo:(userNo) => set({userNo}),
             setNickname: (nickname) => set({nickname}),
             loginMethod: (token) => set({ isAuthenticated: true, token }),
             logoutMethod: () => set({ isAuthenticated: false, token: null }),
@@ -71,7 +75,7 @@ const loginStore = create<LoginProps>()(
             } as PersistStorage<string>
         }
     )
-        
+
 );
 
 export default loginStore;

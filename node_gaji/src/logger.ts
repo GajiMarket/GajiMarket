@@ -68,4 +68,8 @@ const logger = pino({
 // logger.info('This is a info log');
 // logger.error('This is a error log');
 
+const acc = "감자가 아님";
+
+const abs = {"감자": acc};
+
 export default logger;

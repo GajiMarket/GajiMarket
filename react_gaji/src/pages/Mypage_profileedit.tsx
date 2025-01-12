@@ -12,7 +12,7 @@ import { imageUpload } from '../hooks/useMypage.ts';
 
 const MypageProfileEdit: React.FC = () => {
 
-      const {isAuthenticated, nickname, setNickname} = loginStore(); 
+      const {isAuthenticated, nickname, setNickname , userNo} = loginStore(); 
   
   
     const navigate = useNavigate();
@@ -37,12 +37,24 @@ const MypageProfileEdit: React.FC = () => {
   // 이미지 업로드
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
+      // const reader = new FileReader();
       const file = event.target.files[0];
 
-      const originalName = file.name.split('\\').slice(0, -1).join('.');
-      const fileExtension = originalName.split('.').pop(); // '\\'로 split후 마지막 요소
-      const fileName = `${originalName}.${fileExtension}`;
+      // const originalName = file.name.split('\\').slice(0, -1).join('.');
+      // const fileExtension = originalName.split('.').pop(); // '\\'로 split후 마지막 요소
+      // const fileName = `${originalName}.${fileExtension}`;
+
+      // const originName = file.name.split('.').slice(0, -1);
+      const extension = file.name.split('.').pop();
+      const imageName = `${Date.now()}.${extension}`;
+
+      // console.log("지정한 fileName:", fileName);
+      // console.log("지정한 file:", file);
+
+      console.log("지정한 fileName:", imageName);
+      // console.log("지정한 file:", file);
+
+      
 
 
       //유경이 한거 주석처리
@@ -56,7 +68,11 @@ const MypageProfileEdit: React.FC = () => {
 
       
       const formData = new FormData();
-      formData.append('profileImage', file, fileName);
+      //키, input type이 file인 경우에만
+      // formData.append('profileImage', file, fileName);
+      formData.append('profileImage', file,imageName);
+      formData.append('userNo', userNo as string);
+
 
       try {
 
