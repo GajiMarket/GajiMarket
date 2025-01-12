@@ -5,17 +5,19 @@ import { IPathFinderParams, IPathResponse } from '../models/pathFinder.model';
 export const findPathService = async (params: IPathFinderParams): Promise<IPathResponse> => {
 
     try {
+        console.log("Calling external API with params:", params); // 올바른 서버 요청인지 확인
         const response = await axios.get<IPathResponse>(
             apiConfig.pathFinerApi.BASE_URL,
             {
                 headers: {
                     'X-API-KEY': apiConfig.pathFinerApi.API_KEY,
-                    'Content-Type': apiConfig.pathFinerApi.type
+                    "Content-Type": "application/json",
                 },
-                params
+                params,
             }
         )
-        console.log('API Connected Success!');
+        console.log("API Call Data:", params);
+        console.log("External API Response:", response.data);
         return response.data;
 
     } catch (error) {

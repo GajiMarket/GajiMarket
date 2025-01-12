@@ -96,12 +96,10 @@ const useMarkers = () => {
             // 버튼 클릭 이벤트 처리
             const navigateButton = popupContent.querySelector(".navigate-btn");
             navigateButton?.addEventListener("click", async () => {
-                setProduct(product.product_id, product.longitude, product.latitude);
-
+                setProduct(product.longitude, product.latitude);
                 try {
-                    await sendPathData(product.product_id, product.longitude, product.latitude);
-                    console.log("Navigation 페이지로 넘어가는 중...")
-                    navigate("/navigation");
+                    await sendPathData(product.longitude, product.latitude);
+                    alert('데이터 전송 성공!')
                 } catch (error) {
                     console.error("데이터 전송 실패:", error)
                     alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
@@ -110,6 +108,7 @@ const useMarkers = () => {
                 // navigate("/navigation", {
                 //     state: { product }, // 클릭한 마커의 데이터만 전달
                 // });
+                navigate("/navigation");
             });
 
             return new mapboxgl.Marker({ color: "purple" })
