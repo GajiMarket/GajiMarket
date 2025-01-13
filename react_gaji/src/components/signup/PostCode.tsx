@@ -11,10 +11,11 @@ interface PostCodeProps {
     addressChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     detailChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     extraChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    errors?: string;
 
 }
 
-const PostCode: React.FC<PostCodeProps> = ({postcode, address, extraAddress, detailAddress, handleClick, postChange, addressChange, detailChange, extraChange}) => {
+const PostCode: React.FC<PostCodeProps> = ({postcode, address, extraAddress, detailAddress, handleClick, postChange, addressChange, detailChange, extraChange, errors}) => {
   return (
     <div className="postCode">
       <div className="kakao_api">
@@ -24,6 +25,7 @@ const PostCode: React.FC<PostCodeProps> = ({postcode, address, extraAddress, det
         <input id="address" placeholder='주소' type="text" value={address} onChange={addressChange}  /><br/>
         <input id="detailAddress" placeholder="상세주소" type="text" value={detailAddress} onChange={detailChange}/>
         <input id="extraAddress" placeholder="참고항목" type="text" value={extraAddress} onChange={extraChange}/>
+        {errors && <span className="errorMessage">{errors}</span>}
     </div>
   )
 }

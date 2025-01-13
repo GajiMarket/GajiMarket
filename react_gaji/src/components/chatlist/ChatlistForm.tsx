@@ -1,26 +1,31 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import "../../style/Chatlist.css"
+import "../../style/Chatlist.css";
 
 interface ChatItem {
   id: number;
-  name:string;
+  name: string;
   location: string;
   time: string;
   message: string;
   avatar: string;
+  chat_room_id: number;
+  buyer_no: number;
+  created_at: Date;
+  member_no: number;
+  product_id: number;
 }
 
-const ChatlistForm:React.FC<{ chats: ChatItem[] }> = ({ chats }) => {
-  if(!chats || chats.length === 0) {
-    return <div className="no-chats">대화가 없습니다.</div>
+const ChatlistForm: React.FC<{ chats: ChatItem[] }> = ({ chats }) => {
+  if (!Array.isArray(chats) || chats.length === 0) {
+    return <div className="no-chats">대화가 없습니다.</div>;
   }
 
   const navigate = useNavigate();
 
-  const handleChatClick = (id : number, name : string) => {
+  const handleChatClick = (id: number, name: string) => {
     navigate(`/chatpage/${id}?name=${encodeURIComponent(name)}`);
-  }
+  };
 
   return (
     <div className="chatlist-form">
@@ -32,7 +37,7 @@ const ChatlistForm:React.FC<{ chats: ChatItem[] }> = ({ chats }) => {
               <p className="chatlist-name">{chat.name}</p>
               <p className="chatlist-location">{chat.location}</p>
               <p className="chatlist-point">ㆍ</p>
-              <p className="chatlist-time">{chat.time}</p>  
+              <p className="chatlist-time">{chat.time}</p>
             </div>
             <div className="chatlist-message">{chat.message}</div>
           </div>
@@ -40,6 +45,6 @@ const ChatlistForm:React.FC<{ chats: ChatItem[] }> = ({ chats }) => {
       ))}
     </div>
   );
-}
+};
 
-export default ChatlistForm
+export default ChatlistForm;

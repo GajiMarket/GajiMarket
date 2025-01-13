@@ -9,7 +9,8 @@ interface PhoneProps {
 const Phone: React.FC<PhoneProps> = ({phone, onChange, errors}) => {
   return (
       <div className="phone">
-        <input className="phoneForm" type="text" placeholder="전화번호 입력" value={phone} onChange={onChange} />{errors && <span>{errors}</span>}
+        <input className="phoneForm" type="text" placeholder="전화번호 입력" value={phone} onChange={onChange} />
+        {errors && <span className="errorMessage">{errors}</span>}
       </div>
   )
 }

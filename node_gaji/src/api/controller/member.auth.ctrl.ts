@@ -1,11 +1,62 @@
 import {Request, Response} from 'express'
 import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheck } from '../service/member.auth.service'
+import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheckService, pwCheckService} from '../service/member.auth.service'
 import logger from '../../logger';
+import { IMemberTbl } from 'api/models/member_tbl';
+
+type loginType = Partial<IMemberTbl>;
 
 
 
+
+
+// 아이디 중복
+export const duplicatedId = async (req: Request, res: Response) => {
+    try {
+        const id: string = req.body.id;
+
+        console.log("가져온 아이디:", id);
+
+        if(!id) {
+            logger.error("req.id값이 없습니다.")
+            res.status(400).json({
+                success: false,
+                message: "요청 값 전송 실패"
+            });
+            return;
+        }
+
+        const response = await idCheckService(id);
+
+        console.log("갖고온 아이디:", response);
+        
+
+        if(response === id) {
+
+            
+
+            logger.error("아이디 중복 값 반환 실패");
+            res.status(400).json({
+                success: false,
+                message: "아이디 중복값 반환 실패"
+            });
+            return;
+        }
+        
+        res.status(200).json({
+            success: true,
+            message:"중복된 아이디가 없습니다."
+        });
+
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            message:"실행 중 오류"
+        })
+        return;
+    }
+}
 
 
 // 로그인
@@ -27,25 +78,55 @@ export const userCtrl = async (req:Request, res: Response) => {
                 
             }
 
+            const hashCheck = await pwCheckService(id);
+
+            console.log("hashCheck:", hashCheck);
+
+            const dataPassword = hashCheck.member_pwd as string;
+
+            console.log("dataPassword:", dataPassword);
+            
+            const hashPassword = await bcrypt.compare(password, dataPassword);
+
+            console.log("hasPassword 검증:", hashPassword);
+
             // 요청값 보내고, 서비스에서 반환값 받음
     
-            const response = await loginService(id, password);
+            const response = await loginService(id, dataPassword) as loginType;
 
+            logger.info("받아온 response:", response as string);
             
 
             if (!response) {
-                logger.error("userCtrl: Data valid false");
+
+                console.log("현재 response:", response as string);
+                
+                logger.error("userCtrl: 데이터 확인 실패");
             }
 
-            // 토큰 생성
-            const key: string = process.env.TOKEN_KEY || "GajiMarket_login";
-            const token = jwt.sign(
-                { id: response.member_no, email: response.member_email, nickname: response.member_nick},
-                key,
-                {expiresIn: '1h'}
-            );
+            
 
-            logger.debug(token);
+            if(hashPassword) { 
+                // 토큰 생성
+                const key: string = process.env.TOKEN_KEY || "GajiMarket_login";
+                const token = jwt.sign(
+                    { id: response.member_no, email: response.member_email, nickname: response.member_nick},
+                    key,
+                    {expiresIn: '1h'}
+                );
+    
+                logger.debug("생성된 토큰:", token);
+
+                res.status(200).json({
+                    success: true,
+                    data: token,
+                    message: '로그인 성공',
+        
+                });
+            }
+
+           
+           
             
 
             // HttpOnly 쿠키 토큰 저장
@@ -54,12 +135,6 @@ export const userCtrl = async (req:Request, res: Response) => {
             //     sameSite: 'strict', // 동일 사이트 요청만 허용
             // })
     
-            res.status(200).json({
-                success: true,
-                data: token,
-                message: 'Login successfully',
-    
-            });
         } catch (error) {
     
             res.status(500).json({
@@ -73,12 +148,14 @@ export const userCtrl = async (req:Request, res: Response) => {
 // 로그아웃
 export const logout = async (req:Request, res:Response) => {
 
-    res.clearCookie('token', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+    // 쿠키 삭제
 
-    })
+    // res.clearCookie('token', {
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === 'production',
+    //     sameSite: 'strict',
+
+    // })
     
     logger.info("logout successd")
 
@@ -93,37 +170,41 @@ export const signCtrl = async (req: Request, res: Response) => {
     
         try {
 
-            const formData:Record<string, string> = req.body;
+            const signData = req.body.formData;
+
+            console.log("받아온값:", signData);
             
-            if(!formData) {
+
+            logger.info({"받아온값": signData});
+            
+            if(!signData) {
                 res.status(400).json({
                     message: 'signCtrl: formData를 받아오지 못했습니다.'
                 });
+
+                return;
             };
 
-            const encryptedPW = bcrypt.hashSync(formData.password, 10);
+            const encryptedPW = bcrypt.hashSync(signData.password, 10) as string;
+
+            console.log("패스워드:", encryptedPW);
+            
 
             logger.debug("password_bcrypt:", encryptedPW);
-
-            const idCheckCtrl = await idCheck(formData.id);
             
+            
+    
+            const response = await signUpService(signData, encryptedPW);
 
-            if(formData.id === idCheckCtrl) {
-                logger.info("이미 사용중인 아이디입니다.")
+            if(response == false) {
+                logger.error("반환값 전달 실패");
                 res.status(400).json({
                     success: false,
-                    data: idCheckCtrl,
-                    message:"이미 사용중인 아이디 입니다."
-                })
+                    message: "반환값 전달 실패",
+                });
+
+                return;
             }
-    
-            
-
-
-
-            
-    
-            const response = await signUpService(formData, encryptedPW);
     
             res.status(200).json({
                 success: true,
@@ -131,12 +212,19 @@ export const signCtrl = async (req: Request, res: Response) => {
                 message: 'success'
     
             })
+
         } catch(error) {
+
+            logger.error("서버 실행중 오류 발생")
     
             res.status(500).json({
                 success: false,
                 message: 'false',
-            })
+            });
+
+            return;
+
+            
         }
     }
 
@@ -228,7 +316,7 @@ export const getLoginInfo = async(req: Request, res: Response) => {
             res.status(200).json({
                 success: true,
                 data: decoded
-        });
+            });
 
        
     } catch(err) {
@@ -333,7 +421,7 @@ export const kakaoSignUp = async (req: Request, res: Response) => {
 
         const encryptedKakao = await bcrypt.hashSync(formData.password, 10);
 
-        const idCheckKakao = await idCheck(formData.id) as string;
+        const idCheckKakao = await idCheckService(formData.id);
         
         if(idCheckKakao === formData.id) {
             logger.info("already exit member")

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import KakaoInfoCOM from '../components/login/KakaoInfo'
 
-const KakaoInfo = () => {
+const KakaoInfo: React.FC = () => {
 
     const [formData, setFormData] = useState<Record<string, string>>({
         id: '',
@@ -11,7 +11,7 @@ const KakaoInfo = () => {
 
   return (
     <div>
-      <KakaoInfoCOM />
+      <KakaoInfoCOM formData={formData} setFormData={setFormData}/>
     </div>
   )
 }

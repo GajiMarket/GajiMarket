@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Id from './Id'
 import Password from './Password'
@@ -6,7 +6,7 @@ import Find from './Find'
 // import IdFind from './IdFind'
 // import PwFind from './PwFind'
 import Api from './Api'
-import {login, tokenValidate} from '../../hooks/useLogin';
+import {login} from '../../hooks/useLogin';
 import loginStore from '../../utils/loginStore';
 
 
@@ -15,11 +15,9 @@ interface ILoginProps {
   setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   // loginSuccess: boolean;
   // setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-  handleGoogle: () => void;
-  handleNaver: () => void;
 }
 
-const Login:React.FC<ILoginProps> = ({formData, setFormData, handleGoogle, handleNaver}) => {
+const Login:React.FC<ILoginProps> = ({formData, setFormData}) => {
 
   const kakaoKey: string = import.meta.env.VITE_KAKAO_KEY;
   // const redirectUri: string = import.meta.env.VITE_REDIRECT_URL;
@@ -140,12 +138,26 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData, handleGoogle, handl
 
   };
 
+
+  //임시 함수
+  const handleGoogle = () => {
+    const response: string = '';
+
+    return response;
+  }
+
+  const handleNaver = () => {
+    const response: string = '';
+
+    return response;
+  }
+
   
 
   return (
     <div className="login_container">
       <div className="login_logo">
-        <img src='../../public/img/image 16.png' />
+        <img src='https://storage.cloud.google.com/codelab_gajigaji/userProfile/image%2016.png' />
       </div>
     <Id id={formData.id || ''} setId={handleForm('id')} />
     <Password password={formData.password || ''} setPassword={handleForm('password')} />
