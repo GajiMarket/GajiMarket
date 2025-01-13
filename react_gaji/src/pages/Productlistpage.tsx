@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "../style/Productlistpage.css";
 import Footer from "../components/all/Footer";
 
+// Product 타입 정의
 interface Product {
   id: number;
   title: string;
@@ -12,51 +14,50 @@ interface Product {
 }
 
 const ProductList: React.FC = () => {
-  const products: Product[] = [
-    {
-      id: 1,
-      title: "패딩팔아요~~",
-      location: "가산동",
-      distance: "4.5km",
-      time: "10분전",
-      imageUrl: "/path/to/image1.jpg",
-    },
-    {
-      id: 2,
-      title: "패딩팔아요~~",
-      location: "가산동",
-      distance: "4.5km",
-      time: "10분전",
-      imageUrl: "/path/to/image2.jpg",
-    },
-    // Add more products as needed
-  ];
+  // 상태 관리
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // 백엔드 API 호출
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("/api/products");
+
+        // 응답이 배열인지 확인하고 배열만 상태로 설정
+        const productData = Array.isArray(response.data) ? response.data : response.data.data || [];
+        setProducts(productData);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
-    <div className="product-list-container">
-      <header className="product-list-header">
-        <h1>가산동</h1>
-        <button className="dropdown-button">▼</button>
-      </header>
-      <ul className="product-list">
-        {products.map((product) => (
-          <li key={product.id} className="product-item">
-            <img
-              src={product.imageUrl}
-              className="product-image"
-            />
-            <div className="product-info">
-              <h2 className="product-title">{product.title}</h2>
-              <p className="product-meta">
-                {product.distance} · {product.location} · {product.time}
-              </p>
-            </div>
-            <button className="chat-button">채팅하기</button>
-          </li>
-        ))}
-      </ul>
+    <>
+      <div className="product-list-container">
+        <header className="product-list-header">
+          <h1>가산동</h1>
+          <button className="dropdown-button">▼</button>
+        </header>
+        <ul className="product-list">
+          {products.map((product) => (
+            <li key={product.id} className="product-item">
+              <img src={product.imageUrl} alt={product.title} className="product-image" />
+              <div className="product-info">
+                <h2 className="product-title">{product.title}</h2>
+                <p className="product-meta">
+                  {product.distance} · {product.location} · {product.time}
+                </p>
+              </div>
+              <button className="chat-button">채팅하기</button>
+            </li>
+          ))}
+        </ul>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import { userLocation } from './controller/userLocation.ctrl';
 import member from './member.index';
 import chatRoutes from './chat.index';
 import mypage from '../api/mypage.index';
+import productListRoutes from '../api/productlist.index';
 
 const mountRoutes = (app:Express) => {
 
@@ -22,6 +23,8 @@ const mountRoutes = (app:Express) => {
     app.use('/api', chatRoutes);
 
     app.use('/mypage', mypage);
+
+    app.use("/api/productlist", productListRoutes);
 
 }
 
