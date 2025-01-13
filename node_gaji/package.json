@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/bin/www.js",
+    "start:websocket": "ts-node src/api/websocket.ts",
     "dev": "nodemon --exec ts-node src/bin/www.ts | pino-pretty",
     "build": "tsc"
   },
@@ -26,6 +27,7 @@
     "multer": "^1.4.5-lts.1",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.9.16",
+    "ws": "^8.18.0"
     "path": "^0.12.7",
     "pg": "^8.13.1",
     "websocket": "^1.0.35"
@@ -44,6 +46,7 @@
     "@types/node": "^22.10.2",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.11.10",
+    "@types/ws": "^8.5.13",
     "@types/websocket": "^1.0.10",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
