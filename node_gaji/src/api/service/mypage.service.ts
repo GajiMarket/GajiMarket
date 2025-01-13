@@ -21,7 +21,8 @@ export const uploadImageService = {
         for (const file of formData) {
             const originalName = path.basename(file.originalname, path.extname(file.originalname));
             const extension = path.extname(file.originalname);
-            const newFileName = `${originalName}-${Date.now()}${extension}`;
+            //google storage에 저장할 경로 및 파일 이름
+            const newFileName = `userProfile/${originalName}-${Date.now()}${extension}`;
 
             logger.info({"orginalName": originalName});
             logger.info({"extension": extension});
@@ -36,6 +37,9 @@ export const uploadImageService = {
             await new Promise((resolve, reject) => {
                 blobStream.on('finish', async() => {
                     const fileUrl = `https://storage.googleapis.com/${process.env.BUCKET_NAME}/${newFileName}`;
+
+                    // 이미지 공개 엑세스 설정
+                    await blob.makePublic();
 
                     // 업로드된 파일 정보를 DB에 저장
                     const userNo = Number(id);
