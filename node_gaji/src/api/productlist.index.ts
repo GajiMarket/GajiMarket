@@ -1,5 +1,5 @@
 import express from "express";
-import { getProductListCtrl } from "../api/controller/productlist.ctrl"; // 컨트롤러 가져오기
+import { getProductListCtrl } from "./controller/productlist.ctrl"; // 컨트롤러 가져오기
 
 const router = express.Router();
 
