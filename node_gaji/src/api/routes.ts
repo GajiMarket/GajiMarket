@@ -5,6 +5,7 @@ import Product_preview from './map.index';
 import { userLocation } from './controller/userLocation.ctrl';
 import member from './member.index';
 import chatRoutes from './chat.index';
+import mypage from '../api/mypage.index';
 
 const mountRoutes = (app:Express) => {
 
@@ -19,6 +20,8 @@ const mountRoutes = (app:Express) => {
     app.post('/', userLocation)
 
     app.use('/api', chatRoutes);
+
+    app.use('/mypage', mypage);
 
 }
 

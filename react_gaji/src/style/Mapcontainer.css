@@ -59,7 +59,7 @@
 }
 
 /* 선택 버튼 스타일 */
-.map-container-button{
+.map-container-button {
     z-index: 11;
     position: fixed;
     width: 50px;
@@ -67,6 +67,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
 
 .map-container-button:hover {
     background-color: #6a1bb9;

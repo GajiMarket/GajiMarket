@@ -4,7 +4,7 @@ interface IdProps {
 
     id: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    onClick: () => void;
     errors?: string;
     isCheckId: boolean;
 }
@@ -18,7 +18,7 @@ const Id:React.FC<IdProps> = ({id, onChange, onClick, errors, isCheckId}) => {
        
     </div>
        {isCheckId && <span className="checkedId">사용 가능한 아이디 입니다.</span>}
-       {errors && <span>{errors}</span>}
+       {errors && <span className="errorMessage">{errors}</span>}
     </div>
   )
 }

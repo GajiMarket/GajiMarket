@@ -79,13 +79,13 @@ export const validateEmail = (email: string): string | null => {
 };
 
 // 비밀번호 유효성 검증
-export const validatePassword = (password: string): string | null => {
+export const validatePassword = (password: string | ''): string | null => {
   const passwordRegx =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8, 12}$/;
 
-  return passwordRegx.test(password)
-    ? null
-    : "비밀번호는 최소 대문자, 특수문자, 숫자가 포함된 8~12자리를 입력해야합니다.";
+  const response = passwordRegx.test(password) ? null : "비밀번호는 최소 대문자, 특수문자, 숫자가 포함된 8~12자리를 입력해야합니다."
+
+  return response;
 };
 
 //휴대폰 유효성 검증
@@ -96,14 +96,14 @@ export const validatePhone = (phone: string): string | null => {
   return phoneRegex.test(phone) ? null : "없는 전화번호 입니다.";
 };
 
-// 아이디 중복
 
+
+
+// 아이디 중복
 export const checkId = async (id: string): Promise<boolean> => {
   try {
-    const response = await axios.post(`${api}/user/validateId`, {
-      data: {
+    const response = await axios.post(`${api}/auth/validateId`, {
         id: id,
-      }
     });
 
     if (response.data.success === 'false') {
@@ -111,6 +111,9 @@ export const checkId = async (id: string): Promise<boolean> => {
     }
 
     const results = response.data.success;
+
+    console.log("results값:", results);
+    
 
     return results;
   } catch (error) {
@@ -120,21 +123,23 @@ export const checkId = async (id: string): Promise<boolean> => {
   }
 };
 
-// 이메일 인증
 
-export const emailCheck = async (code: string): Promise<{validate: boolean, codeNum: string}> => {
+
+
+// 이메일 인증
+export const emailCheck = async (email:string, code: string): Promise<boolean> => {
   try {
-    const response = await axios.get(`${api}/user/emailCheck`, {
+    const response = await axios.post(`${api}/auth/emailCheck`, {
       data: {
         code: code,
+        email: email,
       },
     });
 
-    if (response.data.success === 'false') {
-      throw new Error(`Server Error: ${response.status}`);
-    }
+    const results = response.data.success;
 
-    const results = {validate: response.data.success, codeNum: response.data.code};
+    console.log("가져온 results:", results);
+    
 
     return results;
   } catch (error) {
@@ -146,26 +151,30 @@ export const emailCheck = async (code: string): Promise<{validate: boolean, code
 
 //이메일 인증번호 전송
 
-export const emailSend = async (email: string): Promise<{success: boolean, code: number}> => {
+export const emailSend = async (email: string): Promise<{success: boolean, code: string}> => {
   try {
-    const response = await axios.get(`http://localhost:3000/user/emailSend`, {
+    const response = await axios.post(`${api}/auth/emailSend`, {
       data:{
         email: email,
       },
     });
 
 
-    console.log('프런트에서 가져온 body값:', response);
+    console.log('프런트에서 가져온 body값:', response.data.data);
     
     
     if (response.data.success === 'false') {
       throw new Error(`Server Error: ${response.status}`);
     }
 
-    const results = {success: response.data.success, code: response.data.code};
+    const results = {success: response.data.success, code: response.data.data};
     
 
     console.log('서버에서 가져온 results값:', results);
+    console.log('code:', response.data.data);
+    console.log('success:', response.data.success);
+    
+    
     
 
     return results;
@@ -184,9 +193,12 @@ export const emailSend = async (email: string): Promise<{success: boolean, code:
 
 export const signUp = async (formData: Record<string, string>): Promise<boolean> => {
   try {
-    const response = await axios.post(`${api}/user/signUp`, {
-      data: formData,
+    const response = await axios.post(`${api}/auth/signUp`, {
+      formData,
     });
+
+    console.log("갖고온 formData:", formData);
+    
 
     console.log('입력된 데이터:', response.data.success);
     

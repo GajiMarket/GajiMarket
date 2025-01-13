@@ -2,12 +2,12 @@ import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { getAccessToken, kakaoUserInfo } from '../../hooks/useLogin';
 
-interface IKakaoProps {
-  formData: Record<string, string>;
-  setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-}
+// interface IKakaoProps {
+//   formData: Record<string, string>;
+//   setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+// }
 
-const KakaoLoginCOM:React.FC<IKakaoProps> = () => {
+const KakaoLoginCOM:React.FC = () => {
 
   // document.location.toString()을 사용하기 싫다면 아래대로 한다
   // const params = new URL(window.location.href).searchParams;
@@ -30,21 +30,21 @@ const KakaoLoginCOM:React.FC<IKakaoProps> = () => {
 
       try {
         //hooks에서 인가코드를 서버로 보내는 로직 사용
-        const accessToken = await getAccessToken(code);
+        const accessToken = await getAccessToken(code) as string;
 
         if(accessToken) {
           // 발급받은 토큰으로 사용자 정보를 가져오거나 처리
           
-          const userInfo = await kakaoUserInfo(accessToken);
+          const info = await kakaoUserInfo(accessToken);
           
-          if(userInfo) {
+          if(info.success) {
 
             alert('추가 정보를 입력해주세요')
             // 성공시 추가정보(회원가입) 페이지 이동
             navigate("/signup", {
               state: { 
-                email: userInfo.kakao_account.email, 
-                nickName: userInfo.properties.nickname
+                email: info.userInfo.email ,
+                nickName: info.userInfo.nickname
               }
             }); 
           }

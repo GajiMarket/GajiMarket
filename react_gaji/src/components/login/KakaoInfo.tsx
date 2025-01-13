@@ -19,6 +19,7 @@ const KakaoInfo: React.FC<IInfoProps> = ({formData, setFormData}) => {
 
   return (
     <div className="info">
+      <input type="text" value={formData.id || ''} onChange={handleState('id')} />
     </div>
   )
 }

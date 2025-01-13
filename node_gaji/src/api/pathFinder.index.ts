@@ -1,8 +1,8 @@
 import express from "express";
-import testPath from "./controller/pathFinder.ctrl";
+import { productPathCtrl } from "./controller/productPath.ctrl";
 
 const router = express.Router();
 
-router.get('/', testPath)
+router.post('/', productPathCtrl)
 
 export default router
