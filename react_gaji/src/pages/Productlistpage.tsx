@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "../style/Productlistpage.css";
 import Footer from "../components/all/Footer";
 
+// Product 타입 정의
 interface Product {
   id: number;
   title: string;
@@ -12,25 +14,22 @@ interface Product {
 }
 
 const ProductList: React.FC = () => {
-  const products: Product[] = [
-    {
-      id: 1,
-      title: "패딩팔아요~~",
-      location: "가산동",
-      distance: "4.5km",
-      time: "10분전",
-      imageUrl: "/path/to/image1.jpg",
-    },
-    {
-      id: 2,
-      title: "패딩팔아요~~",
-      location: "가산동",
-      distance: "4.5km",
-      time: "10분전",
-      imageUrl: "/path/to/image2.jpg",
-    },
-    // Add more products as needed
-  ];
+  // 상태 관리
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // 백엔드 API 호출
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get<Product[]>("/api/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <>
@@ -42,7 +41,7 @@ const ProductList: React.FC = () => {
         <ul className="product-list">
           {products.map((product) => (
             <li key={product.id} className="product-item">
-              <img src={product.imageUrl} className="product-image" />
+              <img src={product.imageUrl} alt={product.title} className="product-image" />
               <div className="product-info">
                 <h2 className="product-title">{product.title}</h2>
                 <p className="product-meta">
