@@ -5,7 +5,7 @@ import Product_preview from './map.index';
 import { userLocation } from './controller/userLocation.ctrl';
 import member from './member.index';
 import chatRoutes from '../api/chat.index';
-import productListRoutes from "../api/rpoductlist.index";
+import productListRoutes from '../api/rpoductlist.index';
 
 const mountRoutes = (app:Express) => {
 
@@ -21,9 +21,8 @@ const mountRoutes = (app:Express) => {
 
     app.use('/chatpage', chatRoutes);
 
-    app.use("/api/products", products);
-    
     app.use("/api/productlist", productListRoutes);
+
 }
 
 export default mountRoutes;
