@@ -7,12 +7,12 @@ import Footer from '../components/all/Footer.tsx';
 import smileIcon from '../assets/icons/smile-icon.png'; // 기본 이미지
 
 import loginStore from "../utils/loginStore.ts";
-import { getUserInfo } from "../hooks/useLogin.ts";
+// import { getUserInfo } from "../hooks/useLogin.ts";
+import { imageUpload } from '../hooks/useMypage.ts';
 
 const MypageProfileEdit: React.FC = () => {
 
-      const {isAuthenticated} = loginStore(); 
-    const token = loginStore.getState().token;
+      const {isAuthenticated, nickname, setNickname , userNo} = loginStore(); 
   
   
     const navigate = useNavigate();
@@ -26,50 +26,67 @@ const MypageProfileEdit: React.FC = () => {
       }
     })
   
-    const [nickname, setNickName] = useState<string>('');
+    // const [nickname, setNickName] = useState<string>('');
   
-    useEffect(() => {
-    
-        const userInfo = async () => {
-          try {
-            const info = await getUserInfo(token as string);
-      
-            if(!info.data.nickname) {
-              
-              console.log('해당 사용자의 닉네임이 없습니다.');
-              
-            }
-            
-            if(info && info.data.nickname !== nickname) {
-                
-              setNickName(info.data.nickname);
-            }
-            
-          } catch {
-    
-            console.error('사용자 정보를 불러오는 도중에 오류가 일어났습니다.');
-            
-          }
-        }
-    
-        userInfo();
-    
-      }, [nickname])
     
 
   const [profileImage, setProfileImage] = useState<string>(smileIcon); // 로컬 상태로 대체
   // const [newName, setNewName] = useState<string>('홍길동'); // 로컬 상태로 대체
   const [isEditingNickname, setIsEditingNickname] = useState<boolean>(false);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // 이미지 업로드
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          setProfileImage(reader.result as string); // Context에 새 이미지 저장
-        }
-      };
-      reader.readAsDataURL(event.target.files[0]);
+      // const reader = new FileReader();
+      const file = event.target.files[0];
+
+      // const originalName = file.name.split('\\').slice(0, -1).join('.');
+      // const fileExtension = originalName.split('.').pop(); // '\\'로 split후 마지막 요소
+      // const fileName = `${originalName}.${fileExtension}`;
+
+      // const originName = file.name.split('.').slice(0, -1);
+      const extension = file.name.split('.').pop();
+      const imageName = `${Date.now()}.${extension}`;
+
+      // console.log("지정한 fileName:", fileName);
+      // console.log("지정한 file:", file);
+
+      console.log("지정한 fileName:", imageName);
+      // console.log("지정한 file:", file);
+
+      
+
+
+      //유경이 한거 주석처리
+
+      // reader.onload = () => {
+      //   if (reader.result) {
+      //     setProfileImage(reader.result as string); // Context에 새 이미지 저장
+      //   }
+      // };
+      // reader.readAsDataURL(file);
+
+      
+      const formData = new FormData();
+      //키, input type이 file인 경우에만
+      // formData.append('profileImage', file, fileName);
+      formData.append('profileImage', file,imageName);
+      formData.append('userNo', userNo as string);
+
+
+      try {
+
+        const response = await imageUpload(formData);
+
+        console.log('이미지 업로드 성공:', response);
+
+        setProfileImage(response as string);
+        
+      } catch (error) {
+
+        console.error('이미지 업로드 실패:', error);
+        
+      }
     }
   };
 
@@ -123,8 +140,8 @@ const MypageProfileEdit: React.FC = () => {
                   <input
                     type="text"
                     id="nickname"
-                    value={nickname}
-                    onChange={(e) => setNickName(e.target.value)}
+                    value={nickname as string}
+                    onChange={(e) => setNickname(e.target.value)}
                     className="profileedit-nickname-input"
                   />
                   <button
@@ -139,7 +156,7 @@ const MypageProfileEdit: React.FC = () => {
                   <input
                     type="text"
                     id="nickname"
-                    value={nickname}
+                    value={nickname as string}
                     readOnly
                     className="profileedit-nickname-input"
                   />

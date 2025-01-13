@@ -1,16 +1,18 @@
-import { IChatUser, IChatMessage } from '../models/chat.models';
-import { getChatUserById, getMessagesBetweenUsers, sendMessage } from '../DAO/chat.dao';
+import { IChatMessage, IChatUser, IUser } from '../models/chat.models';
+import { getMessagesByChatRoomId, sendMessage, getUserById, getChatRoomsByMemberNo } from '../DAO/chat.dao';
 
-// 채팅 사용자
-export const findUserById = async (id: number): Promise<IChatUser | null> => {
-    return await getChatUserById(id);
-}
-
-// 채팅 메세지
-export const getChatMessages = async (userId1: number, userId2: number): Promise<IChatMessage[]> => {
-    return await getMessagesBetweenUsers(userId1, userId2);
+export const fetchMessages = async (chat_room_id: number): Promise<IChatMessage[]> => {
+  return await getMessagesByChatRoomId(chat_room_id);
 };
 
-export const createChatMessage = async (message: IChatMessage): Promise<void> => {
-    await sendMessage(message);
-}
+export const createMessage = async (message: IChatMessage): Promise<IChatMessage> => {
+  return await sendMessage(message);
+};
+
+export const fetchUser = async (member_no: number): Promise<IUser | null> => {
+  return await getUserById(member_no);
+};
+
+export const fetchChatRooms = async (member_no: number): Promise<IChatUser[]> => {
+  return await getChatRoomsByMemberNo(member_no);
+};

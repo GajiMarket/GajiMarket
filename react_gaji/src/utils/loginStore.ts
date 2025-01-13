@@ -1,30 +1,36 @@
-import {devtools, persist} from 'zustand/middleware'
+import {persist} from 'zustand/middleware'
 import { create } from 'zustand'
 import { PersistStorage } from 'zustand/middleware';
 
 // 사용할 타입 정의
 interface LoginProps {
-    // formData: Record<string, string>;
     isAuthenticated: boolean;
     token: string | null;
-    // formData: Record<string, string>;
-    // setFormData: (field: string, value: string) => void;
+    nickname: string | null;
+    userNo: string | null;
+    setUserNo: (userNo: string) => void;
+    setNickname: (nickname: string) => void;
     loginMethod: (token: string) => void;
     logoutMethod: () => void;
-    // setName: 
 }
 
+
+    // formData: Record<string, string>;
+    // setFormData: (nickname: string) => void;
+    // formData: Record<string, string>;
+    // setFormData: (field: string, value: string) => void;
+
 // 테스트용 사용안함
-interface SessionStorage {
-    getItem: (name: string) => string | null;
-    setItem: (name: string, value: string) => void;
-    removeItem: (name: string) => void;
+// interface SessionStorage {
+//     getItem: (name: string) => string | null;
+//     setItem: (name: string, value: string) => void;
+//     removeItem: (name: string) => void;
 
     //아래는 기능상 동일한 기능, 시그니처 정의
     // getItem(name: string): string | null;
     // setItem(name: string, value: string): void;
     // removeItem(name: string): void;
-}
+// }
 
 
 // getItem: (token) => sessionStorage.getItem(token) as string, // 세션 스토리지에서 가져오기
@@ -47,6 +53,10 @@ const loginStore = create<LoginProps>()(
         persist((set) => ({
             isAuthenticated: false,
             token: null,
+            nickname: null,
+            userNo: null,
+            setUserNo:(userNo) => set({userNo}),
+            setNickname: (nickname) => set({nickname}),
             loginMethod: (token) => set({ isAuthenticated: true, token }),
             logoutMethod: () => set({ isAuthenticated: false, token: null }),
         }), // 여기까지 초기화
@@ -65,7 +75,7 @@ const loginStore = create<LoginProps>()(
             } as PersistStorage<string>
         }
     )
-        
+
 );
 
 export default loginStore;

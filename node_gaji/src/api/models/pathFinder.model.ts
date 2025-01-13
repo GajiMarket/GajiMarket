@@ -20,23 +20,23 @@ export interface IPathFinderParams {
     option: string;
     service: string;
     srid: number;
-    type: string;
-    features: Node;
-    id: string;
-    geometry: Node;
-    coordinates: string;
-    properties: Node;
-    index: number;
-    totalLength: number;
-    totalTime: number;
-    maneuver: string;
-    nodeAId: string;
-    nodeEId: string;
-    length: string;
-    incline: number;
-    pathType: number;
-    time: number;
-    guide: string;
+    // type: string;
+    // features: Node;
+    // id: string;
+    // geometry: Node;
+    // coordinates: string;
+    // properties: Node;
+    // index: number;
+    // totalLength: number;
+    // totalTime: number;
+    // maneuver: string;
+    // nodeAId: string;
+    // nodeEId: string;
+    // length: string;
+    // incline: number;
+    // pathType: number;
+    // time: number;
+    // guide: string;
 }
 
 export interface IPathResponse {

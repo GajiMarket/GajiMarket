@@ -1,9 +1,13 @@
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
+import NodeCache from 'node-cache'
+import logger from '../../logger'
+
+const cache = new NodeCache({ stdTTL: 600});
 
 dotenv.config();
 
-const emailCode = async(email:string): Promise<number> => {
+export const emailCode = async(email:string): Promise<number> => {
 
     try {
 
@@ -24,22 +28,63 @@ const emailCode = async(email:string): Promise<number> => {
 
     });
 
-    const info = await transporter.sendMail({
+        const info = await transporter.sendMail({
 
-        from: `${process.env.ADMIN_USER}`,
-        to: email,
-        subject: '가지마켓 회원가입 - 이메일 인증번호를 입력해주세요.',
-        html: `인증번호 6자리를 입력해주세요<br>
-        <p style="font-weight: bold; font-size: 20px;">인증코드: ${code}</p>`
-    });
+            from: `${process.env.ADMIN_USER}`,
+            to: email,
+            subject: '가지마켓 회원가입 - 이메일 인증번호를 입력해주세요.',
+            html: `인증번호 6자리를 입력해주세요<br>
+            <p style="font-weight: bold; font-size: 20px;">인증코드: ${code}</p>`
+        });
 
-    return code;
-} catch (error) {
+        //이메일 코드 node-cache저장
+        cache.set(email, code);
 
-    console.error('코드 전송중 서버에서 오류 발생:', error);
-    throw error
+        return code;
+    } catch (error) {
+
+        console.error('코드 전송중 서버에서 오류 발생:', error);
+        throw error
+        
+    }
+}
+
+export const emailCheckService = (email: string, inputCode: number): boolean => {
+
+    const storeCode = cache.get<number>(email) as number;
+
+    console.log("갖고온 email 파라미터:", storeCode);
+
     
-}
-}
 
-export default {emailCode}
+    if(!storeCode) {
+        logger.error("인증 코드가 만료되었거나 존재하지 않습니다.");
+        return false;
+    }
+
+    console.log(storeCode === inputCode);
+    console.log("storeCode의 타입:", typeof storeCode);
+    console.log("inputCode의 타입:", typeof inputCode);
+    
+    
+    
+
+    if(storeCode === Number(inputCode)) {
+
+        logger.info('인증 성공');
+
+        cache.del(email);
+
+        return true;
+        
+    } else {
+        console.log("storeCode랑 inputCode:", storeCode, "", inputCode);
+        
+        logger.error('인증 실패');
+
+        return false;
+    }
+    
+
+        
+}

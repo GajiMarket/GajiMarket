@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NaverLogin = () => {
+const NaverLogin: React.FC = () => {
   return (
     <div>
       

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { NNIP } from '../components/signup/NNIP';
 import { useNavigate } from 'react-router-dom';
 import '../style/Signup.css';
@@ -11,9 +11,16 @@ import '../style/Signup.css';
 
 
 const Signup:React.FC = () => {
-  const navigate: any = useNavigate();
+  const navigate = useNavigate();
   
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({
+    id: '',
+    password: '',
+    passwordCheck: '',
+    email: '',
+    phone: '',
+    nickName: '',
+  });
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
 
   //이메일 인증코드
@@ -37,8 +44,12 @@ const Signup:React.FC = () => {
     address: '',
     extraAddress: '',
     detailAddress: '',
+    name: '',
 
   })
+
+  // 하나의 문자열로 합치기
+
 
   const handleSuccess = async () => {
 
@@ -47,7 +58,7 @@ const Signup:React.FC = () => {
       alert('회원가입이 완료 되었습니다.');
       console.log('회원가입 데이터:', formData);
 
-      return navigate('/login');
+      navigate('/');
     } catch {
 
       console.error('회원가입 실패');

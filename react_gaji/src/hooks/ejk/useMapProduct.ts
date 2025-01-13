@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import mapboxgl, { Map } from "mapbox-gl";
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
-import { mapConfig } from "../../hooks/ejk/mapConfig";
+import { mapConfig } from "./mapConfig";
 
-const useMap = () => {
+const useMapbox = (onLocationClick: (lngLat: mapboxgl.LngLat) => void) => {
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const clickMarkerRef = useRef<mapboxgl.Marker | null>(null);
 
@@ -29,6 +29,7 @@ const useMap = () => {
           .addTo(mapInstance);
 
         console.log(lngLat);
+        onLocationClick(lngLat);
       };
 
       // 클릭 이벤트 연결
@@ -50,4 +51,4 @@ const useMap = () => {
   return map;
 };
 
-export default useMap;
+export default useMapbox;

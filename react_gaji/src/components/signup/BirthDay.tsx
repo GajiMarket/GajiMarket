@@ -11,9 +11,10 @@ interface BirthDayProps {
 
     BirthDate: IBirthDay;
     handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    errors?: string;
 }
 
-const BirthDay: React.FC<BirthDayProps> = ({BirthDate, handleChange}) => {
+const BirthDay: React.FC<BirthDayProps> = ({BirthDate, handleChange, errors}) => {
   
     const years = Array.from({ length: 100 }, (_, i) => (2024 - i).toString());
     //padStart는 앞에 채울문자, 앞의 인수는 채울길이고 뒤에 인수는 채울문자, 해당 필드는 2자리로 문자 '0'으로 채워짐
@@ -39,7 +40,7 @@ const BirthDay: React.FC<BirthDayProps> = ({BirthDate, handleChange}) => {
             </option>
         ))}
       </select>
-      <select className="birth_day" name="month" value={BirthDate.day} onChange={handleChange}>
+      <select className="birth_day" name="day" value={BirthDate.day} onChange={handleChange}>
         <option value="" disabled>일</option>
         { days.map((day) => (
             <option key={day} value={day}>
@@ -47,6 +48,7 @@ const BirthDay: React.FC<BirthDayProps> = ({BirthDate, handleChange}) => {
             </option>
         ))}
       </select>
+      {errors && <span className="errorMessage">{errors}</span>}
     </div>
   )
 }
