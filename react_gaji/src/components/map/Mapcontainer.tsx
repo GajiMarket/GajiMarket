@@ -1,38 +1,57 @@
-import React, {useState} from "react";
-// import Mapbox from "../../components/all/Mapbox";
-import ClickMap from "./ClickMap";
+import React,{useState} from "react";
+import ClickMap from "../../components/map/ClickMap";
+import useMapStep from "../../hooks/product/useMapStep";
+import useLocationInput from "../../hooks/product/useLocationInput";
 import "../../style/Mapcontainer.css";
 
 interface MapcontainerProps {
   onClose: () => void;
-  onLocationSelect: (location: string) => void;
+  onLocationSelect: (location: { lng: number; lat: number; name: string }) => void;
 }
 
-const Mapcontainer: React.FC<MapcontainerProps> = (props) => {
-  const [step, setStep] = useState(1); // 화면 단계를 관리하는 상태
-  const [locationInput, setLocationInput] = useState("");
+const Mapcontainer: React.FC<MapcontainerProps> = ({ onClose, onLocationSelect }) => {
+  const [selectedLngLat, setSelectedLngLat] = useState<{ lng: number; lat: number } | null>(null);
+  const { step, nextStep, resetStep } = useMapStep();
+  const { locationInput, handleInputChange } = useLocationInput();
 
-  const handleMapSelection = () => {
-    setStep(2); // 선택 버튼을 누르면 다음 단계로 이동
+  const handleMapSelection = (lngLat: mapboxgl.LngLat) => {
+    setSelectedLngLat(lngLat);
+    nextStep();
+  };
+
+  const handleNextStep = () => {
+    if (!selectedLngLat) {
+      alert("지도를 클릭하여 위치를 선택해주세요.");
+      return;
+    }
+    nextStep();
   };
 
   const handleLocationRegister = () => {
-    if (locationInput.trim() !== "") {
-      console.log("Selected Location:", locationInput);
-      props.onLocationSelect(locationInput); // 🔥 장소명 전달
+    if (!selectedLngLat || locationInput.trim() === "") {
+      alert("위치와 장소명을 모두 입력해주세요.");
+      return;
     }
-    props.onClose();
+  
+    const locationData = {
+      lng: selectedLngLat.lng,
+      lat: selectedLngLat.lat,
+      name: locationInput.trim(),
+    };
+    console.log("Registered Location:", locationData);
+    onLocationSelect(locationData);
+    onClose();
+    resetStep();
   };
 
   const handleClose = () => {
-    props.onClose();
+    resetStep();
+    onClose();
   };
-
   return (
     <div className="map-container">
       {step === 1 && (
         <>
-          {/* 첫 번째 화면 */}
           <div className="map-header">
             <button className="close-button" onClick={handleClose}>
               ✖
@@ -40,12 +59,11 @@ const Mapcontainer: React.FC<MapcontainerProps> = (props) => {
             <h2>이웃과 만나서 거래하고 싶은 장소를 선택해주세요.</h2>
             <p>만나서 거래할 때는 누구나 찾기 쉬운 공공장소가 좋아요.</p>
           </div>
-          <div className="map-container">
-            {/* <Mapbox showMyLocationButton={false} /> */}
-            <ClickMap showMyLocationButton={false} />
+          <div className="map-click-container">
+            <ClickMap onLocationClick={handleMapSelection} />
             <button
-              className="map-container-button"
-              onClick={handleMapSelection}
+              className="map-click-container-button"
+              onClick={handleNextStep}
             >
               선택
             </button>
@@ -54,13 +72,12 @@ const Mapcontainer: React.FC<MapcontainerProps> = (props) => {
       )}
       {step === 2 && (
         <>
-          {/* 두 번째 화면 */}
           <div className="map-header">
             <button className="close-button" onClick={handleClose}>
               ✖
             </button>
             <h2>선택한 곳의 장소명을 입력해주세요</h2>
-            <p> 예) 강남역 1번 출구, 교보타워 앞</p>
+            <p>예) 강남역 1번 출구, 교보타워 앞</p>
           </div>
           <div className="map-form">
             <input
@@ -68,14 +85,8 @@ const Mapcontainer: React.FC<MapcontainerProps> = (props) => {
               placeholder="예) 강남역 1번 출구, 교보타워 앞"
               className="location-input"
               value={locationInput}
-              onChange={(e) => {
-                console.log("Input Changed:", e.target.value);  // 🔥 추가
-                setLocationInput(e.target.value);
-              }}
+              onChange={(e) => handleInputChange(e.target.value)}
             />
-            {/* <button className="map-container-button" onClick={handleClose}>
-                            거래 장소 등록
-                        </button> */}
             <button
               className="map-container-button"
               onClick={handleLocationRegister}

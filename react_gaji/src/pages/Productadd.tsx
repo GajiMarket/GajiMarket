@@ -2,19 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/Productadd.css";
 import Mapcontainer from "../components/map/Mapcontainer";
+import axios from 'axios'
 
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState<{ lng: number; lat: number; name :string } | null>(null);
   const [images, setImages] = useState<File[]>([]);
-  const [representativeIndex, setRepresentativeIndex] = useState<number | null>(null);
+  const [representativeIndex, setRepresentativeIndex] = useState<number | null>(
+    null
+  );
   const [showMap, setShowMap] = useState(false);
-
-  // 추가된 코드: 거래 방식 상태 관리
-  const [transactionMethod, setTransactionMethod] = useState("판매하기");
-  const [acceptPriceSuggestion, setAcceptPriceSuggestion] = useState(false);
 
   const navigate = useNavigate();
 
@@ -36,24 +35,58 @@ const ProductAdd: React.FC = () => {
     setRepresentativeIndex(index);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // 유효성 검사
+    if (!title || !price || !description || !location) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+
     const productData = {
       title,
-      price: transactionMethod === "판매하기" ? price : "나눔",
+      price: Number(price), // 숫자로 변환
       description,
       location,
-      images,
-      representativeImage: representativeIndex !== null ? images[representativeIndex] : null,
-      transactionMethod,
-      acceptPriceSuggestion,
+      createdAt: new Date().toISOString(), // 현재 시간
+      views: 0, // 조회수 초기화
     };
 
-    console.log("Product Data:", productData);
-    navigate("/productpage", { state: productData });
+    try {
+      const response = await axios.post("http://localhost:3000/api/products", productData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("Product Saved:", response.data);
+      alert("상품이 성공적으로 등록되었습니다.");
+      
+      // 입력 필드 초기화
+      setTitle("");
+      setPrice("");
+      setDescription("");
+      setLocation(null);
+      setImages([]);
+      setRepresentativeIndex(null);
+
+      navigate("/productpage", { state: response.data });
+    } catch (error) {
+      console.error("Error saving product:", error);
+      alert("상품 등록 중 문제가 발생했습니다.");
+    }
   };
 
-  const handleLocationSelect = (selectedLocation: string) => {
+  const handleLocationSelect = (selectedLocation: { lng: number; lat: number; name: string;}) => {
     setLocation(selectedLocation);
+    console.log(selectedLocation);
+    
     setShowMap(false);
   };
 
@@ -65,7 +98,7 @@ const ProductAdd: React.FC = () => {
         <h1>내 물건 팔기</h1>
         <button className="product-add-save-draft">임시저장</button>
       </header>
-  
+
       {/* Image Upload Section */}
       <section className="product-add-image-upload">
         <div className="image-list-container">
@@ -100,14 +133,16 @@ const ProductAdd: React.FC = () => {
                 style={{
                   display: representativeIndex === index ? "none" : "block",
                 }}
-              >대표설정</button>
+              >
+                대표설정
+              </button>
             </div>
           ))}
         </div>
       </section>
-  
+
       {/* Product Details Form Section */}
-      <form className="product-add-form">
+      <form className="product-add-form" onSubmit={(e) => e.preventDefault()}>
         {/* Title Input */}
         <label className="form-label">
           <h2>제목</h2>
@@ -119,53 +154,21 @@ const ProductAdd: React.FC = () => {
             className="form-input"
           />
         </label>
-  
-        {/* Transaction Method Section */}
-        <div className="transaction-method">
-          <h2>거래 방식</h2>
-          <div className="transaction-method-buttons">
-            <button
-              type="button"
-              className={transactionMethod === "판매하기" ? "selected" : ""}
-              onClick={() => setTransactionMethod("판매하기")}
-            >
-              판매하기
-            </button>
-            <button
-              type="button"
-              className={transactionMethod === "나눔하기" ? "selected" : ""}
-              onClick={() => setTransactionMethod("나눔하기")}
-            >
-              나눔하기
-            </button>
-          </div>
-        </div>
-  
-        {/* Price Input */}
-        {transactionMethod === "판매하기" && (
-  <div className="price-section">
-    <label className="form-label">
-      <h2>가격</h2>
-      <input
-        type="number"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        placeholder="가격을 입력해주세요"
-        className="form-input"
-      />
-    </label>
-    <div className="accept-price-suggestion">
-      <input
-        type="checkbox"
-        checked={acceptPriceSuggestion}
-        onChange={(e) => setAcceptPriceSuggestion(e.target.checked)}
-      />
-      가격 제안 받기
-    </div>
-  </div>
-)}
 
-  
+      
+          <div className="price-section">
+            <label className="form-label">
+              <h2>가격</h2>
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="가격을 입력해주세요"
+                className="form-input"
+              />
+            </label>
+          </div>
+
         {/* Description Input */}
         <label className="form-label">
           상품 상세설명
@@ -176,13 +179,13 @@ const ProductAdd: React.FC = () => {
             className="form-textarea"
           />
         </label>
-  
+
         {/* Location Input */}
         <label className="form-label">
           거래 희망 장소
           <input
             type="text"
-            value={location}
+            value={location ? `${location.name}` : ""}
             onClick={() => setShowMap(true)}
             placeholder="위치 추가"
             readOnly
@@ -190,14 +193,21 @@ const ProductAdd: React.FC = () => {
           />
         </label>
       </form>
-  
+
       {/* Submit Button */}
-      <button className="submit-button" onClick={handleSubmit}>작성 완료</button>
-  
+      <button className="submit-button" onClick={handleSubmit}>
+        작성 완료
+      </button>
+
       {/* Map Modal */}
-      {showMap && <Mapcontainer onClose={() => setShowMap(false)} onLocationSelect={handleLocationSelect} />}
+      {showMap && (
+        <Mapcontainer
+          onClose={() => setShowMap(false)}
+          onLocationSelect={handleLocationSelect}
+        />
+      )}
     </div>
   );
-}
+};
 
 export default ProductAdd;

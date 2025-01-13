@@ -7,7 +7,6 @@ export interface IProduct {
     created_at: Date;
     view_count: number;
     sell_location: string;
-    emd_id: number;
     category_id: number;
     member_no: number;
 }

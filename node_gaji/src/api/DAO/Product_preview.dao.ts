@@ -22,7 +22,7 @@ export const getProductPreviews = async (): Promise<IProduct[]> => {
         created_at, 
         view_count, 
         ST_X(sell_location::geometry) AS longitude, 
-        ST_Y(sell_location::geometry) AS latitude,
+        ST_Y(sell_location::geometry) AS latitude, 
         member_no,
         age(NOW(), created_at) AS time_elapsed
       FROM ${schema}.product;

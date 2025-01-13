@@ -15,7 +15,6 @@ interface ProductLocation {
     status: string;
     created_at: string;
     view_count: number;
-    // emd_id: number;
     member_no: number;
     time_elapsed: string;
 }
@@ -63,32 +62,16 @@ const useMarkers = () => {
         
         clearMarkers(); // 기존 마커 제거
 
-        // const newMarkers = locations.map((product) =>
-        //     new mapboxgl.Marker({ color: "purple" })
-        //         .setLngLat([product.longitude, product.latitude])
-        //         .setPopup(
-        //             new mapboxgl.Popup().setHTML(`
-        //                 <div class="popup">
-        //                     <h3>${product.title}</h3>
-        //                     <p>${product.description}</p>
-        //                     <p>가격: ${product.sell_price}원</p>
-        //                     <p>올린시간: ${product.time_elapsed}</p>
-        //                     <button class="navigate-btn">길찾기</button>
-        //                 </div>
-        //             `)
-        //         )
-        //         .addTo(map)
-        // );
-
         const newMarkers = locations.map((product) => {
             const popupContent = document.createElement("div");
 
             popupContent.innerHTML = `
-                <div class="popup">
-                    <h3>${product.title}</h3>
-                    <p>${product.description}</p>
-                    <p>가격: ${product.sell_price}원</p>
-                    <p>올린시간: ${product.time_elapsed}</p>
+                <div class="map_popup">
+                    <div class="popup_img">${product.status}</div>
+                    <h3 class="popup_title">${product.title}</h3>
+                    <p class="popup_description">${product.description}</p>
+                    <p class="popup_sell_price">가격: ${product.sell_price}원</p>
+                    <p class="popup_time">올린시간: ${product.time_elapsed}</p>
                     <button class="navigate-btn">길찾기</button>
                 </div>
             `;
