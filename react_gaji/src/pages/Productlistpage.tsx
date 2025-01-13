@@ -21,8 +21,11 @@ const ProductList: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get<Product[]>("/api/products");
-        setProducts(response.data);
+        const response = await axios.get("/api/products");
+
+        // 응답이 배열인지 확인하고 배열만 상태로 설정
+        const productData = Array.isArray(response.data) ? response.data : response.data.data || [];
+        setProducts(productData);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
