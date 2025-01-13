@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const api = `http://localhost:3000`;
 
+// id(userNo)도 formData에 들어가 있음
+// 따로따로 보내려고 하면 formData가 빈 배열로 넘어감
 export const imageUpload = async(formData: FormData): Promise<string | void> => {
 
 
