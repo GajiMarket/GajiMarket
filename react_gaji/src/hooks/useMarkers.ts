@@ -13,7 +13,6 @@ interface ProductLocation {
     status: string;
     created_at: string;
     view_count: number;
-    emd_id: number;
     member_no: number;
     time_elapsed: string;
 }
