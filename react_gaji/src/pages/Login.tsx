@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import LoginAccess from '../components/login/Login'
-import loginStore from '../utils/loginStore'
 import '../style/Login.css'
 
 
