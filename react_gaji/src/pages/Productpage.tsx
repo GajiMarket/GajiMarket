@@ -38,8 +38,8 @@ const ProductPage: React.FC = () => {
   const mainImage = product.representativeImage
     ? URL.createObjectURL(product.representativeImage)
     : product.images.length > 0
-    ? URL.createObjectURL(product.images[0])
-    : "";
+      ? URL.createObjectURL(product.images[0])
+      : "";
 
   // 메인 화면으로 돌아가는 함수
   const goBackToMain = () => {
