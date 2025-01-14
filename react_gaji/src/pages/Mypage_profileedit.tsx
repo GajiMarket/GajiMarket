@@ -12,7 +12,7 @@ import { imageUpload } from '../hooks/useMypage.ts';
 
 const MypageProfileEdit: React.FC = () => {
 
-      const {isAuthenticated, nickname, setNickname , userNo} = loginStore(); 
+      const {isAuthenticated, nickname, setNickname, userNo, profileImage, setImage} = loginStore(); 
   
   
     const navigate = useNavigate();
@@ -26,11 +26,11 @@ const MypageProfileEdit: React.FC = () => {
       }
     })
   
-    // const [nickname, setNickName] = useState<string>('');
-  
     
 
-  const [profileImage, setProfileImage] = useState<string>(smileIcon); // 로컬 상태로 대체
+    
+
+  // const [profileImage, setProfileImage] = useState<string>(smileIcon); // 로컬 상태로 대체
   // const [newName, setNewName] = useState<string>('홍길동'); // 로컬 상태로 대체
   const [isEditingNickname, setIsEditingNickname] = useState<boolean>(false);
 
@@ -84,7 +84,7 @@ const MypageProfileEdit: React.FC = () => {
 
         console.log('이미지 업로드 성공:', response);
 
-        setProfileImage(response as string);
+        setImage(response as string);
         
       } catch (error) {
 

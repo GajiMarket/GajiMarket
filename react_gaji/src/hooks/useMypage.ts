@@ -48,3 +48,28 @@ export const imageUpload = async(formData: FormData): Promise<string | void> => 
         throw new Error("imageUpload: 서버와 연결도중 오류가 발생했습니다.");
     }
 }
+
+// 프로필 이미지
+export const imagePath = async (userNo: number): Promise<string | void> => {
+
+    try {
+        if (!userNo) {
+            console.error("유저 번호가 전달되지 못했습니다.", userNo);
+
+            return;
+            
+        }
+
+        const response = await axios.post(`${api}/mypage/defaultimage`, {
+            userNo,
+        });
+
+        const result = response.data.imagePath;
+
+        return result;
+        
+    } catch (error) {
+
+        throw new Error("500 에러 발생:");
+    }
+}
