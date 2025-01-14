@@ -17,12 +17,12 @@ import termsIcon from "../assets/icons/terms-icon.png";
 import arrowIcon from "../assets/icons/arrow.png";
 
 import loginStore from "../utils/loginStore.ts";
-import { getUserInfo } from "../hooks/useLogin.ts";
+
+import {imagePath} from '../hooks/useMypage.ts' 
 
 const Mypage: React.FC = () => {
   // store와 token 생성
-  const {isAuthenticated, logoutMethod, nickname, setNickname, setUserNo} = loginStore(); 
-  const token = loginStore.getState().token;
+  const {isAuthenticated, logoutMethod, nickname, userNo, profileImage, setImage} = loginStore(); 
 
 
   const navigate = useNavigate();
@@ -35,6 +35,24 @@ const Mypage: React.FC = () => {
       
     }
   })
+
+ // 프로필 이미지 불러오기
+     useEffect(() => {
+       const profileDefault = async() => {
+ 
+         try {
+           const defaultImage = await imagePath(Number(userNo));
+ 
+           setImage(defaultImage as string);
+ 
+         } catch {
+           console.error("이미지 불러오기 실패 500");
+           
+         }
+       }
+ 
+       profileDefault();
+     }, [profileImage]);
 
   // const [nickname, setNickName] = useState<string>('');
 
@@ -85,44 +103,6 @@ const Mypage: React.FC = () => {
     navigate('/');
   };
 
-  useEffect(() => {
-
-    const userInfo = async () => {
-      try {
-        const info = await getUserInfo(token as string);
-  
-        if(!info.data.nickname) {
-          
-          console.log('해당 사용자의 닉네임이 없습니다.');
-          
-        }
-
-        if(!info.data.id) {
-
-          console.log("해당 사용자의 아이디가 없습니다.");
-          
-        }
-
-        
-        if(info && info.data.nickname !== nickname && info.data.id) {
-            
-          // store에 있는 nickname에 저장
-          setNickname(info.data.nickname);
-
-          // store에 있는 userNo에 저장
-          setUserNo(info.data.id);
-        }
-        
-      } catch {
-
-        console.error('사용자 정보를 불러오는 도중에 오류가 일어났습니다.');
-        
-      }
-    }
-
-    userInfo();
-
-  }, [nickname])
 
   return (
     <div className="mypage">
@@ -133,7 +113,7 @@ const Mypage: React.FC = () => {
           <div className="profile-info">
             <img
               className="smile-icon cursor-pointer"
-              src={smileIcon}
+              src={profileImage as string || smileIcon}
               alt="프로필 이미지"
             />
             <div className="profile-name">{nickname}</div>

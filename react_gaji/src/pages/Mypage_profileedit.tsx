@@ -12,7 +12,7 @@ import { imageUpload } from '../hooks/useMypage.ts';
 
 const MypageProfileEdit: React.FC = () => {
 
-      const {isAuthenticated, nickname, setNickname , userNo} = loginStore(); 
+      const {isAuthenticated, nickname, setNickname, userNo, profileImage, setImage} = loginStore(); 
   
   
     const navigate = useNavigate();
@@ -26,11 +26,11 @@ const MypageProfileEdit: React.FC = () => {
       }
     })
   
-    // const [nickname, setNickName] = useState<string>('');
-  
     
 
-  const [profileImage, setProfileImage] = useState<string>(smileIcon); // 로컬 상태로 대체
+    
+
+  // const [profileImage, setProfileImage] = useState<string>(smileIcon); // 로컬 상태로 대체
   // const [newName, setNewName] = useState<string>('홍길동'); // 로컬 상태로 대체
   const [isEditingNickname, setIsEditingNickname] = useState<boolean>(false);
 
@@ -45,7 +45,10 @@ const MypageProfileEdit: React.FC = () => {
       // const fileName = `${originalName}.${fileExtension}`;
 
       // const originName = file.name.split('.').slice(0, -1);
+
+      //확장자만 남긴다.
       const extension = file.name.split('.').pop();
+      //지금 날짜와 확장자를 저장
       const imageName = `${Date.now()}.${extension}`;
 
       // console.log("지정한 fileName:", fileName);
@@ -57,7 +60,7 @@ const MypageProfileEdit: React.FC = () => {
       
 
 
-      //유경이 한거 주석처리
+      //===========================유경이 한거 주석처리========================
 
       // reader.onload = () => {
       //   if (reader.result) {
@@ -66,11 +69,12 @@ const MypageProfileEdit: React.FC = () => {
       // };
       // reader.readAsDataURL(file);
 
+      // ====================================================================
       
       const formData = new FormData();
       //키, input type이 file인 경우에만
       // formData.append('profileImage', file, fileName);
-      formData.append('profileImage', file,imageName);
+      formData.append('profileImage', file, imageName);
       formData.append('userNo', userNo as string);
 
 
@@ -80,7 +84,7 @@ const MypageProfileEdit: React.FC = () => {
 
         console.log('이미지 업로드 성공:', response);
 
-        setProfileImage(response as string);
+        setImage(response as string);
         
       } catch (error) {
 

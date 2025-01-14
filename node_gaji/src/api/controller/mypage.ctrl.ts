@@ -63,6 +63,40 @@ export const uploadImage = {
     
             return;
         }
-}
+},
+
+// 프로필 기본 이미지
+    defaultProfileImage: async (req: Request, res: Response) => {
+
+        try {
+            
+            const id = req.body.id;
+
+            logger.debug("갖고온 아이디:", id as string)
+
+            if(!id) {
+                logger.error("아이디가 존재하지 않습니다.");
+                res.status(400).json({
+                    success: false,
+                    message: "아이다가 존재하지 않습니다."
+                });
+            }
+
+            const imagePath = await uploadImageService.profileDefaultService(id);
+
+            res.status(200).json({
+                success: true,
+                imagePath,
+                message: "이미지 불러오기 완료",
+            });
+
+        } catch (error) {
+
+            res.status(500).json({
+                success: false,
+                message: "internel Server error",
+            })
+        }
+    }
 
 }

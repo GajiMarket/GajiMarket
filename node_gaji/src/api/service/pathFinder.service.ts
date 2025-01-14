@@ -16,8 +16,6 @@ export const findPathService = async (params: IPathFinderParams): Promise<IPathR
                 params,
             }
         )
-        console.log("API Call Data:", params);
-        console.log("External API Response:", response.data);
         return response.data;
 
     } catch (error) {
