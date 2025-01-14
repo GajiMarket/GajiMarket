@@ -1,6 +1,6 @@
 import logger from '../../logger'
 import { Storage } from '@google-cloud/storage'
-import {uploadImageDAO} from '../DAO/mypage.dao'
+import {uploadImageDAO, profileDefault} from '../DAO/mypage.dao'
 import IPhoto from 'api/models/photo'
 import path from 'path'
 import dotenv from 'dotenv';
@@ -18,6 +18,7 @@ const bucket = storage.bucket(process.env.BUCKET_NAME as string);
 
 
 export const uploadImageService = {
+    // 구글 스토리지 이미지 업로드
     uploadFilesToStorage: async (formData: Express.Multer.File[], id: string) => {
         const uploadFiles: Array<string> = [];
         
@@ -64,14 +65,22 @@ export const uploadImageService = {
 
     },
 
-    // profileDefaultService: async (id: string): Promise< => {
+    // 내가 쓰고 있는 프로필
+    profileDefaultService: async (id: string): Promise<Photo | void> => {
         
-    //     if(id) {
+        logger.debug("전달 받은 파라미터:", id)
             
-    //         const response = await profileDefault(id);
+            const response = await profileDefault(Number(id));
+
+            if(!response) {
+                logger.error("DAO에서 값을 받아오지 못했습니다.");
+
+                return;
+            }
+
+            return response as Photo;
 
 
-    //     }
-    // }
+    }
 };
     

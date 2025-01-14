@@ -8,6 +8,8 @@ interface LoginProps {
     token: string | null;
     nickname: string | null;
     userNo: string | null;
+    profileImage: string | null;
+    setImage: (image: string) => void;
     setUserNo: (userNo: string) => void;
     setNickname: (nickname: string) => void;
     loginMethod: (token: string) => void;
@@ -55,10 +57,12 @@ const loginStore = create<LoginProps>()(
             token: null,
             nickname: null,
             userNo: null,
+            profileImage: '',
+            setImage: (profileImage) => set({profileImage}),
             setUserNo:(userNo) => set({userNo}),
             setNickname: (nickname) => set({nickname}),
             loginMethod: (token) => set({ isAuthenticated: true, token }),
-            logoutMethod: () => set({ isAuthenticated: false, token: null }),
+            logoutMethod: () => set({ isAuthenticated: false, token: null, userNo: null, nickname: null, profileImage: null }),
         }), // 여기까지 초기화
 
         { // 세션에 저장할 키이름과 storage 설정

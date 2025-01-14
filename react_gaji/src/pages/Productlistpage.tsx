@@ -5,35 +5,45 @@ import Footer from "../components/all/Footer";
 
 // Product 타입 정의
 interface Product {
-  id: number;
+  product_id: number;
   title: string;
-  location: string;
-  distance: string;
-  time: string;
-  imageUrl: string;
+  sell_price: number;
+  created_at: string;
+  view_count: number;
 }
 
 const ProductList: React.FC = () => {
   // 상태 관리
   const [products, setProducts] = useState<Product[]>([]);
+  const api = 'http://localhost:3000';
 
   // 백엔드 API 호출
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/api/products");
+        const response = await axios.get(`${api}/product/list`);
 
-        // 응답이 배열인지 확인하고 배열만 상태로 설정
-        const productData = Array.isArray(response.data) ? response.data : response.data.data || [];
-        setProducts(productData);
+        // API 응답 데이터 확인
+        console.log("Fetched products from API:", response.data);
+
+        if (response.data && response.data.success) {
+          const productData = response.data.data ?? [];
+          setProducts(productData);
+        } else {
+          console.error("API 응답이 성공하지 않았습니다.");
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
+        if (axios.isAxiosError(error)) {
+          console.error("Axios 에러 메시지:", error.response?.data);
+        }
       }
     };
 
     fetchProducts();
   }, []);
 
+  // 화면에 출력
   return (
     <>
       <div className="product-list-container">
@@ -42,18 +52,18 @@ const ProductList: React.FC = () => {
           <button className="dropdown-button">▼</button>
         </header>
         <ul className="product-list">
-          {products.map((product) => (
-            <li key={product.id} className="product-item">
-              <img src={product.imageUrl} alt={product.title} className="product-image" />
-              <div className="product-info">
+          {products.length > 0 ? (
+            products.map((product) => (
+              <li key={product.product_id} className="product-item">
                 <h2 className="product-title">{product.title}</h2>
-                <p className="product-meta">
-                  {product.distance} · {product.location} · {product.time}
-                </p>
-              </div>
-              <button className="chat-button">채팅하기</button>
-            </li>
-          ))}
+                <p className="product-meta">{product.sell_price}원</p>
+                <p className="product-meta">{product.view_count} views</p>
+                <button className="chat-button">채팅하기</button>
+              </li>
+            ))
+          ) : (
+            <p className="no-products">제품 목록이 없습니다.</p>
+          )}
         </ul>
       </div>
       <Footer />

@@ -12,7 +12,7 @@ export const login = async (id: string, password: string): Promise<loginType> =>
     console.log("가지고 온 파라미터:", id,"" , password);
     
 
-    const response =  await db.query(`SELECT member_no, member_id, member_nick, member_pwd, member_email FROM ${schema}.member_tbl WHERE member_id = $1 AND member_pwd = $2`, [String(id), String(password)]);
+    const response =  await db.query(`SELECT m.member_no, m.member_id, m.member_nick, m.member_pwd, m.member_email, p.image FROM ${schema}.member_tbl m inner join ${schema}.photo p ON m.member_no = p.member_no WHERE m.member_id = $1 AND m.member_pwd = $2`, [String(id), String(password)]);
 
     const hashPassword = response.rows[0] as loginType
 
@@ -146,7 +146,3 @@ export const idCheckDAO = async (id: string): Promise<loginType | void> => {
         
 //     }
 // }
-
-
-
-
