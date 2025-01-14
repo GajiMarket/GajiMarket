@@ -21,6 +21,9 @@ export const uploadImageService = {
     // 구글 스토리지 이미지 업로드
     uploadFilesToStorage: async (formData: Express.Multer.File[], id: string) => {
         const uploadFiles: Array<string> = [];
+        const userNo = Number(id);
+
+       
         
         for (const file of formData) {
             const originalName = path.basename(file.originalname, path.extname(file.originalname));
@@ -43,12 +46,35 @@ export const uploadImageService = {
                 blobStream.on('finish', async() => {
                     const fileUrl = `https://storage.googleapis.com/${process.env.BUCKET_NAME}/${newFileName}`;
 
+                   
+
+
                     // 이미지 공개 엑세스 설정
                     await blob.makePublic();
 
                     // 업로드된 파일 정보를 DB에 저장
-                    const userNo = Number(id);
-                    await uploadImageDAO(fileUrl, userNo);
+                    await uploadImageDAO(fileUrl, userNo); 
+                    
+                    // 기존 프로필 이미지가 있으면 삭제
+                    const currentImageFile = await profileDefault(userNo);
+
+                    if(currentImageFile?.image) {
+
+                        const existingFileNmae = path.basename(currentImageFile.image);
+                        const existingBlob = bucket.file(existingFileNmae);
+
+                        try {
+
+                            await existingBlob.delete();
+                            logger.debug(`기존 프로필 이미지 삭제 완료: ${existingFileNmae}`)
+
+                        } catch (error) {
+                            
+                            logger.error(`기존 프로필 이미지 삭제 실패: ${existingFileNmae}`, error)
+                        }
+
+                    }
+                    
 
                     // 이미지 경로URL 저장
                     uploadFiles.push(fileUrl);

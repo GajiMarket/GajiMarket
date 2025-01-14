@@ -9,6 +9,7 @@ interface LoginProps {
     nickname: string | null;
     userNo: string | null;
     profileImage: string | null;
+    setToken: (token: string) => void;
     setImage: (image: string) => void;
     setUserNo: (userNo: string) => void;
     setNickname: (nickname: string) => void;
@@ -58,6 +59,7 @@ const loginStore = create<LoginProps>()(
             nickname: null,
             userNo: null,
             profileImage: null,
+            setToken: (token) => set({token}),
             setImage: (profileImage) => set({profileImage}),
             setUserNo:(userNo) => set({userNo}),
             setNickname: (nickname) => set({nickname}),

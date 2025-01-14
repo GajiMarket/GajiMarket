@@ -78,7 +78,7 @@ export const profileDefault = async (id: number): Promise<Photo | void> => {
 
     }
 
-    const imagePath = response.rows[0] as Photo
+    const imagePath = response.rows[0]
 
     return imagePath;
 }

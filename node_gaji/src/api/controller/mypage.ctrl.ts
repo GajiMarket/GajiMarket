@@ -33,7 +33,7 @@ export const uploadImage = {
         }
     
         const response = await uploadImageService.uploadFilesToStorage(formData, userNo);
-    
+        
         if(!response) {
             
             logger.error({"!response 값을 가져오지 못했습니다": response});

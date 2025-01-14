@@ -42,11 +42,21 @@ const Mypage: React.FC = () => {
  
          try {
            const defaultImage = await imagePath(Number(userNo));
+
+           if(!defaultImage) {
+            console.error("이미지 불러오기 실패");
+
+            return;
+            
+           }
  
            setImage(defaultImage as string);
+
+           return;
  
-         } catch {
-           console.error("이미지 불러오기 실패 500");
+         } catch(error) {
+
+           console.error("이미지 불러오기 실패 500", error);
            
          }
        }

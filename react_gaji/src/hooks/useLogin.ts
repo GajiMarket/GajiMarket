@@ -31,11 +31,12 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
             throw Error(`서버 에러: ${response.status}`);
         }
         
-        const results = ({data:{token: response.data.data.token, id:response.data.data.id, nickname: response.data.data.nickname }, isChecked: response.data.success});
+        const results = ({data:{token: response.data.data.token, id:response.data.data.id, nickname: response.data.data.nickname}, isChecked: response.data.success});
         
         console.log("results.data.id 값", results.data.id);
         console.log("results.data.id 값", results.data.nickname);
         console.log("results.data.token 값", results.data.token);
+        
         console.log("results.success 값", results.isChecked);
         
         

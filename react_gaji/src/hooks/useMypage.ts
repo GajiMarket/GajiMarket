@@ -67,9 +67,46 @@ export const imagePath = async (userNo: number): Promise<string | void> => {
         const result = response.data.imagePath;
 
         return result;
-        
+
     } catch (error) {
 
         throw new Error("500 에러 발생:");
     }
 }
+
+
+// export const updateNick = async (nickname: string, token: string): Promise<string | void> => {
+
+//     try {
+
+//         if (!nickname) {
+//             console.log("파라미터를 받아오지 못했습니다.");
+
+//             return;
+            
+//         }
+
+//         const response = await axios.post(`${api}/mypage/updatenick`, {
+//             nickname,
+//             headers: {
+//                 Authorization: {
+//                     `Bearer: ${token}`
+//                 }
+//             }
+//         });
+
+//         if(!response) {
+//             console.log("값을 반환 하지 못했습니다:", response.data.userNick);
+
+//             return;
+            
+//         }
+
+//         const result = response.data.userNick;
+
+//         return result;
+//     } catch {
+
+//         throw new Error("500 에러 발생<닉네임 업데이트>:");
+//     }
+// }
