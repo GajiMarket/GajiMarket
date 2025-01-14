@@ -1,69 +1,84 @@
 .mypage-sell {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .mypage-sell h1 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .item-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .item {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-  }
-  
-  .item-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-  
-  .item-info {
-    flex: 1;
-  }
-  
-  .item-info h2 {
-    margin: 0 0 5px;
-    font-size: 18px;
-  }
-  
-  .item-info p {
-    margin: 0 0 5px;
-    color: #555;
-    font-size: 14px;
-  }
-  
-  .price {
-    font-weight: bold;
-    font-size: 16px;
-    color: #000;
-  }
-  
-  .item-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .status-button {
-    background-color: #D9D9D9;
-    color: #ffffff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: default;
-    margin-top: 32px; /* 아래 여백 추가 */
-  }
-  
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.mypage-sell h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.item-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info h2 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.item-info p {
+  margin: 0 0 5px;
+  color: #555;
+  font-size: 14px;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+
+.item-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-button {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* 거래완료 상태 스타일 */
+.status-button.status-complete {
+  background-color: #d9d9d9;
+  color: #ffffff;
+}
+
+/* 판매 중 상태 스타일 */
+.status-button.status-selling {
+  background-color: #ffffff;
+  color: #8a2be2;
+  border: 2px solid #8a2be2;
+}
+
+.status-button.status-selling:hover {
+  background-color: #8a2be2;
+  color: #ffffff;
+}

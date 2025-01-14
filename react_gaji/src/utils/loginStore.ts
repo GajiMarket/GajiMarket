@@ -62,7 +62,7 @@ const loginStore = create<LoginProps>()(
             setUserNo:(userNo) => set({userNo}),
             setNickname: (nickname) => set({nickname}),
             loginMethod: (token) => set({ isAuthenticated: true, token }),
-            logoutMethod: () => set({ isAuthenticated: false, token: null }),
+            logoutMethod: () => set({ isAuthenticated: false, token: null, userNo: null, nickname: null, profileImage: null }),
         }), // 여기까지 초기화
 
         { // 세션에 저장할 키이름과 storage 설정

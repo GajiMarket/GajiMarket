@@ -2,29 +2,30 @@ import { db, schema } from "../../config/dbConfig";
 import { IProduct } from "../models/product";
 import logger from "../../logger";
 
-// ✅ 제품 목록 가져오기 서비스 함수
-export const getProductListService = async (distance: number): Promise<IProduct[]> => {
+export const getProductListService = async (): Promise<IProduct[]> => {
   try {
-    logger.info(`getProductListService: ${distance}m 거리 내 제품 목록을 조회합니다.`);
-
-    // SQL 쿼리 작성
+    // 쿼리 실행
     const query = `
-      SELECT id, title, location, distance, time, image_url
-      FROM ${schema}.product
-      WHERE distance <= $1;
+      SELECT product_id, title, sell_price, view_count
+      FROM ${schema}.product;
     `;
+    const queryResult = await db.query<IProduct>(query);
 
-    // DB 쿼리 실행
-    const queryResult = await db.query<IProduct>(query, [distance]);
+    // 쿼리 결과가 없을 경우 빈 배열 반환
+    if (!queryResult.rows || queryResult.rows.length === 0) {
+      logger.info("DB Query Result: No products found.");
+      return [];
+    }
 
-    // 결과 처리
-    const products: IProduct[] = queryResult.rows;
-
-    logger.info(`getProductListService: ${products.length}개의 제품을 반환합니다.`);
-
-    return products;
+    // 쿼리 결과 출력
+    logger.info("DB Query Result:", queryResult.rows);
+    return queryResult.rows;
   } catch (error) {
-    logger.error("getProductListService: 제품 목록 조회 중 오류 발생", error);
-    throw new Error("서비스 오류: 제품 목록을 가져올 수 없습니다.");
+    // 오류 로그 추가
+    const err = error as Error;
+    logger.error("Error in getProductListService:", err.message);
+
+    // 오류를 다시 던져서 컨트롤러로 전달
+    throw new Error("DB에서 제품 목록을 가져오는 중 오류가 발생했습니다.");
   }
 };
