@@ -17,12 +17,22 @@ interface Item {
 }
 
 const MypageSell: React.FC = () => {
-  const [items] = useState<Item[]>([
+  const [items, setItems] = useState<Item[]>([
     { id: 1, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "거래완료" },
-    { id: 2, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "거래완료" },
+    { id: 2, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "판매 중" },
     { id: 3, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "거래완료" },
-    { id: 4, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "거래완료" },
+    { id: 4, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "판매 중" },
   ]);
+
+  const toggleStatus = (id: number) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, status: item.status === "거래완료" ? "판매 중" : "거래완료" }
+          : item
+      )
+    );
+  };
 
   return (
     <div className="Mypage_sell">
@@ -35,11 +45,20 @@ const MypageSell: React.FC = () => {
               <img src={paddingImage} alt={item.name} className="item-image" />
               <div className="item-info">
                 <h2>{item.name}</h2>
-                <p>{item.location} · {item.time}</p>
+                <p>
+                  {item.location} · {item.time}
+                </p>
                 <p className="price">{item.price}</p>
               </div>
               <div className="item-actions">
-                <button className="status-button">{item.status}</button>
+                <button
+                  className={`status-button ${
+                    item.status === "판매 중" ? "status-selling" : "status-complete"
+                  }`}
+                  onClick={() => toggleStatus(item.id)}
+                >
+                  {item.status}
+                </button>
               </div>
             </li>
           ))}
