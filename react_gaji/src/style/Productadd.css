@@ -3,6 +3,8 @@
   flex-direction: column;
   padding: 0 16px;
   background-color: #f9f9f9;
+  min-width: 390px;
+  max-width: 430px;
   height: 100vh;
   justify-content: center;
   overflow-y: scroll;

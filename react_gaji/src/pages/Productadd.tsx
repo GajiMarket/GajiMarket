@@ -3,20 +3,23 @@ import { useNavigate } from "react-router-dom";
 import "../style/Productadd.css";
 import Mapcontainer from "../components/map/Mapcontainer";
 import axios from 'axios'
+import loginStore from "../utils/loginStore";
 
 const ProductAdd: React.FC = () => {
-  // 상태 변수 정의
-  const [title, setTitle] = useState(""); // 제목 입력 상태
-  const [price, setPrice] = useState(""); // 가격 입력 상태
-  const [description, setDescription] = useState(""); // 상세 설명 입력 상태
-  const [location, setLocation] = useState<{ lng: number; lat: number; name: string } | null>(null); // 위치 정보 상태
-  const [images, setImages] = useState<File[]>([]); // 업로드된 이미지 상태
-  const [representativeIndex, setRepresentativeIndex] = useState<number | null>(null); // 대표 이미지 인덱스 상태
-  const [showMap, setShowMap] = useState(false); // 지도 모달 표시 상태
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState<{ lng: number; lat: number; name :string } | null>(null);
+  const [images, setImages] = useState<File[]>([]);
+  const [representativeIndex, setRepresentativeIndex] = useState<number | null>(
+    null
+  );
+  const [showMap, setShowMap] = useState(false);
 
-  const navigate = useNavigate(); // 페이지 이동을 위한 훅
+  const { isAuthenticated, userNo} = loginStore();
 
-  // 이미지 업로드 처리 함수
+  const navigate = useNavigate();
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const uploadedFiles = Array.from(event.target.files); // 업로드된 파일을 배열로 변환
@@ -45,11 +48,9 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
-    // 토큰 확인 (로그인 여부 확인)
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!isAuthenticated) {
       alert("로그인이 필요합니다.");
-      navigate("/login");
+      navigate("/");
       return;
     }
 
@@ -59,17 +60,13 @@ const ProductAdd: React.FC = () => {
       price: Number(price), // 문자열을 숫자로 변환
       description,
       location,
-      createdAt: new Date().toISOString(), // 현재 시간 저장
-      views: 0, // 조회수 초기값 설정
+      createdAt: new Date().toISOString(), // 현재 시간
+      views: 0, // 조회수 초기화
+      userNo,
     };
 
     try {
-      // 서버로 상품 데이터 전송 (POST 요청)
-      const response = await axios.post("http://localhost:3000/api/products", productData, {
-        headers: {
-          Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
-        },
-      });
+      const response = await axios.post("http://localhost:3000/api/productadd", productData);
 
       // 상품 등록 성공 시 처리
       console.log("Product Saved:", response.data);
@@ -92,12 +89,10 @@ const ProductAdd: React.FC = () => {
     }
   };
 
-  // 지도에서 선택한 위치를 설정하는 함수
-  const handleLocationSelect = (selectedLocation: { lng: number; lat: number; name: string }) => {
-    setLocation(selectedLocation); // 선택한 위치 설정
-    console.log(selectedLocation);
-
-    setShowMap(false); // 지도 모달 닫기
+  const handleLocationSelect = (selectedLocation: { lng: number; lat: number; name: string;}) => {
+    setLocation(selectedLocation);
+    console.log("productadd_88줄",selectedLocation);
+    setShowMap(false);
   };
 
   return (
