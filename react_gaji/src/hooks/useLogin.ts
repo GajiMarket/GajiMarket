@@ -6,7 +6,7 @@ const api: string = `http://localhost:3000`
 //로그인 함수
 
 
-export const login = async (formData: Record<string, string>): Promise<{isChecked:boolean, data: string}> => {
+export const login = async (formData: Record<string, string>): Promise<{isChecked:boolean, data: Record<string, string>}> => {
 
 
     try {
@@ -31,14 +31,16 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
             throw Error(`서버 에러: ${response.status}`);
         }
         
-        const results = response.data;
+        const results = ({data:{token: response.data.data.token, id:response.data.data.id, nickname: response.data.data.nickname }, isChecked: response.data.success});
         
-        console.log("results.data 값", results.data);
-        console.log("results.success 값", results.success);
+        console.log("results.data.id 값", results.data.id);
+        console.log("results.data.id 값", results.data.nickname);
+        console.log("results.data.token 값", results.data.token);
+        console.log("results.success 값", results.isChecked);
         
         
 
-        return {isChecked: results.success, data: results.data};
+        return {isChecked: results.isChecked, data: results.data};
         
 
 
