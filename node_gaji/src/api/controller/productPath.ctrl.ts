@@ -26,12 +26,3 @@ export const postPathCtrl = async (req: Request, res: Response): Promise<void> =
         });
     }
 }
-
-export const getPathCtrl = async (req: Request, res: Response): Promise<void> => {
-    try {
-        
-        const params: ICoordinates = req.body;
-
-        const pathResult = await 
-    }
-}

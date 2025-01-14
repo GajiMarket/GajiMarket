@@ -6,7 +6,7 @@ import { userLocation } from './controller/userLocation.ctrl';
 import member from './member.index';
 import chatRoutes from './chat.index';
 import mypage from '../api/mypage.index';
-import productListRoutes from '../api/productlist.index';
+// import productListRoutes from '../api/productlist.index';
 // import productcdd from './productcdd.index';
 
 const mountRoutes = (app:Express) => {
