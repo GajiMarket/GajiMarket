@@ -4,6 +4,6 @@ import { getProductListCtrl } from "./controller/productlist.ctrl"; // 컨트롤
 const router = express.Router();
 
 // 제품 목록 가져오기 라우터
-router.get("/", getProductListCtrl);
+router.get("/product/list", getProductListCtrl);
 
 export default router;
