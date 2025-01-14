@@ -53,11 +53,11 @@ interface LoginProps {
 // loginMethod: 함수 실행 후 true로 바꾸고 서버에서 갖고온 token값 저장
 const loginStore = create<LoginProps>()(
         persist((set) => ({
-            isAuthenticated: false,
+            isAuthenticated: false, 
             token: null,
             nickname: null,
             userNo: null,
-            profileImage: '',
+            profileImage: null,
             setImage: (profileImage) => set({profileImage}),
             setUserNo:(userNo) => set({userNo}),
             setNickname: (nickname) => set({nickname}),
