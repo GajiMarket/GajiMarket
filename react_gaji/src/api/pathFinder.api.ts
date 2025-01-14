@@ -22,8 +22,8 @@ export const sendPathData = async (longitude: number, latitude: number): Promise
 
     const payload = {
         // productId,
-        startY: 37.4809829,
-        startX: 126.8793159,
+        startY: 37.479598,
+        startX: 126.882238,
         endY: latitude, // lat값을 endY로 맵핑
         endX: longitude, // lng값을 endX로 맵핑
     }
