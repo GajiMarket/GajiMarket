@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // React Router Link 사용
 import "../../style/Mypage_sell.css";
 
 import Header from "./Header.tsx";
@@ -42,14 +43,16 @@ const MypageSell: React.FC = () => {
         <ul className="item-list">
           {items.map((item) => (
             <li key={item.id} className="item">
-              <img src={paddingImage} alt={item.name} className="item-image" />
-              <div className="item-info">
-                <h2>{item.name}</h2>
-                <p>
-                  {item.location} · {item.time}
-                </p>
-                <p className="price">{item.price}</p>
-              </div>
+              <Link to={`/productpage/${item.id}`} className="item-link">
+                <img src={paddingImage} alt={item.name} className="item-image" />
+                <div className="item-info">
+                  <h2>{item.name}</h2>
+                  <p>
+                    {item.location} · {item.time}
+                  </p>
+                  <p className="price">{item.price}</p>
+                </div>
+              </Link>
               <div className="item-actions">
                 <button
                   className={`status-button ${
