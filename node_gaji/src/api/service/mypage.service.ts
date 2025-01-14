@@ -1,8 +1,11 @@
 import logger from '../../logger'
 import { Storage } from '@google-cloud/storage'
 import {uploadImageDAO} from '../DAO/mypage.dao'
+import IPhoto from 'api/models/photo'
 import path from 'path'
 import dotenv from 'dotenv';
+
+type Photo = Partial<IPhoto>
 
 dotenv.config();
 
@@ -22,7 +25,8 @@ export const uploadImageService = {
             const originalName = path.basename(file.originalname, path.extname(file.originalname));
             const extension = path.extname(file.originalname);
             //google storage에 저장할 경로 및 파일 이름
-            const newFileName = `userProfile/${originalName}-${Date.now()}${extension}`;
+            // const newFileName = `userProfile/${originalName}-${Date.now()}${extension}`;
+            const newFileName = `userProfile/${originalName}-${extension}`;
 
             logger.info({"orginalName": originalName});
             logger.info({"extension": extension});
@@ -59,5 +63,15 @@ export const uploadImageService = {
     return uploadFiles;
 
     },
+
+    // profileDefaultService: async (id: string): Promise< => {
+        
+    //     if(id) {
+            
+    //         const response = await profileDefault(id);
+
+
+    //     }
+    // }
 };
     

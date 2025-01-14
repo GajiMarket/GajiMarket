@@ -21,8 +21,7 @@ import { getUserInfo } from "../hooks/useLogin.ts";
 
 const Mypage: React.FC = () => {
   // store와 token 생성
-  const {isAuthenticated, logoutMethod, nickname, setNickname, setUserNo} = loginStore(); 
-  const token = loginStore.getState().token;
+  const {isAuthenticated, logoutMethod, nickname} = loginStore(); 
 
 
   const navigate = useNavigate();
@@ -85,44 +84,44 @@ const Mypage: React.FC = () => {
     navigate('/');
   };
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const userInfo = async () => {
-      try {
-        const info = await getUserInfo(token as string);
+  //   const userInfo = async () => {
+  //     try {
+  //       const info = await getUserInfo(token as string);
   
-        if(!info.data.nickname) {
+  //       if(!info.data.nickname) {
           
-          console.log('해당 사용자의 닉네임이 없습니다.');
+  //         console.log('해당 사용자의 닉네임이 없습니다.');
           
-        }
+  //       }
 
-        if(!info.data.id) {
+  //       if(!info.data.id) {
 
-          console.log("해당 사용자의 아이디가 없습니다.");
+  //         console.log("해당 사용자의 아이디가 없습니다.");
           
-        }
+  //       }
 
         
-        if(info && info.data.nickname !== nickname && info.data.id) {
+  //       if(info && info.data.nickname !== nickname && info.data.id) {
             
-          // store에 있는 nickname에 저장
-          setNickname(info.data.nickname);
+  //         // store에 있는 nickname에 저장
+  //         setNickname(info.data.nickname);
 
-          // store에 있는 userNo에 저장
-          setUserNo(info.data.id);
-        }
+  //         // store에 있는 userNo에 저장
+  //         setUserNo(info.data.id);
+  //       }
         
-      } catch {
+  //     } catch {
 
-        console.error('사용자 정보를 불러오는 도중에 오류가 일어났습니다.');
+  //       console.error('사용자 정보를 불러오는 도중에 오류가 일어났습니다.');
         
-      }
-    }
+  //     }
+  //   }
 
-    userInfo();
+  //   userInfo();
 
-  }, [nickname])
+  // }, [nickname])
 
   return (
     <div className="mypage">
