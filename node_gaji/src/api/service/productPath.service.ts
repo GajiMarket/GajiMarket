@@ -1,19 +1,22 @@
 import { findPathService } from './pathFinder.service';
-import { IPathResponse, ICoordinates } from '../models/pathFinder.model';
+import { IPathResponse, ICoordinates, IPathFinderParams } from '../models/pathFinder.model';
 
 export const pathFinderAPI = async (params: ICoordinates): Promise<IPathResponse> => {
 
-    const apiCallData = {
-        ...params,
+    const apiCallData: Partial<IPathFinderParams> = {
+        // ...params,
+        startX: params.startX,
+        startY: params.startY,
+        endX: params.endX,
+        endY: params.endY,
         option: "short",
         service: "wheel",
         srid: 4326,
     }
-    // console.log("API Call Data:", apiCallData);
 
-    const apiResponse = await findPathService(apiCallData);
+    const apiResponse = await findPathService(apiCallData as IPathFinderParams);
 
-    // console.log("API Response:", apiResponse);
+    console.log("API Response:", apiResponse);
 
     return apiResponse;
 }

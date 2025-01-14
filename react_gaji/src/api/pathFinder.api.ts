@@ -1,15 +1,34 @@
 import axios from "axios";
-import { Feature, Geometry, GeoJsonProperties } from "geojson";
+import { Geometry } from "geojson";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
-    headers: {
-        'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json', },
 })
+
+// API 타입 정의의
+export interface PathFeatureProperties {
+    index: number;
+    totalLength: number;
+    totalTime: number;
+    maneuver?: string;
+    nodeAId?: string;
+    nodeBId?: string;
+    length?: number;
+    incline?: number;
+    pathType?: number;
+    time?: number;
+    guide?: string;
+}
+export interface PathFeature {
+    type: string;
+    id: string;
+    geometry: Geometry;
+    properties: PathFeatureProperties;
+}
 export interface IPathResponse {
     type: string;
-    features: Feature<Geometry, GeoJsonProperties>[];
+    features: PathFeature[];
 }
 
 // zustand로 상태저장한 product의 id, lng, lat값을 서버에 전달
