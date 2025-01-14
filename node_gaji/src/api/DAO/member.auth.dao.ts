@@ -13,6 +13,7 @@ export const login = async (id: string, password: string): Promise<loginType> =>
     
 
     const response =  await db.query(`SELECT m.member_no, m.member_id, m.member_nick, m.member_pwd, m.member_email, p.image FROM ${schema}.member_tbl m inner join ${schema}.photo p ON m.member_no = p.member_no WHERE m.member_id = $1 AND m.member_pwd = $2`, [String(id), String(password)]);
+    // const response =  await db.query(`CALL ${schema}.user`, [String(id), String(password)]);
 
     const hashPassword = response.rows[0] as loginType
 
