@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
+import { pathFinderAPI } from "api/service/productPath.service";
 import { ICoordinates } from "api/models/pathFinder.model";
-import { pathFinderAPI } from "../service/productPath.service";
 
-export const productPathCtrl = async (req: Request, res: Response): Promise<void> => {
+export const postPathCtrl = async (req: Request, res: Response): Promise<void> => {
     try {
         const params: ICoordinates = req.body; // ICoordinates로 타입검증
 
@@ -24,5 +24,14 @@ export const productPathCtrl = async (req: Request, res: Response): Promise<void
             message: "Internal server error.",
             details: error instanceof Error ? error.stack : "Unknown error",
         });
+    }
+}
+
+export const getPathCtrl = async (req: Request, res: Response): Promise<void> => {
+    try {
+        
+        const params: ICoordinates = req.body;
+
+        const pathResult = await 
     }
 }
