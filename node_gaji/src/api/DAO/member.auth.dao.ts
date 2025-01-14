@@ -147,7 +147,3 @@ export const idCheckDAO = async (id: string): Promise<loginType | void> => {
         
 //     }
 // }
-
-
-
-

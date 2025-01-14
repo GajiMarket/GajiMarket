@@ -2,15 +2,10 @@ import React, { useState } from "react";
 import "../../style/Mypage_neighborhood_auth.css"; // 스타일 파일
 import Header from "./Header.tsx"; // Header 컴포넌트
 import Footer from "../all/Footer.tsx"; // Footer 컴포넌트
-import currentLocationIcon from "../../assets/icons/current-location-icon.png"; // 현재 위치 아이콘
 import Mapbox from "../all/Mapbox"; // Mapbox 컴포넌트 불러오기
 
 const MypageNeighborhoodAuth: React.FC = () => {
   const [neighborhood, setNeighborhood] = useState<string | null>("가산동");
-
-  const handleCurrentLocationClick = () => {
-    console.log("현재 위치로 이동합니다."); // Mapbox 내부에서 처리됨
-  };
 
   const handleDeleteNeighborhood = (e: React.MouseEvent) => {
     e.stopPropagation(); // 부모 버튼 클릭 이벤트 방지
@@ -18,7 +13,7 @@ const MypageNeighborhoodAuth: React.FC = () => {
   };
 
   const handleSetNeighborhood = () => {
-    const newNeighborhood = "신갈동"; // 예시로 새로운 동네 설정
+    const newNeighborhood = "구로동"; // 예시로 새로운 동네 설정
     setNeighborhood(newNeighborhood);
   };
 
@@ -34,16 +29,6 @@ const MypageNeighborhoodAuth: React.FC = () => {
         <div className="auth-map-container">
           {/* 지도 표시 영역 */}
           <Mapbox /> {/* Mapbox 컴포넌트를 렌더링 */}
-          <button
-            className="auth-current-location-btn"
-            onClick={handleCurrentLocationClick}
-          >
-            <img
-              src={currentLocationIcon}
-              alt="현재 위치 아이콘"
-              className="auth-current-location-icon"
-            />
-          </button>
         </div>
         <div className="auth-button-container">
           {neighborhood ? (

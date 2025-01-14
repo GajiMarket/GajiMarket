@@ -16,7 +16,7 @@ const Mapcontainer: React.FC<MapcontainerProps> = ({ onClose, onLocationSelect }
 
   const handleMapSelection = (lngLat: mapboxgl.LngLat) => {
     setSelectedLngLat(lngLat);
-    nextStep();
+    console.log("Mapcontainer_19줄", lngLat);
   };
 
   const handleNextStep = () => {
@@ -88,7 +88,7 @@ const Mapcontainer: React.FC<MapcontainerProps> = ({ onClose, onLocationSelect }
               onChange={(e) => handleInputChange(e.target.value)}
             />
             <button
-              className="map-container-button"
+              className="map-click-container-button"
               onClick={handleLocationRegister}
             >
               거래 장소 등록

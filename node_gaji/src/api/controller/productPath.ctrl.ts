@@ -4,8 +4,6 @@ import { pathFinderAPI } from "../service/productPath.service";
 
 export const productPathCtrl = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log('Headers:', req.headers); // 헤더 확인
-        console.log("Received Payload:", req.body);
         const params: ICoordinates = req.body; // ICoordinates로 타입검증
 
         if (!params.startY || !params.startX || !params.endY || !params.endX) {
