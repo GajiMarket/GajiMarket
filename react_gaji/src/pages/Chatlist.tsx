@@ -4,31 +4,32 @@ import "../style/Chatlist.css";
 import ChatlistHeader from '../components/chatlist/ChatlistHeader';
 import ChatlistForm from '../components/chatlist/ChatlistForm';
 import Footer from '../components/all/Footer';
+import { useNavigate } from 'react-router-dom';
 
-interface ChatItem {
-  id: number;
-  name: string;
-  location: string;
-  time: string;
-  message: string;
-  avatar: string;
-  chat_room_id: number;
-  buyer_no: number;
-  created_at: Date;
-  member_no: number;
-  product_id: number;
-  last_message: string;
-  last_message_time: Date;
-}
+// interface ChatItem {
+//   id: number;
+//   name: string;
+//   location: string;
+//   time: string;
+//   message: string;
+//   avatar: string;
+//   chat_room_id: number;
+//   buyer_no: number;
+//   created_at: Date;
+//   member_no: number;
+//   product_id: number;
+//   last_message: string;
+//   last_message_time: Date;
+// }
 
 const Chatlist: React.FC = () => {
-  const [chats, setChats] = useState<ChatItem[]>([]);
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [chats, setChats] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get('/api/chatrooms/1'); // 예시로 member_no 1을 사용
+        const response = await axios.get('/api/chatrooms/13'); // 13번 회원의 채팅 목록을 가져옴
         setChats(response.data);
       } catch (error) {
         console.error('Failed to fetch chats:', error);
@@ -59,11 +60,15 @@ const Chatlist: React.FC = () => {
     };
   }, []);
 
+  const handleChatClick = (chatRoomId: number) => {
+    navigate(`/chatpage/${chatRoomId}`);
+  };
+
   return (
     <div className="chatlist">
       <ChatlistHeader />
       <div className="chatlist-scroll-container">
-        <ChatlistForm chats={chats} />
+        <ChatlistForm chats={chats} onChatClick={handleChatClick} />
       </div>
       <Footer />
     </div>

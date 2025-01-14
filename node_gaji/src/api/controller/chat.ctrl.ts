@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import { getChatMessages, saveChatMessage } from '../service/chat.service';
+import { getChatRooms } from '../service/chat.service';
 
-export const getMessages = async (req: Request, res: Response) => {
-  const { roomId } = req.params;
-  const messages = await getChatMessages(roomId);
-  res.json(messages);
-};
+export const getChatRoomsByMember = async (req: Request, res: Response) => {
+  const memberNo = parseInt(req.params.memberNo, 10);
 
-export const postMessage = async (req: Request, res: Response) => {
-  const { roomId, message } = req.body;
-  await saveChatMessage(roomId, message);
-  res.status(201).send();
+  try {
+    const chatRooms = await getChatRooms(memberNo);
+    res.json(chatRooms);
+  } catch (error) {
+    console.error('Failed to fetch chat rooms:', error);
+    res.status(500).json({ error: 'Failed to fetch chat rooms' });
+  }
 };
