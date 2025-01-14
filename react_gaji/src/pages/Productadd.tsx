@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../style/Productadd.css";
 import Mapcontainer from "../components/map/Mapcontainer";
 import axios from 'axios'
+import loginStore from "../utils/loginStore";
 
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -14,6 +15,8 @@ const ProductAdd: React.FC = () => {
     null
   );
   const [showMap, setShowMap] = useState(false);
+
+  const { isAuthenticated, userNo} = loginStore();
 
   const navigate = useNavigate();
 
@@ -42,10 +45,9 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!isAuthenticated) {
       alert("로그인이 필요합니다.");
-      navigate("/login");
+      navigate("/");
       return;
     }
 
@@ -56,14 +58,11 @@ const ProductAdd: React.FC = () => {
       location,
       createdAt: new Date().toISOString(), // 현재 시간
       views: 0, // 조회수 초기화
+      userNo,
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/api/products", productData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post("http://localhost:3000/api/productadd", productData);
 
       console.log("Product Saved:", response.data);
       alert("상품이 성공적으로 등록되었습니다.");
@@ -85,8 +84,7 @@ const ProductAdd: React.FC = () => {
 
   const handleLocationSelect = (selectedLocation: { lng: number; lat: number; name: string;}) => {
     setLocation(selectedLocation);
-    console.log(selectedLocation);
-    
+    console.log("productadd_88줄",selectedLocation);
     setShowMap(false);
   };
 

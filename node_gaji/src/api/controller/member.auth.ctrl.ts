@@ -119,7 +119,11 @@ export const userCtrl = async (req:Request, res: Response) => {
 
                 res.status(200).json({
                     success: true,
-                    data: token,
+                    data: {
+                        token: token,
+                        id: response.member_no,
+                        nickname: response.member_nick,
+                    },
                     message: '로그인 성공',
         
                 });
