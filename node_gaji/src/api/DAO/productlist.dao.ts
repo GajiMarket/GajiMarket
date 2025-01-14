@@ -1,35 +1,31 @@
-import { Request, Response } from "express";
 import { db, schema } from "../../config/dbConfig";
-import { IProduct } from "../models/product"; // Product 인터페이스
+import { IProduct } from "../models/product";
+import logger from "../../logger";
 
-// 제품 목록 가져오기 함수
-export const getProductList = async (req: Request, res: Response): Promise<void> => {
+// 제품 목록 가져오기 함수 (DAO)
+export const getProductList = async (distance: number = 500): Promise<IProduct[]> => {
   try {
-    // 요청 파라미터에서 검색 거리(distance) 가져오기
-    const distance = Number(req.query.distance) || 500;
-
-    // SQL 쿼리 작성
+    // 쿼리 실행
     const query = `
-      SELECT id, title, location, distance, time, image_url
+      SELECT product_id, title, sell_price, view_count
       FROM ${schema}.product
       WHERE distance <= $1;
     `;
+    const response = await db.query<IProduct>(query, [distance]);
 
-    // DB 쿼리 실행
-    const queryResult = await db.query<IProduct>(query, [distance]);
+    // 결과가 없을 경우 빈 배열 반환
+    if (!response.rows || response.rows.length === 0) {
+      logger.info("DB Query Result: No products found.");
+      return [];
+    }
 
-    // 결과 처리
-    const results: IProduct[] = queryResult.rows;
-
-    // 응답 반환
-    res.status(200).json({
-      message: "Product list fetched successfully",
-      data: results,
-    });
+    // 결과 출력 및 반환
+    logger.info(`DB Query Result: ${response.rows.length} products found.`);
+    return response.rows;
   } catch (error) {
-    console.error("Error fetching product list:", error);
-    res.status(500).json({
-      message: "Failed to fetch product list"
-    });
+    // 에러 처리 및 로그 기록
+    const err = error as Error;
+    logger.error("Error in getProductList:", err.message);
+    throw new Error("DB에서 제품 목록을 가져오는 중 오류가 발생했습니다.");
   }
 };
