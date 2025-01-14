@@ -6,7 +6,6 @@ export interface IProduct {
     sell_price: number;
     created_at: Date;
     view_count: number;
-    sell_location: string;
-    category_id: number;
+    location: {lng: number; lat: number;};
     member_no: number;
 }

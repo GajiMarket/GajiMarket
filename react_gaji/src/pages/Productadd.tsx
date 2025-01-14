@@ -54,19 +54,25 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
+    const locationData = location
+    ? { lng: location.lng, lat: location.lat }
+    : null;
+
+
     // 서버로 전송할 상품 데이터 생성
     const productData = {
       title,
       price: Number(price), // 문자열을 숫자로 변환
       description,
-      location,
+      location:locationData,
       createdAt: new Date().toISOString(), // 현재 시간
       views: 0, // 조회수 초기화
       userNo,
+      status:"중고물품",
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/api/productadd", productData);
+      const response = await axios.post("http://localhost:3000/productadd", productData);
 
       // 상품 등록 성공 시 처리
       console.log("Product Saved:", response.data);
