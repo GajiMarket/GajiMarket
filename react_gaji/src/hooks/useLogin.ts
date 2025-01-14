@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 const api: string = `http://localhost:3000` 
@@ -243,4 +244,5 @@ export const kakaoUserInfo = async (token: string): Promise<{success: boolean, u
 //         console.error('kakaoUserInfo: 함수 실행중 오류 발생');
         
 //     }
+
 // }
