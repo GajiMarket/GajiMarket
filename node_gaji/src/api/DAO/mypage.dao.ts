@@ -13,7 +13,7 @@ export const uploadImageDAO = async(url: string, id: number): Promise<Photo | vo
     logger.debug("이미지 확인:", {"image": imageCheck.rows[0]});
     
 
-    if(imageCheck.rowCount as number <= 0) {
+    if(imageCheck.rows[0]) {
         //이미지가 있다면 update 쿼리 실행
 
         const imageUpdate = await db.query(`UPDATE ${schema}.photo SET image = $1 WHERE member_no = $2`, [url, id]);
@@ -25,7 +25,7 @@ export const uploadImageDAO = async(url: string, id: number): Promise<Photo | vo
         //업데이트가 됐다면 쿼리 실행
         const imageSelect = await db.query(`SELECT image FROM ${schema}.photo WHERE member_no = $1`, [id]);
 
-        logger
+        logger.info({"이미지 경로":imageSelect.rows[0]});
 
         return imageSelect.rows[0] as Photo;
        }

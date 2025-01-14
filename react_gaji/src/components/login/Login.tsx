@@ -85,13 +85,10 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData}) => {
 
         setUserNo(form.data.id);
 
-        console.log("저장한 유저 아이디:", userNo);
 
         setNickname(form.data.nickname);
 
-        console.log("저장한 유저 닉네임:", nickname);
         
-
         loginMethod(form.data.token);
 
       
