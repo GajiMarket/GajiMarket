@@ -128,37 +128,3 @@
   text-underline-offset: 4px;
 }
 
-.footer-background {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 8px 0;
-  bottom: 0;
-}
-
-.footer-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20%;
-}
-
-.footer-item img {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 4px;
-}
-
-.footer-item span {
-  font-size: 16px;
-  color: #555;
-}
-
-.footer-item.active span {
-  color: #000000;
-}
-
-.footer-item.active img {
-  filter: brightness(0.8);
-}
