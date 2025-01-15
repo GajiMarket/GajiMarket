@@ -9,6 +9,7 @@ interface ChatProductProps {
 }
 
 const ChatProduct: React.FC<ChatProductProps> = ({ status, title, price, location }) => {
+
   return (
     <div className="chat-product">
       <img src="/path/to/image.jpg" alt="Product" className="chat-product-image" />
