@@ -31,11 +31,12 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
             throw Error(`서버 에러: ${response.status}`);
         }
         
-        const results = ({data:{token: response.data.data.token, id:response.data.data.id, nickname: response.data.data.nickname }, isChecked: response.data.success});
+        const results = ({data:{token: response.data.data.token, id:response.data.data.id, nickname: response.data.data.nickname}, isChecked: response.data.success});
         
         console.log("results.data.id 값", results.data.id);
         console.log("results.data.id 값", results.data.nickname);
         console.log("results.data.token 값", results.data.token);
+        
         console.log("results.success 값", results.isChecked);
         
         
@@ -138,35 +139,6 @@ export const getAccessToken = async (code: string): Promise<string | undefined> 
 }
 
 //사용자 프로필(닉네임) 업데이트
-export const nicknameUpdate = async(token: string, nickname: string) => {
-
-    try {
-        const response = await axios.post(`${api}/auth/profileupdate`, {
-            headers: {
-                Authorizaion: `Bearer ${token}`
-            },
-            data: {
-                nickname: nickname,
-            },
-        });
-
-        if (!response.data.token) {
-            throw new Error('토큰을 받아오지 못했습니다.')
-        }
-
-        const newtoken = response.data.token;
-
-        return newtoken;
-
-    } catch (error) {
-
-        console.error('닉네임 변경 실패:', error);
-        throw error;
-        
-    }
-}
-
-
 
 // 사용자 정보 받아오기
 export const kakaoUserInfo = async (token: string): Promise<{success: boolean, userInfo: Record<string, any>}> => {

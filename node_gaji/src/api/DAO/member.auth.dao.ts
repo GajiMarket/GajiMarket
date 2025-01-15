@@ -1,10 +1,11 @@
 import {db, schema} from '../../config/dbConfig'
 // import {QueryResult} from 'pg';
-import {IMemberTbl} from '../models/member_tbl'
-import logger from '../../logger';
+import IMemberTbl from '../models/member_tbl'
+import IPhoto from '../models/photo'
+import {logger} from '../../logger';
 
 
-type loginType = Partial<IMemberTbl>;
+type loginType = Partial<IMemberTbl & IPhoto>;
 
 // 폴더 별로 역할을 나눌 경우
 export const login = async (id: string, password: string): Promise<loginType> => {

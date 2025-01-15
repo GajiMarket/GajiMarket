@@ -8,5 +8,7 @@ const router = express.Router();
 
 //formData에서 설정한(formData.append(키, 값, 값)) 키값이랑 일치해야함
 router.post('/uploadimage', upload.array('profileImage', 5), uploadImage.uploadFiles);
+router.post('/defaultimage', uploadImage.defaultProfileImage);
+router.post('/profileupdate', uploadImage.proifleNickname);
 
 export default router;
