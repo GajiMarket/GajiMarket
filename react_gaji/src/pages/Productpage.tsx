@@ -47,8 +47,8 @@ const ProductPage: React.FC = () => {
   };
 
   // 채팅 메세지 함수
-  const handleChat = () => {
-    navigate('/chatpage');
+  const handleChatClick = (chatRoomId: number, memberNo: number) => {
+    navigate(`/chatpage/${chatRoomId}?memberNo=${memberNo}`);
   };
 
   return (
@@ -112,7 +112,7 @@ const ProductPage: React.FC = () => {
             {parseInt(product.price).toLocaleString()}원
           </span>
         </div>
-        <button className="chat-button" onClick={handleChat}>채팅하기</button>
+        <button className="chat-button" onClick={() => handleChatClick(1, 12)}>채팅하기</button> {/* 예시로 chatRoomId와 memberNo를 하드코딩 */}
       </div>
     </div>
   );

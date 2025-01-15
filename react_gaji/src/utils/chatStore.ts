@@ -1,12 +1,18 @@
 import { create } from 'zustand';
 
-// 채팅 Zustand 상태 관리 생성
-interface ChatState {
-    messages: { [key: string]: string[] };
-    addMessage: (roomId: string, message: string) => void;
+interface ChatMessage {
+    id: number;
+    sender: 'buyer' | 'seller';
+    message: string;
+    timestamp: string;
 }
 
-export const useChatStore = create<ChatState>((set) => ({
+interface ChatStore {
+    messages: { [key: string]: ChatMessage[] };
+    addMessage: (roomId: string, message: ChatMessage) => void;
+}
+
+export const useChatStore = create<ChatStore>((set) => ({
     messages: {},
     addMessage: (roomId, message) =>
         set((state) => ({

@@ -4,16 +4,29 @@ import "../style/Chatlist.css";
 import ChatlistHeader from '../components/chatlist/ChatlistHeader';
 import ChatlistForm from '../components/chatlist/ChatlistForm';
 import Footer from '../components/all/Footer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+interface Chat {
+  chat_room_id: number;
+  last_message: string;
+  last_message_time: string;
+  name: string;
+  location: string;
+  avatar: string;
+  time: string;
+}
 
 const Chatlist: React.FC = () => {
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState<Chat[]>([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const memberNo = searchParams.get('memberNo') || '13'; // 기본값으로 13번 회원 설정
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/chatrooms/13'); // 13번 회원의 채팅 목록을 가져옴
+        const response = await axios.get(`http://localhost:3000/api/chatrooms/${memberNo}`); // 회원 번호를 URL에 포함
         console.log('Fetched chats:', response.data); // 로그 추가
         setChats(response.data);
       } catch (error) {
@@ -22,10 +35,10 @@ const Chatlist: React.FC = () => {
     };
 
     fetchChats();
-  }, []);
+  }, [memberNo]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080');
+    const ws = new WebSocket('ws://localhost:3000');
 
     ws.onmessage = (event) => {
       const newMessage = JSON.parse(event.data);

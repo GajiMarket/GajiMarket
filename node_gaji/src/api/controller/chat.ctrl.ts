@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getChatRooms } from '../service/chat.service';
+import { getChatRooms, getProductByMemberNo } from '../service/chat.service';
 
 export const getChatRoomsByMember = async (req: Request, res: Response) => {
   const memberNo = parseInt(req.params.memberNo, 10);
@@ -11,5 +11,18 @@ export const getChatRoomsByMember = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Failed to fetch chat rooms:', error);
     res.status(500).json({ error: 'Failed to fetch chat rooms' });
+  }
+};
+
+export const getProductByMember = async (req: Request, res: Response) => {
+  const memberNo = parseInt(req.params.memberNo, 10);
+
+  try {
+    const product = await getProductByMemberNo(memberNo);
+    console.log('Fetched product:', product); // 로그 추가
+    res.json(product);
+  } catch (error) {
+    console.error('Failed to fetch product:', error);
+    res.status(500).json({ error: 'Failed to fetch product' });
   }
 };

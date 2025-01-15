@@ -9,7 +9,7 @@ interface ChatMessage {
   images?: string[]
 }
 
-const Chatting:React.FC<{ messages: ChatMessage[] }> = ({ messages }) => {
+const Chatting: React.FC<{ messages: ChatMessage[] }> = ({ messages }) => {
   if (!messages || messages.length === 0) {
     return <div className="chatting-container">대화가 없습니다.</div>;
   }
