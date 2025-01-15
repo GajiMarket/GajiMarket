@@ -43,29 +43,24 @@ export interface IPathFinderParams {
 }
 
 export interface IPathResponse {
-    // type: string;
-    // features: Array<{
-    //     type: string;
-    //     id: string;
-    //     geometry: {
-    //         type: string,
-    //         coordinates: number[][],
-    //     };
-    //     properties: {
-    //         nodeAId: string,
-    //         nodeBId: string,
-    //         length: number,
-    //         srid: null,
-    //         pathType: number,
-    //         time: number,
-    //         difficulty: number,
-    //         index: number,
-    //         guide: null
-    //     };
-    // }>
-    routes: Array<{
-        paths: Array<{
-            coordinates: number[][];
-        }>;
-    }>;
+    type: string;
+    features: Array<{
+        type: string;
+        id: string;
+        geometry: {
+            type: string,
+            coordinates: number[],
+        };
+        properties: {
+            nodeAId: string,
+            nodeBId: string,
+            length: number,
+            srid: null,
+            pathType: number,
+            time: number,
+            difficulty: number,
+            index: number,
+            guide: null
+        };
+    }>
 }

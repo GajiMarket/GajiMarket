@@ -1,6 +1,5 @@
 import React from 'react'
 import MapComponent from '../components/navigation/MapComponent';
-import { useLocation } from 'react-router-dom';
 import { usePathStore } from '../utils/pathStore';
 
 import '../style/Mainpage.css'
