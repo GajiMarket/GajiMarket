@@ -8,6 +8,9 @@ import chatRoutes from './chat.index';
 import mypage from '../api/mypage.index';
 // import productListRoutes from '../api/productlist.index';
 // import productcdd from './productcdd.index';
+import notificationRoutes from "../api/notifications.index"; // 알림 라우트 추가
+
+
 
 const mountRoutes = (app: Express) => {
 
@@ -26,6 +29,10 @@ const mountRoutes = (app: Express) => {
     app.use('/api', chatRoutes);
 
     app.use('/mypage', mypage);
+
+    // 알림 관련 라우트
+    app.use("/notifications", notificationRoutes);
+    
 
 }
 

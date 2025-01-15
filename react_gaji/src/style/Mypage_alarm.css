@@ -90,3 +90,15 @@
     color: #999;
   }
   
+  .notification-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    flex: 1;
+  }
+  
+  .notification-link:hover {
+    text-decoration: underline;
+    color: #007bff; /* 강조된 색상 */
+  }
+  
