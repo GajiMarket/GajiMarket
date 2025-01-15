@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Geometry } from "geojson";
+import { usePathStore } from "../utils/pathStore";
+import { Feature, Geometry } from "geojson";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
@@ -28,29 +29,29 @@ export interface PathFeature {
 }
 export interface IPathResponse {
     type: string;
-    features: PathFeature[];
+    features: Feature[];
 }
 
 // zustand로 상태저장한 product의 id, lng, lat값을 서버에 전달
-export const sendPathData = async (longitude: number, latitude: number): Promise<void> => {
+export const sendPathData = async (): Promise<IPathResponse> => {
+    const { longitude, latitude } = usePathStore.getState()
 
     if (!longitude || !latitude) {
         console.error("Invalid coordinates:", { longitude, latitude });
-        return;
     }
 
     const payload = {
-        // productId,
         startY: 37.479598,
         startX: 126.882238,
-        endY: latitude, // lat값을 endY로 맵핑
-        endX: longitude, // lng값을 endX로 맵핑
+        endY: latitude,
+        endX: longitude,
     }
     console.log("Payload being sent:", payload);
 
     try {
-        const response = await api.post('/navigation', payload);
+        const response = await api.post<IPathResponse>('/navigation', payload);
         console.log("Data successfully sent to server:", response.data);
+        return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.error("Error response data:", error.response?.data);
@@ -58,17 +59,6 @@ export const sendPathData = async (longitude: number, latitude: number): Promise
         } else {
             console.error("Unexpected error:", error);
         }
-        throw error;
-    }
-};
-
-export const getPathFinder = async (): Promise<IPathResponse> => {
-    try {
-        const response = await api.get<IPathResponse>('/navigation');
-        console.log('API connected!', response.data);
-        return response.data;
-    } catch (error) {
-        console.log('Error fetching path data:', error);
         throw error;
     }
 };

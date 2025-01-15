@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getPathFinder } from '../../api/pathFinder.api';
+import { sendPathData } from "../../api/pathFinder.api";
 import { processCoordinates } from "../../utils/mapUtils";
 
 export const usePathData = () => {
@@ -8,9 +8,19 @@ export const usePathData = () => {
     useEffect(() => {
         const fetchPathData = async () => {
             try {
-                const data = await getPathFinder();
+                const data = await sendPathData();
+                console.log("API Response FrontEnd Data:", data);
+
+                if (!data || !data.features || !Array.isArray(data.features)) {
+                    throw new Error("Invalid response structure: Features missing");
+                    return;
+                }
+
+                console.log("Features Data:", data.features);
 
                 const coordinates = processCoordinates(data.features);
+                
+                console.log("coordinates data:", coordinates);
 
                 if (coordinates.length > 0) {
                     setPathData({ coordinates });
@@ -26,4 +36,4 @@ export const usePathData = () => {
     }, []);
 
     return pathData;
-}
+};
