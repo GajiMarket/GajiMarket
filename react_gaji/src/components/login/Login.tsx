@@ -25,7 +25,7 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData}) => {
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${localUri}&response_type=code`;
   const navigate = useNavigate();
 
-  const { loginMethod, setUserNo, userNo, setNickname, nickname } = loginStore(); 
+  const { loginMethod, setUserNo, setNickname, setImage} = loginStore(); 
 
   // zustand 상태에서 필요한 값, 메서드 가져오기
   // const isAuthenticated = loginStore((state) => state.isAuthenticated);
@@ -85,12 +85,9 @@ const Login:React.FC<ILoginProps> = ({formData, setFormData}) => {
 
         setUserNo(form.data.id);
 
-        console.log("저장한 유저 아이디:", userNo);
-
         setNickname(form.data.nickname);
 
-        console.log("저장한 유저 닉네임:", nickname);
-        
+        setImage(form.data.image)
 
         loginMethod(form.data.token);
 

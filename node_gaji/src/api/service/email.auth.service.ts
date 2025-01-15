@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import NodeCache from 'node-cache'
-import logger from '../../logger'
+import {logger} from '../../logger'
 
 const cache = new NodeCache({ stdTTL: 600});
 

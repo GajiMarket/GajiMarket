@@ -7,7 +7,7 @@ import loginStore from "../utils/loginStore";
 
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+  const [sell_price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState<{ lng: number; lat: number; name :string } | null>(null);
   const [images, setImages] = useState<File[]>([]);
@@ -43,7 +43,7 @@ const ProductAdd: React.FC = () => {
   // 상품 등록 버튼 클릭 시 실행되는 함수
   const handleSubmit = async () => {
     // 필수 입력값 유효성 검사
-    if (!title || !price || !description || !location) {
+    if (!title || !sell_price || !description || !location) {
       alert("모든 필드를 입력해주세요.");
       return;
     }
@@ -54,19 +54,26 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
+    const locationData = location
+    ? { lng: location.lng, lat: location.lat }
+    : null;
+
+
     // 서버로 전송할 상품 데이터 생성
     const productData = {
       title,
-      price: Number(price), // 문자열을 숫자로 변환
+      sell_price: Number(sell_price), // 문자열을 숫자로 변환
       description,
-      location,
+      location:locationData,
       createdAt: new Date().toISOString(), // 현재 시간
       views: 0, // 조회수 초기화
       userNo,
+      status:"중고물품",
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/api/productadd", productData);
+      console.log("body data : ",productData)
+      const response = await axios.post("http://localhost:3000/productadd", productData);
 
       // 상품 등록 성공 시 처리
       console.log("Product Saved:", response.data);
@@ -104,6 +111,8 @@ const ProductAdd: React.FC = () => {
         <button className="product-add-save-draft">임시저장</button>
       </header>
 
+    <div className="product-add-content">
+      <div className="product-add-content-top"></div>
       {/* 이미지 업로드 섹션 */}
       <section className="product-add-image-upload">
         <div className="image-list-container">
@@ -170,7 +179,7 @@ const ProductAdd: React.FC = () => {
             <h2>가격</h2>
             <input
               type="number"
-              value={price}
+              value={sell_price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="가격을 입력해주세요"
               className="form-input"
@@ -202,11 +211,15 @@ const ProductAdd: React.FC = () => {
           />
         </label>
       </form>
+      <div className="product-add-content-bottom"></div>
+    </div>
 
       {/* 작성 완료 버튼 */}
-      <button className="submit-button" onClick={handleSubmit}>
-        작성 완료
-      </button>
+      <div className="submit-button-container">
+        <button className="submit-button" onClick={handleSubmit}>
+          작성 완료
+        </button>
+      </div>
 
       {/* 지도 모달 */}
       {showMap && (

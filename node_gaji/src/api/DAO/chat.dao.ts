@@ -1,25 +1,22 @@
 import { db } from '../../config/dbConfig';
-import { IChatMessage, IChatUser, IUser } from '../models/chat.models';
 
-export const getMessagesByChatRoomId = async (chat_room_id: number): Promise<IChatMessage[]> => {
-  const result = await db.query('SELECT * FROM chat_messages WHERE chat_room_id = $1 ORDER BY created_at ASC', [chat_room_id]);
+export const getChatRoomsFromDB = async (memberNo: number) => {
+  const result = await db.query(`
+    SELECT cr.chat_room_id, cm.chat_message AS last_message, cm.created_at AS last_message_time, m.member_nick AS name, m.member_addr AS location
+    FROM team4.chat_room cr
+    JOIN team4.chat_messages cm ON cr.chat_room_id = cm.chat_room_id
+    JOIN team4.member_tbl m ON cr.member_no = m.member_no
+    WHERE cr.buyer_no = $1 OR cr.member_no = $1
+    ORDER BY cm.created_at DESC
+  `, [memberNo]);
   return result.rows;
 };
 
-export const sendMessage = async (message: IChatMessage): Promise<IChatMessage> => {
-  const result = await db.query(
-    'INSERT INTO chat_messages (chat_message, read_or_not, created_at, chat_room_id, member_no, images) VALUES ($1, $2, NOW(), $3, $4, $5) RETURNING *',
-    [message.chat_message, message.read_or_not, message.chat_room_id, message.member_no, message.images]
-  );
+export const getProductFromDB = async (memberNo: number) => {
+  const result = await db.query(`
+    SELECT status, title, sell_price AS price, member_addr AS location
+    FROM team4.product
+    WHERE member_no = $1
+  `, [memberNo]);
   return result.rows[0];
-};
-
-export const getUserById = async (member_no: number): Promise<IUser | null> => {
-  const result = await db.query('SELECT * FROM member_tbl WHERE member_no = $1', [member_no]);
-  return result.rows[0] || null;
-};
-
-export const getChatRoomsByMemberNo = async (member_no: number): Promise<IChatUser[]> => {
-  const result = await db.query('SELECT * FROM chat_room WHERE member_no = $1 OR buyer_no = $1', [member_no]);
-  return result.rows;
 };

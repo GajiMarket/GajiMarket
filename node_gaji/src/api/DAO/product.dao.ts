@@ -1,37 +1,24 @@
-import { Request, Response } from 'express';
-import { db, schema } from '../../config/dbConfig';
-import { IProduct } from '../models/product'
-// import { userLocation } from '../controller/userLocation.ctrl';
+import { db, schema } from "../../config/dbConfig";
+import { IProduct } from "../models/product";
 
-export const getProducts = async (req: Request, res: Response): Promise<void> => {
+export const addProductDAO = async (productData: IProduct) => {
+  const { lng, lat } = productData.location; // location에서 lng, lat 분리
 
-    console.log({
-        user: process.env.DB_USER,
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        password: process.env.DB_PASSWORD,
-        port: process.env.DB_PORT,
-    });
-
-    const { longitude, latitude } = req.body;
-    const distance = Number(req.query.distance) || 500;
-
-    const query = `
-        SELECT *, ST_AsText(sell_location) AS sell_location
-        FROM ${schema}.product
-        wHERE ST_DistanceSphere(
-            sell_location,
-            ST_MakePoint($1, $2)
-        ) <= $3;
-    `;
-
-    const queryResult = await db.query<IProduct>(query, [longitude, latitude, distance]);
-    const results: IProduct[] = queryResult.rows;
-
-    // 응답 반환
-    res.status(200).json({
-        message: 'Products fetched successfully',
-        data: results,
-    });
-
+  const response = await db.query(
+    `INSERT INTO ${schema}.product
+      (title, sell_price, description, sell_location, created_at, view_count, member_no, status) 
+     VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326), $6, $7, $8, $9) RETURNING *`,
+     [
+      productData.title,           // $1
+      productData.sell_price,           // $2
+      productData.description,     // $3
+      lng,  // $4
+      lat,   // $5
+      productData.created_at,       // $6
+      productData.view_count,           // $7
+      productData.userNo,          // $8
+      productData.status,          // $9
+    ]
+  );
+  return response.rows[0];
 };

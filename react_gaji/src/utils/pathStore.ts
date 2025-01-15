@@ -1,18 +1,15 @@
 import { create } from "zustand";
 
-interface ProductState {
-    // productId: number | null;
+interface PathState {
     longitude: number | null;
     latitude: number | null;
-    setProduct: (longitude: number, latitude: number) => void;
-    clearProduct: () => void;
+    setCoordinates: (longitude: number, latitude: number) => void;
+    resetCoordinates: () => void; // 초기화 메서드
 }
 
-export const useProductStore = create<ProductState>((set) => ({
-    // productId: null,
+export const usePathStore = create<PathState>((set) => ({
     longitude: null,
     latitude: null,
-
-    setProduct: (longitude, latitude) => set({ longitude, latitude }), // setProduct에 상태저장
-    clearProduct: () => set({ longitude: null, latitude: null }),
+    setCoordinates: (longitude, latitude) => set({ longitude, latitude }),
+    resetCoordinates: () => set({ longitude: null, latitude: null }),
 }));

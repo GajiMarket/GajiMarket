@@ -4,7 +4,7 @@ const useProductForm = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState<{ lng: number; lat: number; name: string } | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [representativeIndex, setRepresentativeIndex] = useState<number | null>(null);
   const [transactionMethod, setTransactionMethod] = useState("판매하기");
@@ -28,8 +28,8 @@ const useProductForm = () => {
     setRepresentativeIndex(index);
   };
 
-  const handleLocationSelect = (selectedLocation: string) => {
-    setLocation(selectedLocation);
+  const handleLocationSelect = (location: { lng: number; lat: number; name: string }) => {
+    setLocation(location);
     setShowMap(false);
   };
 

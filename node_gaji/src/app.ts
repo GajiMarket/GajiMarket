@@ -5,10 +5,9 @@ import path from 'path'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import chatRoutes from './api/chat.index'
-import pinoHttp from 'pino-http'
 import cookieParser from 'cookie-parser'
 import mountRoutes from './api/routes'
-import logger from './logger'
+import {httpLogger} from './logger'
 
 dotenv.config();
 
@@ -44,7 +43,7 @@ app.use(compression());
 //     })
 // );
 
-app.use(pinoHttp({logger}));
+app.use(httpLogger);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
