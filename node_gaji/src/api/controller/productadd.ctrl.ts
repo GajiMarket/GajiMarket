@@ -7,10 +7,11 @@ export const productaddCtrl = async (req: Request, res: Response): Promise<void>
     
     
     try {
-        const { title, price, description, location, userNo, status } = req.body;
+        const { title, sell_price, description, location, userNo, status } = req.body;
         logger.info("Received product data:", req.body);
+        console.log("req.body data :",req.body)
 
-    if (!title || !price || !description || !location || !userNo || !status) {
+    if (!title || !sell_price || !description || !location || !userNo || !status) {
       logger.error("Missing required fields");
       res.status(400).json({
         success: false,
@@ -20,11 +21,13 @@ export const productaddCtrl = async (req: Request, res: Response): Promise<void>
     }
     const result = await addfinderAPI({
         title,
-        price,
+        sell_price,
         description,
         location,
         userNo,
         status,
+        created_at: new Date(),
+        view_count: 0,
       });
 
 
