@@ -8,7 +8,7 @@ import ChatProduct from '../components/chatpage/ChatProduct';
 import Chatting from '../components/chatpage/Chatting';
 import ChatSend from '../components/chatpage/ChatSend';
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 
 interface ChatMessage {
   id: number;
