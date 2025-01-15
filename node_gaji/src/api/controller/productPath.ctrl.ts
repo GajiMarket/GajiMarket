@@ -1,18 +1,17 @@
-import { Request, Response } from "express";
-import { ICoordinates } from "api/models/pathFinder.model";
+import { NextFunction, Request, Response } from "express";
 import { pathFinderAPI } from "../service/productPath.service";
+import { ICoordinates, IPathPostParams } from "../models/pathFinder.model";
 
-export const productPathCtrl = async (req: Request, res: Response): Promise<void> => {
+export const postPathCtrl = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const params: ICoordinates = req.body; // ICoordinates로 타입검증
+        console.log("send data:", req.body)
+        const { startX, startY, endX, endY }: ICoordinates = req.body;
 
-        if (!params.startY || !params.startX || !params.endY || !params.endX) {
-            console.error("Payload validation failed:", params);
-            res.status(400).json({ message: "Invalid payload. Please provide all required fields." });
-            return;
+        if (!startX || !startY || !endX || !endY) {
+            throw new Error("Invalid query parameters. Please provide all required fields.");
         }
 
-        const productPathData = await pathFinderAPI(params);
+        const productPathData = await pathFinderAPI({ startX, startY, endX, endY });
 
         res.status(200).json({
             message: "Path finder API data processed successfully.",
@@ -25,4 +24,23 @@ export const productPathCtrl = async (req: Request, res: Response): Promise<void
             details: error instanceof Error ? error.stack : "Unknown error",
         });
     }
+}
+
+export const getPathCtrl = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { startX, startY, endX, endY }: ICoordinates = req.body;
+    if (!startX || !startY || !endX || !endY) {
+        throw new Error("Invalid query parameters. Please provide all required fields.");
+    }
+
+    const params = {
+        startX, startY,
+        endX, endY
+    }
+    const result = await pathFinderAPI(params);
+    console.log(result);
+
+    res.status(200).json({
+        message: "패스 받아오기 성공",
+        data: result,
+    });
 }

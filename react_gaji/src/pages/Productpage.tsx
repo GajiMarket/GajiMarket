@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../style/Productpage.css";
 import heartUnfillIcon from "../assets/icons/heart-unfill-icon.png";
@@ -61,6 +61,10 @@ const ProductPage: React.FC = () => {
     );
   }
 
+  // 채팅 메세지 함수
+  const handleChatClick = (chatRoomId: number, memberNo: number) => {
+    navigate(`/chatpage/${chatRoomId}?memberNo=${memberNo}`);
+  };
 
   return (
     <div className="product-page-container">
@@ -122,9 +126,7 @@ const ProductPage: React.FC = () => {
             {product.price.toLocaleString()}원
           </span>
         </div>
-        <button className="chat-button" onClick={() => navigate("/chatpage")}>
-          채팅하기
-        </button>
+        <button className="chat-button" onClick={() => handleChatClick(1, 12)}>채팅하기</button> {/* 예시로 chatRoomId와 memberNo를 하드코딩 */}
       </div>
     </div>
   );

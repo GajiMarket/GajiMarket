@@ -1,6 +1,6 @@
 import {Request, Response} from 'express'
 import {emailCode, emailCheckService} from '../service/email.auth.service'
-import logger from '../../logger'
+import {logger} from '../../logger'
 
 export const accountAuthEmail = async(req:Request, res:Response): Promise<void> => {
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { addProductService } from "../service/product.service";
-import logger from "../../logger";
+import {logger} from "../../logger";
 import { IProduct } from "../models/product"; // IProduct 인터페이스 가져오기
 
 // 제품 등록 컨트롤러

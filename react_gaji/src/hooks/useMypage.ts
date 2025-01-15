@@ -60,16 +60,55 @@ export const imagePath = async (userNo: number): Promise<string | void> => {
             
         }
 
+        console.log("유저 번호:", userNo);
+        
+
         const response = await axios.post(`${api}/mypage/defaultimage`, {
             userNo,
         });
 
-        const result = response.data.imagePath;
+        const result = response.data.imagePath.image;
 
         return result;
-        
+
     } catch (error) {
 
         throw new Error("500 에러 발생:");
     }
 }
+
+export const nicknameUpdate = async(loginToken: string ,userNo: string, nickname: string): Promise<{token: string, nickName: string}> => {
+
+    try {
+        const response = await axios.post(`${api}/mypage/profileupdate`, {
+            data: {
+                nickname: nickname,
+                id: userNo,
+                token: loginToken,
+            },
+        });
+
+        console.log("파라미터 loginToken:", loginToken);
+        console.log("파라미터 userNo:", userNo);
+        console.log("파라미터 nickname:", nickname);
+        
+
+        if (!response.data.setToken) {
+            throw new Error('토큰을 받아오지 못했습니다.')
+        }
+
+        // 새로운 토큰과 닉네임
+        const result = {token: response.data.setToken, nickName: response.data.nickName }
+
+        return result;
+
+    } catch (error) {
+
+        console.error('닉네임 변경 실패:', error);
+        throw new Error();
+        
+    }
+}
+
+
+

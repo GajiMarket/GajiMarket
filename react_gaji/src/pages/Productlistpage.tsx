@@ -32,6 +32,8 @@ const ProductList: React.FC = () => {
         if (response.data && response.data.success) {
           const productData = response.data.data ?? [];
           setProducts(productData);
+
+          const productId: number = response.data.data.products.product_id;
         } else {
           console.error("API 응답이 성공하지 않았습니다.");
         }
@@ -46,10 +48,11 @@ const ProductList: React.FC = () => {
     fetchProducts();
   }, []);
 
-  const handleNavigate = ( productAdr: number ) => {
-    
+  const handleNavigate = (productAdr: number) => {
+
     navigate(`/productpage/${productAdr}`);
   }
+
 
   // 화면에 출력
   return (
@@ -63,7 +66,7 @@ const ProductList: React.FC = () => {
           {products.length > 0 ? (
             products.map((product) => (
               <li key={product.product_id} className="product-item">
-                <h2 className="product-title" onClick={ () => handleNavigate(product.product_id)}>{product.title}</h2>
+                <h2 className="product-title" onClick={() => handleNavigate(product.product_id)}>{product.title}</h2>
                 <p className="product-meta">{product.sell_price}원</p>
                 <p className="product-meta">{product.view_count} views</p>
                 <button className="chat-button">채팅하기</button>
