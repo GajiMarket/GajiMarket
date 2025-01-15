@@ -6,22 +6,6 @@ import ChatlistForm from '../components/chatlist/ChatlistForm';
 import Footer from '../components/all/Footer';
 import { useNavigate } from 'react-router-dom';
 
-// interface ChatItem {
-//   id: number;
-//   name: string;
-//   location: string;
-//   time: string;
-//   message: string;
-//   avatar: string;
-//   chat_room_id: number;
-//   buyer_no: number;
-//   created_at: Date;
-//   member_no: number;
-//   product_id: number;
-//   last_message: string;
-//   last_message_time: Date;
-// }
-
 const Chatlist: React.FC = () => {
   const [chats, setChats] = useState([]);
   const navigate = useNavigate();
@@ -29,7 +13,8 @@ const Chatlist: React.FC = () => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get('/api/chatrooms/13'); // 13번 회원의 채팅 목록을 가져옴
+        const response = await axios.get('http://localhost:5000/api/chatrooms/13'); // 13번 회원의 채팅 목록을 가져옴
+        console.log('Fetched chats:', response.data); // 로그 추가
         setChats(response.data);
       } catch (error) {
         console.error('Failed to fetch chats:', error);
@@ -60,8 +45,8 @@ const Chatlist: React.FC = () => {
     };
   }, []);
 
-  const handleChatClick = (chatRoomId: number) => {
-    navigate(`/chatpage/${chatRoomId}`);
+  const handleChatClick = (chatRoomId: number, chatName: string) => {
+    navigate(`/chatpage/${chatRoomId}?name=${encodeURIComponent(chatName)}`);
   };
 
   return (

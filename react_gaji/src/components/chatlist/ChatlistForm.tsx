@@ -1,20 +1,5 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
 import "../../style/Chatlist.css";
-
-// interface ChatItem {
-//   id: number;
-//   name: string;
-//   location: string;
-//   time: string;
-//   message: string;
-//   avatar: string;
-//   chat_room_id: number;
-//   buyer_no: number;
-//   created_at: Date;
-//   member_no: number;
-//   product_id: number;
-// }
 
 interface Chat {
   chat_room_id: number;
@@ -35,12 +20,6 @@ const ChatlistForm: React.FC<ChatlistFormProps> = ({ chats, onChatClick }) => {
   if (!Array.isArray(chats) || chats.length === 0) {
     return <div className="no-chats">대화가 없습니다.</div>;
   }
-
-  // const navigate = useNavigate();
-
-  // const handleChatClick = (id: number, name: string) => {
-  //   navigate(`/chatpage/${id}?name=${encodeURIComponent(name)}`);
-  // };
 
   return (
     <div className="chatlist-form">

@@ -6,6 +6,7 @@ export const getChatRoomsByMember = async (req: Request, res: Response) => {
 
   try {
     const chatRooms = await getChatRooms(memberNo);
+    console.log('Fetched chat rooms:', chatRooms); // 로그 추가
     res.json(chatRooms);
   } catch (error) {
     console.error('Failed to fetch chat rooms:', error);
