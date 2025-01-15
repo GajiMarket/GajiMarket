@@ -1,5 +1,4 @@
-import React from 'react'
-import "../../style/Chatpage.css"
+import React from 'react';
 
 interface ChatProductProps {
   status: string;
@@ -9,7 +8,6 @@ interface ChatProductProps {
 }
 
 const ChatProduct: React.FC<ChatProductProps> = ({ status, title, price, location }) => {
-
   return (
     <div className="chat-product">
       <img src="/path/to/image.jpg" alt="Product" className="chat-product-image" />
@@ -22,7 +20,7 @@ const ChatProduct: React.FC<ChatProductProps> = ({ status, title, price, locatio
         <p className="chat-product-location">{location}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChatProduct
+export default ChatProduct;
