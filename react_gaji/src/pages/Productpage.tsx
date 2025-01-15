@@ -1,74 +1,78 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import "../style/Productpage.css";
-
-// 이미지 경로 추가
 import heartUnfillIcon from "../assets/icons/heart-unfill-icon.png";
 import heartFullIcon from "../assets/icons/heart-full-icon.png";
 
 interface Product {
   title: string;
   description: string;
-  price: string;
+  price: number;
   location: string;
-  images: File[];
-  representativeImage: File | null;
+  images: string[];
+  representativeImage: string | null;
   sellerName: string;
 }
 
 const ProductPage: React.FC = () => {
-  const location = useLocation();
+  const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
-  const product: Product = location.state || {
-    title: "기본 상품 제목",
-    description: "기본 상품 설명",
-    price: "0",
-    location: "기본 장소",
-    images: [],
-    representativeImage: null,
-    sellerName: "홍길동",
-  };
-
-  // useEffect(() => {
-
-  //   const mainPage = async () => {
-      
-  //     const response = await mainProduct();
-
-  //   }
-
-  // })
-
+  const [product, setProduct] = useState<Product | null>(null);
   const [liked, setLiked] = useState(false);
+  const [profileImage, setImage] = useState<string | null>(null);
 
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
+  // 🔥 백엔드에서 상품 상세 정보 가져오기
+  useEffect(() => {
+    const fetchProductDetail = async () => {
+      try {
+        const response = await axios.get(`/product/detail/${productId}`);
+        setProduct(response.data.data); // 백엔드에서 반환된 상품 데이터 설정
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+        navigate("/"); // 에러 시 메인 페이지로 이동
+      }
+    };
 
-  const mainImage = product.representativeImage
-    ? URL.createObjectURL(product.representativeImage)
-    : product.images.length > 0
-    ? URL.createObjectURL(product.images[0])
-    : "";
+    fetchProductDetail();
+  }, [productId, navigate]);
 
-  // 메인 화면으로 돌아가는 함수
-  const goBackToMain = () => {
-    navigate("/"); // "Main" 경로로 이동
-  };
+  // 🌟 프로필 이미지 불러오기
+  useEffect(() => {
+    const profileDefault = async () => {
+      try {
+        const response = await axios.get(`/profile/image/${product?.sellerName}`);
+        setImage(response.data.imagePath);
+      } catch {
+        console.error("이미지 불러오기 실패 500");
+      }
+    };
+
+    profileDefault();
+  }, [product?.sellerName]);
+
+  // 상품 데이터가 없을 때 처리
+  if (!product) {
+    return (
+      <div className="product-page-container">
+        <h1>상품을 찾을 수 없습니다.</h1>
+        <button onClick={() => navigate("/")}>메인 페이지로 돌아가기</button>
+      </div>
+    );
+  }
 
   // 채팅 메세지 함수
-  const handleChat = () => {
-    navigate('/chatpage');
+  const handleChatClick = (chatRoomId: number, memberNo: number) => {
+    navigate(`/chatpage/${chatRoomId}?memberNo=${memberNo}`);
   };
 
   return (
     <div className="product-page-container">
       <div className="product-image-slider" style={{ position: "relative" }}>
-        <img src={mainImage} alt="대표 이미지" className="slider-image" />
-        {/* 화살표 버튼 */}
+        <img src={product.representativeImage || product.images[0]} alt="대표 이미지" className="slider-image" />
         <div
           className="back-button"
-          onClick={goBackToMain}
+          onClick={() => navigate("/")}
           style={{
             position: "absolute",
             top: "10px",
@@ -86,7 +90,9 @@ const ProductPage: React.FC = () => {
       </div>
 
       <div className="seller-info-section">
-        <div className="profile-icon">👤</div>
+        <div className="profile-icon">
+          {profileImage ? <img src={profileImage} alt="프로필 이미지" /> : "👤"}
+        </div>
         <div className="seller-details">
           <span className="seller-name">{product.sellerName}</span>
           <span className="location">{product.location}</span>
@@ -100,10 +106,9 @@ const ProductPage: React.FC = () => {
 
       <div className="product-actions">
         <div className="price-like-container">
-          {/* 좋아요 아이콘 */}
           <button
             className="like-button"
-            onClick={toggleLike}
+            onClick={() => setLiked(!liked)}
             style={{
               background: "none",
               border: "none",
@@ -117,12 +122,11 @@ const ProductPage: React.FC = () => {
               style={{ width: "24px", height: "24px" }}
             />
           </button>
-          {/* 가격 */}
           <span className="product-price">
-            {parseInt(product.price).toLocaleString()}원
+            {product.price.toLocaleString()}원
           </span>
         </div>
-        <button className="chat-button" onClick={handleChat}>채팅하기</button>
+        <button className="chat-button" onClick={() => handleChatClick(1, 12)}>채팅하기</button> {/* 예시로 chatRoomId와 memberNo를 하드코딩 */}
       </div>
     </div>
   );

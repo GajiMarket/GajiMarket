@@ -1,15 +1,25 @@
-import { Server, WebSocket } from 'ws';
+import { Server } from 'socket.io';
+import http from 'http';
 
-const wss = new Server({ port: 8080 });
+const server = http.createServer();
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
-wss.on('connection', (ws: WebSocket) => {
-  ws.on('message', (message: string) => {
-    wss.clients.forEach((client: WebSocket) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('message', (msg) => {
+    io.emit('message', msg);
   });
 
-  ws.send('Welcome to the chat!');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+server.listen(8080, () => {
+  console.log('listening on *:8080');
 });

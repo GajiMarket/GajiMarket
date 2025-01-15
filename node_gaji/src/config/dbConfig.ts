@@ -13,8 +13,8 @@ const dbConfig = {
 }
 
 
- export const db = new pg.Pool(dbConfig);
- export const schema = process.env.CODELAB_SCHEMA;
+export const db = new pg.Pool(dbConfig);
+export const schema = process.env.CODELAB_SCHEMA;
 
 
 
