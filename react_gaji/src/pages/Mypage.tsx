@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import { useProfile } from "../components/mypage/ProfileContext"; // Context를 불러옴
 import "../style/Mypage.css";

@@ -59,7 +59,7 @@ const Chatpage: React.FC = () => {
   // }, [id]);
 
   // 메시지 전송 핸들러
-  const handleSendMessage = async (message: string, image?: string) => {
+  const handleSendMessage = async (message: string, image?: string[]) => {
     try {
       const response = await axios.post(`http://localhost:3000/api/chat/${id}`, { message, image });
       setMessages([...messages, response.data]);
@@ -74,7 +74,7 @@ const Chatpage: React.FC = () => {
 
   return (
     <div className="chatpage">
-      <ChatHeader chatId={id} chatName={name} />
+      <ChatHeader chatName={name} />
       <ChatProduct />
       <Chatting messages={messages} />
       <ChatSend onSendMessage={handleSendMessage} />

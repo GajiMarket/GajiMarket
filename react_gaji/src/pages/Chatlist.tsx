@@ -23,7 +23,6 @@ interface ChatItem {
 
 const Chatlist: React.FC = () => {
   const [chats, setChats] = useState<ChatItem[]>([]);
-  const [user, setUser] = useState<{ name: string } | null>(null);
 
   useEffect(() => {
     const fetchChats = async () => {

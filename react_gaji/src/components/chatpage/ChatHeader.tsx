@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import "../../style/Chatpage.css"
 
 interface ChatHeaderProps {
-  chatId: string
   chatName: string
 }
 
-const ChatHeader:React.FC<ChatHeaderProps> = ({ chatId, chatName }) => {
+const ChatHeader:React.FC<ChatHeaderProps> = ({ chatName }) => {
   const navigate = useNavigate()
 
   const handleBackClick = () => {

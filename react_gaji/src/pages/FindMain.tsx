@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FindMain = () => {
+const FindMain:React.FC = () => {
   return (
     <div>
       
