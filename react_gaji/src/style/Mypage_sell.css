@@ -82,3 +82,14 @@
   background-color: #8a2be2;
   color: #ffffff;
 }
+
+.item-link {
+  display: flex;
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 기본 글자 색상 유지 */
+  flex: 1; /* 좌우 균등 배치 */
+}
+
+.item-link:hover {
+  opacity: 0.9; /* 호버 시 살짝 투명 효과 */
+}

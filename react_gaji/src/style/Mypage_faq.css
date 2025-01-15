@@ -10,7 +10,7 @@
   flex: 1;
   overflow-y: auto; /* 스크롤 활성화 */
   max-width: 500px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 16px;
   text-align: left; /* 왼쪽 정렬 */
 }
@@ -28,28 +28,29 @@
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 16px;
-  text-align: left; /* 왼쪽 정렬 */
+  text-align: left; /* 항상 왼쪽 정렬 */
 }
 
 .faq-subtitle {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 24px;
-  text-align: left; /* 왼쪽 정렬 */
+  text-align: left; /* 항상 왼쪽 정렬 */
 }
 
 .faq-list {
   border-top: 1px solid #ddd;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: none; /* 기본 불릿 제거 */
+  padding: 0; /* ul 기본 패딩 제거 */
+  margin: 0; /* ul 기본 마진 제거 */
 }
 
 .faq-item {
   padding: 12px 0;
   border-bottom: 1px solid #ddd;
   cursor: pointer;
-  text-align: left; /* 왼쪽 정렬 */
+  text-align: left; /* 항상 왼쪽 정렬 */
+  margin: 0; /* li 기본 마진 제거 */
 }
 
 .faq-question {
@@ -57,7 +58,7 @@
   font-weight: bold;
   color: #333;
   margin-bottom: 8px;
-  text-align: left; /* 왼쪽 정렬 */
+  text-align: left; /* 항상 왼쪽 정렬 */
 }
 
 .faq-answer {
@@ -65,7 +66,7 @@
   color: #555;
   line-height: 1.8; /* 자간 추가 */
   margin-top: 8px; /* 문단 간격 추가 */
-  text-align: left; /* 왼쪽 정렬 */
+  text-align: left; /* 항상 왼쪽 정렬 */
 }
 
 .faq-footer-space {
