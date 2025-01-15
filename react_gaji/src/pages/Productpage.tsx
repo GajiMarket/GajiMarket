@@ -34,6 +34,8 @@ const ProductPage: React.FC = () => {
     if (!product && productId) {
       const fetchProductDetail = async () => {
         try {
+          console.log("productId:", productId);
+          
           const response = await axios.get(`http://localhost:3000/products/${productId}`);
           setProduct(response.data.data);
         } catch (error) {
