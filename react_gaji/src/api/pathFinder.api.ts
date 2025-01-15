@@ -1,6 +1,6 @@
 import axios from "axios";
 import { usePathStore } from "../utils/pathStore";
-import { Feature, Point, LineString, GeoJsonProperties } from "geojson";
+import { Feature, Geometry, GeoJsonProperties } from "geojson";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
@@ -8,13 +8,33 @@ const api = axios.create({
 })
 
 export interface IPathResponse {
-    type: string;
+    // type: string;
     // features: Feature<Geometry, GeoJsonProperties>[];
-    features: Feature<Point | LineString, GeoJsonProperties>[];
+    type: string;
+    features: Array<{
+        type: string;
+        id: string;
+        geometry: {
+            type: string;
+            coordinates: number[];
+        };
+        properties: {
+            nodeAId: string;
+            nodeBId: string;
+            length: number;
+            srid: null;
+            pathType: number;
+            time: number;
+            difficulty: number;
+            index: number;
+            guide: null;
+        };
+    }>;
+
 }
 
 // zustand로 상태저장한 product의 id, lng, lat값을 서버에 전달
-export const sendPathData = async (): Promise<IPathResponse> => {
+export const sendPathData = async (): Promise<void> => {
     const { longitude, latitude } = usePathStore.getState();
     console.log("Coordinates from store:", { longitude, latitude });
 
@@ -29,7 +49,6 @@ export const sendPathData = async (): Promise<IPathResponse> => {
         endY: latitude,
         endX: longitude,
     }
-    // console.log("Payload being sent:", payload);
 
     try {
         const response = await api.post<IPathResponse>('/navigation', payload);
@@ -52,7 +71,7 @@ export const sendPathData = async (): Promise<IPathResponse> => {
             }
         });
         
-        return response.data;
+        // return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.error("Error response data:", error.response?.data);

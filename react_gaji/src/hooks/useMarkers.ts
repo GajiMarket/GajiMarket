@@ -79,37 +79,17 @@ const useMarkers = () => {
             // 버튼 클릭 이벤트 처리
             const navigateButton = popupContent.querySelector(".navigate-btn");
             navigateButton?.addEventListener("click", async () => {
-                const { setCoordinates, longitude, latitude } = usePathStore.getState();
-                console.log("Store Coordinates before sending:", { longitude, latitude });
-
+                const { setCoordinates } = usePathStore.getState();
                 setCoordinates(product.longitude, product.latitude)
-                console.log("Store Coordinates after setting:", {
-                    longitude: product.longitude,
-                    latitude: product.latitude,
-                });
 
                 try {
                     const data = await sendPathData();
-                    console.log("Received Path Data:", data);
-                    console.log("Features Field:", data.features);
-
-                    if (!data.features || !Array.isArray(data.features)) {
-                        console.error("Invalid response structure:", data);
-                        throw new Error("Invalid response structure: Features missing or not an array.");
-                    }
-
-                    data.features.forEach((feature) => {
-                        if (!feature.geometry || !feature.geometry.coordinates) {
-                            console.error("Feature missing geometry or coordinates:", feature);
-                            throw new Error("Feature missing geometry or coordinates.");
-                        }
-                    });
-
+                    console.log("Response Data:", data);
                     alert('데이터 전송 성공!')
                     navigate("/navigation");
                 } catch (error) {
                     console.error("데이터 전송 실패:", error)
-                    // alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
+                    alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
                 }
             });
 
