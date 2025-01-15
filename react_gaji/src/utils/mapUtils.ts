@@ -57,14 +57,23 @@ export const mapRoute = (map: Map, pathData: { coordinates: [number, number][]})
 }
 
 export const processCoordinates = (features: Feature<Geometry, GeoJsonProperties>[]): [number, number][] => {
-  return features.flatMap((feature) => {
-    const { geometry } = feature;
+  if (!features || !Array.isArray(features)) {
+      console.error("Invalid features input:", features);
+      return [];
+  }
 
-    if (geometry.type === "Point") {
-      return [geometry.coordinates as [number, number]];
-    } else if (geometry.type === "LineString") {
-      return geometry.coordinates as [number, number][];
-    }
-    return [];
-  })
-}
+  return features.flatMap((feature) => {
+      const { geometry } = feature;
+
+      if (geometry.type === "Point") {
+          // Point 타입인 경우 좌표를 배열에 추가
+          return [geometry.coordinates as [number, number]];
+      } else if (geometry.type === "LineString") {
+          // LineString 타입인 경우 배열로 반환
+          return geometry.coordinates as [number, number][];
+      }
+
+      // 처리할 수 없는 경우 빈 배열 반환
+      return [];
+  });
+};

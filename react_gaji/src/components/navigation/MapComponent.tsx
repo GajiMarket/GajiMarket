@@ -15,6 +15,7 @@ const MapComponent: React.FC = () => {
         }
     }, [map, pathData]);
 
+
     return <div id="map" style={{ width: '100%', height: '100vh' }}/>
 }
 
