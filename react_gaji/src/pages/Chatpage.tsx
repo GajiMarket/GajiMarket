@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useChatStore } from '../utils/chatStore';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import axios from 'axios';
 import ChatHeader from '../components/chatpage/ChatHeader';
 import ChatProduct from '../components/chatpage/ChatProduct';
 import Chatting from '../components/chatpage/Chatting';
 import ChatSend from '../components/chatpage/ChatSend';
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 
 interface ChatMessage {
   id: number;

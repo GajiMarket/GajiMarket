@@ -5,33 +5,13 @@ import { Feature, Geometry, GeoJsonProperties } from "geojson";
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
     headers: {
-        // 'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
     },
 })
 
 export interface IPathResponse {
     type: string;
     features: Feature<Geometry, GeoJsonProperties>[];
-    // type: string;
-    // features: Array<{
-    //     type: string;
-    //     id: string;
-    //     geometry: {
-    //         type: string;
-    //         coordinates: number[];
-    //     };
-    //     properties: {
-    //         nodeAId: string;
-    //         nodeBId: string;
-    //         length: number;
-    //         srid: null;
-    //         pathType: number;
-    //         time: number;
-    //         difficulty: number;
-    //         index: number;
-    //         guide: null;
-    //     };
-    // }>;
 }
 
 // zustand로 상태저장한 product의 id, lng, lat값을 서버에 전달
@@ -49,30 +29,24 @@ export const sendPathData = async (): Promise<void> => {
         startX: 126.882238,
         endY: latitude,
         endX: longitude,
-    }
+    };
 
     try {
         const response = await api.post<IPathResponse>('/navigation', payload);
-        console.log("Raw API Response:", response);
-        console.log("Processed API Response:", response.data);
-    
-        if (!response.data || !response.data.features || !Array.isArray(response.data.features)) {
-            console.error("Invalid response structure:", response.data);
-            throw new Error("Invalid response structure: Features missing or not an array.");
+        const features = Array.isArray(response.data?.features) ? response.data.features : [];
+
+        // console.log(response);
+        // console.log("API Response Data:", JSON.stringify(response.data, null, 2));
+
+        if (features.length === 0) {
+            console.error("Features field is missing or not an array:", response.data);
+            throw new Error("Invalid response: features is not an array.");
         }
 
-        response.data.features.forEach((feature, index) => {
-            const geometry = feature.geometry;
-        
-            // 타입 좁히기
-            if (geometry.type === "Point" || geometry.type === "LineString") {
-                console.log(`Feature ${index} - Coordinates:`, geometry.coordinates);
-            } else {
-                console.warn(`Feature ${index} - Unsupported Geometry Type:`, geometry.type);
-            }
-        });
-        
-        // return response.data;
+        console.log("Features Exists:", !!response.data?.features);
+        console.log("Features is Array:", Array.isArray(response.data?.features));
+        console.log("Valid response received:", response.data.features);
+
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.error("Error response data:", error.response?.data);
