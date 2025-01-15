@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { validatePassword, checkId, signUp, validatePhone, validateEmail, emailCheck, emailSend, executeDaumPostCode} from '../../hooks/useSign';
+import { checkId, signUp, emailCheck, emailSend, executeDaumPostCode} from '../../hooks/useSign';
 import Email from './Email';
 import NickName from './NickName';
 import Id from './Id';
@@ -38,7 +38,7 @@ interface SignupFormProps {
 
 
 
-export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId, setIsCheckedId, accessChecked, setAccessChecked, codeNumberChecked, setCodeNumberChecked, codeNumber, setCodeNumber, errors, setErrors, inputCode, setInputCode}) => {
+export const NNIP:React.FC<SignupFormProps> = ({formData, setFormData, isCheckId, setIsCheckedId, accessChecked, setAccessChecked, codeNumberChecked, setCodeNumberChecked, setCodeNumber, errors, setErrors, inputCode, setInputCode}) => {
 
 
 const navigate= useNavigate();

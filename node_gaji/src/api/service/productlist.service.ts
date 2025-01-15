@@ -1,6 +1,6 @@
 import { db, schema } from "../../config/dbConfig";
 import { IProduct } from "../models/product";
-import logger from "../../logger";
+import {logger} from "../../logger";
 
 export const getProductListService = async (): Promise<IProduct[]> => {
   try {

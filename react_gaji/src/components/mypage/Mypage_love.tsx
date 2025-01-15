@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // React Router Link 사용
 import "../../style/Mypage_love.css";
 
 import Header from './Header.tsx';
 import Footer from '../all/Footer.tsx';
-
 
 // 이미지 경로를 import로 불러오기
 import paddingImage from "../../assets/images/padding-image.png";
@@ -36,10 +36,6 @@ const MypageLove: React.FC = () => {
     );
   };
 
-  const handleChat = (id: number) => {
-    alert(`상품 ${id}와 채팅을 시작합니다!`); // 채팅 시작 동작 추가 (임시)
-  };
-
   return (
     <div className="Mypage_love">
         <Header />
@@ -48,14 +44,16 @@ const MypageLove: React.FC = () => {
             <ul className="item-list">
                 {items.map((item) => (
                 <li key={item.id} className="item">
-                    <img src={paddingImage} alt={item.name} className="item-image" />
-                    <div className="item-info">
-                    <h2>{item.name}</h2>
-                    <p>{item.distance} · {item.location} · {item.time}</p>
-                    <p className="price">{item.price}</p>
-                    </div>
+                    {/* 상품 상세 페이지로 이동 */}
+                    <Link to={`/productpage/${item.id}`} className="item-link">
+                      <img src={paddingImage} alt={item.name} className="item-image" />
+                      <div className="item-info">
+                        <h2>{item.name}</h2>
+                        <p>{item.distance} · {item.location} · {item.time}</p>
+                        <p className="price">{item.price}</p>
+                      </div>
+                    </Link>
                     <div className="item-actions">
-                    <div className="heart-action">
                         <button
                         className="heart-button"
                         onClick={() => toggleLike(item.id)}
@@ -66,15 +64,6 @@ const MypageLove: React.FC = () => {
                             className="heart-icon"
                         />
                         </button>
-                    </div>
-                    <div className="chat-action">
-                        <button
-                        className="chat-button"
-                        onClick={() => handleChat(item.id)}
-                        >
-                        채팅하기
-                        </button>
-                    </div>
                     </div>
                 </li>
                 ))}

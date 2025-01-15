@@ -143,7 +143,7 @@ const ProductForm: React.FC = () => {
           거래 희망 장소
           <input
             type="text"
-            value={location}
+            value={location?.name || ""}
             onClick={() => setShowMap(true)}
             placeholder="위치 추가"
             readOnly

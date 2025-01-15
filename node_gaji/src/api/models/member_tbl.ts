@@ -1,4 +1,4 @@
-export interface IMemberTbl {
+interface IMemberTbl {
     member_no: number | string;
     member_id: string;
     member_pwd: string;
@@ -12,3 +12,5 @@ export interface IMemberTbl {
     member_addr: string;
     member_birth: number;
 }
+
+export default IMemberTbl;

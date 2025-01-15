@@ -1,6 +1,6 @@
 import { db, schema } from "../../config/dbConfig";
 import { IProduct } from "../models/product";
-import logger from "../../logger";
+import {logger} from "../../logger";
 
 // 제품 목록 가져오기 함수 (DAO)
 export const getProductList = async (distance: number = 500): Promise<IProduct[]> => {

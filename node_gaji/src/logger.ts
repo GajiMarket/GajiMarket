@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path'
 import dotenv from 'dotenv';
 import dayjs from 'dayjs';
+import pinoHttp from 'pino-http';
 
 dotenv.config();
 
@@ -34,7 +35,7 @@ if (!fs.existsSync(logDir)) {
 const logLevel: string = process.env.LOG_LEVEL || 'debug';
 
 
-const logger = pino({
+export const logger = pino({
     level: logLevel, // 로그 레벨 설정: 'fatal', 'error', 'warn', 'info', 'debug', 'trace'
     // timestamp: () => `,"time": "${new Date().toISOString()}"`,
     // timestamp: () => `, "time": "${year}-${month}-${day} ${hours}:${minutes}:${seconds}"`,
@@ -62,14 +63,35 @@ const logger = pino({
     },
 });
 
+export const httpLogger = pinoHttp({
+    logger, // 기존 logger 객체 사용
+    customLogLevel: (req, res, err) => {
+        if (res.statusCode >= 500) return 'error';
+        if (res.statusCode >= 400) return 'warn';
+        if (res.statusCode >= 300) return 'info';
+        return 'debug';
+    },
+
+    serializers: {
+        req(req) {
+            return {
+                method: req.method,
+                url: req.url,
+                headers: req.headers,
+                body: req.body,
+            };
+        },
+
+        res(res) {
+            return {
+                statusCode: res.statusCode,
+            };
+        },
+    },
+});
+
 
 //logger 테스트
 // logger.debug('This is a debug log');
 // logger.info('This is a info log');
 // logger.error('This is a error log');
-
-const acc = "감자가 아님";
-
-const abs = {"감자": acc};
-
-export default logger;
