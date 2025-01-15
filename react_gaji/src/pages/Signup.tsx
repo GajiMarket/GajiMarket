@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { NNIP } from '../components/signup/NNIP';
 import { useNavigate } from 'react-router-dom';
 import '../style/Signup.css';

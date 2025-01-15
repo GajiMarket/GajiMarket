@@ -4,11 +4,11 @@ import { usePathStore } from '../utils/pathStore';
 
 import '../style/Mainpage.css'
 
-const Navigation:React.FC = () => {
+const Navigation: React.FC = () => {
   const productState = usePathStore.getState();
 
   console.log("Current Product State:", productState);
-  
+
   return (
     <div className='Mainpage'>
       <MapComponent />
