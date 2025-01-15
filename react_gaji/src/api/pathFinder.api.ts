@@ -4,33 +4,34 @@ import { Feature, Geometry, GeoJsonProperties } from "geojson";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
-    headers: { 'Content-Type': 'application/json', },
+    headers: {
+        // 'Content-Type': 'application/json',
+    },
 })
 
 export interface IPathResponse {
-    // type: string;
-    // features: Feature<Geometry, GeoJsonProperties>[];
     type: string;
-    features: Array<{
-        type: string;
-        id: string;
-        geometry: {
-            type: string;
-            coordinates: number[];
-        };
-        properties: {
-            nodeAId: string;
-            nodeBId: string;
-            length: number;
-            srid: null;
-            pathType: number;
-            time: number;
-            difficulty: number;
-            index: number;
-            guide: null;
-        };
-    }>;
-
+    features: Feature<Geometry, GeoJsonProperties>[];
+    // type: string;
+    // features: Array<{
+    //     type: string;
+    //     id: string;
+    //     geometry: {
+    //         type: string;
+    //         coordinates: number[];
+    //     };
+    //     properties: {
+    //         nodeAId: string;
+    //         nodeBId: string;
+    //         length: number;
+    //         srid: null;
+    //         pathType: number;
+    //         time: number;
+    //         difficulty: number;
+    //         index: number;
+    //         guide: null;
+    //     };
+    // }>;
 }
 
 // zustand로 상태저장한 product의 id, lng, lat값을 서버에 전달
