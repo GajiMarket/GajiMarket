@@ -38,7 +38,9 @@ const Mypage: React.FC = () => {
 
  // 프로필 이미지 불러오기
      useEffect(() => {
+
        const profileDefault = async() => {
+
  
          try {
            const defaultImage = await imagePath(Number(userNo));
@@ -57,12 +59,14 @@ const Mypage: React.FC = () => {
          } catch(error) {
 
            console.error("이미지 불러오기 실패 500", error);
+
+           return;
            
          }
        }
  
        profileDefault();
-     }, [profileImage]);
+     }, []);
 
   // const [nickname, setNickName] = useState<string>('');
 

@@ -1,11 +1,16 @@
-import logger from '../../logger'
+import {logger} from '../../logger'
 import { Storage } from '@google-cloud/storage'
-import {uploadImageDAO, profileDefault} from '../DAO/mypage.dao'
-import IPhoto from 'api/models/photo'
+import {uploadImageDAO, profileDefault, profileNickDAO} from '../DAO/mypage.dao'
+import IUser from 'api/models/photo'
+import IMemberTbl from 'api/models/member_tbl'
 import path from 'path'
 import dotenv from 'dotenv';
 
-type Photo = Partial<IPhoto>
+// type Photo = Partial<IPhoto>
+// type Member = Partial<IMemberTbl>
+
+
+type User = Partial<IMemberTbl&IUser>
 
 dotenv.config();
 
@@ -56,21 +61,26 @@ export const uploadImageService = {
                     await uploadImageDAO(fileUrl, userNo); 
                     
                     // 기존 프로필 이미지가 있으면 삭제
-                    const currentImageFile = await profileDefault(userNo);
+                    const currentImageFile = await profileDefault(userNo) as User;
+
+                    logger.debug({"기존 이미지": currentImageFile.image})
 
                     if(currentImageFile?.image) {
 
-                        const existingFileNmae = path.basename(currentImageFile.image);
-                        const existingBlob = bucket.file(existingFileNmae);
+                        const existingFileName = path.basename(currentImageFile.image);
+                        const existingBlob = bucket.file(existingFileName);
+
+                        logger.debug({"existingFileName": existingFileName});
+                        logger.debug({"existingBlob": existingBlob});
 
                         try {
 
                             await existingBlob.delete();
-                            logger.debug(`기존 프로필 이미지 삭제 완료: ${existingFileNmae}`)
+                            logger.debug(`기존 프로필 이미지 삭제 완료: ${existingFileName}`)
 
                         } catch (error) {
                             
-                            logger.error(`기존 프로필 이미지 삭제 실패: ${existingFileNmae}`, error)
+                            logger.error(`"있는 이미지 이름:"${existingFileName}`, error)
                         }
 
                     }
@@ -91,8 +101,8 @@ export const uploadImageService = {
 
     },
 
-    // 내가 쓰고 있는 프로필
-    profileDefaultService: async (id: string): Promise<Photo | void> => {
+    // 내가 쓰고 있는 프로필 이미지
+    profileDefaultService: async (id: string): Promise<User | void> => {
         
         logger.debug("전달 받은 파라미터:", id)
             
@@ -104,9 +114,32 @@ export const uploadImageService = {
                 return;
             }
 
-            return response as Photo;
+            return response ;
 
 
+    },
+
+    //닉네임 업데이트
+    profileNickService: async (nick: string, id: string): Promise<User | void> => {
+
+        try {
+            logger.debug({"전달 받은 파라미터": nick});
+
+            const response = await profileNickDAO(nick, id);
+
+            if(!response) {
+                logger.error("값을 반환 하지 못했습니다.");
+                return;
+            }
+
+            return response as User;
+
+        } catch {
+
+            logger.error("profileNickService에서 에러 발생");
+            
+        }
     }
+
 };
     

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../style/Productpage.css";
 
@@ -28,6 +28,16 @@ const ProductPage: React.FC = () => {
     representativeImage: null,
     sellerName: "홍길동",
   };
+
+  // useEffect(() => {
+
+  //   const mainPage = async () => {
+      
+  //     const response = await mainProduct();
+
+  //   }
+
+  // })
 
   const [liked, setLiked] = useState(false);
 

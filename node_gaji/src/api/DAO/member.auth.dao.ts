@@ -2,7 +2,7 @@ import {db, schema} from '../../config/dbConfig'
 // import {QueryResult} from 'pg';
 import IMemberTbl from '../models/member_tbl'
 import IPhoto from '../models/photo'
-import logger from '../../logger';
+import {logger} from '../../logger';
 
 
 type loginType = Partial<IMemberTbl & IPhoto>;

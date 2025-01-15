@@ -2,7 +2,7 @@ import axios from 'axios';
 import {login, signUpDAO, saveOrUpdateUser, idCheckDAO, pwCheckDAO} from '../DAO/member.auth.dao';
 import IMemberTbl from '../models/member_tbl';
 import IPhoto from 'api/models/photo';
-import logger from '../../logger';
+import {logger} from '../../logger';
 
 type loginType = Partial<IMemberTbl&IPhoto>;
 
@@ -53,7 +53,7 @@ export const loginService = async (id: string, password:string): Promise<loginTy
 
     const memberLogin = await login(id, password);
 
-    if(memberLogin) {
+    if(!memberLogin) {
         logger.error("loginService: 받은 데이터 값이 없습니다.");
     }
 

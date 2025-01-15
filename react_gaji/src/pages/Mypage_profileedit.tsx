@@ -7,12 +7,11 @@ import Footer from '../components/all/Footer.tsx';
 import smileIcon from '../assets/icons/smile-icon.png'; // 기본 이미지
 
 import loginStore from "../utils/loginStore.ts";
-import { nicknameUpdate } from "../hooks/useLogin.ts";
-import { imageUpload } from '../hooks/useMypage.ts';
+import { imageUpload, nicknameUpdate } from '../hooks/useMypage.ts';
 
 const MypageProfileEdit: React.FC = () => {
 
-      const {isAuthenticated, nickname, setNickname, userNo, profileImage, setImage, token, setToken} = loginStore(); 
+      const {isAuthenticated, nickname, setNickname, userNo, profileImage, setImage, token, setToken, setUserNo} = loginStore(); 
   
   
     const navigate = useNavigate();
@@ -109,7 +108,8 @@ const MypageProfileEdit: React.FC = () => {
     
     try {
       
-      const userNick = await nicknameUpdate(nickname as string, token as string);
+      const userNick = await nicknameUpdate(token as string, userNo as string, nickname as string);
+
 
       setNickname(userNick.nickName as string);
 
@@ -121,7 +121,8 @@ const MypageProfileEdit: React.FC = () => {
 
     } catch (error) {
 
-      console.error(error);
+      console.error("500 에러 발생:", error);
+      
       
     }
   };

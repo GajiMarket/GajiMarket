@@ -2,7 +2,7 @@ import {Request, Response} from 'express'
 import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheckService, pwCheckService} from '../service/member.auth.service'
-import logger from '../../logger';
+import {logger} from '../../logger';
 import IMemberTbl  from 'api/models/member_tbl';
 import IPhoto from 'api/models/photo';
 
@@ -283,6 +283,7 @@ export const validateToken = (req: Request, res: Response) => {
 // 일반 로그인 사용자 정보
 export const getLoginInfo = async(req: Request, res: Response) => {
 
+    //`Bearer[0] (공백으로 나눔) token이름[1]`
     const token = req.headers.authorization?.split(' ')[1] as string; // Bearer 토큰에서 추출
     const key: string = process.env.TOKEN_KEY || "GajiMarket_login" 
 
