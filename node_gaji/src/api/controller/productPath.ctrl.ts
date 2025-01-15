@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { pathFinderAPI } from "../service/productPath.service";
-import { ICoordinates, IPathPostParams } from "../models/pathFinder.model";
+import { ICoordinates } from "../models/pathFinder.model";
 
 export const postPathCtrl = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -26,21 +26,21 @@ export const postPathCtrl = async (req: Request, res: Response, next: NextFuncti
     }
 }
 
-export const getPathCtrl = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { startX, startY, endX, endY }: ICoordinates = req.body;
-    if (!startX || !startY || !endX || !endY) {
-        throw new Error("Invalid query parameters. Please provide all required fields.");
-    }
+// export const getPathCtrl = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+//     const { startX, startY, endX, endY }: ICoordinates = req.body;
+//     if (!startX || !startY || !endX || !endY) {
+//         throw new Error("Invalid query parameters. Please provide all required fields.");
+//     }
 
-    const params = {
-        startX, startY,
-        endX, endY
-    }
-    const result = await pathFinderAPI(params);
-    console.log(result);
+//     const params = {
+//         startX, startY,
+//         endX, endY
+//     }
+//     const result = await pathFinderAPI(params);
+//     console.log(result);
 
-    res.status(200).json({
-        message: "패스 받아오기 성공",
-        data: result,
-    });
-}
+//     res.status(200).json({
+//         message: "패스 받아오기 성공",
+//         data: result,
+//     });
+// }
