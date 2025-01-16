@@ -1,9 +1,9 @@
-import { getChatRoomsFromDB, getProductFromDB } from '../DAO/chat.dao';
+import { getChatRoomsFromDB, getChatProductFromDB } from '../DAO/chat.dao';
 
 export const getChatRooms = async (memberNo: number) => {
   return await getChatRoomsFromDB(memberNo);
 };
 
-export const getProductByMemberNo = async (memberNo: number) => {
-  return await getProductFromDB(memberNo);
+export const getChatProductById = async (productId: number) => {
+  return await getChatProductFromDB(productId);
 };

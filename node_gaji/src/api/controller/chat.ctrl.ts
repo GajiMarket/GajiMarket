@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getChatRooms, getProductByMemberNo } from '../service/chat.service';
+import { getChatRooms, getChatProductById } from '../service/chat.service';
 
 export const getChatRoomsByMember = async (req: Request, res: Response) => {
   const memberNo = parseInt(req.params.memberNo, 10);
@@ -14,11 +14,11 @@ export const getChatRoomsByMember = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductByMember = async (req: Request, res: Response) => {
-  const memberNo = parseInt(req.params.memberNo, 10);
+export const getProductById = async (req: Request, res: Response) => {
+  const productId = parseInt(req.params.productId, 10);
 
   try {
-    const product = await getProductByMemberNo(memberNo);
+    const product = await getChatProductById(productId);
     console.log('Fetched product:', product); // 로그 추가
     res.json(product);
   } catch (error) {

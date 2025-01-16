@@ -17,23 +17,15 @@ interface ChatMessage {
   timestamp: string;
 }
 
-interface Product {
-  status: string;
-  title: string;
-  price: number;
-  location: string;
-}
-
 const Chatpage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const roomId = id || ''; // roomId를 string으로 변환
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const name = searchParams.get('name') || 'Unknown';
-  const memberNo = searchParams.get('memberNo') || 'Unknown';
+  const productId = searchParams.get('productId') || '';
   const { messages, addMessage } = useChatStore();
   const [input, setInput] = useState('');
-  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     // 서버에서 채팅 메시지 데이터를 가져옴
@@ -59,22 +51,6 @@ const Chatpage: React.FC = () => {
     };
   }, [addMessage, roomId]);
 
-  useEffect(() => {
-    // 서버에서 상품 데이터를 가져옴
-    const fetchProduct = async () => {
-      try {
-        console.log(`Fetching product for memberNo: ${memberNo}`);
-        const response = await axios.get(`http://localhost:3000/api/product/${memberNo}`);
-        console.log('Fetched product:', response.data);
-        setProduct(response.data);
-      } catch (error) {
-        console.error('Failed to fetch product:', error);
-      }
-    };
-
-    fetchProduct();
-  }, [memberNo]);
-
   const sendMessage = () => {
     const newMessage: ChatMessage = {
       id: Date.now(),
@@ -99,19 +75,11 @@ const Chatpage: React.FC = () => {
   return (
     <div className="chatpage">
       <ChatHeader roomId={roomId} chatName={name} />
-      {product && (
-        <ChatProduct
-          status={product.status}
-          title={product.title}
-          price={product.price}
-          location={product.location}
-        />
-      )}
+      <ChatProduct productId={productId} />
       <Chatting messages={messages[roomId] || []} />
       <ChatSend onSendMessage={handleSendMessage} />
     </div>
   );
 };
-
 
 export default Chatpage;

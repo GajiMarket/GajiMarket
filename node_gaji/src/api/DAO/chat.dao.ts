@@ -12,11 +12,11 @@ export const getChatRoomsFromDB = async (memberNo: number) => {
   return result.rows;
 };
 
-export const getProductFromDB = async (memberNo: number) => {
+export const getChatProductFromDB = async (productId: number) => {
   const result = await db.query(`
     SELECT status, title, sell_price AS price, member_addr AS location
     FROM team4.product
-    WHERE member_no = $1
-  `, [memberNo]);
+    WHERE product_id = $1
+  `, [productId]);
   return result.rows[0];
 };
