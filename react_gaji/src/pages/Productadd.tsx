@@ -75,7 +75,7 @@ const ProductAdd: React.FC = () => {
 
     try {
       console.log("body data : ",productData)
-      const response = await axios.post("http://localhost:3000/productadd", productData);
+      const response = await axios.post("http://localhost:3000/use/productadd", productData);
 
       // 상품 등록 성공 시 처리
       console.log("Product Saved:", response.data);
@@ -93,6 +93,7 @@ const ProductAdd: React.FC = () => {
       
       // 상품 페이지로 이동
       navigate(`/productpage/${response.data.data.product_id}`);
+      
     } catch (error) {
       // 상품 등록 실패 시 처리
       console.error("Error saving product:", error);
