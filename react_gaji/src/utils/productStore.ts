@@ -20,8 +20,8 @@ interface IProductProps {
 
 type ProductProps = Partial<IProductProps>
 
-const productStroe = create<ProductProps>()(
-    persist((set) => ({
+const productStroe = create<ProductProps>()
+    ((set) => ({
     userMarker: null,
     userLocation: null,
     profileNick: null,
@@ -33,22 +33,22 @@ const productStroe = create<ProductProps>()(
     
 }),
 
-{ // 세션에 저장할 키이름과 storage 설정
-    name: 'map-storage',
-    storage: {
-    getItem: (name: string) => {
-        const value = sessionStorage.getItem(name);
-        return value ? JSON.parse(value) : null;
-    },
-    setItem: (name: string, value: {}) => {
-        sessionStorage.setItem(name, JSON.stringify(value));
-    },
-    removeItem: (name: string) => sessionStorage.removeItem(name)
-},
-    partialize: (state) => ({mapInstance: state.mapInstance})
-}
+// { // 세션에 저장할 키이름과 storage 설정
+//     name: 'map-storage',
+//     storage: {
+//     getItem: (name: string) => {
+//         const value = sessionStorage.getItem(name);
+//         return value ? JSON.parse(value) : null;
+//     },
+//     setItem: (name: string, value: {}) => {
+//         sessionStorage.setItem(name, JSON.stringify(value));
+//     },
+//     removeItem: (name: string) => sessionStorage.removeItem(name)
+// },
+//     partialize: (state) => ({mapInstance: state.mapInstance})
+// }
 
-));
+);
 
 // storage: {
 //     getItem: (name: string) => {

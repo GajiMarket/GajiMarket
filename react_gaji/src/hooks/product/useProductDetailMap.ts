@@ -1,22 +1,28 @@
-import { useEffect, RefObject} from 'react';
+import { useState, useEffect, RefObject} from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxLanguage from "@mapbox/mapbox-gl-language";
 import { mapConfig} from '../../config/mapConfig';
 import productStroe from '../../utils/productStore';
 
-const {mapInstance, setMapInstance} = productStroe();
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 
 export const detailMap = (mapContainerRef: RefObject<HTMLDivElement>, config: typeof mapConfig) => {
 // const [mapInstance, setMapInstance] = useState<mapboxgl.Map | null>(null);
+const {mapInstance, setMapInstance} = productStroe();
 
     useEffect(() => {
-        if(!mapContainerRef.current || mapInstance) return;
+        if(!mapContainerRef.current || mapInstance) {
+            console.error("mapContainerRef.current는 없습니다. 맵을 인스톨 하는데 실패했습니다.", mapContainerRef.current);
+            return;
+            
+        }
+
+        const mapContainer = mapContainerRef.current;
 
         const map = new mapboxgl.Map({
-            container: mapContainerRef.current,
+            container: mapContainer,
             style: config.defaultStyle,
             center: config.initialCenter,
             zoom: config.initialZoom,
@@ -31,7 +37,7 @@ export const detailMap = (mapContainerRef: RefObject<HTMLDivElement>, config: ty
         map.remove();
        };
         
-    }, [mapContainerRef, config]);
+    }, [mapContainerRef, config, setMapInstance]);
 
     const updateCenter = (longitude: number, latitude: number) => {
         mapInstance?.flyTo({center: [longitude, latitude], essential: true});
