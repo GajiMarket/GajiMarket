@@ -1,6 +1,6 @@
 import axios from "axios";
 import { usePathStore } from "../utils/pathStore";
-import { Feature, Geometry, GeoJsonProperties } from "geojson";
+import { Feature, Geometry } from "geojson";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
@@ -9,9 +9,18 @@ const api = axios.create({
     },
 })
 
+export interface CustomProperties {
+    totalLength: number; // 총 거리
+    totalTime: number; // 총 소요 시간
+    [key: string]: any;
+}
+
+export interface CustomFeature extends Feature<Geometry, CustomProperties> {}
+
 export interface IPathResponse {
     type: string;
-    features: Feature<Geometry, GeoJsonProperties>[];
+    // features: Feature<Geometry, GeoJsonProperties>[];
+    features: CustomFeature[];
     coordinates?: [number, number][]; // 선택적으로 추가
 }
 
@@ -35,7 +44,6 @@ export const sendPathData = async (): Promise<IPathResponse> => {
     try {
         const response = await api.post<IPathResponse>('/navigation', payload);
         // console.log("Received Data:", response);
-        
         // console.log("Features Exists:", !!response.data?.features);
         // console.log("Features is Array:", Array.isArray(response.data?.features));
         // console.log("Valid response received features:", response.data.features);

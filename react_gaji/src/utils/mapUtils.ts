@@ -59,7 +59,7 @@ export const mapRoute = (map: Map, pathData: IPathRoute) => {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': '#888',
+        'line-color': '#8142D6',
         'line-width': 6
       },
     })
