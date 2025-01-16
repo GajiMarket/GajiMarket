@@ -12,12 +12,13 @@ const api = axios.create({
 export interface IPathResponse {
     type: string;
     features: Feature<Geometry, GeoJsonProperties>[];
+    coordinates?: [number, number][]; // 선택적으로 추가
 }
 
 // zustand로 상태저장한 product의 id, lng, lat값을 서버에 전달
-export const sendPathData = async (): Promise<void> => {
+export const sendPathData = async (): Promise<IPathResponse> => {
     const { longitude, latitude } = usePathStore.getState();
-    console.log("Coordinates from store:", { longitude, latitude });
+    // console.log("Coordinates from store:", { longitude, latitude });
 
     if (!longitude || !latitude) {
         console.error("Invalid coordinates:", { longitude, latitude });
@@ -33,19 +34,13 @@ export const sendPathData = async (): Promise<void> => {
 
     try {
         const response = await api.post<IPathResponse>('/navigation', payload);
-        const features = Array.isArray(response.data?.features) ? response.data.features : [];
+        // console.log("Received Data:", response);
+        
+        // console.log("Features Exists:", !!response.data?.features);
+        // console.log("Features is Array:", Array.isArray(response.data?.features));
+        // console.log("Valid response received features:", response.data.features);
 
-        // console.log(response);
-        // console.log("API Response Data:", JSON.stringify(response.data, null, 2));
-
-        if (features.length === 0) {
-            console.error("Features field is missing or not an array:", response.data);
-            throw new Error("Invalid response: features is not an array.");
-        }
-
-        console.log("Features Exists:", !!response.data?.features);
-        console.log("Features is Array:", Array.isArray(response.data?.features));
-        console.log("Valid response received:", response.data.features);
+        return response.data;
 
     } catch (error) {
         if (axios.isAxiosError(error)) {

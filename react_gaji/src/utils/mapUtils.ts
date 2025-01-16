@@ -1,6 +1,11 @@
 import mapboxgl, { Map } from "mapbox-gl";
 import { Feature, LineString, GeoJsonProperties, Geometry } from "geojson";
 
+export interface IPathRoute {
+  coordinates?: [number, number][];
+  features?: Feature<Geometry, GeoJsonProperties>[];
+}
+
 export const mapMarker = (map: mapboxgl.Map, position: [number, number]) => {
   const marker = new mapboxgl.Marker({
     draggable: false,
@@ -20,39 +25,44 @@ export const mapPopup = (map: mapboxgl.Map, position: [number, number]) => {
   return popup;
 }
 
-export const mapRoute = (map: Map, pathData: { coordinates: [number, number][]}) => {
+export const mapRoute = (map: Map, pathData: IPathRoute) => {
+  const coordinates = pathData.coordinates || processCoordinates(pathData.features || []);
+  
+  if (coordinates.length === 0) {
+    console.error("유효하지 않은 path data입니다.");
+    return;
+  }
+
   const routeGeoJSON: Feature<LineString> = {
     type: 'Feature',
     properties: {},
     geometry: {
       type: 'LineString',
-      coordinates: pathData.coordinates, // 경로 데이터
+      coordinates
     },
-  };
+  }
 
-  if (map.getSource('route')) {
-    // 이미 소스가 있는 경우 데이터를 업데이트
-    (map.getSource('route') as mapboxgl.GeoJSONSource).setData(routeGeoJSON);
+  const sourceId = 'route';
+  if (map.getSource(sourceId)) {
+    (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(routeGeoJSON);
   } else {
-    // 소스가 없으면 새로 추가
-    map.addSource('route', {
+    map.addSource(sourceId, {
       type: 'geojson',
-      data: routeGeoJSON,
+      data: routeGeoJSON
     });
-
     map.addLayer({
-      id: 'route',
+      id: sourceId,
       type: 'line',
-      source: 'route',
+      source: sourceId,
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
       },
       paint: {
         'line-color': '#888',
-        'line-width': 6,
+        'line-width': 6
       },
-    });
+    })
   }
 }
 

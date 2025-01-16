@@ -1,35 +1,26 @@
 import { useState, useEffect } from "react";
-import { sendPathData } from "../../api/pathFinder.api";
-import { processCoordinates } from "../../utils/mapUtils";
-import { Feature, Geometry, GeoJsonProperties } from "geojson";
+import { IPathResponse, sendPathData } from "../../api/pathFinder.api";
 
 export const usePathData = () => {
-    const [pathData, setPathData] = useState<IPathResponse | null>(null);
+    const [pathData, setPathData] = useState<IPathResponse | null>(null); // state에 pathdata 저장
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const getApiData = async () => {
+        try {
+            const response = await sendPathData(); // API 결과를 가져옴
+            setPathData(response) // state에 response값 저장
+            // console.log("Response Data:", response.features);
+        } catch (error) {
+            setError("path Data를 불러오는데 실패했습니다.");
+        } finally {
+            setLoading(false); // 실패시 받아오기를 false
+        }
+    };
 
     useEffect(() => {
-        const fetchPathData = async () => {
-            try {
-                const data = await sendPathData();
-                // console.log("API Response FrontEnd Data:", data);
-                console.log("Features Data:", data.features);
-                setPathData(data);
+        getApiData();
+    }, [])
 
-                // const coordinates = processCoordinates(data.features);
-
-                // console.log("coordinates data:", coordinates);
-
-                // if (coordinates.length > 0) {
-                    // setPathData({ coordinates });
-                // } else {
-                    // console.warn('No valid coordinates found in path data');
-                // }
-            } catch (error) {
-                console.error('Failed to fetch path data:', error)
-            }
-        };
-
-        fetchPathData();
-    }, []);
-
-    return pathData;
+    return { pathData, loading, error }; // 각 변수 반환
 };
