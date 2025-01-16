@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { getChatRoomsByMember, getProductById } from './controller/chat.ctrl';
+import { getChatRooms, getChatProduct } from './controller/chat.ctrl';
 
 const router = Router();
 
-router.get('/chatrooms/:memberNo', getChatRoomsByMember);
-router.get('/product/:productId', getProductById);
+router.get('/chatrooms/:memberNo', getChatRooms);
+router.get('/product/:productId', getChatProduct);
 
 export default router;

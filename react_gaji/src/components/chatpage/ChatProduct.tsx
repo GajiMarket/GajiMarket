@@ -10,6 +10,7 @@ interface Product {
   title: string;
   price: number;
   location: string;
+  image: string | null; // 대표 이미지
 }
 
 const ChatProduct: React.FC<ChatProductProps> = ({ productId }) => {
@@ -36,7 +37,11 @@ const ChatProduct: React.FC<ChatProductProps> = ({ productId }) => {
 
   return (
     <div className="chat-product">
-      <img src="/path/to/image.jpg" alt="Product" className="chat-product-image" />
+      {product.image && (
+        <div className="chat-product-images">
+          <img src={product.image} alt="Product" className="chat-product-image" />
+        </div>
+      )}
       <div className="chat-product-info">
         <div className="chat-product-header2">
           <p className="sell-reserv-end">{product.status}</p>
