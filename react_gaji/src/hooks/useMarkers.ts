@@ -79,8 +79,9 @@ const useMarkers = () => {
             // 버튼 클릭 이벤트 처리
             const navigateButton = popupContent.querySelector(".navigate-btn");
             navigateButton?.addEventListener("click", async () => {
-                const { setCoordinates } = usePathStore.getState();
-                setCoordinates(product.longitude, product.latitude)
+                const { setProductId, setCoordinates } = usePathStore.getState();
+                setProductId(product.product_id);
+                setCoordinates(product.longitude, product.latitude);
 
                 try {
                     const data = await sendPathData();
