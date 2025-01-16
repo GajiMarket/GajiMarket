@@ -88,7 +88,7 @@ const ProductAdd: React.FC = () => {
       setRepresentativeIndex(null);
 
       // 상품 페이지로 이동
-      navigate("/productpage", { state: response.data });
+      navigate(`/productpage/${response.data.data.product_id}`);
     } catch (error) {
       // 상품 등록 실패 시 처리
       console.error("Error saving product:", error);
