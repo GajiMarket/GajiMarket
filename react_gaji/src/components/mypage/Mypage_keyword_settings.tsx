@@ -152,7 +152,7 @@ const MypageKeywordSettings: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer currentPage={4}/>
     </div>
   );
 };

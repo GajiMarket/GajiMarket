@@ -9,16 +9,11 @@ import loginStore from '../utils/loginStore.ts';
 
 const Mainpage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-
-
   const navigate = useNavigate();
   const { isAuthenticated } = loginStore();
 
   useEffect(() => {
-
-
     if (!isAuthenticated) {
-
       alert('로그인이 필요합니다.');
       navigate('/');
       return;
@@ -29,7 +24,7 @@ const Mainpage: React.FC = () => {
     <div className='Mainpage'>
       <Mapbox searchTerm={searchTerm} />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <Footer />
+      <Footer currentPage={0}/>
     </div>
   )
 }

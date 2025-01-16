@@ -48,7 +48,7 @@ const MypageBuy: React.FC = () => {
           ))}
         </ul>
       </div>
-      <Footer />
+      <Footer currentPage={4}/>
     </div>
   );
 };
