@@ -84,7 +84,7 @@ const useMarkers = () => {
 
                 try {
                     const data = await sendPathData();
-                    alert('데이터 전송 성공!')
+                    // alert('데이터 전송 성공!')
                     navigate("/navigation");
                 } catch (error) {
                     console.error("데이터 전송 실패:", error)

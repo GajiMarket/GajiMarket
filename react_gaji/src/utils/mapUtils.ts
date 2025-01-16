@@ -6,6 +6,26 @@ export interface IPathRoute {
   features?: Feature<Geometry, GeoJsonProperties>[];
 }
 
+export const updateOrCreateMarker = (
+  map: mapboxgl.Map,
+  position: [number, number],
+  existingMarker: mapboxgl.Marker | null
+): mapboxgl.Marker => {
+  if (existingMarker) {
+    // 기존 마커가 있는 경우 위치 업데이트
+    existingMarker.setLngLat(position);
+    return existingMarker;
+  }
+
+  // 기존 마커가 없으면 새 마커 생성
+  return new mapboxgl.Marker({
+    draggable: false,
+    anchor: "center",
+  })
+    .setLngLat(position)
+    .addTo(map);
+};
+
 export const mapMarker = (map: mapboxgl.Map, position: [number, number]) => {
   const marker = new mapboxgl.Marker({
     draggable: false,
@@ -59,7 +79,7 @@ export const mapRoute = (map: Map, pathData: IPathRoute) => {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': '#8142D6',
+        'line-color': '#888',
         'line-width': 6
       },
     })

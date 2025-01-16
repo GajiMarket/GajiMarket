@@ -15,6 +15,7 @@ const NaviPopup: React.FC<PopupProps> = ({ totalLength, totalTime }) => {
                 <p>총 거리: {totalLength.toFixed(2)} m</p>
                 <p>총 소요 시간: {totalTime} 초</p>
             </div>
+            <button className="popup-end-btn">도착</button>
         </div>
     );
 };

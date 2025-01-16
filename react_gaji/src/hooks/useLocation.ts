@@ -36,7 +36,15 @@ const useLocation = (options: UseLocationOptions = { enableHighAccuracy: true })
             }
         };
 
-        const watchId = navigator.geolocation.watchPosition(handleSuccess, handleError, options);
+        const watchId = navigator.geolocation.watchPosition(
+            handleSuccess,
+            handleError,
+            {
+                ...options,
+                maximumAge: 10000, // 10초 동안 캐시된 위치 사용
+                timeout: 5000, // 5초 초과 시 타임아웃
+            }
+        );
 
         return () => navigator.geolocation.clearWatch(watchId);
     }, [options]);

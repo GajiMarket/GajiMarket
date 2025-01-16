@@ -1,6 +1,6 @@
 .popup-container {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
@@ -25,4 +25,13 @@
     border: none;
     font-size: 16px;
     cursor: pointer;
+}
+
+.popup-end-btn {
+    width: 100%;
+    background-color: blueviolet;
+    margin-top: 15px;
+    padding: 8px;
+    color: #fff;
+    border-radius: 6px;
 }

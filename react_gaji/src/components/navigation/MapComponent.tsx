@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import NaviPopup from "./NaviPopup";
 import useMap from '../../hooks/ejk/useMap.ej';
+import useLocation from "../../hooks/useLocation";
 import { usePathData } from "../../hooks/ejk/useNavitation";
-import { mapMarker, mapRoute, processCoordinates } from "../../utils/mapUtils";
+import { mapMarker, updateOrCreateMarker, mapRoute, processCoordinates } from "../../utils/mapUtils";
 import { CustomProperties } from "../../api/pathFinder.api";
 
 const MapComponent: React.FC = () => {
@@ -10,6 +11,9 @@ const MapComponent: React.FC = () => {
     const { pathData, loading, error } = usePathData(); // useNavigation return 변수 받기
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupData, setPopupData] = useState({ totalLength: 0, totalTime: 0 });
+
+    const { userLocation, error: locationError } = useLocation(); // 현재위치 표시 hook
+    const userMarkerRef = useRef<mapboxgl.Marker | null>(null)
 
     useEffect(() => {
         if (loading || error || !map || !pathData) return;
@@ -33,6 +37,12 @@ const MapComponent: React.FC = () => {
         }
     }, [map, pathData, loading, error]);
 
+    // 기존 사용자 위치를 갱신하도록 수정 아니면 매번 새로운 마커 생성해서 엄청 렉걸림
+    useEffect(() => {
+        if (!map || !userLocation) return;
+        userMarkerRef.current = updateOrCreateMarker(map, [userLocation.lng, userLocation.lat], userMarkerRef.current);
+    }, [map, userLocation]);
+
     return (
         <>
             <div id="map" style={{ width: '100%', height: '100vh' }}/>
@@ -42,6 +52,11 @@ const MapComponent: React.FC = () => {
                     totalTime={popupData.totalTime}
                 />
             )}
+            {/* {locationError && (
+                <div className="error-popup">
+                    <p>{locationError}</p>
+                </div>
+            )} */}
         </>
     )
 }
