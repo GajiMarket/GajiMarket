@@ -9,6 +9,7 @@
   scroll-snap-type: x mandatory; /* 스크롤 스냅 효과 */
   width: 100%; /* 슬라이더 너비 */
   margin-bottom: 20px;
+  /* overflow: hidden; */
 }
 
 .image-slider {
@@ -168,3 +169,27 @@
   height: 24px;
 }
 
+/* 점 컨테이너 스타일 */
+.dots-container {
+  position: absolute; /* 슬라이더 위에 위치 */
+  bottom: 10px; /* 슬라이더 하단에 위치 */
+  left: 50%; /* 중앙 정렬 */
+  transform: translateX(-50%); /* 정확히 가운데로 이동 */
+  display: flex;
+  gap: 8px; /* 점 간격 */
+}
+
+/* 점 기본 스타일 */
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ccc; /* 비활성화 색상 */
+  border-radius: 50%; /* 원형 */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* 색상 전환 효과 */
+}
+
+/* 활성화된 점 스타일 */
+.dot.active {
+  background-color: #333; /* 활성화 색상 */
+}
