@@ -7,7 +7,7 @@ import member from './member.index';
 import chatRoutes from './chat.index';
 import mypage from '../api/mypage.index';
 import notificationRoutes from "../api/notifications.index"; // 알림 라우트 추가
-
+import mypageLoveRoutes from "./mypage_love.index";
 
 
 const mountRoutes = (app: Express) => {
@@ -28,7 +28,7 @@ const mountRoutes = (app: Express) => {
     // 알림 관련 라우트
     app.use("/notifications", notificationRoutes);
     
-
+    app.use("/mypage_love", mypageLoveRoutes);
 }
 
 export default mountRoutes;
