@@ -1,4 +1,4 @@
-import React,{useRef} from 'react'
+import React,{useEffect, useRef} from 'react'
 import { mapConfig } from "../../config/mapConfig";
 import { detailMap } from '../../hooks/product/useProductDetailMap';
 import useMarkers from '../../hooks/useMarkers';
@@ -6,7 +6,9 @@ import productStroe from '../../utils/productStore';
 import gps_icon from "../../img/gps_icon.png"
 
 interface LocationProps {
-    locationData: {lat: string, lng: string};
+    locationData: string;
+
+    
 }
 
 
@@ -25,6 +27,19 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
         return markerElement;
 
     };
+
+    useEffect(() => {
+      if (!mapInstance) return;
+
+      updateCenter(mapConfig.initialCenter[0], mapConfig.initialCenter[1]);
+
+      if(mapInstance) {
+        if(userMarker) {
+          userMarker.setLngLat([longtitu])
+        }
+      }
+
+    })
 
 
 

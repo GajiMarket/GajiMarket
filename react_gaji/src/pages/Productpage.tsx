@@ -5,6 +5,7 @@ import "../style/Productpage.css";
 import heartUnfillIcon from "../assets/icons/heart-unfill-icon.png";
 import heartFullIcon from "../assets/icons/heart-full-icon.png";
 // import productStroe from "../utils/productStore";
+import ProductDetailMap from "../components/map/ProductDetailMap";
 import wellknown from 'wellknown'; 
 
 interface Product {
@@ -65,25 +66,9 @@ const ProductPage: React.FC = () => {
 
           const result = response.data.data;
 
-          const geojson = {
-            type: 'FeatureCollection',
-            features: result.map((item: ProductTbl) => ({
-              type: 'Feature',
-              geometry: wellknown.parse(item.location as string),
-              properties: {
-                title: item.title,
-                description: item.description,
-                status: item.status,
-                sell_price: item.sell_price,
-                created_at: item.created_at,
-                view_count: item.view_count
-
-              }
-
-            }))
-          };
 
           setProduct(result as ProductTbl);
+
 
         } catch (error) {
           console.error("Error fetching product details:", error);
@@ -123,7 +108,7 @@ const ProductPage: React.FC = () => {
         />
       );
         })}
-        {/* <img src={product.images?.[0]} alt="대표 이미지" className="slider-image"/> */}
+       
         <div
           className="back-button"
           onClick={() => navigate("/")}
@@ -162,6 +147,7 @@ const ProductPage: React.FC = () => {
 
       {/* 위치 */}
       <div className="sell_location_map">
+        <ProductDetailMap locationData={product?.location as string}/>
       </div>
 
       {/* 좋아요 버튼 및 가격 */}

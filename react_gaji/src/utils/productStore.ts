@@ -2,18 +2,18 @@ import {create} from 'zustand';
 import { persist, PersistStorage } from 'zustand/middleware';
 import mapboxgl from "mapbox-gl";
 
-type mapbox = typeof mapboxgl.Marker
+
 
 interface IProductProps {
     // image: string | null;
     // setImage:(image: string) => void;
-    userMarker: mapbox | null;
+    userMarker: mapboxgl.Marker | null;
     userLocation: string | null;
     profileNick: string | null;
     mapInstance: mapboxgl.Map | null;
     setMapInstance: (mapInstance: mapboxgl.Map) => void;
     setProfileNick: (profileNick: string) => void;
-    setUserMarker: (userMarker: mapbox) => void; 
+    setUserMarker: (userMarker: mapboxgl.Marker) => void; 
     setUserLocation: (userLocation: string) => void;
 
 }
