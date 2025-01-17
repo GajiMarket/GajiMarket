@@ -4,7 +4,8 @@ import "../style/Chatlist.css";
 import ChatlistHeader from '../components/chatlist/ChatlistHeader';
 import ChatlistForm from '../components/chatlist/ChatlistForm';
 import Footer from '../components/all/Footer';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import loginStore from '../utils/loginStore'; // 로그인 상태를 가져오는 훅
 
 interface Chat {
   chat_room_id: number;
@@ -12,21 +13,21 @@ interface Chat {
   last_message_time: string;
   name: string;
   location: string;
-  avatar: string;
-  time: string;
+  avatar: string; // 추가
+  time: string; // 추가
 }
 
 const Chatlist: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
   const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const memberNo = searchParams.get('memberNo') || '13'; // 기본값으로 13번 회원 설정
+  const { userNo } = loginStore(); // 로그인한 회원 정보 가져오기
 
   useEffect(() => {
+    if (!userNo) return; // 로그인한 회원이 없으면 리턴
+
     const fetchChats = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/chatrooms/${memberNo}`); // 회원 번호를 URL에 포함
+        const response = await axios.get(`http://localhost:3000/api/chatrooms/${userNo}`); // 회원 번호를 URL에 포함
         console.log('Fetched chats:', response.data); // 로그 추가
         setChats(response.data);
       } catch (error) {
@@ -35,31 +36,10 @@ const Chatlist: React.FC = () => {
     };
 
     fetchChats();
-  }, [memberNo]);
-
-  useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3000');
-
-    ws.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-      setChats((prevChats) => {
-        const updatedChats = prevChats.map(chat => {
-          if (chat.chat_room_id === newMessage.chat_room_id) {
-            return { ...chat, last_message: newMessage.chat_message, last_message_time: newMessage.created_at };
-          }
-          return chat;
-        });
-        return updatedChats;
-      });
-    };
-
-    return () => {
-      ws.close();
-    };
-  }, []);
+  }, [userNo]);
 
   const handleChatClick = (chatRoomId: number, chatName: string) => {
-    navigate(`/chatpage/${chatRoomId}?name=${encodeURIComponent(chatName)}`);
+    navigate(`/api/chatpage/${chatRoomId}?name=${encodeURIComponent(chatName)}&memberNo=${userNo}`);
   };
 
   return (
@@ -68,7 +48,7 @@ const Chatlist: React.FC = () => {
       <div className="chatlist-scroll-container">
         <ChatlistForm chats={chats} onChatClick={handleChatClick} />
       </div>
-      <Footer />
+      <Footer currentPage={3}/>
     </div>
   );
 };

@@ -20,6 +20,13 @@ const ProductAdd: React.FC = () => {
 
   const navigate = useNavigate();
 
+  
+  if (!isAuthenticated) {
+    alert("로그인이 필요합니다.");
+    navigate("/");
+    return;
+  }
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const uploadedFiles = Array.from(event.target.files); // 업로드된 파일을 배열로 변환
@@ -48,11 +55,6 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
-    if (!isAuthenticated) {
-      alert("로그인이 필요합니다.");
-      navigate("/");
-      return;
-    }
 
     const locationData = location
     ? { lng: location.lng, lat: location.lat }
@@ -73,7 +75,7 @@ const ProductAdd: React.FC = () => {
 
     try {
       console.log("body data : ",productData)
-      const response = await axios.post("http://localhost:3000/productadd", productData);
+      const response = await axios.post("http://localhost:3000/use/productadd", productData);
 
       // 상품 등록 성공 시 처리
       console.log("Product Saved:", response.data);
@@ -87,8 +89,10 @@ const ProductAdd: React.FC = () => {
       setImages([]);
       setRepresentativeIndex(null);
 
+      console.log("response.data.product_id:", response.data.data.product_id);
+      
       // 상품 페이지로 이동
-      navigate("/productpage", { state: response.data });
+      navigate(`/productpage/${response.data.data.product_id}`);
     } catch (error) {
       // 상품 등록 실패 시 처리
       console.error("Error saving product:", error);

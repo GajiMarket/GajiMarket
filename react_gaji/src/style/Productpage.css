@@ -3,12 +3,18 @@
   font-family: Arial, sans-serif;
 }
 
+.sell_location_map {
+  width: 100%;
+  height: 30vh;
+}
+
 .product-image-slider {
   display: flex;
   overflow-x: auto; /* 가로 스크롤 활성화 */
   scroll-snap-type: x mandatory; /* 스크롤 스냅 효과 */
   width: 100%; /* 슬라이더 너비 */
   margin-bottom: 20px;
+  /* overflow: hidden; */
 }
 
 .image-slider {
@@ -43,15 +49,23 @@
   margin-bottom: 20px;
 }
 
+/*20250116 이미지 크기때문에 수정함*/
 .profile-icon {
-  width: 50px;
-  height: 50px;
+  width: 36px;
+  height: 36px;
   background-color: #ddd;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
+  overflow: hidden;
+}
+
+.profile-icon img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .seller-details {
@@ -168,3 +182,27 @@
   height: 24px;
 }
 
+/* 점 컨테이너 스타일 */
+.dots-container {
+  position: absolute; /* 슬라이더 위에 위치 */
+  bottom: 10px; /* 슬라이더 하단에 위치 */
+  left: 50%; /* 중앙 정렬 */
+  transform: translateX(-50%); /* 정확히 가운데로 이동 */
+  display: flex;
+  gap: 8px; /* 점 간격 */
+}
+
+/* 점 기본 스타일 */
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ccc; /* 비활성화 색상 */
+  border-radius: 50%; /* 원형 */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* 색상 전환 효과 */
+}
+
+/* 활성화된 점 스타일 */
+.dot.active {
+  background-color: #333; /* 활성화 색상 */
+}

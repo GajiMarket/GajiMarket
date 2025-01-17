@@ -1,3 +1,4 @@
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Chatlist from "./pages/Chatlist";
 import Chatpage from "./pages/Chatpage";
@@ -18,16 +19,14 @@ import MypageTermsDetail from "./components/mypage/Mypage_terms_detail";
 import MypageNeighborhoodSettings from "./components/mypage/Mypage_neighborhood_settings";
 import MypageNeighborhoodAuth from "./components/mypage/Mypage_neighborhood_auth";
 import MypageKeywordSettings from "./components/mypage/Mypage_keyword_settings";
-import MypageAlarm from "./components/mypage/Mypage_alarm"; // 알림 페이지 추가
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import MypageAlarm from "./components/mypage/Mypage_alarm";
 import Navigation from './pages/Navigation';
-import { FooterProvider } from './components/all/FooterContext';
 import Lodingpage from "./pages/Lodingpage";
 import FindMain from './pages/FindMain';
 
+
 const App: React.FC = () => {
   return (
-      <FooterProvider>
         <BrowserRouter>
             <Routes>
               <Route path="/map" element={<Mainpage />} />
@@ -38,7 +37,7 @@ const App: React.FC = () => {
               <Route path="/find" element={<FindMain />} />
               <Route path="/productadd" element={<Productadd />} />
               <Route path="/productlistpage" element={<Productlistpage />} />
-              <Route path="/productpage/:product_id" element={<Productpage />} />
+              <Route path="/productpage/:productId" element={<Productpage />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/mypage" element={<Mypage />} />
               <Route path="/mypage_profileedit" element={<MypageProfileEdit />} />
@@ -64,7 +63,6 @@ const App: React.FC = () => {
               <Route path="/navigation" element={<Navigation />} />
             </Routes>
         </BrowserRouter>
-      </FooterProvider>
   );
 };
 

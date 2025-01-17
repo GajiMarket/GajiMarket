@@ -1,17 +1,18 @@
 import {db, schema} from '../../config/dbConfig'
 import {logger} from '../../logger'
 
-export const productDetailDAO = async () => {
+export const productDetailDAO = async (id: number) => {
     try {
 
-        const response = await db.query(`SELECT title, description, status, sell_price, created_at, view_count, st_astext(sell_location) as location, member_no FROM ${schema}.product`);
+        const response = await db.query(`SELECT * FROM team4.product_and_image WHERE product_id = $1`, [id]);
 
         if(!response) {
             logger.error(`'not return': ${response}`);
             return;
         }
 
-        return response.rows
+        return response.rows[0];
+
     } catch(error) {
         logger.error('error 500');
     }
