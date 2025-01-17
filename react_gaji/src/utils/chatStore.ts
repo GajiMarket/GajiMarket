@@ -5,6 +5,7 @@ interface ChatMessage {
     sender: 'buyer' | 'seller';
     message: string;
     timestamp: string;
+    productId: string;
 }
 
 interface ChatStore {
