@@ -1,38 +1,63 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // React Router Link 사용
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../../style/Mypage_sell.css";
 
 import Header from "./Header.tsx";
 import Footer from "../all/Footer.tsx";
-
-// 이미지 경로를 import로 불러오기
-import paddingImage from "../../assets/images/padding-image.png";
+import axios from "axios";
+import loginStore from "../../utils/loginStore.ts";
 
 interface Item {
-  id: number;
-  name: string;
-  price: string;
+  product_id: number;
+  title: string;
+  sell_price: number;
   location: string;
-  time: string;
+  created_at: string;
   status: string;
+  image: string;
 }
 
 const MypageSell: React.FC = () => {
-  const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "거래완료" },
-    { id: 2, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "판매 중" },
-    { id: 3, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "거래완료" },
-    { id: 4, name: "패딩팔아요~~", price: "60,000원", location: "가산동", time: "1일 전", status: "판매 중" },
-  ]);
+  const [items, setItems] = useState<Item[]>([]);
+  const { userNo, isAuthenticated } = loginStore();
 
-  const toggleStatus = (id: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, status: item.status === "거래완료" ? "판매 중" : "거래완료" }
-          : item
-      )
-    );
+  // 판매내역 가져오기
+  useEffect(() => {
+    const fetchSellHistory = async () => {
+      try {
+        const response = await axios.get(`/mypage_sell/${userNo}`);
+        setItems(response.data);
+      } catch (error) {
+        console.error("판매내역을 불러오는 중 오류 발생:", error);
+      }
+    };
+
+    if (isAuthenticated && userNo) {
+      fetchSellHistory();
+    }
+  }, [userNo, isAuthenticated]);
+
+  // 상태 업데이트
+  const toggleStatus = async (product_id: number) => {
+    try {
+      const newStatus =
+        items.find((item) => item.product_id === product_id)?.status ===
+        "판매 중"
+          ? "거래완료"
+          : "판매 중";
+
+      await axios.patch(`/mypage_sell/${product_id}`, { status: newStatus });
+
+      setItems((prevItems) =>
+        prevItems.map((item) =>
+          item.product_id === product_id
+            ? { ...item, status: newStatus }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("상품 상태 업데이트 중 오류 발생:", error);
+    }
   };
 
   return (
@@ -42,23 +67,27 @@ const MypageSell: React.FC = () => {
         <h1>판매내역</h1>
         <ul className="item-list">
           {items.map((item) => (
-            <li key={item.id} className="item">
-              <Link to={`/productpage/${item.id}`} className="item-link">
-                <img src={paddingImage} alt={item.name} className="item-image" />
+            <li key={item.product_id} className="item">
+              <Link to={`/productpage/${item.product_id}`} className="item-link">
+                <img
+                  src={item.image || "https://via.placeholder.com/60"}
+                  alt={item.title}
+                  className="item-image"
+                />
                 <div className="item-info">
-                  <h2>{item.name}</h2>
-                  <p>
-                    {item.location} · {item.time}
-                  </p>
-                  <p className="price">{item.price}</p>
+                  <h2>{item.title}</h2>
+                  <p>{item.location} · {item.created_at}</p>
+                  <p className="price">{item.sell_price.toLocaleString()}원</p>
                 </div>
               </Link>
               <div className="item-actions">
                 <button
                   className={`status-button ${
-                    item.status === "판매 중" ? "status-selling" : "status-complete"
+                    item.status === "판매 중"
+                      ? "status-selling"
+                      : "status-complete"
                   }`}
-                  onClick={() => toggleStatus(item.id)}
+                  onClick={() => toggleStatus(item.product_id)}
                 >
                   {item.status}
                 </button>
@@ -67,7 +96,7 @@ const MypageSell: React.FC = () => {
           ))}
         </ul>
       </div>
-      <Footer currentPage={4}/>
+      <Footer currentPage={4} />
     </div>
   );
 };
