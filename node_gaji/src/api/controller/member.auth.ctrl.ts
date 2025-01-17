@@ -3,8 +3,8 @@ import jwt, {JwtPayload} from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import {loginService, signUpService, generateToken, getUserInfo, signKakao, idCheckService, pwCheckService} from '../service/member.auth.service'
 import {logger} from '../../logger';
-import IMemberTbl  from 'api/models/member_tbl';
-import IPhoto from 'api/models/photo';
+import IMemberTbl  from '../models/member_tbl';
+import IPhoto from '../models/photo';
 
 type loginType = Partial<IMemberTbl&IPhoto>;
 
