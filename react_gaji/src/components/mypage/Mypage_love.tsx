@@ -106,8 +106,7 @@ const MypageLove: React.FC = () => {
                 ) : (
                     <p>관심목록이 비어 있습니다.</p>
                 )}
-            </div>
-            <Footer />
+
         </div>
         <Footer currentPage={4}/>
     </div>
