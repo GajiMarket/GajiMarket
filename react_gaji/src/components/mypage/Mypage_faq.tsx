@@ -61,7 +61,7 @@ const MypageFAQ: React.FC = () => {
           ))}
         </ul>
       </div>
-      <Footer />
+      <Footer currentPage={4}/>
       <div className="faq-footer-space"></div> {/* Footer 여백 추가 */}
     </div>
   );

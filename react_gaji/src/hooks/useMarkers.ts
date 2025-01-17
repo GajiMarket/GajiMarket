@@ -46,28 +46,19 @@ const useMarkers = () => {
             console.error("Error fetching product locations:", error);
         }
     };
-
-    // 기존 마커 제거
-    const clearMarkers = () => {
-        markers.forEach((marker) => marker.remove());
-        setMarkers([]);
-    };
+    
 
     // 마커 렌더링
     const renderMarkers = (map: mapboxgl.Map, locations: ProductLocation[]) => {
-        if (!Array.isArray(locations)) {
-            console.error("Invalid locations data. Expected an array but got:", locations);
-            return;
-        }
-        
-        clearMarkers(); // 기존 마커 제거
+        markers.forEach(marker => marker.remove());
 
         const newMarkers = locations.map((product) => {
             const popupContent = document.createElement("div");
+            const imageUrl = product.images && product.images.length > 0 ? product.images[0] : null;
 
             popupContent.innerHTML = `
                 <div class="map_popup">
-                    <div class="popup_img">${product.status}</div>
+                    ${imageUrl ? `<img src="${imageUrl}" alt="Product Image" class="popup_img" />` : '<div class="popup_img">No Image</div>'}
                     <h3 class="popup_title">${product.title}</h3>
                     <p class="popup_description">${product.description}</p>
                     <p class="popup_sell_price">가격: ${product.sell_price}원</p>
@@ -79,8 +70,7 @@ const useMarkers = () => {
             // 버튼 클릭 이벤트 처리
             const navigateButton = popupContent.querySelector(".navigate-btn");
             navigateButton?.addEventListener("click", async () => {
-                const { setCoordinates, longitude, latitude } = usePathStore.getState();
-                console.log("Store Coordinates before sending:", { longitude, latitude });
+                const { setCoordinates} = usePathStore.getState()
 
                 setCoordinates(product.longitude, product.latitude)
                 console.log("Store Coordinates after setting:", {
@@ -90,36 +80,25 @@ const useMarkers = () => {
 
                 try {
                     const data = await sendPathData();
-                    console.log("Received Path Data:", data);
-                    console.log("Features Field:", data.features);
-
-                    if (!data.features || !Array.isArray(data.features)) {
-                        console.error("Invalid response structure:", data);
-                        throw new Error("Invalid response structure: Features missing or not an array.");
-                    }
-
-                    data.features.forEach((feature) => {
-                        if (!feature.geometry || !feature.geometry.coordinates) {
-                            console.error("Feature missing geometry or coordinates:", feature);
-                            throw new Error("Feature missing geometry or coordinates.");
-                        }
-                    });
-
-                    alert('데이터 전송 성공!')
+                    // alert('데이터 전송 성공!')
                     navigate("/navigation");
                 } catch (error) {
                     console.error("데이터 전송 실패:", error)
-                    // alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
+                    alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
                 }
             });
 
-            return new mapboxgl.Marker({ color: "purple" })
-                .setLngLat([product.longitude, product.latitude])
-                .setPopup(new mapboxgl.Popup().setDOMContent(popupContent)) // HTML 팝업 추가
-                .addTo(map);
+            return new mapboxgl.Marker({ color: "purple" }) // 보라색 마커 생성
+            .setLngLat([product.longitude, product.latitude]) // 마커 위치 설정
+            .setPopup(new mapboxgl.Popup().setDOMContent(popupContent)) // 팝업 추가
+            .addTo(map); // 지도에 추가
         });
 
-        setMarkers(newMarkers);
+        setMarkers((prevMarkers) => {
+            prevMarkers.forEach((marker) => marker.remove()); // 이전 마커 제거
+            return newMarkers;
+        });
+        console.log("New markers added:", newMarkers); // 디버깅 로그
     };
 
     return { productLocations, fetchProductLocations, renderMarkers };

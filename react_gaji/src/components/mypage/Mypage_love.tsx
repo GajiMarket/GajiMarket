@@ -109,7 +109,9 @@ const MypageLove: React.FC = () => {
             </div>
             <Footer />
         </div>
-    );
+        <Footer currentPage={4}/>
+    </div>
+  );
 };
 
 export default MypageLove;

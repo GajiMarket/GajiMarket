@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { apiConfig } from '../../config/apiConfig';
-import { IPathFinderParams, IPathResponse } from '../models/pathFinder.model';
+import { IPathPostParams, IPathResponse } from '../models/pathFinder.model';
 
-export const findPathService = async (params: IPathFinderParams): Promise<IPathResponse> => {
+export const findPathService = async (params: IPathPostParams): Promise<IPathResponse> => {
 
     try {
         console.log("Calling external API with params:", params); // 올바른 서버 요청인지 확인

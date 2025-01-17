@@ -64,7 +64,7 @@ const MypageAlarm: React.FC = () => {
           <p className="empty-message">알림이 없습니다.</p>
         )}
       </div>
-      <Footer />
+      <Footer currentPage={4}/>
     </div>
   );
 };

@@ -51,7 +51,7 @@ const MypageNeighborhoodAuth: React.FC = () => {
           </button>
         </div>
       </div>
-      <Footer />
+      <Footer currentPage={4}/>
     </div>
   );
 };

@@ -102,7 +102,7 @@ const MypageTermsDetail: React.FC = () => {
           {/* <div className="MypageTermsDetail-footer-space"></div> */}
         </div>
       </div>
-      <Footer />
+      <Footer currentPage={4}/>
     </div>
   );
 };
