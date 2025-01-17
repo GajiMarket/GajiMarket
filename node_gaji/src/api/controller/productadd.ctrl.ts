@@ -8,8 +8,8 @@ export const productaddCtrl = async (req: Request, res: Response): Promise<void>
 
   try {
     const { title, sell_price, description, location, userNo, status } = req.body;
-    logger.info("Received product data:", req.body);
-    console.log("req.body data :", req.body)
+    logger.info(`Received product data:${req.body}`);
+    console.log(`req.body data :  ${req.body}`)
 
     if (!title || !sell_price || !description || !location || !userNo || !status) {
       logger.error("Missing required fields");

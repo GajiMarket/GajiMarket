@@ -3,6 +3,11 @@
   font-family: Arial, sans-serif;
 }
 
+.sell_location_map {
+  width: 100%;
+  height: 30vh;
+}
+
 .product-image-slider {
   display: flex;
   overflow-x: auto; /* 가로 스크롤 활성화 */
@@ -44,15 +49,23 @@
   margin-bottom: 20px;
 }
 
+/*20250116 이미지 크기때문에 수정함*/
 .profile-icon {
-  width: 50px;
-  height: 50px;
+  width: 36px;
+  height: 36px;
   background-color: #ddd;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
+  overflow: hidden;
+}
+
+.profile-icon img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .seller-details {

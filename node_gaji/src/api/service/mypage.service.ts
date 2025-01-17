@@ -68,7 +68,8 @@ export const uploadImageService = {
                     if(currentImageFile?.image) {
 
                         const existingFileName = path.basename(currentImageFile.image);
-                        const existingBlob = bucket.file(existingFileName);
+                        const finalName = `userProfile/${existingFileName}`;
+                        const existingBlob = bucket.file(finalName);
 
                         logger.debug({"existingFileName": existingFileName});
                         logger.debug({"existingBlob": existingBlob});

@@ -7,7 +7,7 @@ export const addProductDAO = async (productData: IProduct) => {
   const response = await db.query(
     `INSERT INTO ${schema}.product
       (title, sell_price, description, sell_location, created_at, view_count, member_no, status) 
-     VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326), $6, $7, $8, $9) RETURNING *`,
+     VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326), $6, $7, $8, $9) RETURNING product_id`,
      [
       productData.title,           // $1
       productData.sell_price,           // $2
@@ -20,5 +20,8 @@ export const addProductDAO = async (productData: IProduct) => {
       productData.status,          // $9
     ]
   );
+
+  console.log("response 값:", response.rows[0]);
+  
   return response.rows[0];
 };

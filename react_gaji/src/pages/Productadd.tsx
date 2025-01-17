@@ -20,6 +20,13 @@ const ProductAdd: React.FC = () => {
 
   const navigate = useNavigate();
 
+  
+  if (!isAuthenticated) {
+    alert("로그인이 필요합니다.");
+    navigate("/");
+    return;
+  }
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const uploadedFiles = Array.from(event.target.files); // 업로드된 파일을 배열로 변환
@@ -48,11 +55,6 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
-    if (!isAuthenticated) {
-      alert("로그인이 필요합니다.");
-      navigate("/");
-      return;
-    }
 
     const locationData = location
     ? { lng: location.lng, lat: location.lat }
@@ -73,7 +75,7 @@ const ProductAdd: React.FC = () => {
 
     try {
       console.log("body data : ",productData)
-      const response = await axios.post("http://localhost:3000/productadd", productData);
+      const response = await axios.post("http://localhost:3000/use/productadd", productData);
 
       // 상품 등록 성공 시 처리
       console.log("Product Saved:", response.data);
@@ -87,6 +89,8 @@ const ProductAdd: React.FC = () => {
       setImages([]);
       setRepresentativeIndex(null);
 
+      console.log("response.data.product_id:", response.data.data.product_id);
+      
       // 상품 페이지로 이동
       navigate(`/productpage/${response.data.data.product_id}`);
     } catch (error) {
@@ -111,6 +115,8 @@ const ProductAdd: React.FC = () => {
         <button className="product-add-save-draft">임시저장</button>
       </header>
 
+    <div className="product-add-content">
+      <div className="product-add-content-top"></div>
       {/* 이미지 업로드 섹션 */}
       <section className="product-add-image-upload">
         <div className="image-list-container">
@@ -209,11 +215,15 @@ const ProductAdd: React.FC = () => {
           />
         </label>
       </form>
+      <div className="product-add-content-bottom"></div>
+    </div>
 
       {/* 작성 완료 버튼 */}
-      <button className="submit-button" onClick={handleSubmit}>
-        작성 완료
-      </button>
+      <div className="submit-button-container">
+        <button className="submit-button" onClick={handleSubmit}>
+          작성 완료
+        </button>
+      </div>
 
       {/* 지도 모달 */}
       {showMap && (
