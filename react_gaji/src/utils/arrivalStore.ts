@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { sendMessagesToServer } from './apiService'; // 서버 통신 api
+import { sendMessagesToServer } from '../api/sendArrivalMessage'; // 서버 통신 api
 import { useChatStore } from './chatStore'; // 기존 Zustand 스토어 가져오기
 
 interface NewStoreState {
