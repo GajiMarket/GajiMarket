@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import NaviPopup from "./NaviPopup";
 import useMap from '../../hooks/ejk/useMap.ej';
-import useLocation from "../../hooks/useLocation";
+// import useLocation from "../../hooks/useLocation";
 import { usePathData } from "../../hooks/ejk/useNavitation";
 import { updateOrCreateMarker, mapRoute, processCoordinates } from "../../utils/mapUtils";
 import { CustomProperties } from "../../api/pathFinder.api";
@@ -12,16 +12,15 @@ const MapComponent: React.FC = () => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupData, setPopupData] = useState({ totalLength: 0, totalTime: 0 });
 
-    const { userLocation, error: locationError } = useLocation(); // 현재위치 표시 hook
-    const userMarkerRef = useRef<mapboxgl.Marker | null>(null)
+    // const { userLocation, error: locationError } = useLocation(); // 현재위치 표시 hook
+    // const userMarkerRef = useRef<mapboxgl.Marker | null>(null)
 
     useEffect(() => {
-        if (loading || error || !map || !pathData || !pathData.features || pathData.features.length === 0) {
-          return;
-        }
-    
+        if (loading || error || !map || !pathData || !pathData.features || pathData.features.length === 0) {return;}
+        
         const features = pathData.features[0];
         const coordinates = pathData.coordinates || processCoordinates(pathData.features);
+
         if (!features || coordinates.length === 0) {
           console.error("경로 데이터가 유효하지 않습니다.");
           return;
@@ -48,13 +47,13 @@ const MapComponent: React.FC = () => {
       }, [map, pathData, loading, error]);
 
     // 기존 사용자 위치를 갱신하도록 수정 아니면 매번 새로운 마커 생성해서 엄청 렉걸림
-    useEffect(() => {
-        if (!map || !userLocation) return;
-        userMarkerRef.current = updateOrCreateMarker(map, [userLocation.lng, userLocation.lat], userMarkerRef.current, {
-          imageUrl: "/assets/my_gps.png",
-          className: "marker",
-        });
-      }, [map, userLocation]);
+    // useEffect(() => {
+    //     if (!map || !userLocation) return;
+    //     userMarkerRef.current = updateOrCreateMarker(map, [userLocation.lng, userLocation.lat], userMarkerRef.current, {
+    //       imageUrl: "/assets/my_gps.png",
+    //       className: "marker",
+    //     });
+    //   }, [map, userLocation]);
 
     return (
         <>
