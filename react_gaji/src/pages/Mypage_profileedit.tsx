@@ -19,7 +19,7 @@ const MypageProfileEdit: React.FC = () => {
     // 로그인 아니면 로그인 페이지로
     useEffect(() => {
       if (!isAuthenticated) {
-        console.log('로그인 해야 접근할수있습니다.');
+        console.log('로그인을 해야 접근할 수 있습니다.');
         navigate('/');
         
       }

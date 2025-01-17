@@ -1,29 +1,33 @@
 import React, { useState } from "react";
-import "../../style/Mypage_alarm.css"; // 스타일 파일
+import { Link } from "react-router-dom";
+import "../../style/Mypage_alarm.css";
 
 import Header from "./Header.tsx";
 import Footer from "../all/Footer.tsx";
-import binIcon from "../../assets/icons/bin-icon.png"; // 휴지통 아이콘
+import binIcon from "../../assets/icons/bin-icon.png";
+
+interface Notification {
+  id: number; // 알림 ID
+  message: string; // 알림 메시지
+  productId: number; // 연관된 상품 ID
+}
 
 const MypageAlarm: React.FC = () => {
-  // 알림 데이터 (state로 관리)
-  const [notifications, setNotifications] = useState<string[]>([
-    "키워드: 스타벅스 기프티콘 팔아요",
-    "키워드: 스타벅스 다이어리 팔아요",
-    "키워드: 스타벅스 텀블러 삽니다",
-    "키워드: 스타벅스 기프티콘 삽니다",
+  const [notifications, setNotifications] = useState<Notification[]>([
+    { id: 1, message: "스타벅스 기프티콘 팔아요", productId: 31 },
+    { id: 2, message: "스타벅스 다이어리 팔아요", productId: 31 },
+    { id: 3, message: "스타벅스 텀블러 삽니다", productId: 31 },
+    { id: 4, message: "스타벅스 기프티콘 삽니다", productId: 31 },
   ]);
 
-  // 알림 삭제 핸들러 (단일 항목 삭제)
-  const handleDelete = (index: number) => {
+  const handleDelete = (id: number) => {
     setNotifications((prevNotifications) =>
-      prevNotifications.filter((_, i) => i !== index)
+      prevNotifications.filter((notification) => notification.id !== id)
     );
   };
 
-  // 전체 알림 삭제 핸들러
   const handleClearAll = () => {
-    setNotifications([]); // 모든 알림 삭제
+    setNotifications([]);
   };
 
   return (
@@ -37,13 +41,19 @@ const MypageAlarm: React.FC = () => {
           </button>
         </div>
         <ul className="alarm-list">
-          {notifications.map((notification, index) => (
-            <li key={index} className="alarm-item">
-              <span>{notification}</span>
+          {notifications.map((notification) => (
+            <li key={notification.id} className="alarm-item">
+              {/* 상품 상세 페이지로 연결 */}
+              <Link
+                to={`/productpage/${notification.productId}`}
+                className="notification-link"
+              >
+                {notification.message}
+              </Link>
               <button
                 className="icon-btn"
                 aria-label="알림 삭제"
-                onClick={() => handleDelete(index)}
+                onClick={() => handleDelete(notification.id)}
               >
                 <img src={binIcon} alt="휴지통 아이콘" className="icon" />
               </button>
