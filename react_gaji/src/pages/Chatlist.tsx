@@ -48,7 +48,7 @@ const Chatlist: React.FC = () => {
       <div className="chatlist-scroll-container">
         <ChatlistForm chats={chats} onChatClick={handleChatClick} />
       </div>
-      <Footer />
+      <Footer currentPage={3}/>
     </div>
   );
 };

@@ -13,6 +13,12 @@ const useLocation = (options: UseLocationOptions = { enableHighAccuracy: true })
     const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    const createCustomMarker = (): HTMLElement => {
+      const markerElement = document.createElement("div");
+      markerElement.className = "custom-marker"; // CSS로 스타일링
+      return markerElement;
+  };
+
     useEffect(() => {
         const handleSuccess = (position: GeolocationPosition) => {
             const { latitude, longitude } = position.coords;
@@ -36,20 +42,12 @@ const useLocation = (options: UseLocationOptions = { enableHighAccuracy: true })
             }
         };
 
-        const watchId = navigator.geolocation.watchPosition(
-            handleSuccess,
-            handleError,
-            {
-                ...options,
-                maximumAge: 10000, // 10초 동안 캐시된 위치 사용
-                timeout: 5000, // 5초 초과 시 타임아웃
-            }
-        );
+        const watchId = navigator.geolocation.watchPosition(handleSuccess, handleError, options);
 
         return () => navigator.geolocation.clearWatch(watchId);
     }, [options]);
 
-    return { userLocation, error };
+    return { userLocation, error,createCustomMarker };
 };
 
 export default useLocation;

@@ -15,13 +15,15 @@ const Mapbox: React.FC<MapboxProps> = ({ searchTerm = "" }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const { mapInstance, updateCenter } = useMap(mapContainerRef, mapConfig);
     const { productLocations, fetchProductLocations, renderMarkers } = useMarkers();
-    const { userLocation, error } = useLocation();
+    const { userLocation, error,createCustomMarker } = useLocation();
 
     // 사용자 위치 마커 관리
     useEffect(() => {
         if (!mapInstance || !userLocation) return;
 
-        const userMarker = new mapboxgl.Marker()
+        const userMarker = new mapboxgl.Marker({
+            element: createCustomMarker(),
+        })
             .setLngLat([userLocation.lng, userLocation.lat])
             .addTo(mapInstance);
 
@@ -39,13 +41,17 @@ const Mapbox: React.FC<MapboxProps> = ({ searchTerm = "" }) => {
 
     // 상품 데이터 및 검색어로 마커 렌더링
     useEffect(() => {
-        if (mapInstance) {
-            const filteredLocations = productLocations.filter((product) =>
-                product.title.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            renderMarkers(mapInstance, filteredLocations);
-        }
-    }, [mapInstance, productLocations, searchTerm]);
+        if (!mapInstance) return; // 맵이 초기화되지 않았으면 중단
+    
+        // 검색어로 필터링된 데이터
+        const filteredLocations = searchTerm.trim()
+            ? productLocations.filter((product) =>
+                  product.title.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+            : productLocations; // 검색어가 없으면 전체 데이터
+    
+        renderMarkers(mapInstance, filteredLocations); // 필터링된 데이터로 마커 렌더링
+    }, [mapInstance, productLocations, searchTerm])
 
     // "내 위치" 버튼 핸들러
     const handleMyLocation = () => {

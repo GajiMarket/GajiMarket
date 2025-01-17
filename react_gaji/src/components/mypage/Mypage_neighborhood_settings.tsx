@@ -58,7 +58,7 @@ const MypageNeighborhoodSettings: React.FC = () => {
           )}
         </div>
       </div>
-      <Footer />
+      <Footer currentPage={4}/>
     </div>
   );
 };
