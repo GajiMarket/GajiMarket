@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import mapboxgl from 'mapbox-gl'
+// import mapboxgl from 'mapbox-gl'
 import "../style/Productpage.css";
 import heartUnfillIcon from "../assets/icons/heart-unfill-icon.png";
 import heartFullIcon from "../assets/icons/heart-full-icon.png";
-import productStroe from "../utils/productStore";
-import { mapConfig } from "../config/mapConfig";
-import { detailMap } from '../hooks/product/useProductDetailMap';
+// import productStroe from "../utils/productStore";
+// import { mapConfig } from "../config/mapConfig";
+// import { detailMap } from '../hooks/product/useProductDetailMap';
 // import ProductDetailMap from "../components/map/ProductDetailMap";
 
 interface Product {
@@ -47,18 +47,18 @@ const ProductPage: React.FC = () => {
   const [liked, setLiked] = useState(false);
 
   // const [profileImage, setProfileImage] = useState<string | null>('');
-  const {userMarker, setUserMarker} = productStroe();
+  // const {userMarker, setUserMarker} = productStroe();
 
   // const {productLocations, fetchProductLocations, renderMarkers} = useMarkers();
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const { mapInstance,updateCenter} = detailMap(mapContainerRef, mapConfig);
+  // const mapContainerRef = useRef<HTMLDivElement>(null);
+  // const { mapInstance,updateCenter} = detailMap(mapContainerRef, mapConfig);
 
-  const createCustomMarker = (): HTMLElement => {
-      const markerElement = document.createElement("div");
-      markerElement.className = "custom-marker"; // CSS로 스타일링
-      return markerElement;
+  // const createCustomMarker = (): HTMLElement => {
+  //     const markerElement = document.createElement("div");
+  //     markerElement.className = "custom-marker"; // CSS로 스타일링
+  //     return markerElement;
 
-  };
+  // };
  // 백엔드에서 상품 상세 정보 가져오기 (productId가 있을 때만 실행)
 
  
@@ -238,7 +238,9 @@ const ProductPage: React.FC = () => {
       {/* 위치 */}
      {product?.location &&  
      <div className="sell_location_map">
-        <div className="productDetail_Mapbox" ref={mapContainerRef}/>
+        {/* <div className="productDetail_Mapbox" ref={mapContainerRef}/> */}
+        {/* <ProductDetailMap locationData={product?.location}/> */}
+
       </div>}
 
       {/* 좋아요 버튼 및 가격 */}

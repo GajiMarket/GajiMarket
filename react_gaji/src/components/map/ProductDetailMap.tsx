@@ -21,7 +21,7 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
     // const {productLocations, fetchProductLocations, renderMarkers} = useMarkers();
 
     const mapContainerRef = useRef<HTMLDivElement>(null);
-    const { mapInstance,updateCenter} = detailMap(mapContainerRef, mapConfig);
+    const { mapInstance, updateCenter} = detailMap(mapContainerRef, mapConfig);
 
     const createCustomMarker = (): HTMLElement => {
         const markerElement = document.createElement("div");
@@ -55,12 +55,16 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
     
 
     useEffect(() => {
-      if (!locationData){
 
-        console.error("mapInstance나 locationData가 없습니다.", {'mapInstance': mapInstance, 'locationData':locationData});
+      if (!mapInstance){
+
+        console.error("mapInstance가 없습니다:", mapInstance);
+
+        return;
         
+      } 
 
-      }
+      updateCenter(mapConfig.initialCenter[0], mapConfig.initialCenter[1]);
 
       // 파라미터를 넣으면 [number, number]로 분리
       const coordinates = parsePoint(locationData);
@@ -77,6 +81,14 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
       //지도 중심 업데이트트
       updateCenter(lng, lat);
 
+      if(locationData) {
+
+        const marker = new mapboxgl.Marker({element: createCustomMarker()}).setLngLat([lng, lat]).addTo(mapInstance as mapboxgl.Map);
+        
+        // 상태 저장
+        setUserMarker?.(marker);
+      }
+
       // 기존 마커 있으면 삭제제
       if (userMarker) {
         userMarker.remove();
@@ -84,11 +96,9 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
 
       // 새로운 마커 생성성
       // 경도, 위도 순서로 설정
-      const marker = new mapboxgl.Marker({element: createCustomMarker()}).setLngLat([lng, lat]).addTo(mapInstance as mapboxgl.Map);
+      
 
-      // 상태 저장
-      setUserMarker?.(marker);
-    }, [userMarker, mapInstance]);
+    }, [mapInstance, setUserMarker]);
 
 
 
