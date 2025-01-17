@@ -77,7 +77,6 @@ const ProductList: React.FC = () => {
           </ul>
 
         </div>
-        <Footer />
       </div>
       <Footer currentPage={1}/>
     </>
