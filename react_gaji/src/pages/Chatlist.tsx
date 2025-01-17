@@ -39,7 +39,7 @@ const Chatlist: React.FC = () => {
   }, [userNo]);
 
   const handleChatClick = (chatRoomId: number, chatName: string) => {
-    navigate(`/chatpage/${chatRoomId}?name=${encodeURIComponent(chatName)}&memberNo=${userNo}`);
+    navigate(`/api/chatpage/${chatRoomId}?name=${encodeURIComponent(chatName)}&memberNo=${userNo}`);
   };
 
   return (
