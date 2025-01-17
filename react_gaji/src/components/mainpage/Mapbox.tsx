@@ -15,7 +15,7 @@ const Mapbox: React.FC<MapboxProps> = ({ searchTerm = "" }) => {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const { mapInstance, updateCenter } = useMap(mapContainerRef, mapConfig);
     const { productLocations, fetchProductLocations, renderMarkers } = useMarkers();
-    const { userLocation, error,createCustomMarker } = useLocation();
+    const { userLocation, error, createCustomMarker } = useLocation();
 
     // 사용자 위치 마커 관리
     useEffect(() => {

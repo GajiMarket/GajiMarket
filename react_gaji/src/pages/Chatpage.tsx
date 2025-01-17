@@ -8,7 +8,7 @@ import ChatProduct from '../components/chatpage/ChatProduct';
 import Chatting from '../components/chatpage/Chatting';
 import ChatSend from '../components/chatpage/ChatSend';
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 
 interface ChatMessage {
   id: number;
@@ -24,7 +24,7 @@ const Chatpage: React.FC = () => {
   const searchParams = new URLSearchParams(location.search);
   const name = searchParams.get('name') || 'Unknown';
   const productId = searchParams.get('productId') || '';
-  const memberNo = searchParams.get('memberNo') || '';
+  // const memberNo = searchParams.get('memberNo') || '';
   const { messages, addMessage } = useChatStore();
   const [input, setInput] = useState('');
 
@@ -76,7 +76,7 @@ const Chatpage: React.FC = () => {
   return (
     <div className="chatpage">
       <ChatHeader roomId={roomId} chatName={name} />
-      <ChatProduct productId={productId} memberNo={memberNo} />
+      <ChatProduct productId={productId} />
       <Chatting messages={messages[roomId] || []} />
       <ChatSend onSendMessage={handleSendMessage} />
     </div>

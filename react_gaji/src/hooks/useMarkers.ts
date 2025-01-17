@@ -79,7 +79,7 @@ const useMarkers = () => {
                 });
 
                 try {
-                    const data = await sendPathData();
+                    await sendPathData();
                     // alert('데이터 전송 성공!')
                     navigate("/navigation");
                 } catch (error) {
