@@ -12,6 +12,26 @@ const detailMap = (mapContainerRef: RefObject<HTMLDivElement>, config: typeof ma
 // const {mapInstance, setMapInstance} = productStroe();
 const [mapInstance, setMapInstance] = useState<mapboxgl.Map | null>(null);
 
+const parsepoint = (locationData: string): [number, number] | null => {
+    try {
+        // "POINT("를 ""로 대체하고 ")"를 ""로 대체해서 " "을 기준으로 분리한다다
+        const coordinates = locationData.replace("POINT(", "").replace(")", "").split(" ");
+        const lng = parseFloat(coordinates[0]); // 경도
+        const lat = parseFloat(coordinates[1]); // 위도
+
+        console.log("lng와 lat 값",lng, lat);
+        
+        
+        return [lng, lat];
+
+      } catch (error) {
+
+        console.error("POINT를 가져오지 못했습니다:", error);
+        return null;
+        
+      }
+    };
+
     
   
      useEffect(() => {
@@ -45,6 +65,8 @@ const [mapInstance, setMapInstance] = useState<mapboxgl.Map | null>(null);
        map.on("load", () => {
            console.log("지도 초기화 완료", mapInstance);
            console.log("지도 위치:", config.initialCenter);
+
+          
            
            map.flyTo({ center: config.initialCenter, zoom: config.initialZoom });
        });
@@ -62,7 +84,7 @@ const [mapInstance, setMapInstance] = useState<mapboxgl.Map | null>(null);
         mapInstance?.flyTo({center: [longitude, latitude], essential: true});
     }
 
-    return { mapInstance, updateCenter };
+    return { mapInstance, updateCenter, parsepoint };
 };
 
 export default detailMap;
