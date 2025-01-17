@@ -22,7 +22,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ccc;
-  margin-top: 32px;
+  margin-top: 8px;
   padding: 20px 16px;
 }
 
@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eaeaea;
-  padding: 25px 0;
+  padding: 10px 0;
 }
 
 /* 이미지 스타일 */
@@ -79,7 +79,7 @@
 }
 
 /* 제목 스타일 */
-.product-title {
+.product-list-title {
   font-size: 18px;
   font-weight: bold;
   margin: 0 0 5px 0;

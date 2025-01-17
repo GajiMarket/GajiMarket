@@ -61,7 +61,7 @@ const ProductList: React.FC = () => {
                   </div>
                   <div className="product-info">
                     <h2
-                      className="product-title"
+                      className="product-list-title"
                       onClick={() => handleNavigate(product.product_id)}
                     >
                       {product.title}

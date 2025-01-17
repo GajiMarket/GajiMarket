@@ -15,7 +15,7 @@ interface Product {
   title: string;
   description: string;
   sell_price: number;
-  status: string
+  status: string;
   location: string;
   // images: string[];
   images: string[];
@@ -188,34 +188,24 @@ const ProductPage: React.FC = () => {
     <div className="product-page-container">
       {/* 상품 이미지 슬라이더 */}
       <div className="product-image-slider" style={{ position: "relative" }}>
-        {product?.images?.map((productImage, i) => {
-          return (
-          <img
-          key={i}
-          src={productImage}
-          alt="대표 이미지"
-          className="slider-image"
-        />
-      );
-        })}
-       
-        <div
-          className="back-button"
-          onClick={() => navigate("/")}
-          style={{
-            position: "absolute",
-            top: "10px",
-            left: "10px",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            padding: "10px",
-            borderRadius: "50%",
-            color: "white",
-            fontSize: "24px",
-            cursor: "pointer",
-          }}
-        >
-          🔙
-        </div>
+        {product?.images && product.images.length > 0 && (
+          <>
+            <img
+              src={product.images[currentIndex]}
+              alt={`슬라이드 이미지 ${currentIndex + 1}`}
+              className="slider-image"
+            />
+            <div className="dots-container">
+              {product.images.map((_, index) => (
+                <span
+                  key={index}
+                  className={`dot ${currentIndex === index ? "active" : ""}`}
+                  onClick={() => handleSlideChange(index)}
+                ></span>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* 판매자 정보 */}
@@ -247,12 +237,7 @@ const ProductPage: React.FC = () => {
           <button
             className="like-button"
             onClick={() => setLiked(!liked)}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: "0",
-            }}
+            style={{ background: "none", border: "none", cursor: "pointer" }}
           >
             <img
               src={liked ? heartFullIcon : heartUnfillIcon}
