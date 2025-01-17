@@ -10,7 +10,7 @@ interface Product {
   title: string;
   price: number;
   location: string;
-  image: string | null; // 대표 이미지
+  image: string; // 대표 이미지
 }
 
 const ChatProduct: React.FC<ChatProductProps> = ({ productId }) => {

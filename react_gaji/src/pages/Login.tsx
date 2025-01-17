@@ -14,7 +14,6 @@ const Login:React.FC = () => {
 useEffect(() =>{
   
   if(isAuthenticated) {
-    alert("이미 로그인한 상태입니다.");
     navigate('/map');
   }
 

@@ -17,9 +17,9 @@ const mountRoutes = (app: Express) => {
 
     app.use('/map', Product_preview);
 
-    app.use('/product', products);
-    
-    app.use('/navigation', path);
+    app.use('/product', products)
+
+    app.use('/navigation', path)
 
     app.post('/', userLocation);
 

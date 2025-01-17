@@ -1,6 +1,6 @@
 .FooterBar{
     background-color: #ffffff;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     min-width: 390px;
     max-width: 430px;

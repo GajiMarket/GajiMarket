@@ -17,6 +17,7 @@ interface ProductLocation {
     view_count: number;
     member_no: number;
     time_elapsed: string;
+    images: string;
 }
 interface ApiResponse {
     success: boolean;
@@ -79,16 +80,17 @@ const useMarkers = () => {
                 });
 
                 try {
-                    const data = await sendPathData();
+                    await sendPathData();
                     // alert('데이터 전송 성공!')
                     navigate("/navigation");
+                    
                 } catch (error) {
                     console.error("데이터 전송 실패:", error)
                     alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
                 }
             });
 
-            return new mapboxgl.Marker({ color: "purple" }) // 보라색 마커 생성
+            return new mapboxgl.Marker({ color: "#8a2be2" }) // 보라색 마커 생성
             .setLngLat([product.longitude, product.latitude]) // 마커 위치 설정
             .setPopup(new mapboxgl.Popup().setDOMContent(popupContent)) // 팝업 추가
             .addTo(map); // 지도에 추가
@@ -98,7 +100,6 @@ const useMarkers = () => {
             prevMarkers.forEach((marker) => marker.remove()); // 이전 마커 제거
             return newMarkers;
         });
-        console.log("New markers added:", newMarkers); // 디버깅 로그
     };
 
     return { productLocations, fetchProductLocations, renderMarkers };
