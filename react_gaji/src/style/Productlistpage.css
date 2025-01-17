@@ -1,16 +1,48 @@
+.product-total {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 /* 리스트 컨테이너 스타일 */
 .product-list-container {
   padding: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+  margin-bottom: 75px;
+  scrollbar-width: none;
+  /* 탭바 높이 제외한 나머지 영역을 스크롤 가능하게 */
 }
 
 /* 헤더 스타일 */
 .product-list-header {
+  font-size: 20px;
+  font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  margin-top: 32px;
+  padding: 20px 16px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.dropdown-button {
+  font-size: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin-left: 8px;
+  /* 제목과 버튼 사이의 간격 */
 }
 
 /* 리스트 스타일 */
@@ -29,8 +61,10 @@
 
 /* 이미지 스타일 */
 .product-image {
-  width: 60px !important; /* 이미지 크기 조정 */
-  height: auto; /* 비율 유지 */
+  width: 60px !important;
+  /* 이미지 크기 조정 */
+  height: auto;
+  /* 비율 유지 */
   border-radius: 8px;
   margin-right: 12px;
   object-fit: cover;
@@ -49,6 +83,7 @@
   font-size: 18px;
   font-weight: bold;
   margin: 0 0 5px 0;
+  cursor: pointer;
 }
 
 /* 메타 정보 스타일 */
@@ -56,19 +91,3 @@
   color: #777;
   font-size: 15px;
 }
-
-/* 채팅하기 버튼 스타일 */
-.chat-button {
-  background-color: #6c63ff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.chat-button:hover {
-  background-color: #5a54d4;
-}
-
