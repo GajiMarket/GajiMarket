@@ -6,6 +6,8 @@ import { userLocation } from './controller/userLocation.ctrl';
 import member from './member.index';
 import chatRoutes from './chat.index';
 import mypage from '../api/mypage.index';
+import notificationRoutes from "../api/notifications.index"; // 알림 라우트 추가
+import mypageLoveRoutes from "./mypage_love.index";
 import productadd from '../api/productcdd.index'
 
 const mountRoutes = (app: Express) => {
@@ -15,6 +17,7 @@ const mountRoutes = (app: Express) => {
     app.use('/map', Product_preview)
 
     app.use('/product', products)
+    
     app.use('/navigation', path)
 
     app.post('/', userLocation)
@@ -22,6 +25,11 @@ const mountRoutes = (app: Express) => {
     app.use('/api', chatRoutes);
 
     app.use('/mypage', mypage);
+
+    // 알림 관련 라우트
+    app.use("/notifications", notificationRoutes);
+    
+    app.use("/mypage_love", mypageLoveRoutes);
 
     app.use('/use', productadd);
 

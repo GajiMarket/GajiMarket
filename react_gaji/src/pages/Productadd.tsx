@@ -93,7 +93,6 @@ const ProductAdd: React.FC = () => {
       
       // 상품 페이지로 이동
       navigate(`/productpage/${response.data.data.product_id}`);
-      
     } catch (error) {
       // 상품 등록 실패 시 처리
       console.error("Error saving product:", error);
@@ -116,6 +115,8 @@ const ProductAdd: React.FC = () => {
         <button className="product-add-save-draft">임시저장</button>
       </header>
 
+    <div className="product-add-content">
+      <div className="product-add-content-top"></div>
       {/* 이미지 업로드 섹션 */}
       <section className="product-add-image-upload">
         <div className="image-list-container">
@@ -214,11 +215,15 @@ const ProductAdd: React.FC = () => {
           />
         </label>
       </form>
+      <div className="product-add-content-bottom"></div>
+    </div>
 
       {/* 작성 완료 버튼 */}
-      <button className="submit-button" onClick={handleSubmit}>
-        작성 완료
-      </button>
+      <div className="submit-button-container">
+        <button className="submit-button" onClick={handleSubmit}>
+          작성 완료
+        </button>
+      </div>
 
       {/* 지도 모달 */}
       {showMap && (

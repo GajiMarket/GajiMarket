@@ -7,7 +7,7 @@
   max-width: 430px;
   height: 100vh;
   justify-content: center;
-  overflow-y: scroll;
+  overflow: hidden;
   scrollbar-width: none;
 }
 
@@ -15,10 +15,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 16px 0;
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
-  margin-bottom: 0px;
+  position: fixed;
+  top: 0;
+  min-width: 390px;
+  max-width: 420px;
+  z-index: 1000;
 }
 
 .product-add-back-button,
@@ -27,7 +31,6 @@
   border: none;
   font-size: 16px;
   cursor: pointer;
-  margin-right: 12px;
 }
 
 .product-add-save-draft {
@@ -144,7 +147,7 @@
   background-color: #f9f9f9;
   margin-bottom: 10px;
   resize: none;
-  height: 150px;
+  height: 300px;
 }
 
 .transaction-method {
@@ -344,8 +347,7 @@
 }
 
 .submit-button {
-  width: 100%;
-  padding: 12px;
+  padding: 12px 0;
   background-color: #8a2be2;
   color: #ffffff;
   font-size: 16px;
@@ -354,6 +356,10 @@
   cursor: pointer;
   margin-top: 20px;
   margin-bottom: 16px;
+  position: fixed;
+  bottom: 0;
+  max-width: 420px;
+  min-width: 390px;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -361,4 +367,31 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.submit-button-container{
+max-width: 420px;
+min-width: 390px;
+background: #fff;
+height: 50px;
+position: fixed;
+bottom: 0;
+z-index: 1000; /* 항상 최상단에 표시 */
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.product-add-content-top{
+  margin-top: 30px;
+}
+.product-add-content-bottom{
+  margin-top: 40px;
+}
+.product-add-content {
+  flex: 1; /* 남은 공간을 모두 차지 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  padding: 16px 0; /* 위아래 여백 추가 */
+  box-sizing: border-box;
+  scrollbar-width: none;
 }

@@ -9,7 +9,6 @@ router.get('/list', getProductListCtrl)
 
 // router.get('/:productId', )
 
-
 router.get('/:id', productDetail);
 
 export default router;

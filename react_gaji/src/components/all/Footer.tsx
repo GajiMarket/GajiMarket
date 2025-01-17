@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useFooter } from './FooterContext.tsx';
+import React from 'react';
+// import { useFooter } from './FooterContext.tsx';
 import '../../style/Footer.css';
 import homeicon from '../../img/home.png';
 import nc_homeicon from '../../img/no_color_home.png';
@@ -10,55 +10,50 @@ import chaticon from '../../img/chat.png';
 import nc_chaticon from '../../img/no_color_chat.png';
 import mypageicon from '../../img/mypage.png';
 import nc_mypageicon from '../../img/no_color_mypage.png';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const Footer: React.FC = () => {
-  const { activeIndex, setActiveIndex } = useFooter();
+interface FooterProps {
+  currentPage: number;
+}
+
+const Footer: React.FC<FooterProps> = ({ currentPage }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  
+
   const handleNavigation = (index: number, path: string) => {
-    setActiveIndex(index);
     navigate(path);
   };
-
-  useEffect(() => {
-    if (location.pathname === '/') {
-      setActiveIndex(0);
-    }
-  }, [location, setActiveIndex]);
 
   return (
     <div className='FooterBar'>
       <button
-        className={`footer_home_icon ${activeIndex === 0 ? 'active' : ''}`}
+        className={`footer_home_icon ${currentPage === 0 ? 'active' : ''}`}
         onClick={() => handleNavigation(0, '/map')}
       >
-        <img src={activeIndex === 0 ? homeicon : nc_homeicon} alt="Example" className='footer_home_icon_img' />홈
+        <img src={currentPage === 0 ? homeicon : nc_homeicon} alt="홈" className='footer_home_icon_img' />홈
       </button>
       <button
-        className={`footer_list_icon ${activeIndex === 1 ? 'active' : ''}`}
+        className={`footer_list_icon ${currentPage === 1 ? 'active' : ''}`}
         onClick={() => handleNavigation(1, '/productlistpage')}
       >
-        <img src={activeIndex === 1 ? listicon : nc_listicon} alt="Example" className='footer_list_icon_img' />리스트
+        <img src={currentPage === 1 ? listicon : nc_listicon} alt="리스트" className='footer_list_icon_img' />리스트
       </button>
       <button
-        className="footer_join_icon"
+        className={`footer_join_icon ${currentPage === 2 ? 'active' : ''}`}
         onClick={() => handleNavigation(2, '/productadd')}
       >
-        <img src={nc_joinicon} alt="Example" className='footer_join_icon_img' />등록
+        <img src={nc_joinicon} alt="등록" className='footer_join_icon_img' />등록
       </button>
       <button
-        className={`footer_chat_icon ${activeIndex === 3 ? 'active' : ''}`}
+        className={`footer_chat_icon ${currentPage === 3 ? 'active' : ''}`}
         onClick={() => handleNavigation(3, '/chatlist')}
       >
-        <img src={activeIndex === 3 ? chaticon : nc_chaticon} alt="Example" className='footer_chat_icon_img' />채팅
+        <img src={currentPage === 3 ? chaticon : nc_chaticon} alt="채팅" className='footer_chat_icon_img' />채팅
       </button>
       <button
-        className={`footer_my_icon ${activeIndex === 4 ? 'active' : ''}`}
+        className={`footer_my_icon ${currentPage === 4 ? 'active' : ''}`}
         onClick={() => handleNavigation(4, '/mypage')}
       >
-        <img src={activeIndex === 4 ? mypageicon : nc_mypageicon} alt="Example" className='footer_my_icon_img' />내정보
+        <img src={currentPage === 4 ? mypageicon : nc_mypageicon} alt="내정보" className='footer_my_icon_img' />내정보
       </button>
     </div>
   );
