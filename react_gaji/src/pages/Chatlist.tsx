@@ -15,6 +15,7 @@ interface Chat {
   location: string;
   avatar: string; // 추가
   time: string; // 추가
+  productId: number; // 추가
 }
 
 const Chatlist: React.FC = () => {
@@ -38,8 +39,8 @@ const Chatlist: React.FC = () => {
     fetchChats();
   }, [userNo]);
 
-  const handleChatClick = (chatRoomId: number, chatName: string) => {
-    navigate(`/api/chatpage/${chatRoomId}?name=${encodeURIComponent(chatName)}&memberNo=${userNo}`);
+  const handleChatClick = (chatRoomId: number, chatName: string, productId: number) => {
+    navigate(`/chatpage/${chatRoomId}?name=${encodeURIComponent(chatName)}&memberNo=${userNo}&productId=${productId}`);
   };
 
   return (
@@ -48,7 +49,7 @@ const Chatlist: React.FC = () => {
       <div className="chatlist-scroll-container">
         <ChatlistForm chats={chats} onChatClick={handleChatClick} />
       </div>
-      <Footer currentPage={3}/>
+      <Footer currentPage={3} />
     </div>
   );
 };
