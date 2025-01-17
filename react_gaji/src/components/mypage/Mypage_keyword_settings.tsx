@@ -93,7 +93,7 @@ const MypageKeywordSettings: React.FC = () => {
               placeholder="알림 받을 키워드를 입력해주세요."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              onKeyPress={handleKeyPress} // 엔터키 이벤트 추가
+              onKeyPress={handleKeyPress} // 엔터키 이벤트 추가 insert문
             />
             <button className="keyword-search-btn" onClick={handleSearch}>
               <img src={searchIcon} alt="검색 아이콘" className="keyword-search-icon" />
@@ -109,7 +109,7 @@ const MypageKeywordSettings: React.FC = () => {
                 {keyword}
                 <button
                   className="keyword-remove-btn"
-                  onClick={() => handleRemoveKeyword(keyword, "added")}
+                  onClick={() => handleRemoveKeyword(keyword, "added")} // update 쿼리
                 >
                   ✕
                 </button>
@@ -126,7 +126,7 @@ const MypageKeywordSettings: React.FC = () => {
                 {keyword}
                 <button
                   className="keyword-remove-btn"
-                  onClick={() => handleRemoveKeyword(keyword, "recent")}
+                  onClick={() => handleRemoveKeyword(keyword, "recent")} // 이부분은 update 쿼리로
                 >
                   ✕
                 </button>
