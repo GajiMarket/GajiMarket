@@ -9,13 +9,15 @@ interface IProductProps {
     // image: string | null;
     // setImage:(image: string) => void;
     userMarker: mapboxgl.Marker | null;
-    userLocation: string | null;
+    userLocation: [lat: number, lng: number] | null;
     profileNick: string | null;
     mapInstance: mapboxgl.Map | null;
+    error: string | null;
+    setError: (error: string) => void;
     setMapInstance: (mapInstance: mapboxgl.Map) => void;
     setProfileNick: (profileNick: string) => void;
     setUserMarker: (userMarker: mapboxgl.Marker) => void; 
-    setUserLocation: (userLocation: string) => void;
+    setUserLocation: (userLocation: [lat: number, lng: number]) => void;
 
 }
 
@@ -27,6 +29,8 @@ const productStroe = create<ProductProps>()
     userLocation: null,
     profileNick: null,
     mapInstance: null,
+    error: null,
+    setError: (error) => set({error}),
     setMapInstance: (mapInstance) => set({mapInstance}),
     setProfileNick: (profileNick) => set({profileNick}),
     setUserMarker: (userMarker) => set({userMarker}),
