@@ -1,4 +1,4 @@
-import React,{useEffect, useRef} from 'react'
+import React, { useEffect, useRef } from 'react'
 import { mapConfig } from "../../config/mapConfig";
 import detailMap from '../../hooks/product/useProductDetailMap';
 // import useMarkers from '../../hooks/useMarkers';
@@ -8,9 +8,9 @@ import mapboxgl from 'mapbox-gl'
 
 //locationData는 ProductPage.tsx에서 가져온 product.location
 interface LocationProps {
-    locationData?: string;
+  locationData?: string;
 
-    
+
 }
 
 type Location = Partial<LocationProps>
@@ -18,8 +18,9 @@ type Location = Partial<LocationProps>
 
 const ProductDetailMap:React.FC<Location> = ({locationData}) => {
 
-    const {userMarker, setUserMarker, userLocation, setUserLocation} = productStroe();
-    // const {productLocations, fetchProductLocations, renderMarkers} = useMarkers();
+
+  const { userMarker, setUserMarker, userLocation, setUserLocation } = productStroe();
+  // const {productLocations, fetchProductLocations, renderMarkers} = useMarkers();
 
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const { mapInstance, updateCenter, parsepoint} = detailMap(mapContainerRef, mapConfig);
@@ -33,21 +34,6 @@ const ProductDetailMap:React.FC<Location> = ({locationData}) => {
     };
 
     updateCenter(mapConfig.initialCenter[0], mapConfig.initialCenter[1]);
-   
-    // useEffect(() => {
-
-    //   if(!locationData) {
-    //     console.error("판매자 위치를 불러오지 못했습니다.", locationData);
-    //     return;
-        
-    //   }
-
-    //   const handleSuccess = (position: GeolocationPosition) => {
-    //     const { latitude, longitude }= position.coords;
-    //     setUserLocation({ lat: latitude, lng: longitude});
-    //   }
-      
-    // })
 
   
    
@@ -89,6 +75,7 @@ const ProductDetailMap:React.FC<Location> = ({locationData}) => {
         console.error("locationData가 없습니다.");
         return;
       }
+
 
       const coordinates = parsePoint(locationData);
 

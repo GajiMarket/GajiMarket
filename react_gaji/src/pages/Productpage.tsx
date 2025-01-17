@@ -1,10 +1,10 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../style/Productpage.css";
 import heartUnfillIcon from "../assets/icons/heart-unfill-icon.png";
 import heartFullIcon from "../assets/icons/heart-full-icon.png";
-import productStroe from "../utils/productStore";
+// import productStroe from "../utils/productStore";
 import ProductDetailMap from "../components/map/ProductDetailMap";
 
 interface Product {
@@ -45,9 +45,8 @@ const ProductPage: React.FC = () => {
   // const [profileImage, setProfileImage] = useState<string | null>('');
 
   // const {productLocations, fetchProductLocations, renderMarkers} = useMarkers();
- 
 
-  
+
   // 백엔드에서 상품 상세 정보 가져오기 (productId가 있을 때만 실행)
 
   useEffect(() => {
@@ -79,7 +78,6 @@ const ProductPage: React.FC = () => {
     }
   }, [productId, navigate]);
 
- 
 
   const handleSlideChange = (index: number) => {
     setCurrentIndex(index);
@@ -98,60 +96,76 @@ const ProductPage: React.FC = () => {
   }
 
   return (
-    <div className="product-page-container">
-      {/* 상품 이미지 슬라이더 */}
-      <div className="product-image-slider" style={{ position: "relative" }}>
-        {product?.images && product.images.length > 0 && (
-          <>
-            <img
-              src={product.images[currentIndex]}
-              alt={`슬라이드 이미지 ${currentIndex + 1}`}
-              className="slider-image"
-            />
-            <div className="dots-container">
-              {product.images.map((_, index) => (
-                <span
-                  key={index}
-                  className={`dot ${currentIndex === index ? "active" : ""}`}
-                  onClick={() => handleSlideChange(index)}
-                ></span>
-              ))}
-            </div>
-          </>
+    <div className="product-page-total">
+      {/* 상단 고정 헤더 */}
+      <div className="header-container fixed-header">
+        <button
+          className="back-button"
+          onClick={() => navigate("/productlistpage")}
+        >
+          ←
+        </button>
+        <h1 className="header-title">상품 상세 페이지</h1>
+      </div>
+      <div className="product-page-container">
+        {/* 상품 이미지 슬라이더 */}
+        <div className="product-image-slider" style={{ position: "relative" }}>
+          {product?.images && product.images.length > 0 ? (
+            <>
+              <img
+                src={product.images[currentIndex]}
+                alt={`슬라이드 이미지 ${currentIndex + 1}`}
+                className="slider-image"
+              />
+              <div className="dots-container">
+                {product.images.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`dot ${currentIndex === index ? "active" : ""}`}
+                    onClick={() => handleSlideChange(index)}
+                  ></span>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="image-placeholder">이미지 없음</div>
+          )}
+        </div>
+
+        {/* 판매자 정보 */}
+        <div className="seller-info-section">
+          <div className="profile-icon">
+            {product?.profile_image ? (
+              <img src={product?.profile_image} alt="프로필 이미지" />
+            ) : (
+              "👤"
+            )}
+          </div>
+          <div className="seller-details">
+            <span className="seller-name">{product?.member_nick}</span>
+            {/* <span className="location">{product?.location}</span> */}
+          </div>
+        </div>
+
+        {/* 상품 정보 */}
+        <div className="product-info-section">
+          <h1 className="product-title">{product?.title || "상품 제목 없음"}</h1>
+          <p className="product-description">
+            {product?.description || "상품 설명이 없습니다."}
+          </p>
+        </div>
+
+        {/* 위치 */}
+        {product?.location && (
+          <div className="sell_location_map">
+            {/* <div className="productDetail_Mapbox" ref={mapContainerRef} /> */}
+            <ProductDetailMap locationData={product?.location} />
+          </div>
         )}
       </div>
 
-      {/* 판매자 정보 */}
-      <div className="seller-info-section">
-        <div className="profile-icon">
-          {product?.profile_image ? (
-            <img src={product?.profile_image} alt="프로필 이미지" />
-          ) : (
-            "👤"
-          )}
-        </div>
-        <div className="seller-details">
-          <span className="seller-name">{product?.member_nick}</span>
-          {/* <span className="location">{product?.location}</span> */}
-        </div>
-      </div>
-
-      {/* 상품 정보 */}
-      <div className="product?-info-section">
-        <h1 className="product?-title">{product?.title}</h1>
-        <p className="product?-description">{product?.description}</p>
-      </div>
-
-      {/* 위치 */}
-      {product?.location && (
-        <div className="sell_location_map">
-          {/* <div className="productDetail_Mapbox" ref={mapContainerRef} /> */}
-          <ProductDetailMap locationData={product?.location}/>
-        </div>
-      )}
-
       {/* 좋아요 버튼 및 가격 */}
-      <div className="product?-actions">
+      <div className="product-actions">
         <div className="price-like-container">
           <button
             className="like-button"
@@ -164,11 +178,14 @@ const ProductPage: React.FC = () => {
               style={{ width: "24px", height: "24px" }}
             />
           </button>
-          <span className="product?-price">
+          <span className="product-price">
             {product?.sell_price?.toLocaleString()}원
           </span>
         </div>
-        <button className="chat-button" onClick={() => navigate("/chatpage")}>
+        <button
+          className="chat-button"
+          onClick={() => navigate(`/chatpage/${product?.product_id}?name=${encodeURIComponent(product?.member_nick || '')}&memberNo=${product?.member_no}&productId=${product?.product_id}`)}
+        >
           채팅하기
         </button>
       </div>
