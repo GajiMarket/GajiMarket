@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/Productadd.css";
 import Mapcontainer from "../components/map/Mapcontainer";
-import axios from 'axios'
+import axios from "axios";
 import loginStore from "../utils/loginStore";
 
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
   const [sell_price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState<{ lng: number; lat: number; name :string } | null>(null);
+  const [location, setLocation] = useState<{
+    lng: number;
+    lat: number;
+    name: string;
+  } | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [representativeIndex, setRepresentativeIndex] = useState<number | null>(
     null
   );
   const [showMap, setShowMap] = useState(false);
 
-  const { isAuthenticated, userNo} = loginStore();
+  const { isAuthenticated, userNo } = loginStore();
 
   const navigate = useNavigate();
 
-  
   if (!isAuthenticated) {
     alert("로그인이 필요합니다.");
     navigate("/");
@@ -55,27 +58,28 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
-
     const locationData = location
-    ? { lng: location.lng, lat: location.lat }
-    : null;
-
+      ? { lng: location.lng, lat: location.lat }
+      : null;
 
     // 서버로 전송할 상품 데이터 생성
     const productData = {
       title,
       sell_price: Number(sell_price), // 문자열을 숫자로 변환
       description,
-      location:locationData,
+      location: locationData,
       createdAt: new Date().toISOString(), // 현재 시간
       views: 0, // 조회수 초기화
       userNo,
-      status:"중고물품",
+      status: "중고물품",
     };
 
     try {
-      console.log("body data : ",productData)
-      const response = await axios.post("http://localhost:3000/use/productadd", productData);
+      console.log("body data : ", productData);
+      const response = await axios.post(
+        "http://localhost:3000/use/productadd",
+        productData
+      );
 
       // 상품 등록 성공 시 처리
       console.log("Product Saved:", response.data);
@@ -90,7 +94,7 @@ const ProductAdd: React.FC = () => {
       setRepresentativeIndex(null);
 
       console.log("response.data.product_id:", response.data.data.product_id);
-      
+
       // 상품 페이지로 이동
       navigate(`/productpage/${response.data.data.product_id}`);
     } catch (error) {
@@ -100,123 +104,142 @@ const ProductAdd: React.FC = () => {
     }
   };
 
-  const handleLocationSelect = (selectedLocation: { lng: number; lat: number; name: string;}) => {
+  const handleLocationSelect = (selectedLocation: {
+    lng: number;
+    lat: number;
+    name: string;
+  }) => {
     setLocation(selectedLocation);
-    console.log("productadd_88줄",selectedLocation);
+    console.log("productadd_88줄", selectedLocation);
     setShowMap(false);
+  };
+
+  // 뒤로가기 버튼 이벤트 핸들러 추가
+  const handleBackButtonClick = () => {
+    if (window.history.length > 1) {
+      navigate(-1); // 브라우저 히스토리 스택에서 뒤로 이동
+    } else {
+      navigate("/"); // 히스토리 스택이 없을 경우 메인 페이지로 이동
+    }
   };
 
   return (
     <div className="product-add-container">
       {/* 헤더 섹션 */}
       <header className="product-add-header">
-        <button className="product-add-back-button">뒤로가기</button>
+        <button
+          className="product-add-back-button"
+          onClick={handleBackButtonClick}
+          aria-label="뒤로가기"
+        >
+          ← {/* 화살표 기호로 대체 */}
+        </button>
         <h1>내 물건 팔기</h1>
         <button className="product-add-save-draft">임시저장</button>
       </header>
 
-    <div className="product-add-content">
-      <div className="product-add-content-top"></div>
-      {/* 이미지 업로드 섹션 */}
-      <section className="product-add-image-upload">
-        <div className="image-list-container">
-          {/* 최대 10장의 이미지만 업로드 가능 */}
-          {images.length < 10 && (
-            <label className="image-upload-label">
-              <div className="image-placeholder">
-                <span>📷</span>
-                <span>{images.length}/10</span>
+      <div className="product-add-content">
+        <div className="product-add-content-top"></div>
+        {/* 이미지 업로드 섹션 */}
+        <section className="product-add-image-upload">
+          <div className="image-list-container">
+            {/* 최대 10장의 이미지만 업로드 가능 */}
+            {images.length < 10 && (
+              <label className="image-upload-label">
+                <div className="image-placeholder">
+                  <span>📷</span>
+                  <span>{images.length}/10</span>
+                </div>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{ display: "none" }}
+                />
+              </label>
+            )}
+            {/* 업로드된 이미지 목록 */}
+            {images.map((image, index) => (
+              <div className="uploaded-image-wrapper" key={index}>
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={`uploaded-${index}`}
+                  className="uploaded-image"
+                />
+                {/* 대표 이미지 뱃지 */}
+                {representativeIndex === index && (
+                  <span className="representative-badge">대표사진</span>
+                )}
+                {/* 대표 이미지 설정 버튼 */}
+                <button
+                  className="set-representative-button"
+                  onClick={() => handleSetRepresentative(index)}
+                  style={{
+                    display: representativeIndex === index ? "none" : "block",
+                  }}
+                >
+                  대표설정
+                </button>
               </div>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handleImageUpload}
-                style={{ display: "none" }}
-              />
-            </label>
-          )}
-          {/* 업로드된 이미지 목록 */}
-          {images.map((image, index) => (
-            <div className="uploaded-image-wrapper" key={index}>
-              <img
-                src={URL.createObjectURL(image)}
-                alt={`uploaded-${index}`}
-                className="uploaded-image"
-              />
-              {/* 대표 이미지 뱃지 */}
-              {representativeIndex === index && (
-                <span className="representative-badge">대표사진</span>
-              )}
-              {/* 대표 이미지 설정 버튼 */}
-              <button
-                className="set-representative-button"
-                onClick={() => handleSetRepresentative(index)}
-                style={{
-                  display: representativeIndex === index ? "none" : "block",
-                }}
-              >
-                대표설정
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
-      {/* 상품 상세 입력 폼 섹션 */}
-      <form className="product-add-form" onSubmit={(e) => e.preventDefault()}>
-        {/* 제목 입력 */}
-        <label className="form-label">
-          <h2>제목</h2>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="제목을 입력해주세요"
-            className="form-input"
-          />
-        </label>
-
-        {/* 가격 입력 */}
-        <div className="price-section">
+        {/* 상품 상세 입력 폼 섹션 */}
+        <form className="product-add-form" onSubmit={(e) => e.preventDefault()}>
+          {/* 제목 입력 */}
           <label className="form-label">
-            <h2>가격</h2>
+            <h2>제목</h2>
             <input
-              type="number"
-              value={sell_price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="가격을 입력해주세요"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="제목을 입력해주세요"
               className="form-input"
             />
           </label>
-        </div>
 
-        {/* 상세 설명 입력 */}
-        <label className="form-label">
-          상품 상세설명
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="올릴 게시글 내용을 작성해주세요."
-            className="form-textarea"
-          />
-        </label>
+          {/* 가격 입력 */}
+          <div className="price-section">
+            <label className="form-label">
+              <h2>가격</h2>
+              <input
+                type="number"
+                value={sell_price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="가격을 입력해주세요"
+                className="form-input"
+              />
+            </label>
+          </div>
 
-        {/* 위치 입력 */}
-        <label className="form-label">
-          거래 희망 장소
-          <input
-            type="text"
-            value={location ? `${location.name}` : ""}
-            onClick={() => setShowMap(true)} // 클릭 시 지도 모달 열기
-            placeholder="위치 추가"
-            readOnly
-            className="form-input"
-          />
-        </label>
-      </form>
-      <div className="product-add-content-bottom"></div>
-    </div>
+          {/* 상세 설명 입력 */}
+          <label className="form-label">
+            상품 상세설명
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="올릴 게시글 내용을 작성해주세요."
+              className="form-textarea"
+            />
+          </label>
+
+          {/* 위치 입력 */}
+          <label className="form-label">
+            거래 희망 장소
+            <input
+              type="text"
+              value={location ? `${location.name}` : ""}
+              onClick={() => setShowMap(true)} // 클릭 시 지도 모달 열기
+              placeholder="위치 추가"
+              readOnly
+              className="form-input"
+            />
+          </label>
+        </form>
+        <div className="product-add-content-bottom"></div>
+      </div>
 
       {/* 작성 완료 버튼 */}
       <div className="submit-button-container">
