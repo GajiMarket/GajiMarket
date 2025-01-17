@@ -1,6 +1,6 @@
 import React,{useEffect, useRef} from 'react'
 import { mapConfig } from "../../config/mapConfig";
-import { detailMap } from '../../hooks/product/useProductDetailMap';
+import detailMap from '../../hooks/product/useProductDetailMap';
 // import useMarkers from '../../hooks/useMarkers';
 import productStroe from '../../utils/productStore';
 import gps_icon from "../../img/gps_icon.png"
@@ -8,7 +8,7 @@ import mapboxgl from 'mapbox-gl'
 
 //locationData는 ProductPage.tsx에서 가져온 product.location
 interface LocationProps {
-    locationData: string;
+    locationData?: string;
 
     
 }
@@ -17,11 +17,12 @@ interface LocationProps {
 
 const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
 
-    const {userMarker, setUserMarker} = productStroe();
+    const {userMarker, setUserMarker, userLocation, setUserLocation} = productStroe();
     // const {productLocations, fetchProductLocations, renderMarkers} = useMarkers();
 
     const mapContainerRef = useRef<HTMLDivElement>(null);
-    const { mapInstance,updateCenter} = detailMap(mapContainerRef, mapConfig);
+    const { mapInstance, updateCenter} = detailMap(mapContainerRef, mapConfig);
+   
 
     const createCustomMarker = (): HTMLElement => {
         const markerElement = document.createElement("div");
@@ -30,6 +31,24 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
 
     };
 
+    updateCenter(mapConfig.initialCenter[0], mapConfig.initialCenter[1]);
+   
+    // useEffect(() => {
+
+    //   if(!locationData) {
+    //     console.error("판매자 위치를 불러오지 못했습니다.", locationData);
+    //     return;
+        
+    //   }
+
+    //   const handleSuccess = (position: GeolocationPosition) => {
+    //     const { latitude, longitude }= position.coords;
+    //     setUserLocation({ lat: latitude, lng: longitude});
+    //   }
+      
+    // })
+
+  
    
 
     const parsePoint = (point: string): [number, number] | null => {
@@ -44,6 +63,7 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
         
         
         return [lng, lat];
+
       } catch (error) {
 
         console.error("POINT를 가져오지 못했습니다:", error);
@@ -52,49 +72,148 @@ const ProductDetailMap:React.FC<LocationProps> = ({locationData}) => {
       }
     };
 
+    useEffect(() => {
+      if(locationData) {
+
+        const coordinates = parsePoint(locationData) as [number, number];
+
+        console.log("현재 coordinates:", coordinates);
+
+        const [lng, lat] = coordinates;
+        
+
+        
+        setUserLocation?.([lng, lat]);
+      }
+    })
+
+
     
 
-    useEffect(() => {
-      if (!locationData){
+  
 
-        console.error("mapInstance나 locationData가 없습니다.", {'mapInstance': mapInstance, 'locationData':locationData});
+    // useEffect(() => {
+    //   if(!mapInstance || !userLocation) {
+
+    //     console.error("현재 판매자 위치:", userLocation);
+
+    //     return;
+        
+    //   }
+
+    //   console.log("판매자 위치:", userLocation);
+
+    //   const userMarker = new mapboxgl.Marker({
+    //     element: createCustomMarker(),
+    //   }).setLngLat([userLocation?.[1] as number, userLocation?.[0] as number ]).addTo(mapInstance);
+      
+    //   return () => {
+    //     userMarker.remove();
+    //   }
+
+    
+    // }, [mapInstance, userLocation]);
+
+    
+
+  //   useEffect(() => {
+
+  //     if (!mapInstance){
+
+  //       console.error("mapInstance가 없습니다:", mapInstance);
+  //       console.error("userLocation이 없습니다:", userLocation);
         
 
-      }
-
-      // 파라미터를 넣으면 [number, number]로 분리
-      const coordinates = parsePoint(locationData);
-
-      if(!coordinates) {
-        console.error("판매자 위치 값을 가져오지 못했습니다.", locationData);
-
-        return;
+  //       return;
         
-      }
+  //     } 
 
-      const [lng, lat] = coordinates;
+  //   // const mapUpdate = () => {
+  //     //현재 위치
+  //     updateCenter(mapConfig.initialCenter[0], mapConfig.initialCenter[1]);
 
-      //지도 중심 업데이트트
-      updateCenter(lng, lat);
+  //     console.log("현재 맵 위치(초기 config):", mapInstance.getCenter);
+  //     console.log("현재 마커:", userMarker?.toString() as string);
+      
+      
+      
 
-      // 기존 마커 있으면 삭제제
-      if (userMarker) {
-        userMarker.remove();
-      }
+  //     // 파라미터를 넣으면 [number, number]로 분리
+  //     if(locationData) {
 
-      // 새로운 마커 생성성
-      // 경도, 위도 순서로 설정
-      const marker = new mapboxgl.Marker({element: createCustomMarker()}).setLngLat([lng, lat]).addTo(mapInstance as mapboxgl.Map);
+  //       const coordinates = parsePoint(locationData as string);
 
-      // 상태 저장
-      setUserMarker?.(marker);
-    }, [userMarker, mapInstance]);
+  //       console.log("coodinates값:", coordinates);
+
+        
+
+  //       if(!coordinates) {
+  //         console.error("판매자 위치 값을 가져오지 못했습니다.", locationData);
+
+  //         return;
+          
+  //       }
+
+  //       if (coordinates) {
+
+
+  //         const [lng, lat] = coordinates;
+
+          
+  //         setUserLocation?.([lat, lng]);
+
+
+  //         if(userLocation) {
+  //          // 새로운 마커 생성성
+  //         // 경도, 위도 순서로 설정
+
+          
+  //         if(!userMarker) {
+  //           console.error("userMarker가 없습니다:", userMarker);
+  //           return;
+              
+  //         }
+
+  //         const newMarker = new mapboxgl.Marker({
+  //           element: createCustomMarker(),
+  //         }).setLngLat([userLocation[1], userLocation[0]]).addTo(mapInstance);
+
+  //         setUserMarker?.(newMarker);
+
+
+         
+    
+
+  //         //지도 중심 업데이트
+  //         updateCenter(lng, lat);
+
+  //         return () => {
+  //           newMarker.remove
+  //         }
+  //       }
+
+       
+  //     }
+
+
+  //   // }
+
+  //     // mapUpdate();
+
+  //     // // 기존 마커 있으면 삭제제
+  //     // if (userMarker) {
+  //     //   userMarker.remove();
+  //     // }
+      
+
+  //   }
+  // }, [mapInstance]);
 
 
 
   return (
     <>
-      <div className="productDetail_Mapbox" ref={mapContainerRef}/>
+      <div className="productDetail_Mapbox" ref={mapContainerRef} />
     </>
   )
 }
