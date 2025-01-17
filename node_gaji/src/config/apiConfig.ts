@@ -1,11 +1,11 @@
-import { IPathFinderParams } from "../../src/api/models/pathFinder.model";
+import { IPathGetResponse } from "../../src/api/models/pathFinder.model";
 
 export interface PathFinderConfig {
     headers: {
         API_KEY : string;
         type : string;
     };
-    params: IPathFinderParams;
+    params: IPathGetResponse;
 }
 
 export const apiConfig = {

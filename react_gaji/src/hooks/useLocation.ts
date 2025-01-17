@@ -1,46 +1,55 @@
 import { useState, useEffect } from "react";
 
-// 타입 정의
-interface Location {
-  lng: number;
-  lat: number;
-}
-interface GeolocationError {
-    code: number;
-    message: string;
+interface UserLocation {
+    lat: number;
+    lng: number;
 }
 
-const useLocation = () => {
-  const [location, setLocation] = useState<Location | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface UseLocationOptions {
+    enableHighAccuracy?: boolean;
+}
 
-  useEffect(() => {
-      if (!navigator.geolocation) {
-        setError("Geolocation is not supported by your browser.");
-        setLoading(false);
-        return;
-      }
+const useLocation = (options: UseLocationOptions = { enableHighAccuracy: true }) => {
+    const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
-      navigator.geolocation.getCurrentPosition(
-        ({ coords: { longitude, latitude } }) => {
-          setLocation({ lng: longitude, lat: latitude });
-          setLoading(false)
-        },
-        (err: GeolocationError) => {
-          setError(`위치 정보 조회 실패 (${err.code}): ${err.message}`);
-          setLoading(false)
-        },
-        {
-            // 정확도를 올리는 작업
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        }
-      );
-  }, []);
+    useEffect(() => {
+        const handleSuccess = (position: GeolocationPosition) => {
+            const { latitude, longitude } = position.coords;
+            setUserLocation({ lat: latitude, lng: longitude });
+            setError(null); // 이전 에러 상태 초기화
+        };
 
-  return { location, error, loading };
+        const handleError = (error: GeolocationPositionError) => {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    setError("위치 권한이 필요합니다. 브라우저 설정에서 위치 권한을 허용해주세요.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    setError("위치 정보를 가져올 수 없습니다.");
+                    break;
+                case error.TIMEOUT:
+                    setError("위치 정보를 가져오는 데 시간이 초과되었습니다.");
+                    break;
+                default:
+                    setError("알 수 없는 오류가 발생했습니다.");
+            }
+        };
+
+        const watchId = navigator.geolocation.watchPosition(
+            handleSuccess,
+            handleError,
+            {
+                ...options,
+                maximumAge: 10000, // 10초 동안 캐시된 위치 사용
+                timeout: 5000, // 5초 초과 시 타임아웃
+            }
+        );
+
+        return () => navigator.geolocation.clearWatch(watchId);
+    }, [options]);
+
+    return { userLocation, error };
 };
 
 export default useLocation;
