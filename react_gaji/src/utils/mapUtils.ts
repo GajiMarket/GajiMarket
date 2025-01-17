@@ -6,104 +6,111 @@ export interface IPathRoute {
   features?: Feature<Geometry, GeoJsonProperties>[];
 }
 
+/**
+ * 마커를 업데이트하거나 없으면 새로 생성합니다.
+ */
 export const updateOrCreateMarker = (
   map: mapboxgl.Map,
   position: [number, number],
-  existingMarker: mapboxgl.Marker | null
+  existingMarker: mapboxgl.Marker | null,
+  options?: { imageUrl?: string; className?: string }
 ): mapboxgl.Marker => {
+  const { imageUrl = "/default-marker.png", className = "marker" } = options || {};
+
+  /**
+   * 커스텀 마커 요소 생성
+   */
+  const createMarkerElement = (): HTMLElement => {
+    const el = document.createElement("div");
+    el.className = className;
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.style.width = "40px";
+    img.style.height = "47px";
+    el.appendChild(img);
+    return el;
+  };
+
   if (existingMarker) {
-    // 기존 마커가 있는 경우 위치 업데이트
+    const markerElement = existingMarker.getElement();
+    markerElement.className = className;
+    const img = markerElement.querySelector("img");
+    if (img) img.src = imageUrl;
     existingMarker.setLngLat(position);
     return existingMarker;
   }
 
-  // 기존 마커가 없으면 새 마커 생성
-  return new mapboxgl.Marker({
+  const newMarker = new mapboxgl.Marker({
+    element: createMarkerElement(),
     draggable: false,
-    anchor: "center",
-  })
-    .setLngLat(position)
-    .addTo(map);
+  });
+  newMarker.setLngLat(position).addTo(map);
+  return newMarker;
 };
 
-export const mapMarker = (map: mapboxgl.Map, position: [number, number]) => {
-  const marker = new mapboxgl.Marker({
-    draggable: false,
-    anchor: 'center',
-  })
-  .setLngLat(position)
-  .addTo(map)
-
-  return marker;
-}
-
-export const mapPopup = (map: mapboxgl.Map, position: [number, number]) => {
-  const popup = new mapboxgl.Popup()
-    .setLngLat(position)
-    .addTo(map);
-
-  return popup;
-}
-
+/**
+ * GeoJSON 데이터를 기반으로 경로를 지도에 추가합니다.
+ */
 export const mapRoute = (map: Map, pathData: IPathRoute) => {
   const coordinates = pathData.coordinates || processCoordinates(pathData.features || []);
-  
   if (coordinates.length === 0) {
-    console.error("유효하지 않은 path data입니다.");
+    console.error("유효하지 않은 경로 데이터입니다.");
     return;
   }
 
   const routeGeoJSON: Feature<LineString> = {
-    type: 'Feature',
+    type: "Feature",
     properties: {},
     geometry: {
-      type: 'LineString',
-      coordinates
+      type: "LineString",
+      coordinates,
     },
-  }
+  };
 
-  const sourceId = 'route';
+  const sourceId = "route";
   if (map.getSource(sourceId)) {
     (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(routeGeoJSON);
   } else {
     map.addSource(sourceId, {
-      type: 'geojson',
-      data: routeGeoJSON
+      type: "geojson",
+      data: routeGeoJSON,
     });
     map.addLayer({
       id: sourceId,
-      type: 'line',
+      type: "line",
       source: sourceId,
       layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
+        "line-join": "round",
+        "line-cap": "round",
       },
       paint: {
-        'line-color': '#888',
-        'line-width': 6
+        "line-color": "#AC86DD",
+        "line-width": 6,
       },
-    })
+    });
   }
-}
+};
 
-export const processCoordinates = (features: Feature<Geometry, GeoJsonProperties>[]): [number, number][] => {
+/**
+ * GeoJSON Feature에서 좌표를 추출합니다.
+ */
+export const processCoordinates = (
+  features: Feature<Geometry, GeoJsonProperties>[]
+): [number, number][] => {
   if (!features || !Array.isArray(features)) {
-      console.error("Invalid features input:", features);
-      return [];
+    console.error("유효하지 않은 Feature 데이터:", features);
+    return [];
   }
 
   return features.flatMap((feature) => {
-      const { geometry } = feature;
+    const { geometry } = feature;
 
-      if (geometry.type === "Point") {
-          // Point 타입인 경우 좌표를 배열에 추가
-          return [geometry.coordinates as [number, number]];
-      } else if (geometry.type === "LineString") {
-          // LineString 타입인 경우 배열로 반환
-          return geometry.coordinates as [number, number][];
-      }
+    if (geometry.type === "Point") {
+      return [geometry.coordinates as [number, number]];
+    } else if (geometry.type === "LineString") {
+      return geometry.coordinates as [number, number][];
+    }
 
-      // 처리할 수 없는 경우 빈 배열 반환
-      return [];
+    return [];
   });
 };
