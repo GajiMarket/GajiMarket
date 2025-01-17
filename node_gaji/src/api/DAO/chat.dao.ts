@@ -48,7 +48,7 @@ export const getChatRoomsFromDB = async (memberNo: number) => {
 
 export const getChatProductFromDB = async (productId: number) => {
   const productResult = await db.query(`
-    SELECT status, title, sell_price AS price, member_addr AS location
+    SELECT status, title, sell_price AS price
     FROM team4.product
     WHERE product_id = $1
   `, [productId]);
