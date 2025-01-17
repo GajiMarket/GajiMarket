@@ -5,10 +5,10 @@ interface Chat {
   chat_room_id: number;
   last_message: string;
   last_message_time: string;
-  avatar: string;
   name: string;
   location: string;
-  time: string;
+  avatar: string; // 추가
+  time: string; // 추가
 }
 
 interface ChatlistFormProps {

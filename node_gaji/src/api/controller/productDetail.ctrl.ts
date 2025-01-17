@@ -8,12 +8,24 @@ export const productDetail = async(req: Request, res: Response) => {
 
     try {
 
-        const response = await productDetailService();
+        const id = Number(req.params.id);
+
+        logger.debug({"가져온 id": id});
+        
+
+        const response = await productDetailService(id);
+
+        logger.debug({"response": response})
 
         if(!response) {
             logger.error({"not returns.": response});
             return;
         }
+
+        res.status(200).json({
+            success: true,
+            data: response,
+        })
 
         
     } catch {

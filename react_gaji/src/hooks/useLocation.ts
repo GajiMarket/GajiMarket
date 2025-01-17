@@ -9,8 +9,6 @@ interface UseLocationOptions {
     enableHighAccuracy?: boolean;
 }
 
-
-
 const useLocation = (options: UseLocationOptions = { enableHighAccuracy: true }) => {
     const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
     const [error, setError] = useState<string | null>(null);

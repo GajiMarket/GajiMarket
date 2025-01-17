@@ -1,3 +1,5 @@
+import { Feature, Geometry, GeoJsonProperties } from 'geojson';
+
 export interface ICoordinates {
     startX: number;
     startY: number;
@@ -15,7 +17,12 @@ export interface IPathPostParams {
     srid: number;
 }
 
-export interface IPathFinderParams {
+export interface IPathResponse {
+    type: "FeatureCollection";
+    features: Feature<Geometry, GeoJsonProperties>[];
+}
+
+export interface IPathGetResponse {
     startX: number;
     startY: number;
     endX: number;
@@ -40,27 +47,4 @@ export interface IPathFinderParams {
     pathType: number;
     time: number;
     guide: string;
-}
-
-export interface IPathResponse {
-    type: string;
-    features: Array<{
-        type: string;
-        id: string;
-        geometry: {
-            type: string,
-            coordinates: number[],
-        };
-        properties: {
-            nodeAId: string,
-            nodeBId: string,
-            length: number,
-            srid: null,
-            pathType: number,
-            time: number,
-            difficulty: number,
-            index: number,
-            guide: null
-        };
-    }>
 }

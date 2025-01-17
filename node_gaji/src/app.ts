@@ -7,7 +7,7 @@ import dotenv from 'dotenv'
 import chatRoutes from './api/chat.index'
 import cookieParser from 'cookie-parser'
 import mountRoutes from './api/routes'
-import {httpLogger} from './logger'
+import { httpLogger } from './logger'
 
 dotenv.config();
 
@@ -26,7 +26,7 @@ app.use(cors({
 
 app.use(cookieParser());
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(helmet());
 
@@ -51,14 +51,14 @@ app.use('/api/chat', chatRoutes);
 
 mountRoutes(app);
 
-app.get('/', async(req:express.Request, res:express.Response) => {
+app.get('/', async (req: express.Request, res: express.Response) => {
 
     res.log.info('Root route accessed');
     res.send('GajiMarket API Server');
 })
 
 
-app.get('/test', async (req:express.Request, res:express.Response) => {
+app.get('/test', async (req: express.Request, res: express.Response) => {
     req.log.info('Test route accessed');
     res.send('Testing Pino Logging');
 })
