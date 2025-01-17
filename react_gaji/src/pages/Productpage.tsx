@@ -46,7 +46,6 @@ const ProductPage: React.FC = () => {
 
   // const {productLocations, fetchProductLocations, renderMarkers} = useMarkers();
  
-
   
   // 백엔드에서 상품 상세 정보 가져오기 (productId가 있을 때만 실행)
 
@@ -79,7 +78,6 @@ const ProductPage: React.FC = () => {
     }
   }, [productId, navigate]);
 
- 
 
   const handleSlideChange = (index: number) => {
     setCurrentIndex(index);
@@ -98,28 +96,35 @@ const ProductPage: React.FC = () => {
   }
 
   return (
-    <div className="product-page-container">
-      {/* 상품 이미지 슬라이더 */}
-      <div className="product-image-slider" style={{ position: "relative" }}>
-        {product?.images && product.images.length > 0 && (
-          <>
-            <img
-              src={product.images[currentIndex]}
-              alt={`슬라이드 이미지 ${currentIndex + 1}`}
-              className="slider-image"
-            />
-            <div className="dots-container">
-              {product.images.map((_, index) => (
-                <span
-                  key={index}
-                  className={`dot ${currentIndex === index ? "active" : ""}`}
-                  onClick={() => handleSlideChange(index)}
-                ></span>
-              ))}
-            </div>
-          </>
-        )}
+    <div className="product-page-total">
+      {/* 상단 고정 헤더 */}
+      <div className="header-container fixed-header">
+        <button
+          className="back-button"
+          onClick={() => navigate("/productlistpage")}
+        >
+          ←
+        </button>
+        <h1 className="header-title">상품 상세 페이지</h1>
       </div>
+      <div className="product-page-container">
+        {/* 상품 이미지 슬라이더 */}
+        <div className="product-image-slider" style={{ position: "relative" }}>
+  {product?.images && product.images.length > 0 ? (
+    <>
+      <img
+        src={product.images[currentIndex]}
+        alt={`슬라이드 이미지 ${currentIndex + 1}`}
+        className="slider-image"
+      />
+      <div className="dots-container">
+        {product.images.map((_, index) => (
+          <span
+            key={index}
+            className={`dot ${currentIndex === index ? "active" : ""}`}
+            onClick={() => handleSlideChange(index)}
+          ></span>
+        ))}
 
       {/* 판매자 정보 */}
       <div className="seller-info-section">
@@ -135,11 +140,41 @@ const ProductPage: React.FC = () => {
           {/* <span className="location">{product?.location}</span> */}
         </div>
       </div>
+    </>
+  ) : (
+    <div className="image-placeholder">이미지 없음</div>
+  )}
+</div>
 
-      {/* 상품 정보 */}
-      <div className="product?-info-section">
-        <h1 className="product?-title">{product?.title}</h1>
-        <p className="product?-description">{product?.description}</p>
+        {/* 판매자 정보 */}
+        <div className="seller-info-section">
+  <div className="profile-icon">
+    {product?.profile_image ? (
+      <img src={product?.profile_image} alt="프로필 이미지" />
+    ) : (
+      "👤" // 기본 아이콘
+    )}
+  </div>
+  <div className="seller-details">
+    <span className="seller-name">
+      {product?.member_nick || "판매자 정보 없음"}
+    </span>
+  </div>
+</div>
+
+        {/* 상품 정보 */}
+        <div className="product-info-section">
+  <h1 className="product-title">{product?.title || "상품 제목 없음"}</h1>
+  <p className="product-description">
+    {product?.description || "상품 설명이 없습니다."}
+  </p>
+</div>
+        {/* 위치 */}
+        {product?.location && (
+          <div className="sell_location_map">
+            {/* <div className="productDetail_Mapbox" ref={mapContainerRef} /> */}
+          </div>
+        )}
       </div>
 
       {/* 위치 */}
@@ -151,7 +186,7 @@ const ProductPage: React.FC = () => {
       )}
 
       {/* 좋아요 버튼 및 가격 */}
-      <div className="product?-actions">
+    <div className="product-actions">
         <div className="price-like-container">
           <button
             className="like-button"
