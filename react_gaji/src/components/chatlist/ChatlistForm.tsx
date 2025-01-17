@@ -7,13 +7,13 @@ interface Chat {
   last_message_time: string;
   name: string;
   location: string;
-  avatar: string; // 추가
-  time: string; // 추가
+  avatar: string;
+  productId: number; // 추가
 }
 
 interface ChatlistFormProps {
   chats: Chat[];
-  onChatClick: (chatRoomId: number, chatName: string) => void;
+  onChatClick: (chatRoomId: number, chatName: string, productId: number) => void;
 }
 
 const ChatlistForm: React.FC<ChatlistFormProps> = ({ chats, onChatClick }) => {
@@ -24,7 +24,7 @@ const ChatlistForm: React.FC<ChatlistFormProps> = ({ chats, onChatClick }) => {
   return (
     <div className="chatlist-form">
       {chats.map((chat) => (
-        <div key={chat.chat_room_id} className="chatlist-item" onClick={() => onChatClick(chat.chat_room_id, chat.name)}>
+        <div key={chat.chat_room_id} className="chatlist-item" onClick={() => onChatClick(chat.chat_room_id, chat.name, chat.productId)}>
           <img src={chat.avatar} alt={`${chat.name} 프로필`} className="chatlist-avatar" />
           <div className="chatlist-info">
             <div className="chatlist-Form-header">

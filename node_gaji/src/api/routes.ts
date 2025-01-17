@@ -17,7 +17,7 @@ const mountRoutes = (app: Express) => {
     app.use('/map', Product_preview)
 
     app.use('/product', products)
-    
+
     app.use('/navigation', path)
 
     app.post('/', userLocation)
@@ -28,7 +28,7 @@ const mountRoutes = (app: Express) => {
 
     // 알림 관련 라우트
     app.use("/notifications", notificationRoutes);
-    
+
     app.use("/mypage_love", mypageLoveRoutes);
 
     app.use('/use', productadd);
