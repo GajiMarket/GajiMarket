@@ -62,6 +62,8 @@ const ProductAdd: React.FC = () => {
       ? { lng: location.lng, lat: location.lat }
       : null;
 
+      
+
     // 서버로 전송할 상품 데이터 생성
     const productData = {
       title,
@@ -71,8 +73,16 @@ const ProductAdd: React.FC = () => {
       createdAt: new Date().toISOString(), // 현재 시간
       views: 0, // 조회수 초기화
       userNo,
-      status: "중고물품",
+      status: "판매중",
     };
+
+    const extension = images.
+
+    const imagesData = imag
+
+    const formData = new FormData();
+
+    formData.append('productData', productData)
 
     try {
       console.log("body data : ", productData);
