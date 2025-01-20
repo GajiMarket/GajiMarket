@@ -24,7 +24,10 @@ const ChatlistForm: React.FC<ChatlistFormProps> = ({ chats, onChatClick }) => {
   return (
     <div className="chatlist-form">
       {chats.map((chat) => (
-        <div key={chat.chat_room_id} className="chatlist-item" onClick={() => onChatClick(chat.chat_room_id, chat.name, chat.productId)}>
+        <div key={chat.chat_room_id} className="chatlist-item" onClick={() => {
+          console.log('Chat clicked:', chat); // 로그 추가
+          onChatClick(chat.chat_room_id, chat.name, chat.productId);
+        }}>
           <img src={chat.avatar} alt={`${chat.name} 프로필`} className="chatlist-avatar" />
           <div className="chatlist-info">
             <div className="chatlist-Form-header">

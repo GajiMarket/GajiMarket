@@ -9,6 +9,7 @@ import mypage from '../api/mypage.index';
 import notificationRoutes from "../api/notifications.index"; // 알림 라우트 추가
 import mypageLoveRoutes from "./mypage_love.index";
 import productadd from '../api/productcdd.index';
+import mypageKeyword from './mypage_key.index';
 import mypageSellRoutes from './mypage_sell.index'; // 판매내역 라우트 추가
 import mypageBuyRoutes from './mypage_buy.index'; // 구매내역 라우트 추가
 
@@ -40,6 +41,9 @@ const mountRoutes = (app: Express) => {
 
     // 구매내역 라우트
     app.use('/api/mypage_buy', mypageBuyRoutes);
+
+    // 키워드 알림 라우트
+    app.use('/api/mypage_keyword', mypageKeyword)
 }
 
 export default mountRoutes;

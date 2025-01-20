@@ -15,9 +15,7 @@ const ProductAdd: React.FC = () => {
     name: string;
   } | null>(null);
   const [images, setImages] = useState<File[]>([]);
-  const [representativeIndex, setRepresentativeIndex] = useState<number | null>(
-    null
-  );
+
   const [showMap, setShowMap] = useState(false);
 
   const { isAuthenticated, userNo } = loginStore();
@@ -35,19 +33,18 @@ const ProductAdd: React.FC = () => {
       const uploadedFiles = Array.from(event.target.files); // 업로드된 파일을 배열로 변환
 
       setImages((prevImages) => {
-        const updatedImages = [...prevImages, ...uploadedFiles];
-        // 업로드된 이미지 중 첫 번째 이미지를 대표 이미지로 설정
-        if (representativeIndex === null && updatedImages.length > 0) {
-          setRepresentativeIndex(0);
+        const totalImages = prevImages.length + uploadedFiles.length;
+        if (totalImages > 10) {
+          alert("이미지는 최대 10개까지만 업로드할 수 있습니다.");
+          return prevImages; // 기존 이미지 유지, 새 이미지는 추가하지 않음
         }
-        return updatedImages;
+        return [...prevImages, ...uploadedFiles]; // 이미지 추가
       });
     }
   };
 
-  // 대표 이미지 설정 함수c
-  const handleSetRepresentative = (index: number) => {
-    setRepresentativeIndex(index);
+  const handleRemoveImage = (index: number) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   // 상품 등록 버튼 클릭 시 실행되는 함수
@@ -62,7 +59,7 @@ const ProductAdd: React.FC = () => {
       ? { lng: location.lng, lat: location.lat }
       : null;
 
-      
+
 
     // 서버로 전송할 상품 데이터 생성
     const productData = {
@@ -101,7 +98,6 @@ const ProductAdd: React.FC = () => {
       setDescription("");
       setLocation(null);
       setImages([]);
-      setRepresentativeIndex(null);
 
       console.log("response.data.product_id:", response.data.data.product_id);
 
@@ -177,20 +173,17 @@ const ProductAdd: React.FC = () => {
                   alt={`uploaded-${index}`}
                   className="uploaded-image"
                 />
-                {/* 대표 이미지 뱃지 */}
-                {representativeIndex === index && (
+                {/* 이미지 삭제 버튼 */}
+                <button
+                  className="product-image-remove-button"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  x
+                </button>
+                {/* 첫 번째 이미지에만 대표 이미지 뱃지 표시 */}
+                {index === 0 && (
                   <span className="representative-badge">대표사진</span>
                 )}
-                {/* 대표 이미지 설정 버튼 */}
-                <button
-                  className="set-representative-button"
-                  onClick={() => handleSetRepresentative(index)}
-                  style={{
-                    display: representativeIndex === index ? "none" : "block",
-                  }}
-                >
-                  대표설정
-                </button>
               </div>
             ))}
           </div>

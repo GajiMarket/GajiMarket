@@ -59,6 +59,24 @@
   margin-bottom: 0px;
 }
 
+.product-image-remove-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(185, 185, 185, 0.6); /* 붉은 배경 */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
 .image-list-container {
   display: flex;
   flex-wrap: nowrap;
