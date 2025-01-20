@@ -1,75 +1,55 @@
+import { IProduct } from "api/models/product";
+import { INotifications } from "api/models/notifications.model";
 import { db, schema } from "../../config/dbConfig";
-import { INotifications } from "../models/notifications.model";
+import { notifyClient } from "../../config/websocket";
 
-export const getMatchingKeywordsDAO = async (title: string, description: string) => {
-    const response = await db.query(
-        `SELECT k.keyword_id, k.keyword, k.member.no
-        FROM ${schema}.keyword k
-        WHERE $1 ILIKE '%' || k.keyword || '%' OR $2 ILIKE '%" || k.keyword || '%'`,
-        [title, description]
-    );
-    console.log('알람 데이터:', response.rows);
-    return response.rows;
-}
+export const sendNotificationToUsers = async (product: IProduct): Promise<void> => {
+  try {
+    const query = `
+      SELECT k.member_no, k.keyword_name
+      FROM ${schema}.keyword k
+      WHERE $1 ILIKE '%' || k.keyword_name || '%';
+    `;
 
-export const createNotificationsDAO = async (notifications: Omit<INotifications, "notice_id">[]) => {
-    const queries = notifications.map(({ notice_message, read_or_not, created_at, member_no, keyword_id }) =>
-      db.query(
-        `INSERT INTO ${schema}.notifications
-          (notice_message, read_or_not, created_at, member_no, keyword_id)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [notice_message, read_or_not, created_at, member_no, keyword_id]
-      )
-    );
-    await Promise.all(queries); // 병렬 처리
+    const values = [product.title];
+    const result = await db.query<{ member_no: number; keyword_name: string }>(query, values);
+
+    if (result.rows.length === 0) {
+      console.log("No matching keywords found for the product.");
+      return;
+    }
+
+    for (const row of result.rows) {
+      const message = `새로운 제품 '${product.title}'이(가) 등록되었습니다!`;
+
+      // WebSocket으로 알림 전송
+      notifyClient(row.member_no.toString(), message);
+
+      console.log(`Notification sent to member_no: ${row.member_no}, message: "${message}"`);
+    }
+  } catch (error) {
+    console.error("Error in sendNotificationToUsers:", error);
+    throw new Error("사용자 알림 전송 중 오류가 발생했습니다.");
+  }
 };
 
-
-// 사용자별 알림 가져오기
-export const getNotificationsByUserId = async (member_no: number): Promise<INotifications[]> => {
-    const result = await db.query(
-        `SELECT * FROM ${schema}.notifications
-        WHERE member_no = $1 ORDER BY created_at DESC`,
-        [member_no]
-    );
-    console.log('notification:', result.rows);
-    return result.rows;
+export const getNotificationsByMember = async (memberNo: number): Promise<INotifications[]> => {
+    const query = `
+      SELECT * FROM ${schema}.notifications
+      WHERE member_no = $1
+      ORDER BY created_at DESC
+    `;
+  
+    const result = await db.query(query, [memberNo]);
+    console.log("member notice:", result.rows);
+    return result.rows as INotifications[];
 };
 
-// 특정 알림 읽음 처리
-export const markAsRead = async (notice_id: number): Promise<void> => {
-    await db.query(
-        "UPDATE team4.notifications SET read_or_not = true WHERE notice_id = $1",
-        [notice_id]
-    );
-};
-
-// 알림 삭제
-export const deleteNotification = async (notice_id: number): Promise<void> => {
-    await db.query(
-        "DELETE FROM team4.notifications WHERE notice_id = $1",
-        [notice_id]
-    );
-};
-
-// 사용자 모든 알림 삭제
-export const clearAllNotifications = async (member_no: number): Promise<void> => {
-    await db.query(
-        "DELETE FROM team4.notifications WHERE member_no = $1",
-        [member_no]
-    );
-};
-
-// 새로운 알림 생성
-export const createNotification = async (notification: INotifications): Promise<INotifications> => {
-    const result = await db.query(
-        "INSERT INTO team4.notifications (notice_message, read_or_not, created_at, member_no, keyword_id) VALUES ($1, $2, NOW(), $3, $4) RETURNING *",
-        [
-            notification.notice_message,
-            notification.read_or_not,
-            notification.member_no,
-            notification.keyword_id,
-        ]
-    );
-    return result.rows[0];
+export const createNotification = async (message: string, memberNo: number, keywordId: number): Promise<void> => {
+    const query = `
+      INSERT INTO ${schema}.notifications (notice_message, member_no, keyword_id, read_or_not, created_at)
+      VALUES ($1, $2, $3, $4, NOW())
+    `;
+  
+    await db.query(query, [message, memberNo, keywordId, false]);
 };
