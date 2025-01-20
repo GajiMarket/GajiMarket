@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import axios from "axios";
-import loginStore from "../utils/loginStore";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
@@ -9,24 +7,21 @@ const api = axios.create({
     },
 })
 
-export const getNotification = async () => {
-  try {
-    const memberNo = loginStore.getState().userNo;
-    console.log("Member no:", memberNo);
-    const response = await api.post(`/notifications?member_no=${memberNo}`); 
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch notifications:', error);
-    throw error;
-  }
-}
+export const fetchNotifications = async (memberNo: number) => {
+  console.log("user num:", memberNo);
+    const response = await api.get(`/notifications/${memberNo}`);
+    console.log("response data:", response.data);
+    return response.data.map((notification: any) => ({
+      id: notification.notice_id,
+      message: notification.notice_message,
+      productId: notification.product_id,
+    }));
+  };
 
-export const deleteNotification = async (notice_id: number) => {
-  try {
-    const response = await api.delete(`/notifications/${notice_id}`);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to delete notifications:', error);
-    throw error;
+  export const deleteNotification = async (noticeId: number) => {
+    await api.delete(`/notifications/${noticeId}`);
   }
-}
+
+  export const clearAllNotifications = async (memberNo: number) => {
+    await api.delete(`/notifications/user/${memberNo}`);
+  }
