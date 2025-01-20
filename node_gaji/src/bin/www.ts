@@ -1,18 +1,26 @@
-import app from '../app'
+import app from "../app";
+import webSocketServer from "../config/websocket"; // WebSocket 서버 import
+import { createServer } from "http"; // HTTP 서버 생성
 
-const main = async() => {
+const main = async () => {
+  const PORT = process.env.PORT || "3000";
 
-    const PORT = process.env.PORT || '3000'
+  // HTTP 서버 생성
+  const server = createServer(app);
 
-    app.listen(parseInt(PORT, 10), () => {
-
-        console.log(`server is running on port ${PORT}`);
-        
+  // WebSocket 서버 연결
+  server.on("upgrade", (req, socket, head) => {
+    webSocketServer.handleUpgrade(req, socket, head, (ws) => {
+      webSocketServer.emit("connection", ws, req);
     });
-}
+  });
 
-main().catch(err => {
+  // 서버 실행
+  server.listen(parseInt(PORT, 10), () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
 
-    console.error((err as Error).message);
-    
-})
+main().catch((err) => {
+  console.error((err as Error).message);
+});

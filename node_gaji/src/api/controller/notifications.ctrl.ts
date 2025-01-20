@@ -1,39 +1,32 @@
 import { Request, Response } from "express";
 import { fetchNotifications, markNotificationAsRead } from "../service/notifications.service";
-import { INotifications } from "../models/notifications.model";
 
 export const getNotifications = async (req: Request, res: Response): Promise<void> => {
   const memberNo = parseInt(req.query.member_no as string, 10);
-  console.log("member no:", memberNo);
-
-  if (!memberNo) {
-    res.status(400).json({ message: 'member no is required' });
+  if (isNaN(memberNo)) {
+    res.status(400).json({ message: "유효한 member_no를 입력하세요." });
     return;
   }
 
   try {
     const notifications = await fetchNotifications(memberNo);
-    console.log("Get Notifications:", notifications);
     res.status(200).json(notifications);
   } catch (error) {
-    console.error('Error fetching notifications:', error);
-    res.status(500).json({ message: 'Failed to fetch notifications' });
+    res.status(500).json({ message: "알림 조회 중 오류가 발생했습니다." });
   }
-}
+};
 
 export const markAsRead = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;
-
-  if (!id) {
-    res.status(400).json({ message: 'Notification ID is required' });
+  const notificationId = parseInt(req.params.id, 10);
+  if (isNaN(notificationId)) {
+    res.status(400).json({ message: "유효한 알림 ID를 입력하세요." });
     return;
   }
 
   try {
-    await markNotificationAsRead(parseInt(id, 10));
-    res.status(200).json({ message: 'Notification marked as read' })
+    await markNotificationAsRead(notificationId);
+    res.status(200).json({ message: "알림이 읽음 처리되었습니다." });
   } catch (error) {
-    console.error('Error marking notification as read:', error);
-    res.status(500).json({ message: 'Failed to update notification' });
+    res.status(500).json({ message: "알림 읽음 처리 중 오류가 발생했습니다." });
   }
-}
+};

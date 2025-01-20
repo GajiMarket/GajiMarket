@@ -1,14 +1,12 @@
-import WebSocket from 'ws';
+import WebSocket from "ws";
 
-// WebSocket 클라이언트 관리
 const clients: { [memberNo: string]: WebSocket } = {};
 
-// WebSocket 서버 설정
 const webSocketServer = new WebSocket.Server({ noServer: true });
 
-webSocketServer.on('connection', (socket, req) => {
-  const urlParams = new URLSearchParams(req.url?.split('?')[1]);
-  const memberNo = urlParams.get('member_no');
+webSocketServer.on("connection", (socket, req) => {
+  const urlParams = new URLSearchParams(req.url?.split("?")[1]);
+  const memberNo = urlParams.get("member_no");
 
   if (!memberNo) {
     socket.close();
@@ -17,12 +15,11 @@ webSocketServer.on('connection', (socket, req) => {
 
   clients[memberNo] = socket;
 
-  socket.on('close', () => {
+  socket.on("close", () => {
     delete clients[memberNo];
   });
 });
 
-// 클라이언트에 알림 전송
 export const notifyClient = (memberNo: string, message: string) => {
   const client = clients[memberNo];
   if (client) {
