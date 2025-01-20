@@ -1,9 +1,10 @@
 import express from "express";
-import { getNotifications, markAsRead } from "./controller/notifications.ctrl";
+import { keywordCtrl, getKeywords, deleteKeywords } from "./controller/mypage_key.ctrl";
 
 const router = express.Router();
 
-router.get('/', getNotifications);
-router.patch('/:id', markAsRead);
+router.post("/", keywordCtrl);
+router.get("/", getKeywords);
+router.delete("/", deleteKeywords)
 
 export default router;
