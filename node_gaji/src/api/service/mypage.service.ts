@@ -1,7 +1,7 @@
 import {logger} from '../../logger'
 import { Storage } from '@google-cloud/storage'
 import {uploadImageDAO, profileDefault, profileNickDAO} from '../DAO/mypage.dao'
-import IUser from 'api/models/photo'
+import IPhoto from 'api/models/photo'
 import IMemberTbl from 'api/models/member_tbl'
 import path from 'path'
 import dotenv from 'dotenv';
@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 // type Member = Partial<IMemberTbl>
 
 
-type User = Partial<IMemberTbl&IUser>
+type User = Partial<IMemberTbl&IPhoto>
 
 dotenv.config();
 
@@ -61,30 +61,48 @@ export const uploadImageService = {
                     await uploadImageDAO(fileUrl, userNo); 
                     
                     // 기존 프로필 이미지가 있으면 삭제
-                    const currentImageFile = await profileDefault(userNo) as User;
+                    // const currentImageFile = await profileDefault(userNo) as User;
 
-                    logger.debug({"기존 이미지": currentImageFile.image})
+                    // logger.debug({"기존 이미지": currentImageFile.image})
 
-                    if(currentImageFile?.image) {
+                    // if(currentImageFile?.image) {
 
-                        const existingFileName = path.basename(currentImageFile.image);
-                        const finalName = `userProfile/${existingFileName}`;
-                        const existingBlob = bucket.file(finalName);
+                        // const existingFileName = path.basename(currentImageFile.image);
+                        // const finalName = `userProfile/${existingFileName}`;
+                        // // const existingBlob = bucket.file(existingFileName);
+                        // const existingBlob = bucket.file(finalName);
+                        // // const existingBlob = bucket.file(currentImageFile.image);
 
-                        logger.debug({"existingFileName": existingFileName});
-                        logger.debug({"existingBlob": existingBlob});
+                        // logger.debug({"existingFileName": existingFileName});
+                        // logger.debug({"existingBlob": existingBlob});
 
-                        try {
+                        // try {
 
-                            await existingBlob.delete();
-                            logger.debug(`기존 프로필 이미지 삭제 완료: ${existingFileName}`)
+                        //     const [exists] = await existingBlob.exists();
 
-                        } catch (error) {
+                        //     if (exists) {
+                        //         await existingBlob.delete();
+                        //         logger.debug(`기존 이미지 삭제 완료: ${finalName}`);
+                        //         logger.debug(`기존 이미지: ${existingBlob}`);
+                        //     } else {
+                        //         logger.debug(`파일 ${finalName}이 존재하지 않습니다.`);
+                        //     }
+
+
+                        //     // const Delete = await existingBlob.delete();
+
+                        //     // logger.info(`삭제 결과:${Delete}`);
                             
-                            logger.error(`"있는 이미지 이름:"${existingFileName}`, error)
-                        }
+                        //     // logger.debug(`기존 프로필 이미지 삭제 완료: ${existingFileName}`)
 
-                    }
+                        // } catch (error) {
+                            
+                        //     logger.error(`"있는 이미지 이름:"${existingFileName}`, error)
+                        //     logger.error(`"있는 이미지 이름:"${finalName}`, error)
+                            
+                        // }
+
+                    // }
                     
 
                     // 이미지 경로URL 저장

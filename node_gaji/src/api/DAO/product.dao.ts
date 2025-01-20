@@ -1,16 +1,16 @@
 import { db, schema } from "../../config/dbConfig";
-import { IProduct } from "../models/product";
+import { IProduct, ILocation } from "../models/product";
 import IPhoto from '../models/photo';
 import {logger} from '../../logger';
 
 type Product = Partial<IPhoto&IProduct>;
 
 
-export const addProductDAO = async (productData: Product): Promise<Product> => {
+export const addProductDAO = async (productData: Product): Promise<IProduct> => {
   // const { lng, lat } = productData.location; // location에서 lng, lat 분리
 
-  const lng = productData.location?.lng;
-  const lat = productData.location?.lat;
+  const lng = (productData.location as ILocation)?.lng;
+  const lat = (productData.location as ILocation)?.lat;
 
   const response = await db.query(
     `INSERT INTO ${schema}.product

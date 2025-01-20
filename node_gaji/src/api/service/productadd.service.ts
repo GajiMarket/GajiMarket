@@ -18,7 +18,7 @@ const storage = new Storage({
 const bucket = storage.bucket(process.env.BUCKET_NAME as string);
 
 
-export const addfinderAPI = async (images: Express.Multer.File[], productData: Product): Promise<number | string[] | any> => {
+export const addfinderAPI = async (images: Express.Multer.File[], productData: {}): Promise<number | string[] | any> => {
   try {
     logger.info(`Processing product data in service:${productData}`);
     logger.debug(`service로 가져온 이미지:${images}`);

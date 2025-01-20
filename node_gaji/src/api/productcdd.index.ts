@@ -7,6 +7,6 @@ const upload = multer({storage: multer.memoryStorage()});
 const router = express.Router();
 
 // router.post('/productadd', productaddCtrl);
-router.post('/productadd', upload.array('productImage', 10), productaddCtrl);
+router.post('/productadd', upload.array('productImages', 10), productaddCtrl);
 
 export default router;
