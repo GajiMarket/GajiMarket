@@ -9,6 +9,14 @@ const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
   const [sell_price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  // const [product, setProduct] = useState<Record<any, any>>({
+  //   title: '',
+  //   sell_price: '',
+  //   description: '',
+  //   location: {lng: 0, lat: 0, name: ''},
+  //   view: 0,
+  //   status: '판매중',
+  // });
   const [location, setLocation] = useState<{
     lng: number;
     lat: number;
@@ -17,6 +25,8 @@ const ProductAdd: React.FC = () => {
   const [images, setImages] = useState<File[]>([]);
 
   const [showMap, setShowMap] = useState(false);
+
+  const [firstImage, setFirstImage] = useState<string>('');
 
   const { isAuthenticated, userNo } = loginStore();
 
@@ -27,6 +37,7 @@ const ProductAdd: React.FC = () => {
     navigate("/");
     return;
   }
+
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -55,21 +66,21 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
-    const locationData = location
-      ? { lng: location.lng, lat: location.lat }
-      : null;
+    // const locationData = location
+    //   ? { lng: location.lng, lat: location.lat }
+    //   : null;
 
 
 
     // 서버로 전송할 상품 데이터 생성
     const productData = {
       title,
-      sell_price: Number(sell_price), // 문자열을 숫자로 변환
+      sell_price, //Number(sell_price), // 문자열을 숫자로 변환
       description,
-      location: locationData,
+      location: location, //locationData,
       // createdAt: new Date().toISOString(), // 현재 시간
-      views: 0, // 조회수 초기화
-      // userNo,
+      // view_count: 0, // 조회수 초기화
+      userNo: userNo,
       status: "판매중",
     };
 
@@ -80,12 +91,43 @@ const ProductAdd: React.FC = () => {
     const formData = new FormData();
 
     // formData.append('productData', productData)
+    formData.append('title', productData.title);
+    formData.append('sell_price', productData.sell_price);
+    formData.append('description', productData.description);
+    formData.append('location', JSON.stringify(productData.location));
+    // formData.append('views', String(productData.view_count));
+    formData.append('userNo', productData.userNo as string);
+    formData.append('status', productData.status);
+
+    //이미지 저장
+    images.map((data, i) => {
+      formData.append(`data_${i}`, data);
+    });
+
+    console.log("forEach전 이미지:", images);
+  
+    
+    // formData.append('image', image);
+
+    images.forEach((image) => {
+      formData.append('productImage', image);
+      console.log("image 데이터:", image);
+    })
+    
 
     try {
       console.log("body data : ", productData);
+
+      console.log("이미지 데이터:", formData.get('productImage'));
+      
+      
       const response = await axios.post(
         "http://localhost:3000/use/productadd",
-        productData
+        formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       // 상품 등록 성공 시 처리
@@ -98,6 +140,8 @@ const ProductAdd: React.FC = () => {
       setDescription("");
       setLocation(null);
       setImages([]);
+
+      // setProduct({});
 
       console.log("response.data.product_id:", response.data.data.product_id);
 

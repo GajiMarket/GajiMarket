@@ -269,7 +269,7 @@ const navigate= useNavigate();
             <BirthDay BirthDate={{year:formData.year, month:formData.month, day:formData.day}} handleChange={handleBirthDateChange} />
             <h3 className="sub_Header">주소</h3>
             <PostCode postcode={formData.zonecode || ''} address={formData.address || ''} detailAddress={formData.detailAddress || ''} extraAddress={formData.extraAddress || ''} postChange={handleChange('zonecode')} addressChange={handleChange('address')} detailChange={handleChange('detailAddress')} extraChange={handleChange('extraAddress')} handleClick={handlePostCode}/>
-        <button className="formSubmit-button" type="button" onClick={() => navigate('/')} >로그인</button>
+        {/* <button className="formSubmit-button" type="button" onClick={() => navigate('/')} >로그인</button> */}
         <button className="formSubmit-button" type="button" onClick={handleSubmit}>회원가입</button>
     </div>
   )
