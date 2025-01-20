@@ -9,7 +9,7 @@ interface IProductProps {
     // image: string | null;
     // setImage:(image: string) => void;
     userMarker: mapboxgl.Marker | null;
-    userLocation: [lat: number, lng: number] | null;
+    userLocation: [lng: number, lat: number] | null;
     profileNick: string | null;
     mapInstance: mapboxgl.Map | null;
     error: string | null;

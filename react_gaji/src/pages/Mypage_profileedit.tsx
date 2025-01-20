@@ -39,22 +39,13 @@ const MypageProfileEdit: React.FC = () => {
       // const reader = new FileReader();
       const file = event.target.files[0];
 
-      // const originalName = file.name.split('\\').slice(0, -1).join('.');
-      // const fileExtension = originalName.split('.').pop(); // '\\'로 split후 마지막 요소
-      // const fileName = `${originalName}.${fileExtension}`;
-
-      // const originName = file.name.split('.').slice(0, -1);
-
       //확장자만 남긴다.
       const extension = file.name.split('.').pop();
       //지금 날짜와 확장자를 저장
       const imageName = `${Date.now()}.${extension}`;
 
-      // console.log("지정한 fileName:", fileName);
-      // console.log("지정한 file:", file);
 
       console.log("지정한 fileName:", imageName);
-      // console.log("지정한 file:", file);
 
       
 
