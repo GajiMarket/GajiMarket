@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useChatStore } from '../utils/chatStore';
 import io from 'socket.io-client';
@@ -24,9 +24,9 @@ const Chatpage: React.FC = () => {
   const searchParams = new URLSearchParams(location.search);
   const name = searchParams.get('name') || 'Unknown';
   const productId = searchParams.get('productId') || '';
-  const memberNo = searchParams.get('memberNo') || '';
+  // const memberNo = searchParams.get('memberNo') || '';
   const { messages, addMessage } = useChatStore();
-  const [input, setInput] = useState('');
+  // const [input, setInput] = useState('');
 
   useEffect(() => {
     console.log(`Product ID in Chatpage: ${productId}`); // 추가된 로그
@@ -53,17 +53,17 @@ const Chatpage: React.FC = () => {
     };
   }, [addMessage, roomId]);
 
-  const sendMessage = () => {
-    const newMessage: ChatMessage = {
-      id: Date.now(),
-      sender: 'buyer',
-      message: input,
-      timestamp: new Date().toISOString(),
-    };
-    socket.emit('message', newMessage);
-    addMessage(roomId, newMessage);
-    setInput('');
-  };
+  // const sendMessage = () => {
+  //   const newMessage: ChatMessage = {
+  //     id: Date.now(),
+  //     sender: 'buyer',
+  //     message: input,
+  //     timestamp: new Date().toISOString(),
+  //   };
+  //   socket.emit('message', newMessage);
+  //   addMessage(roomId, newMessage);
+  //   setInput('');
+  // };
 
   const handleSendMessage = async (message: string) => {
     try {

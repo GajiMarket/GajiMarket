@@ -1,6 +1,6 @@
 import {create} from 'zustand';
-import { persist, PersistStorage } from 'zustand/middleware';
-import mapboxgl from "mapbox-gl";
+// import { persist, PersistStorage } from 'zustand/middleware';
+// import mapboxgl from "mapbox-gl";
 
 
 

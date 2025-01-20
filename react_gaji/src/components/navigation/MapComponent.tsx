@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import NaviPopup from "./NaviPopup";
 import useMap from '../../hooks/ejk/useMap.ej';
 // import useLocation from "../../hooks/useLocation";

@@ -11,7 +11,7 @@ import { imageUpload, nicknameUpdate } from '../hooks/useMypage.ts';
 
 const MypageProfileEdit: React.FC = () => {
 
-      const {isAuthenticated, nickname, setNickname, userNo, profileImage, setImage, token, setToken, setUserNo} = loginStore(); 
+      const {isAuthenticated, nickname, setNickname, userNo, profileImage, setImage, token, setToken} = loginStore(); 
   
   
     const navigate = useNavigate();

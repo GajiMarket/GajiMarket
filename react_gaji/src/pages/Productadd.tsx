@@ -77,7 +77,7 @@ const ProductAdd: React.FC = () => {
 
     // const imagesData = imag
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
     // formData.append('productData', productData)
 

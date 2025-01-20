@@ -19,7 +19,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ currentPage }) => {
   const navigate = useNavigate();
 
-  const handleNavigation = (index: number, path: string) => {
+  const handleNavigation = (path: string) => {
     navigate(path);
   };
 
@@ -27,31 +27,31 @@ const Footer: React.FC<FooterProps> = ({ currentPage }) => {
     <div className='FooterBar'>
       <button
         className={`footer_home_icon ${currentPage === 0 ? 'active' : ''}`}
-        onClick={() => handleNavigation(0, '/map')}
+        onClick={() => handleNavigation('/map')}
       >
         <img src={currentPage === 0 ? homeicon : nc_homeicon} alt="홈" className='footer_home_icon_img' />홈
       </button>
       <button
         className={`footer_list_icon ${currentPage === 1 ? 'active' : ''}`}
-        onClick={() => handleNavigation(1, '/productlistpage')}
+        onClick={() => handleNavigation('/productlistpage')}
       >
         <img src={currentPage === 1 ? listicon : nc_listicon} alt="리스트" className='footer_list_icon_img' />리스트
       </button>
       <button
         className={`footer_join_icon ${currentPage === 2 ? 'active' : ''}`}
-        onClick={() => handleNavigation(2, '/productadd')}
+        onClick={() => handleNavigation('/productadd')}
       >
         <img src={nc_joinicon} alt="등록" className='footer_join_icon_img' />등록
       </button>
       <button
         className={`footer_chat_icon ${currentPage === 3 ? 'active' : ''}`}
-        onClick={() => handleNavigation(3, '/chatlist')}
+        onClick={() => handleNavigation('/chatlist')}
       >
         <img src={currentPage === 3 ? chaticon : nc_chaticon} alt="채팅" className='footer_chat_icon_img' />채팅
       </button>
       <button
         className={`footer_my_icon ${currentPage === 4 ? 'active' : ''}`}
-        onClick={() => handleNavigation(4, '/mypage')}
+        onClick={() => handleNavigation('/mypage')}
       >
         <img src={currentPage === 4 ? mypageicon : nc_mypageicon} alt="내정보" className='footer_my_icon_img' />내정보
       </button>
