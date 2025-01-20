@@ -94,52 +94,56 @@ const MypageKeywordSettings: React.FC = () => {
   return (
     <div className="keyword-settings-page">
       <Header />
-      <div className="keyword-settings-content">
-        <div className="keyword-settings-header">
-          <h1 className="keyword-settings-title">키워드 알림 설정</h1>
-          <div className="keyword-search-box">
-            <input
-              type="text"
-              className="keyword-search-input"
-              placeholder="알림 받을 키워드를 입력해주세요."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-            />
-            <button className="keyword-search-btn" onClick={handleSearch}>
-              <img src={searchIcon} alt="검색 아이콘" className="keyword-search-icon" />
-            </button>
+      <div className="keyword-settings-container">
+        <div className="mypage-header-margin-top"></div>
+        <div className="keyword-settings-content">
+          <div className="keyword-settings-header">
+            <h1 className="keyword-settings-title">키워드 알림 설정</h1>
+            <div className="keyword-search-box">
+              <input
+                type="text"
+                className="keyword-search-input"
+                placeholder="알림 받을 키워드를 입력해주세요."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+              />
+              <button className="keyword-search-btn" onClick={handleSearch}>
+                <img src={searchIcon} alt="검색 아이콘" className="keyword-search-icon" />
+              </button>
+            </div>
           </div>
+
+          {/* 추가된 키워드 섹션 */}
+          <div className="keyword-section">
+            <div className="keyword-save">
+              <h2 className="keyword-section-title">추가된 키워드 ({addedKeywords.length}/10)</h2>
+              <button onClick={handleSaveKeywords} disabled={isSaving}>
+                {isSaving ? "저장 중..." : "저장"}
+              </button>
+            </div>
+            <div className="keyword-list">
+              {addedKeywords.map((keyword, index) => (
+                <span key={index} className="keyword-item">
+                  {keyword}
+                  <button
+                    className="keyword-remove-btn"
+                    onClick={() => handleRemoveKeyword(keyword, "added")}
+                  >
+                    ✕
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
+            
+          {/* 최근 본 키워드 섹션 */}
+          {renderKeywordList("최근 본 키워드", recentKeywords, "recent")}
+
+          {/* 추천 키워드 섹션 */}
+          {renderKeywordList("추천 키워드", suggestedKeywords, "suggested")}
         </div>
-
-        {/* 추가된 키워드 섹션 */}
-        <div className="keyword-section">
-          <div className="keyword-save">
-            <h2 className="keyword-section-title">추가된 키워드 ({addedKeywords.length}/10)</h2>
-            <button onClick={handleSaveKeywords} disabled={isSaving}>
-              {isSaving ? "저장 중..." : "저장"}
-            </button>
-          </div>
-          <div className="keyword-list">
-            {addedKeywords.map((keyword, index) => (
-              <span key={index} className="keyword-item">
-                {keyword}
-                <button
-                  className="keyword-remove-btn"
-                  onClick={() => handleRemoveKeyword(keyword, "added")}
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* 최근 본 키워드 섹션 */}
-        {renderKeywordList("최근 본 키워드", recentKeywords, "recent")}
-
-        {/* 추천 키워드 섹션 */}
-        {renderKeywordList("추천 키워드", suggestedKeywords, "suggested")}
+        <div className="mypage-footer-margin-bottom"></div>
       </div>
       <Footer currentPage={4} />
     </div>

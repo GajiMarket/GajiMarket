@@ -6,18 +6,17 @@
 }
 
 .neighbor-settings-content {
-  flex: 1;
-  padding: 20px;
+  padding: 0 20px;
   background-color: #ffffff;
-  border-radius: 16px;
-  margin: 16px;
+  border-radius: 10px;
+  margin: 0 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .neighbor-title {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 20px;
+  padding: 20px 0;
   color: #333;
 }
 
@@ -46,7 +45,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  margin-top: 16px;
+  padding: 16px 0;
 }
 
 .neighbor-set-location-btn {
@@ -89,4 +88,10 @@
 
 .neighbor-tag:hover {
   background-color: #6c1cb3;
+}
+
+.neighbor-settings-container{
+  height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }

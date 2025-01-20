@@ -49,3 +49,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 (선택 사항) */
   overflow: hidden; /* 내부 요소가 넘치지 않도록 */
 }
+
+.mapboxgl-ctrl-bottom-right{
+	display: none;
+}

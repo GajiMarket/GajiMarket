@@ -122,7 +122,7 @@ const Mypage: React.FC = () => {
     <div className="mypage">
       <Header />
       <div className="mypage-container">
-        
+        <div className="mypage-header-margin-top"></div>
         <div className="profile-section">
           <div className="profile-info">
             <img

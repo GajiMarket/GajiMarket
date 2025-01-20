@@ -13,12 +13,6 @@ const detailMap = (mapContainerRef: RefObject<HTMLDivElement>, config: typeof ma
 const [mapInstance, setMapInstance] = useState<mapboxgl.Map | null>(null);
 const {setUserMarker, userMarker} = productStroe();
 
-const createCustomMarker = (): HTMLElement => {
-    const markerElement = document.createElement("div");
-    markerElement.className = "custom-marker"; // CSS로 스타일링
-    return markerElement;
-
-};
 
 const parsePoint = (locationData: string): [number, number] | null => {
     try {
@@ -113,7 +107,7 @@ const parsePoint = (locationData: string): [number, number] | null => {
     const updateCenter = (longitude: number, latitude: number) => {
         mapInstance?.flyTo({center: [longitude, latitude], essential: true});
         
-        const marker = new mapboxgl.Marker({ element: createCustomMarker()}).setLngLat([longitude, latitude]).addTo(mapInstance as mapboxgl.Map);
+        const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(mapInstance as mapboxgl.Map);
     
         console.log("현재 마커:", longitude, ",", latitude);
         

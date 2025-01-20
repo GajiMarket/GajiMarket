@@ -8,11 +8,11 @@
 
 .faq-container {
   flex: 1;
-  overflow-y: auto; /* 스크롤 활성화 */
-  max-width: 500px;
-  /* margin: 0 auto; */
-  padding: 16px;
-  text-align: left; /* 왼쪽 정렬 */
+  overflow-y: scroll;
+  max-width: 420px;
+  padding: 0 16px;
+  text-align: left;
+  scrollbar-width: none;
 }
 
 .faq-container::-webkit-scrollbar {

@@ -6,7 +6,7 @@
 
 /* 리스트 컨테이너 스타일 */
 .product-list-container {
-  padding: 20px;
+  padding:0 20px;
   overflow-y: auto;
   height: calc(100vh - 60px);
   margin-bottom: 75px;
