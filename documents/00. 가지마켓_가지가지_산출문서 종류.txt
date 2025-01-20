@@ -21,6 +21,7 @@ https://github.com/GajiMarket/GajiMarket
 14. 화면설계서
 15. 발표용 PPT (최종)
 16. 발표용 PPT (1page)
+17. 영상
 17.1. 시연영상
 17.2. 향후발전방향 영상
 17.2.1. 2차 향후발전방향 영상
