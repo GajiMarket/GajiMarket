@@ -1,11 +1,11 @@
 import { addProductDAO } from "../DAO/product.dao";
 import { IProduct } from "../models/product";
 import IPhoto from '../models/photo';
-import {logger} from "../../logger";
+import { logger } from "../../logger";
 
-type Product = Partial<IProduct|IPhoto>
+type Product = Partial<IProduct | IPhoto>
 
-export const addfinderAPI = async (productData: Product) => {
+export const addfinderAPI = async (productData: IProduct) => {
   try {
     logger.info(`Processing product data in service:${productData}`);
     console.log(`productData :${productData}`)
