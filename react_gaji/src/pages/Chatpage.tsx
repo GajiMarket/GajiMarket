@@ -24,11 +24,12 @@ const Chatpage: React.FC = () => {
   const searchParams = new URLSearchParams(location.search);
   const name = searchParams.get('name') || 'Unknown';
   const productId = searchParams.get('productId') || '';
-  // const memberNo = searchParams.get('memberNo') || '';
+  const memberNo = searchParams.get('memberNo') || '';
   const { messages, addMessage } = useChatStore();
   const [input, setInput] = useState('');
 
   useEffect(() => {
+    console.log(`Product ID in Chatpage: ${productId}`); // 추가된 로그
     // 서버에서 채팅 메시지 데이터를 가져옴
     const fetchMessages = async () => {
       try {
