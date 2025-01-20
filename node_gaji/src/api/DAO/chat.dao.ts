@@ -35,7 +35,8 @@ export const getChatRoomsFromDB = async (memberNo: number) => {
                  ELSE SUBSTRING(b.member_addr FROM POSITION('동' IN b.member_addr) - 2 FOR 3)
                END
            END AS opposite_location,
-           (SELECT image FROM team4.photo WHERE product_id = cr.product_id ORDER BY photo_id LIMIT 1) AS avatar
+           (SELECT image FROM team4.photo WHERE product_id = cr.product_id ORDER BY photo_id LIMIT 1) AS avatar,
+           cr.product_id
     FROM team4.chat_room cr
     JOIN team4.chat_messages cm ON cr.chat_room_id = cm.chat_room_id
     JOIN team4.member_tbl m ON cr.member_no = m.member_no
@@ -43,6 +44,7 @@ export const getChatRoomsFromDB = async (memberNo: number) => {
     WHERE cr.member_no = $1 OR cr.buyer_no = $1
     ORDER BY cm.created_at DESC
   `, [memberNo]);
+  console.log('Query result:', result.rows); // 쿼리 결과 로그 추가
   return result.rows;
 };
 
