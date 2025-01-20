@@ -58,7 +58,7 @@ const useMarkers = () => {
             const imageUrl = product.images && product.images.length > 0 ? product.images[0] : null;
 
             popupContent.innerHTML = `
-                <div class="map_popup">
+                <div class="map_popup productpage-btn">
                     ${imageUrl ? `<img src="${imageUrl}" alt="Product Image" class="popup_img" />` : '<div class="popup_img">No Image</div>'}
                     <h3 class="popup_title">${product.title}</h3>
                     <p class="popup_description">${product.description}</p>
@@ -68,9 +68,13 @@ const useMarkers = () => {
                 </div>
             `;
 
+            popupContent.addEventListener("click", () => {
+                navigate(`/productpage/${product.product_id}`); // product_id를 URL로 전달
+            });
             // 버튼 클릭 이벤트 처리
             const navigateButton = popupContent.querySelector(".navigate-btn");
-            navigateButton?.addEventListener("click", async () => {
+            navigateButton?.addEventListener("click", async (e) => {
+                e.stopPropagation();
                 const { setCoordinates} = usePathStore.getState()
 
                 setCoordinates(product.longitude, product.latitude)
@@ -81,7 +85,6 @@ const useMarkers = () => {
 
                 try {
                     await sendPathData();
-                    // alert('데이터 전송 성공!')
                     navigate("/navigation");
                     
                 } catch (error) {
@@ -89,6 +92,8 @@ const useMarkers = () => {
                     alert("길찾기 데이터를 서버로 전송하는 데 실패했습니다. 다시 시도해주세요.");
                 }
             });
+
+            
 
             return new mapboxgl.Marker({ color: "#8a2be2" }) // 보라색 마커 생성
             .setLngLat([product.longitude, product.latitude]) // 마커 위치 설정
