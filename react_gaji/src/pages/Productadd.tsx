@@ -70,19 +70,19 @@ const ProductAdd: React.FC = () => {
       sell_price: Number(sell_price), // 문자열을 숫자로 변환
       description,
       location: locationData,
-      createdAt: new Date().toISOString(), // 현재 시간
+      // createdAt: new Date().toISOString(), // 현재 시간
       views: 0, // 조회수 초기화
-      userNo,
+      // userNo,
       status: "판매중",
     };
 
-    const extension = images.
+    // const imageData = images.map((image, i) => {representativeIndex === 0&& `${Date.now()}_${}`})
 
-    const imagesData = imag
+    // const imagesData = imag
 
     const formData = new FormData();
 
-    formData.append('productData', productData)
+    // formData.append('productData', productData)
 
     try {
       console.log("body data : ", productData);
