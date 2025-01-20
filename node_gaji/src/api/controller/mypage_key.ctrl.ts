@@ -37,7 +37,9 @@ export const keywordCtrl = async (req: Request, res: Response): Promise<void> =>
 
 export const getKeywords = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { userNo } = req.body;
+    // const { userNo } = req.body;
+    const userNo = parseInt(req.query.userNo as string, 10)
+    console.log("user no:", userNo);
 
     // 유효성 검사
     if (!userNo) {
@@ -50,6 +52,7 @@ export const getKeywords = async (req: Request, res: Response): Promise<void> =>
 
     // 키워드 조회 서비스 호출
     const keywords = await getUserKeywords(userNo);
+    console.log("get keywords:", keywords);
 
     res.status(200).json({
       success: true,
