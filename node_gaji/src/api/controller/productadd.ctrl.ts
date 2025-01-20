@@ -10,26 +10,48 @@ export const productaddCtrl = async (req: Request, res: Response): Promise<void>
 
     const images = req.files as Express.Multer.File[];
 
-    // const title = req.body.title;
-    // const sell_price = req.body.sell_price;
-    // const description = req.body.description;
+    const title = req.body.title as string;
+    const sell_price = Number(req.body.sell_price);
+    const description = req.body.description as string;
     // const location = req.body.location;
-    // // const {lng, lat} = req.body;
-    // const userNo = req.body.userNo;
-    // const status = req.body.status;
-    const { title, sell_price, description, name, userNo, status } = req.body;
+    // const {lng, lat} = req.body;
+    const userNo = Number(req.body.userNo);
+    const status = req.body.status as string;
+    // const { title, sell_price, description, userNo, status, } = req.body;
 
-    const {lng, lat} = req.body;
+    // const locationData = JSON.stringify(req.body.location);
 
-    const location = {lng, lat};
+    // const lng = JSON.stringify(req.body.location.lng);
+    // const lat = JSON.stringify(req.body.location.lat);
+    // const name = JSON.stringify(req.body.location.name);
+
+    // const location = JSON.parse(req.body.location);
+
+    // console.log("location 뭐가 있나", location);
+
+    const location = typeof req.body.location === 'string' ? JSON.parse(req.body.location) : req.body.location;
+
+    const lng = Number(location.lng);
+    const lat = Number(location.lat);
+    const name: string = location.name as string;
+
+    const locationData = [lng, lat];
+
+    console.log("location 결과:", location);
+    console.log("lng 결과:", lng);
+    console.log("lat 결과:", lat);
+    console.log("name 결과:", name);
+    
+    
+    
     
     // const locationData = location
 
-    logger.debug(`각각 파라미터:${title},${sell_price},${description},${location},${userNo},${status}`);
+    // logger.debug(`각각 파라미터:${title},${sell_price},${description},${JSON.stringify(location)},${userNo}, ${status}`);
 
     // logger.debug(`갖고온 이미지들:${JSON.stringify(images)}`);
-    logger.info(`Received product data:${req.body}`);
-    console.log(`req.body data :  ${req.body}`)
+    // logger.info(`Received product data:${req.body}`);
+    // console.log(`req.body data :  ${req.body}`)
 
     if (!title || !sell_price || !description || !location || !userNo || !status) {
       logger.error("Missing required fields");
@@ -59,7 +81,6 @@ export const productaddCtrl = async (req: Request, res: Response): Promise<void>
       // lat,
       location,
       userNo,
-      name,
       status,
     });
 
@@ -68,8 +89,8 @@ export const productaddCtrl = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    const imagesData = result.uploadFiles;
-    const productId = result.result;
+    const imagesData = result.uploadFiles as string[];
+    const productId = String(result.result);
 
     logger.info(`imagesData값:${imagesData}`);
     logger.info(`productId값:${productId}`)

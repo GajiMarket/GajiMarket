@@ -3,19 +3,19 @@ import { IProduct, ILocation } from "../models/product";
 import IPhoto from '../models/photo';
 import {logger} from '../../logger';
 
-type Product = Partial<IPhoto&IProduct>;
+type Product = Partial<IPhoto | IProduct | string>;
 
 
-export const addProductDAO = async (productData: Product): Promise<IProduct> => {
+export const addProductDAO = async (productData: IProduct): Promise<IProduct> => {
   // const { lng, lat } = productData.location; // location에서 lng, lat 분리
 
-  const lng = (productData.location as ILocation)?.lng;
-  const lat = (productData.location as ILocation)?.lat;
+  const lng = productData.location?.[0];
+  const lat = productData.location?.[1];
 
   const response = await db.query(
     `INSERT INTO ${schema}.product
       (title, sell_price, description, sell_location, view_count, member_no, status) 
-     VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326), $6, $7, $8, $9) RETURNING product_id`,
+     VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326), $6, $7, $8) RETURNING product_id`,
      [
       productData.title,           // $1
       productData.sell_price,           // $2

@@ -23,17 +23,17 @@ const ProductAdd: React.FC = () => {
 
   const { isAuthenticated, userNo } = loginStore();
 
-  const [product, setProduct] = useState<Record<string, string>>({
-    title: '',
-    sell_price: '',
-    description: '',
-    lng: '',
-    lat: '',
-    name: '',
-    view: '',
-    status: '판매중',
-    userNo: userNo as string,
-  });
+  // const [product, setProduct] = useState<Record<string, string>>({
+  //   title: '',
+  //   sell_price: '',
+  //   description: '',
+  //   lng: '',
+  //   lat: '',
+  //   name: '',
+  //   view: '',
+  //   status: '판매중',
+  //   userNo: userNo as string,
+  // });
 
   const navigate = useNavigate();
 
@@ -43,9 +43,9 @@ const ProductAdd: React.FC = () => {
     return;
   }
 
-  const handleProduct = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProduct({...product, [field]:e.target.value});
-  }
+  // const handleProduct = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setProduct({...product, [field]:e.target.value});
+  // }
 
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,16 +82,16 @@ const ProductAdd: React.FC = () => {
 
 
     // 서버로 전송할 상품 데이터 생성
-    // const productData = {
-    //   title,
-    //   sell_price, //Number(sell_price), // 문자열을 숫자로 변환
-    //   description,
-    //   location: location, //locationData,
-    //   // createdAt: new Date().toISOString(), // 현재 시간
-    //   // view_count: 0, // 조회수 초기화
-    //   userNo: userNo,
-    //   status: "판매중",
-    // };
+    const productData = {
+      title,
+      sell_price, //Number(sell_price), // 문자열을 숫자로 변환
+      description,
+      location: location, //locationData,
+      // createdAt: new Date().toISOString(), // 현재 시간
+      // view_count: 0, // 조회수 초기화
+      userNo: userNo,
+      status: "판매중",
+    };
 
     // const imageData = images.map((image, i) => {representativeIndex === 0&& `${Date.now()}_${}`})
 
@@ -99,27 +99,27 @@ const ProductAdd: React.FC = () => {
 
     const formData = new FormData();
 
-    // formData.append('productJSONData', JSON.stringify(productData));
-    // formData.append('title', productData.title);
-    // formData.append('sell_price', productData.sell_price);
-    // formData.append('description', productData.description);
-    // formData.append('location', JSON.stringify(productData.location));
-    // formData.append('userNo', productData.userNo as string);
-    // formData.append('status', productData.status);
+    formData.append('productJSONData', JSON.stringify(productData));
+    formData.append('title', productData.title);
+    formData.append('sell_price', productData.sell_price);
+    formData.append('description', productData.description);
+    formData.append('location', JSON.stringify(productData.location));
+    formData.append('userNo', productData.userNo as string);
+    formData.append('status', productData.status);
     // formData.append('lng', String(productData.location.lng));
     // formData.append('lat', String(productData.location.lat));
     // formData.append('name', String(productData.location.name));
     // formData.append('views', String(productData.view_count));
 
-    formData.append('title', product.title as string);
-    formData.append('sell_price', product.sell_price as string);
-    formData.append('description', product.description as string);
-    formData.append('lng', product.lng as string);
-    formData.append('lat', product.lat as string);
-    formData.append('name', product.name as string);
-    formData.append('views', product.views as string);
-    formData.append('userNo', product.userNo as string);
-    formData.append('status', product.status as string);
+    // formData.append('title', product.title as string);
+    // formData.append('sell_price', product.sell_price as string);
+    // formData.append('description', product.description as string);
+    // formData.append('lng', product.lng as string);
+    // formData.append('lat', product.lat as string);
+    // formData.append('name', product.name as string);
+    // formData.append('views', product.views as string);
+    // formData.append('userNo', product.userNo as string);
+    // formData.append('status', product.status as string);
 
 // 300
 // "설명"
@@ -145,7 +145,7 @@ const ProductAdd: React.FC = () => {
     // formData.append('productImage', images);
 
     try {
-      console.log("body data : ", product);
+      console.log("body data : ", productData);
       
       
       const response = await axios.post(
@@ -263,8 +263,8 @@ const ProductAdd: React.FC = () => {
             <h2>제목</h2>
             <input
               type="text"
-              value={product.title as string | ''}
-              onChange={handleProduct('title')}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="제목을 입력해주세요"
               className="form-input"
             />
@@ -276,8 +276,8 @@ const ProductAdd: React.FC = () => {
               <h2>가격</h2>
               <input
                 type="number"
-                value={product.sell_price as string | ''}
-                onChange={handleProduct('sell_price')}
+                value={sell_price}
+                onChange={(e) => setPrice(e.target.value)}
                 placeholder="가격을 입력해주세요"
                 className="form-input"
               />
@@ -288,8 +288,8 @@ const ProductAdd: React.FC = () => {
           <label className="form-label">
             상품 상세설명
             <textarea
-              value={product.description as string | ''}
-              onChange={() => handleProduct('description')}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder="올릴 게시글 내용을 작성해주세요."
               className="form-textarea"
             />
@@ -300,7 +300,7 @@ const ProductAdd: React.FC = () => {
             거래 희망 장소
             <input
               type="text"
-              value={product.lng && product.lat ? `${product.name}` : ""}
+              value={location ? `${location.name}` : ""}
               onClick={() => setShowMap(true)} // 클릭 시 지도 모달 열기
               placeholder="위치 추가"
               readOnly

@@ -8,7 +8,7 @@ import {Storage} from '@google-cloud/storage'
 
 dotenv.config();
 
-type Product = Partial<IProduct&IPhoto>
+type Product = Partial<IProduct>
 
 const storage = new Storage({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
@@ -18,12 +18,12 @@ const storage = new Storage({
 const bucket = storage.bucket(process.env.BUCKET_NAME as string);
 
 
-export const addfinderAPI = async (images: Express.Multer.File[], productData: {}): Promise<number | string[] | any> => {
+export const addfinderAPI = async (images: Express.Multer.File[], productData: Product): Promise<Product | string[] | any> => {
   try {
-    logger.info(`Processing product data in service:${productData}`);
-    logger.debug(`service로 가져온 이미지:${images}`);
+    logger.info(`Processing product data in service:${(productData)}`);
+    // logger.debug(`service로 가져온 이미지:${images}`);
 
-    const result = await addProductDAO(productData);
+    const result = await addProductDAO(productData as Product);
     if (!result) {
       logger.error("Product insertion failed in DAO");
       return;
