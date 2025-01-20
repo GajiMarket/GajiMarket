@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useKeywordStore } from "../../utils/keywordStore.ts";
 import { sendKeyword } from "../../api/sendKeyWord.ts";
 import Header from "./Header.tsx";
@@ -8,35 +8,34 @@ import searchIcon from "../../assets/icons/search-icon.png";
 import "../../style/Mypage_keyword_settings.css"; // 스타일 파일
 
 const MypageKeywordSettings: React.FC = () => {
-  const { addedKeywords, setKeywords, addKeyword, removeKeyword } = useKeywordStore(); // Zustand에서 상태 가져오기
-  const { getKeywords, postKeywords } = sendKeyword(); // Axios 훅 가져오기
+  const { addedKeywords, addKeyword, removeKeyword } = useKeywordStore(); // Zustand에서 상태 가져오기
+  const { postKeywords } = sendKeyword(); // Axios 훅 가져오기
   const [searchInput, setSearchInput] = useState<string>("");
-
   const [recentKeywords, setRecentKeywords] = useState<string[]>([
-    "스마트폰", "카메라", "책상", "의자", "TV", "커피머신", "헤드폰", "키보드", "마우스", "노트북",
+    "스마트폰",
+    "카메라",
+    "책상",
+    "의자",
+    "TV",
+    "커피머신",
+    "헤드폰",
+    "키보드",
+    "마우스",
+    "노트북",
   ]);
-
   const [suggestedKeywords, setSuggestedKeywords] = useState<string[]>([
-    "냉장고", "세탁기", "에어컨", "자전거", "운동화", "드론", "테이블", "모니터", "청소기", "스피커",
+    "냉장고",
+    "세탁기",
+    "에어컨",
+    "자전거",
+    "운동화",
+    "드론",
+    "테이블",
+    "모니터",
+    "청소기",
+    "스피커",
   ]);
-
   const [isSaving, setIsSaving] = useState(false);
-
-  // 컴포넌트가 마운트될 때 서버에서 키워드 가져오기
-  useEffect(() => {
-    const fetchKeywords = async () => {
-      const data = await getKeywords();
-      if (data) {
-        const extractedKeywords = data.flatMap((item: any) => item.keyword_name);
-        if (JSON.stringify(extractedKeywords) !== JSON.stringify(addedKeywords)) {
-          setKeywords(extractedKeywords); // Zustand 상태 업데이트
-        }
-      }
-    };
-  
-    fetchKeywords();
-  }, []); // 의존성 배열을 빈 배열로 설정
-  
 
   const handleSearch = () => {
     const trimmedInput = searchInput.trim();
@@ -61,23 +60,29 @@ const MypageKeywordSettings: React.FC = () => {
   };
 
   const handleRemoveKeyword = (keyword: string, type: "added" | "recent" | "suggested") => {
-    if (type === "added") {
-      removeKeyword(keyword);
-    } else if (type === "recent") {
-      setRecentKeywords((prev) => prev.filter((item) => item !== keyword));
-    } else if (type === "suggested") {
-      setSuggestedKeywords((prev) => prev.filter((item) => item !== keyword));
-    }
+    const updateState = (setter: React.Dispatch<React.SetStateAction<string[]>>) =>
+      setter((prevKeywords) => prevKeywords.filter((item) => item !== keyword));
+
+    if (type === "added") removeKeyword(keyword);
+    if (type === "recent") updateState(setRecentKeywords);
+    if (type === "suggested") updateState(setSuggestedKeywords);
   };
 
-  const renderKeywordList = (title: string, keywords: string[], type: "added" | "recent" | "suggested") => (
+  const renderKeywordList = (
+    title: string,
+    keywords: string[],
+    type: "added" | "recent" | "suggested"
+  ) => (
     <div className="keyword-section">
       <h2 className="keyword-section-title">{title}</h2>
       <div className="keyword-list">
         {keywords.map((keyword, index) => (
           <span key={index} className="keyword-item">
             {keyword}
-            <button className="keyword-remove-btn" onClick={() => handleRemoveKeyword(keyword, type)}>
+            <button
+              className="keyword-remove-btn"
+              onClick={() => handleRemoveKeyword(keyword, type)}
+            >
               ✕
             </button>
           </span>
@@ -108,19 +113,33 @@ const MypageKeywordSettings: React.FC = () => {
         </div>
 
         {/* 추가된 키워드 섹션 */}
-        {renderKeywordList("추가된 키워드", addedKeywords, "added")}
+        <div className="keyword-section">
+          <div className="keyword-save">
+            <h2 className="keyword-section-title">추가된 키워드 ({addedKeywords.length}/10)</h2>
+            <button onClick={handleSaveKeywords} disabled={isSaving}>
+              {isSaving ? "저장 중..." : "저장"}
+            </button>
+          </div>
+          <div className="keyword-list">
+            {addedKeywords.map((keyword, index) => (
+              <span key={index} className="keyword-item">
+                {keyword}
+                <button
+                  className="keyword-remove-btn"
+                  onClick={() => handleRemoveKeyword(keyword, "added")}
+                >
+                  ✕
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
 
         {/* 최근 본 키워드 섹션 */}
         {renderKeywordList("최근 본 키워드", recentKeywords, "recent")}
 
         {/* 추천 키워드 섹션 */}
         {renderKeywordList("추천 키워드", suggestedKeywords, "suggested")}
-
-        <div className="keyword-save">
-          <button onClick={handleSaveKeywords} disabled={isSaving}>
-            {isSaving ? "저장 중..." : "저장"}
-          </button>
-        </div>
       </div>
       <Footer currentPage={4} />
     </div>
