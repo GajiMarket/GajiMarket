@@ -1,116 +1,106 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// Mypage_love.tsx
+
+import React, { useState } from "react";
 import "../../style/Mypage_love.css";
 
 import Header from "./Header.tsx";
 import Footer from "../all/Footer.tsx";
 
-import heartFullIcon from "../../assets/icons/heart-full-icon.png";
-import heartUnfillIcon from "../../assets/icons/heart-unfill-icon.png";
+// 이미지 경로를 import로 불러오기
+import paddingImage from "../../assets/images/padding-image.png"; // 패딩 이미지
+import bagImage from "../../assets/images/bag-image.jpg"; // 업로드된 배낭 이미지
+import speakerImage from "../../assets/images/speaker-image.jpg"; // 업로드된 스피커 이미지
+import heartFullIcon from "../../assets/icons/heart-full-icon.png"; // 좋아요 아이콘
+import heartUnfillIcon from "../../assets/icons/heart-unfill-icon.png"; // 좋아요 취소 아이콘
 
-import axios from "axios";
-import loginStore from "../../utils/loginStore.ts";
-
-// Product 타입 정의
-interface Product {
-    product_id: number;
-    title: string;
-    sell_price: number;
-    location: string;
-    product_image: string;
-    liked: boolean;
+interface Item {
+  id: number;
+  name: string;
+  price: string;
+  location: string;
+  distance: string;
+  time: string;
+  liked: boolean;
+  image: string; // 이미지 경로를 위한 속성 추가
 }
 
 const MypageLove: React.FC = () => {
-    // 상태 선언
-    const [products, setProducts] = useState<Product[]>([]); // 관심목록 데이터
-    const { userNo, isAuthenticated } = loginStore(); // 로그인 사용자 정보
+  const [items, setItems] = useState<Item[]>([
+    {
+      id: 1,
+      name: "패딩팔아요~~",
+      price: "60,000원",
+      location: "가산동",
+      distance: "2.0km",
+      time: "10분전",
+      liked: false,
+      image: paddingImage, // 패딩 이미지
+    },
+    {
+      id: 2,
+      name: "여행용 배낭",
+      price: "20,000원",
+      location: "가산동",
+      distance: "3.5km",
+      time: "1시간전",
+      liked: false,
+      image: bagImage, // 배낭 이미지
+    },
+    {
+      id: 3,
+      name: "블루투스 스피커",
+      price: "5,000원",
+      location: "가산동",
+      distance: "4.5km",
+      time: "2시간전",
+      liked: false,
+      image: speakerImage, // 스피커 이미지
+    },
+  ]);
 
-    // 관심목록 데이터 로드
-    useEffect(() => {
-        const fetchMypageLove = async () => {
-            try {
-                console.log("Fetching wishlist for userNo:", userNo);
-                const response = await axios.get(`/Mypage_love/${userNo}`); // API 호출
-                console.log("API 응답 데이터:", response.data);
-                if (Array.isArray(response.data)) {
-                    setProducts(response.data); // 상태 업데이트
-                    console.log("현재 products 상태:", response.data);
-                } else {
-                    console.error("API 응답이 배열이 아닙니다:", response.data);
-                    setProducts([]); // 잘못된 응답일 경우 빈 배열 설정
-                }
-            } catch (error) {
-                console.error("관심목록 데이터를 불러오는 중 오류 발생:", error);
-                setProducts([]); // 에러 발생 시 빈 배열 설정
-            }
-        };
-
-        if (isAuthenticated && userNo) {
-            fetchMypageLove(); // API 호출
-        } else {
-            console.error("로그인되지 않았거나 userNo가 설정되지 않았습니다.");
-        }
-    }, [userNo, isAuthenticated]);
-
-    // 관심목록 항목 삭제
-    const toggleLike = async (productId: number) => {
-        try {
-            console.log("Removing product from wishlist:", productId);
-            await axios.delete(`/Mypage_love/${productId}/${userNo}`); // 항목 삭제 API 호출
-            setProducts((prevProducts) =>
-                prevProducts.filter((product) => product.product_id !== productId)
-            ); // 상태 업데이트
-        } catch (error) {
-            console.error("관심목록 항목 삭제 중 오류 발생:", error);
-        }
-    };
-
-    // 컴포넌트 렌더링
-    return (
-        <div className="Mypage_love">
-            <Header />
-            <div className="mypage-love">
-                <h1>관심목록</h1>
-                {Array.isArray(products) && products.length > 0 ? (
-                    <ul className="item-list">
-                        {products.map((product) => (
-                            <li key={product.product_id} className="item">
-                                <Link to={`/productpage/${product.product_id}`} className="item-link">
-                                    <img
-                                        src={product.product_image || "https://via.placeholder.com/60"}
-                                        alt={product.title}
-                                        className="item-image"
-                                    />
-                                    <div className="item-info">
-                                        <h2>{product.title}</h2>
-                                        <p>{product.location}</p>
-                                        <p className="price">{product.sell_price.toLocaleString()}원</p>
-                                    </div>
-                                </Link>
-                                <div className="item-actions">
-                                    <button
-                                        className="heart-button"
-                                        onClick={() => toggleLike(product.product_id)}
-                                    >
-                                        <img
-                                            src={product.liked ? heartUnfillIcon : heartFullIcon}
-                                            alt="like"
-                                            className="heart-icon"
-                                        />
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>관심목록이 비어 있습니다.</p>
-                )}
-
-        </div>
-        <Footer currentPage={4}/>
-      </div>
+  const toggleLike = (id: number) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, liked: !item.liked } : item
+      )
     );
   };
+
+  return (
+    <div className="Mypage_love">
+      <Header />
+      <div className="mypage-love">
+        <h1>관심목록</h1>
+        <ul className="item-list">
+          {items.map((item) => (
+            <li key={item.id} className="item">
+              <img src={item.image} alt={item.name} className="item-image" />
+              <div className="item-info">
+                <h2>{item.name}</h2>
+                <p>{item.distance} · {item.location} · {item.time}</p>
+                <p className="price">{item.price}</p>
+              </div>
+              <div className="item-actions">
+                <div className="heart-action">
+                  <button
+                    className="heart-button"
+                    onClick={() => toggleLike(item.id)}
+                  >
+                    <img
+                      src={item.liked ? heartUnfillIcon : heartFullIcon}
+                      alt="like"
+                      className="heart-icon"
+                    />
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Footer currentPage={4} />
+    </div>
+  );
+};
 
 export default MypageLove;
