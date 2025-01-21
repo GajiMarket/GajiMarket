@@ -1,6 +1,7 @@
 import { db, schema } from "../../config/dbConfig";
 import { IProduct } from "../models/product";
-import {logger} from "../../logger";
+import { sendNotificationToUsers } from "../DAO/notifications.dao";
+import { logger } from "../../logger";
 
 // 제품 등록 서비스
 export const addProductService = async (productData: IProduct): Promise<IProduct> => {
@@ -20,7 +21,7 @@ export const addProductService = async (productData: IProduct): Promise<IProduct
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING product_id, title, description, status, sell_price, created_at, view_count, sell_location, category_id, member_no;
     `;
-    
+
     const values = [
       productData.title,
       productData.description,
@@ -44,6 +45,10 @@ export const addProductService = async (productData: IProduct): Promise<IProduct
     // 성공적으로 등록된 제품 반환
     const newProduct = queryResult.rows[0];
     logger.info("Product successfully added:", newProduct);
+
+    // 키워드와 매칭된 사용자에게 알림 전송
+    await sendNotificationToUsers(newProduct);
+
     return newProduct;
   } catch (error) {
     // 오류 로그 추가
