@@ -1,4 +1,5 @@
 import { db, schema } from "../../config/dbConfig";
+import { IKeyword } from "api/models/keyword.models";
 
 export const keywordDAO = {
    /**
@@ -39,14 +40,16 @@ export const keywordDAO = {
    * @param userNo 사용자 번호
    * @returns 키워드 목록
    */
-  getKeywordsByUser: async (userNo: number) => {
+  getKeywordsByUser: async (userNo: number): Promise<IKeyword[]> => {
     const query = `
       SELECT keyword_id, keyword_name, created_at
       FROM ${schema}.keyword
       WHERE member_no = $1;
     `;
     const { rows } = await db.query(query, [userNo]);
-    return rows;
+
+    // return rows;
+    return rows.length > 0 ? rows[0].keyword_name : [];
   },
 
   /**

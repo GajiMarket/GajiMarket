@@ -60,7 +60,9 @@
   .keyword-search-btn:hover {
     background-color: #f2f2f2;
   }
-  
+  .keyword-sub {
+    margin-bottom: 16px;
+  }
   .keyword-section {
     margin-bottom: 36px; /* 각 섹션 간 더 넓은 간격 추가 */
   }
@@ -68,6 +70,9 @@
   .keyword-section-title {
     font-size: 16px;
     font-weight: bold;
+    margin-bottom: 16px;
+  }
+  .keyword-title {
     margin-bottom: 16px;
   }
   
@@ -96,12 +101,25 @@
     cursor: pointer;
   }
   
-  .keyword-remove-btn:hover {
+.keyword-remove-btn:hover {
     color: #d9534f;
-  }
+}
   
 .keyword-settings-container{
   height: 100vh;
   overflow: scroll;
   scrollbar-width: none;
+}
+
+.keyword-save {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.keyword-save-btn {
+  color: #fff;
+  background-color: blueviolet;
+  padding: 6px 8px;
+  border-radius: 3px;
 }

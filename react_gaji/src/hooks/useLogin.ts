@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const api: string = import.meta.env.VITE_NODE_LOCAL;
+const api: string = import.meta.env.VITE_API_LOCAL;
 
 const google: string = import.meta.env.VITE_GOOGLE_URL;
 
@@ -20,7 +20,7 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
         
         
 
-        const response = await axios.post(import.meta.env.NODE_ENV === 'production' ?  `${google}/auth/login` : `${api}/auth/login`, {
+        const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${google}/auth/login` : `${api}/auth/login`, {
             data:{
                 id: formData.id,
                 pw: formData.password,
