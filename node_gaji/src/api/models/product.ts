@@ -9,8 +9,8 @@ export interface IProduct {
     status?: string;
     sell_price?: number;
     created_at?: Date;
-    view_count?: number;
-    location?: [lng: number, lat: number];
+    view_count?: number | null;
+    sell_location?: [lng: number, lat: number];
     // location: {lng: string, lat: string};
-    userNo?: number;
+    member_no?: number;
 }

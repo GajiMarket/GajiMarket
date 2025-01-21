@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../style/Productpage.css";
 import heartUnfillIcon from "../assets/icons/heart-unfill-icon.png";
@@ -35,6 +35,7 @@ const ProductPage: React.FC = () => {
 
   // navigate로 전달된 state 가져오기
   const navigate = useNavigate();
+  const images = useLocation();
 
   // 상태 관리
   const [product, setProduct] = useState<ProductTbl | null>(null);

@@ -97,7 +97,7 @@ const ProductAdd: React.FC = () => {
 
     // const imagesData = imag
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
     formData.append('productJSONData', JSON.stringify(productData));
     formData.append('title', productData.title);
@@ -166,10 +166,13 @@ const ProductAdd: React.FC = () => {
 
       // setProduct({});
 
-      console.log("response.data.product_id:", response.data.data.product_id);
+      console.log("response.data.productId:", response.data.productId);
+
+      // const imagesData = response.data.imagesData;
+      const productId = response.data.productId
 
       // 상품 페이지로 이동
-      navigate(`/productpage/${response.data.data.product_id}`);
+      navigate(`/productpage/${productId}`);
     } catch (error) {
       // 상품 등록 실패 시 처리
       console.error("Error saving product:", error);
