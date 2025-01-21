@@ -13,7 +13,7 @@ export const updateOrCreateMarker = (
   map: mapboxgl.Map,
   position: [number, number],
   existingMarker: mapboxgl.Marker | null,
-  options?: { imageUrl?: string; className?: string }
+  options?: { imageUrl?: string; className?: string; element?:HTMLElement }
 ): mapboxgl.Marker => {
   const { imageUrl = "/default-marker.png", className = "marker" } = options || {};
 
@@ -41,7 +41,7 @@ export const updateOrCreateMarker = (
   }
 
   const newMarker = new mapboxgl.Marker({
-    element: createMarkerElement(),
+    element: options?.element || createMarkerElement(),
     draggable: false,
   });
   newMarker.setLngLat(position).addTo(map);

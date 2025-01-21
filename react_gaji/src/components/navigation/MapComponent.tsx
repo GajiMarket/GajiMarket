@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
 import NaviPopup from "./NaviPopup";
 import useMap from '../../hooks/ejk/useMap.ej';
-// import useLocation from "../../hooks/useLocation";
+import useLocation from "../../hooks/useLocation";
 import { usePathData } from "../../hooks/ejk/useNavitation";
 import { updateOrCreateMarker, mapRoute, processCoordinates } from "../../utils/mapUtils";
 import { CustomProperties } from "../../api/pathFinder.api";
@@ -12,12 +13,13 @@ const MapComponent: React.FC = () => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupData, setPopupData] = useState({ totalLength: 0, totalTime: 0 });
 
-    // const { userLocation, error: locationError } = useLocation(); // 현재위치 표시 hook
-    // const userMarkerRef = useRef<mapboxgl.Marker | null>(null)
-
+    const { userLocation, error: locationError, createCustomMarker } = useLocation(); // 현재위치 표시 hook
+    const userMarkerRef = useRef<mapboxgl.Marker | null>(null);
+ 
+    // 경로 데이터 렌더링
     useEffect(() => {
-        if (loading || error || !map || !pathData || !pathData.features || pathData.features.length === 0) {return;}
-        
+        if (loading || error || !map || !pathData || !pathData.features || pathData.features.length === 0) return;
+
         const features = pathData.features[0];
         const coordinates = pathData.coordinates || processCoordinates(pathData.features);
 
@@ -44,16 +46,22 @@ const MapComponent: React.FC = () => {
         // 팝업 데이터 설정
         setPopupData({ totalLength, totalTime });
         setPopupVisible(true);
-      }, [map, pathData, loading, error]);
+    }, [map, pathData, loading, error]);
 
-    // 기존 사용자 위치를 갱신하도록 수정 아니면 매번 새로운 마커 생성해서 엄청 렉걸림
-    // useEffect(() => {
-    //     if (!map || !userLocation) return;
-    //     userMarkerRef.current = updateOrCreateMarker(map, [userLocation.lng, userLocation.lat], userMarkerRef.current, {
-    //       imageUrl: "/assets/my_gps.png",
-    //       className: "marker",
-    //     });
-    //   }, [map, userLocation]);
+    // 사용자 위치 업데이트
+    useEffect(() => {
+      if (!map || !userLocation) return;
+
+      const userMarker = new mapboxgl.Marker({
+          element: createCustomMarker(),
+      })
+          .setLngLat([userLocation.lng, userLocation.lat])
+          .addTo(map);
+
+      return () => {
+          userMarker.remove();
+      } 
+  }, [map, userLocation]);
 
     return (
         <>
@@ -64,13 +72,13 @@ const MapComponent: React.FC = () => {
                     totalTime={popupData.totalTime}
                 />
             )}
-            {/* {locationError && (
+            {locationError && (
                 <div className="error-popup">
                     <p>{locationError}</p>
                 </div>
-            )} */}
+            )}
         </>
-    )
-}
+    );
+};
 
 export default MapComponent;

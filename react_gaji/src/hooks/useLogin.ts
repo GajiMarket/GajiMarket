@@ -1,7 +1,9 @@
 
 import axios from 'axios';
 
-const api: string = `http://localhost:3000` 
+const api: string = import.meta.env.VITE_NODE_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 //로그인 함수
 
@@ -13,10 +15,12 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
         console.log(formData);
         console.log(formData.id);
         console.log(formData.password);
+        console.log(api);
+        
         
         
 
-        const response = await axios.post(`${api}/auth/login`, {
+        const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${api}/auth/login` : `${google}/auth/login`, {
             data:{
                 id: formData.id,
                 pw: formData.password,

@@ -4,9 +4,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/bin/www.js",
-    "start:websocket": "ts-node src/api/websocket.ts",
-    "dev": "nodemon --exec ts-node src/bin/www.ts | pino-pretty",
+    "start": "cross-env NODE_ENV=production node dist/bin/www.js",
+    "start:websocket": "cross-env NODE_ENV=development ts-node src/api/websocket.ts",
+    "dev": "cross-env NODE_ENV=development nodemon src/bin/www.ts | pino-pretty",
+    "deploy": "cross-env NODE_ENV=production gcloud app deploy",
     "build": "tsc"
   },
   "author": "",
@@ -21,6 +22,7 @@
     "compression": "^1.7.5",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
