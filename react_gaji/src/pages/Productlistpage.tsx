@@ -11,6 +11,7 @@ interface Product {
   sell_price: number;
   created_at: string;
   view_count: number;
+  images: string;
 }
 
 const ProductList: React.FC = () => {
@@ -51,31 +52,36 @@ const ProductList: React.FC = () => {
         <div className="product-list-container">
           <ul className="product-list">
             {products.length > 0 ? (
-              products.map((product) => (
-                <li key={product.product_id} className="product-item">
-                  <div className="product-image">
-                    <img
-                      src={`https://via.placeholder.com/80`} // 이미지 경로 수정 필요
-                      alt="상품 이미지"
-                    />
-                  </div>
-                  <div className="product-info">
-                    <h2
-                      className="product-list-title"
-                      onClick={() => handleNavigate(product.product_id)}
-                    >
-                      {product.title}
-                    </h2>
-                    <p className="product-meta">{product.sell_price}원</p>
-                    <p className="product-meta">{product.view_count} views</p>
-                  </div>
-                </li>
-              ))
+              products.map((product) => {
+                // 이미지 URL 설정
+                const imageUrl = product.images;
+
+                return (
+                  <li key={product.product_id} className="product-item">
+                    <div className="product-image">
+                      <img
+                        src={imageUrl} // 기본 이미지 설정
+                        alt="상품 이미지"
+                        className="product_img"
+                      />
+                    </div>
+                    <div className="product-info">
+                      <h2
+                        className="product-list-title"
+                        onClick={() => handleNavigate(product.product_id)}
+                      >
+                        {product.title}
+                      </h2>
+                      <p className="product-meta">{product.sell_price}원</p>
+                      <p className="product-meta">{product.view_count} views</p>
+                    </div>
+                  </li>
+                );
+              })
             ) : (
               <p className="no-products">제품 목록이 없습니다.</p>
             )}
           </ul>
-
         </div>
       </div>
       <Footer currentPage={1}/>

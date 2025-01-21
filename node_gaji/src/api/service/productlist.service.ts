@@ -6,8 +6,25 @@ export const getProductListService = async (): Promise<IProduct[]> => {
   try {
     // 쿼리 실행
     const query = `
-      SELECT product_id, title, sell_price, view_count
-      FROM ${schema}.product;
+      SELECT 
+        p.product_id,
+        p.title,
+        p.sell_price,
+        p.view_count,
+        (SELECT i.image
+          FROM team4.photo i
+          WHERE i.product_id = p.product_id
+          ORDER BY i.photo_id ASC
+          LIMIT 1
+        ) AS images
+      FROM 
+        ${schema}.product p 
+      INNER JOIN 
+        team4.photo i 
+      ON 
+        p.product_id = i.product_id 
+      GROUP BY 
+        p.product_id;
     `;
     const queryResult = await db.query<IProduct>(query);
 
