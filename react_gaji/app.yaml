@@ -1,8 +1,8 @@
-service: test-shpark
+service: shpark-test
 runtime: nodejs20
 instance_class: F1
 env_variables:
-  PORT: 8080
+  PORT: 5173
   NODE_ENV: production
 
 handlers:

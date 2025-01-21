@@ -9,17 +9,17 @@
 /* 컨텐츠 영역 */
 .auth-content {
   flex: 1;
-  padding: 20px;
+  padding: 0 20px;
   background-color: #ffffff;
   border-radius: 16px;
-  margin: 16px;
+  margin: 0 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .auth-title {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 20px;
+  padding: 20px 0;
   color: #333;
 }
 
@@ -48,7 +48,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 16px;
-  margin-top: 16px;
+  padding: 16px 0;
 }
 
 /* 동네 태그 버튼 */
@@ -93,4 +93,11 @@
 .auth-complete-btn:hover {
   background-color: #6f42c1;
   color: white;
+}
+
+
+.auth-coontainer{
+  height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }

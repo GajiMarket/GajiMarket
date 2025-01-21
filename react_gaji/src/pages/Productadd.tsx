@@ -97,7 +97,7 @@ const ProductAdd: React.FC = () => {
 
     // const imagesData = imag
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
     formData.append('productJSONData', JSON.stringify(productData));
     formData.append('title', productData.title);

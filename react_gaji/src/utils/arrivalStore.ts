@@ -21,8 +21,14 @@ export const useNewStore = create<NewStoreState>((set, get) => ({
     }
 
     try {
-      const payload = { roomId, userId, messages };
+      for (const message of messages) {
+        const payload = {
+          roomId,
+          userID: userId,
+          message, // 각 메시지를 개별적으로 전송
+        };
       await sendMessagesToServer(payload); // 서버 전송
+      }
     } catch (error) {
       console.error('Error sending messages to server:', error);
     }

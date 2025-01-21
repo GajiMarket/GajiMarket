@@ -1,4 +1,3 @@
-import { useState } from "react";
 import loginStore from "../utils/loginStore";
 import axios from "axios";
 
@@ -10,12 +9,8 @@ const api = axios.create({
 })
 
 export const sendKeyword = () => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
     const postKeywords = async (keywords: string[]) => {
-        setLoading(true);
-        setError(null);
 
         try {
             const userNo = loginStore.getState().userNo;

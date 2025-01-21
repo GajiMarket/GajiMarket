@@ -26,37 +26,41 @@ const MypageNeighborhoodSettings: React.FC = () => {
   return (
     <div className="neighbor-settings-page">
       <Header />
-      <div className="neighbor-settings-content">
-        <h1 className="neighbor-title">나의 동네 설정</h1>
-        <div className="neighbor-map-container">
-          {/* 지도 표시 영역 */}
-          <div className="neighbor-map-placeholder">
-            <Mapbox /> {/* Mapbox 컴포넌트 렌더링 */}
+      <div className="neighbor-settings-container">
+        <div className="neighbor-settings-content">
+          <div className="mypage-header-margin-top"></div>
+          <h1 className="neighbor-title">나의 동네 설정</h1>
+          <div className="neighbor-map-container">
+            {/* 지도 표시 영역 */}
+            <div className="neighbor-map-placeholder">
+              <Mapbox /> {/* Mapbox 컴포넌트 렌더링 */}
+            </div>
           </div>
-        </div>
-        <div className="neighbor-actions-right">
-          <button
-            className="neighbor-set-location-btn"
-            onClick={handleSetNeighborhoodWithAlert}
-          >
-            현재 위치로 설정하기
-          </button>
-          {neighborhood ? (
-            <button className="neighbor-tag">
-              {neighborhood}
-              <span
-                className="neighbor-delete-icon"
-                onClick={handleDeleteNeighborhood} // 삭제만 수행
-              >
-                ×
-              </span>
+          <div className="neighbor-actions-right">
+            <button
+              className="neighbor-set-location-btn"
+              onClick={handleSetNeighborhoodWithAlert}
+            >
+              현재 위치로 설정하기
             </button>
-          ) : (
-            <button className="neighbor-tag" onClick={handleSetNeighborhood}>
-              동네 설정
-            </button>
-          )}
-        </div>
+            {neighborhood ? (
+              <button className="neighbor-tag">
+                {neighborhood}
+                <span
+                  className="neighbor-delete-icon"
+                  onClick={handleDeleteNeighborhood} // 삭제만 수행
+                >
+                  ×
+                </span>
+              </button>
+            ) : (
+              <button className="neighbor-tag" onClick={handleSetNeighborhood}>
+                동네 설정
+              </button>
+            )}
+          </div>
+        </div>  
+        <div className="mypage-footer-margin-bottom"></div>
       </div>
       <Footer currentPage={4}/>
     </div>

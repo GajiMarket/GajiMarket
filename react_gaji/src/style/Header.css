@@ -1,9 +1,14 @@
 .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 16px;
-    background-color: #f7f8fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f7f8fa;
+  position: fixed;
+  top: 0;
+  min-width: 390px;
+  max-width: 420px;
+  z-index: 10;
   }
   
   .header-title-btn {

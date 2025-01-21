@@ -39,9 +39,10 @@ const MypageFAQ: React.FC = () => {
     <div className="Mypage_faq">
       <Header />
       <div className="faq-container">
-        <div className="faq-title-container">
+      <div className="mypage-header-margin-top"></div>
+        {/* <div className="faq-title-container">
           <h1 className="faq-title">고객센터</h1>
-        </div>
+        </div> */}
         <div className="faq-subtitle-container">
           <h2 className="faq-subtitle">자주 묻는 질문 (FAQ)</h2>
         </div>

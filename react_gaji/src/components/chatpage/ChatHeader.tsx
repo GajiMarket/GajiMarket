@@ -9,7 +9,8 @@ interface ChatHeaderProps {
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ roomId, chatName }) => {
   const navigate = useNavigate()
-
+  console.log(roomId);
+  
   const handleBackClick = () => {
     navigate('/chatlist')
   }

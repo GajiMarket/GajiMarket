@@ -51,19 +51,19 @@ const ProductPage: React.FC = () => {
 
   useEffect(() => {
     if (productId) {
-      console.log("productId에서 가지온 id:", productId);
+      // console.log("productId에서 가지온 id:", productId);
 
       const fetchProductDetail = async () => {
         try {
-          console.log("productId 값:", productId);
+          // console.log("productId 값:", productId);
 
           const response = await axios.get(
             `http://localhost:3000/product/${productId}`
           );
 
-          console.log("가져온 response:", response.data.data);
-          console.log("프로필 이미지:", response.data.data.profile_image);
-          console.log("판매자 위치:", response.data.data.location);
+          // console.log("가져온 response:", response.data.data);
+          // console.log("프로필 이미지:", response.data.data.profile_image);
+          // console.log("판매자 위치:", response.data.data.location);
 
           const result = response.data.data;
 
@@ -98,7 +98,7 @@ const ProductPage: React.FC = () => {
   return (
     <div className="product-page-total">
       {/* 상단 고정 헤더 */}
-      <div className="header-container fixed-header">
+      {/* <div className="productpage-header-container">
         <button
           className="back-button"
           onClick={() => navigate("/productlistpage")}
@@ -106,8 +106,10 @@ const ProductPage: React.FC = () => {
           ←
         </button>
         <h1 className="header-title">상품 상세 페이지</h1>
-      </div>
+      </div> */}
+      
       <div className="product-page-container">
+        {/* <div className="productpage-header-margin"></div> */}
         {/* 상품 이미지 슬라이더 */}
         <div className="product-image-slider" style={{ position: "relative" }}>
           {product?.images && product.images.length > 0 ? (
@@ -158,10 +160,13 @@ const ProductPage: React.FC = () => {
         {/* 위치 */}
         {product?.location && (
           <div className="sell_location_map">
-            {/* <div className="productDetail_Mapbox" ref={mapContainerRef} /> */}
-            <ProductDetailMap locationData={product?.location} />
+            <div className="sell_location_map_textcontainer"><p>거래희망장소</p></div>
+            <button>
+              <ProductDetailMap locationData={product?.location} />
+            </button>
           </div>
         )}
+                <div className="productpage-footer-margin"></div>
       </div>
 
       {/* 좋아요 버튼 및 가격 */}

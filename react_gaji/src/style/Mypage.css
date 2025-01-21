@@ -42,7 +42,7 @@
   padding: 16px;
   background-color: #ffffff;
   border-radius: 20px;
-  margin: 0 16px 12px;
+  margin: 0 15px;
 }
 
 .profile-info {
@@ -128,3 +128,9 @@
   text-underline-offset: 4px;
 }
 
+.mypage-header-margin-top{
+  height: 70px;
+}
+.mypage-footer-margin-bottom{
+  height: 80px;
+}
