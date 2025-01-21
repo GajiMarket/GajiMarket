@@ -15,6 +15,7 @@ export const getUserKeywords = async (userNo: number) => {
     }
 
     const keywords = await keywordDAO.getKeywordsByUser(userNo);
+    console.log("DB에서 받아온 데이터:", keywords);
     return keywords;
 }
 
