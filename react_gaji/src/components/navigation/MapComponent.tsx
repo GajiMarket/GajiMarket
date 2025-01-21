@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import NaviPopup from "./NaviPopup";
 import useMap from '../../hooks/ejk/useMap.ej';
@@ -14,7 +15,7 @@ const MapComponent: React.FC = () => {
     const [popupData, setPopupData] = useState({ totalLength: 0, totalTime: 0 });
 
     const { userLocation, error: locationError, createCustomMarker } = useLocation(); // 현재위치 표시 hook
-    const userMarkerRef = useRef<mapboxgl.Marker | null>(null);
+    // const userMarkerRef = useRef<mapboxgl.Marker | null>(null);
  
     // 경로 데이터 렌더링
     useEffect(() => {

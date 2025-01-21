@@ -19,7 +19,7 @@ const ProductAdd: React.FC = () => {
 
   const [showMap, setShowMap] = useState(false);
 
-  const [firstImage, setFirstImage] = useState<string>('');
+  // const [firstImage, setFirstImage] = useState<string>('');
 
   const { isAuthenticated, userNo } = loginStore();
 
