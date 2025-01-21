@@ -3,6 +3,7 @@ import compression from 'compression'
 import path from 'path'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import { fileURLToPath } from 'url'
 import chatRoutes from './api/chat.index'
 import cookieParser from 'cookie-parser'
 import mountRoutes from './api/routes'
@@ -10,8 +11,8 @@ import { httpLogger } from './logger'
 
 dotenv.config();
 
-// const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.resolve(process.cwd());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 console.log("__dirname 경로", __dirname);
 
@@ -50,29 +51,40 @@ app.use(httpLogger);
 // app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.join(__dirname, 'dist')));
 
-const reactPath = path.join(__dirname, '..', 'react_gaji', 'dist');
+// const reactPath = path.join(__dirname, '..', 'react_gaji', 'dist');
 
-console.log("reactPath", reactPath);
+const distPath = path.join(__dirname, 'dist');
 
-if(process.env.NODE_env === 'production') {
-    app.use(express.static(reactPath));
-}
+// console.log("reactPath", reactPath);
+
+
+app.use(express.static(distPath));
+
 
 
 app.use('/api/chat', chatRoutes);
 
 mountRoutes(app);
 
+// app.get('/', async (req: express.Request, res: express.Response) => {
+//     if(process.env.NODE_ENV === 'production') {
+//         res.sendFile(path.join(reactPath, 'index.html'));
+//     } else {
+//         // res.log.info('Root route accessed');
+//         res.json({message: 'GajiMarket API Server'});
+//         // res.send('GajiMarket API Server');
+
+//     }
+
+// });
+
 app.get('/', async (req: express.Request, res: express.Response) => {
-    if(process.env.NODE_ENV === 'production') {
-        res.sendFile(path.join(reactPath, 'index.html'));
-    } else {
-        // res.log.info('Root route accessed');
-        res.json({message: 'GajiMarket API Server'});
-        // res.send('GajiMarket API Server');
+    res.json({message: 'GajiMarket API Server'});
+});
 
-    }
-
+app.get("*", (req: express.Request, res: express.Response) => {
+    
+    res.sendFile(path.join(distPath, 'index.html'));
 });
 
 // process.env.NODE_ENV === 'production' ? app.get('*', (req, res) => { res.sendFile(path.join(reactPath, 'index.html'));}) : app.get('/', async (req: express.Request, res: express.Response) => { res.log.info('Root route accessed'); res.json({ message: 'gcloud API server' }); /*res.send('GajiMarket API Server');*/ })

@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const api = `http://localhost:3000`;
+const api: string = import.meta.env.VITE_API_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
+
+ import.meta.env.VITE_NODE_ENV == 'production' ? `${google}/map/product_preview` : `${api}/map/product_preview`
 
 // id(userNo)도 formData에 들어가 있음
 // 따로따로 보내려고 하면 formData가 빈 배열로 넘어감
@@ -28,7 +32,7 @@ export const imageUpload = async(formData: FormData): Promise<string | void> => 
             
         }
 
-        const response = await axios.post(`${api}/mypage/uploadimage`, formData,
+        const response = await axios.post( import.meta.env.VITE_NODE_ENV == 'production' ? `${google}/mypage/uploadimage` : `${api}/mypage/uploadimage`, formData,
             {
             
             headers: {
@@ -63,7 +67,7 @@ export const imagePath = async (userNo: number): Promise<string | void> => {
         console.log("유저 번호:", userNo);
         
 
-        const response = await axios.post(`${api}/mypage/defaultimage`, {
+        const response = await axios.post(import.meta.env.VITE_NODE_ENV == 'production' ? `${google}/mypage/defaultimage` : `${api}/mypage/defaultimage`, {
             userNo,
         });
 
@@ -80,7 +84,7 @@ export const imagePath = async (userNo: number): Promise<string | void> => {
 export const nicknameUpdate = async(loginToken: string ,userNo: string, nickname: string): Promise<{token: string, nickName: string}> => {
 
     try {
-        const response = await axios.post(`${api}/mypage/profileupdate`, {
+        const response = await axios.post(import.meta.env.VITE_NODE_ENV == 'production' ? `${google}/mypage/profileupdate` : `${api}/mypage/profileupdate`, {
             data: {
                 nickname: nickname,
                 id: userNo,

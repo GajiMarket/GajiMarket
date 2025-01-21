@@ -1,5 +1,5 @@
 import { db, schema } from "../../config/dbConfig";
-import { IKeyword } from "api/models/keyword.models";
+import { IKeyword } from "../models/keyword.models";
 
 export const keywordDAO = {
    /**
