@@ -14,11 +14,26 @@ const ProductAdd: React.FC = () => {
     lat: number;
     name: string;
   } | null>(null);
+  
   const [images, setImages] = useState<File[]>([]);
 
   const [showMap, setShowMap] = useState(false);
 
+  const [firstImage, setFirstImage] = useState<string>('');
+
   const { isAuthenticated, userNo } = loginStore();
+
+  // const [product, setProduct] = useState<Record<string, string>>({
+  //   title: '',
+  //   sell_price: '',
+  //   description: '',
+  //   lng: '',
+  //   lat: '',
+  //   name: '',
+  //   view: '',
+  //   status: '판매중',
+  //   userNo: userNo as string,
+  // });
 
   const navigate = useNavigate();
 
@@ -27,6 +42,11 @@ const ProductAdd: React.FC = () => {
     navigate("/");
     return;
   }
+
+  // const handleProduct = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setProduct({...product, [field]:e.target.value});
+  // }
+
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -55,37 +75,82 @@ const ProductAdd: React.FC = () => {
       return;
     }
 
-    const locationData = location
-      ? { lng: location.lng, lat: location.lat }
-      : null;
+    // const locationData = location
+    //   ? { lng: location.lng, lat: location.lat }
+    //   : null;
 
 
 
     // 서버로 전송할 상품 데이터 생성
     const productData = {
       title,
-      sell_price: Number(sell_price), // 문자열을 숫자로 변환
+      sell_price, //Number(sell_price), // 문자열을 숫자로 변환
       description,
-      location: locationData,
-      createdAt: new Date().toISOString(), // 현재 시간
-      views: 0, // 조회수 초기화
-      userNo,
+      location: location, //locationData,
+      // createdAt: new Date().toISOString(), // 현재 시간
+      // view_count: 0, // 조회수 초기화
+      userNo: userNo,
       status: "판매중",
     };
 
-    // const extension = images.
+    // const imageData = images.map((image, i) => {representativeIndex === 0&& `${Date.now()}_${}`})
 
     // const imagesData = imag
 
     const formData = new FormData();
 
-    // formData.append('productData', productData)
+    formData.append('productJSONData', JSON.stringify(productData));
+    formData.append('title', productData.title);
+    formData.append('sell_price', productData.sell_price);
+    formData.append('description', productData.description);
+    formData.append('location', JSON.stringify(productData.location));
+    formData.append('userNo', productData.userNo as string);
+    formData.append('status', productData.status);
+    // formData.append('lng', String(productData.location.lng));
+    // formData.append('lat', String(productData.location.lat));
+    // formData.append('name', String(productData.location.name));
+    // formData.append('views', String(productData.view_count));
+
+    // formData.append('title', product.title as string);
+    // formData.append('sell_price', product.sell_price as string);
+    // formData.append('description', product.description as string);
+    // formData.append('lng', product.lng as string);
+    // formData.append('lat', product.lat as string);
+    // formData.append('name', product.name as string);
+    // formData.append('views', product.views as string);
+    // formData.append('userNo', product.userNo as string);
+    // formData.append('status', product.status as string);
+
+// 300
+// "설명"
+
+// {lng: 126.88208551349072, lat: 37.48091521029353, name: "강남"}
+
+
+    //이미지 저장
+    // images.map((data, i) => {
+    //   formData.append(`data_${i}`, data);
+    // });
+
+    console.log("forEach전 이미지:", images);
+  
+    
+    // formData.append('image', image);
+
+    images.forEach((image) => {
+      formData.append('productImages', image);
+      console.log("image 데이터:", image);
+    })
+    
+    // formData.append('productImage', images);
 
     try {
       console.log("body data : ", productData);
+      
+      
       const response = await axios.post(
         "http://localhost:3000/use/productadd",
-        productData
+        formData, 
       );
 
       // 상품 등록 성공 시 처리
@@ -98,6 +163,8 @@ const ProductAdd: React.FC = () => {
       setDescription("");
       setLocation(null);
       setImages([]);
+
+      // setProduct({});
 
       console.log("response.data.product_id:", response.data.data.product_id);
 

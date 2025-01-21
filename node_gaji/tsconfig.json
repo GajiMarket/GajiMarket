@@ -14,7 +14,8 @@
         "baseUrl": "./src",
         "paths": {
             "*": ["*"]
-        }
+        },
+        "downlevelIteration": true,
     },
     "include": ["src/**/*", "src/logger.ts"],
     "exclude": ["node_modules"]
