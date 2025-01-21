@@ -1,7 +1,7 @@
 service: gajimarket-api
 runtime: nodejs20
 instance_class: F1
-entrypoint: node src/bin/www.ts
+entrypoint: node dist/bin/www.js
 
 env_variables:
   NODE_ENV: 'production'

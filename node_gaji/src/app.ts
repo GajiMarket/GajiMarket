@@ -11,6 +11,8 @@ import { httpLogger } from './logger'
 
 dotenv.config();
 
+// const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.resolve(process.cwd());
 const app = express();
 
 
@@ -20,7 +22,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: [`http://localhost:${process.env.FRONT_PORT}`, `https://test-shpark-dot-winged-woods-442503-f1.du.r.appspot.com`],
+    origin: [`http://localhost:${process.env.FRONT_PORT}`,`https://test-shpark-dot-winged-woods-442503-f1.du.r.appspot.com`],
     credentials: true
 }));
 
@@ -45,7 +47,8 @@ app.use(compression());
 
 app.use(httpLogger);
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api/chat', chatRoutes);
 
@@ -54,8 +57,14 @@ mountRoutes(app);
 app.get('/', async (req: express.Request, res: express.Response) => {
 
     res.log.info('Root route accessed');
+    res.json({message: 'gcloud API server'})
     res.send('GajiMarket API Server');
-})
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist','index.html'));
+});
+
 
 
 app.get('/test', async (req: express.Request, res: express.Response) => {
