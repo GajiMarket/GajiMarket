@@ -57,13 +57,12 @@ mountRoutes(app);
 app.get('/', async (req: express.Request, res: express.Response) => {
 
     res.log.info('Root route accessed');
-    res.json({message: 'gcloud API server'})
     res.send('GajiMarket API Server');
 });
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist','index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'dist','index.html'));
+// });
 
 
 

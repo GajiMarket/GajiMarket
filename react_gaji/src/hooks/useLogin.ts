@@ -20,7 +20,7 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
         
         
 
-        const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${api}/auth/login` : `${google}/auth/login`, {
+        const response = await axios.post(import.meta.env.NODE_ENV === 'production' ?  `${google}/auth/login` : `${api}/auth/login`, {
             data:{
                 id: formData.id,
                 pw: formData.password,
