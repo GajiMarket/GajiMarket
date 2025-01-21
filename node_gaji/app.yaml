@@ -1,0 +1,75 @@
+service: gajimarket-api
+runtime: nodejs20
+instance_class: F1
+entrypoint: node src/bin/www.ts
+
+env_variables:
+  NODE_ENV: 'production'
+  PORT: 3000
+  CLOUD_HOST: /cloudsql/winged-woods-442503-f1:asia-northeast3:codelab
+  CODELAB_PORT: 5432
+  CODELABDB: 'postgres'
+  CODELAB_USER: 'codelab'
+  CODELAB_PW: 'codelab1234'
+  CODELAB_SCHEMA: 'team4'
+
+handlers:
+ - url: /auth/.*
+   script: auto
+   secure: always
+   
+ - url: /map/.*
+   script: auto
+   secure: always
+
+ - url: /product/.*
+   script: auto
+   secure: always
+
+ - url: /navigation/.*
+   script: auto
+   secure: always
+
+ - url: /api/.*
+   script: auto
+   secure: always
+
+ - url: /mypage/.*
+   script: auto
+   secure: always
+
+ - url: /notifications/.*
+   script: auto
+   secure: always
+
+ - url: /mypage_love/.*
+   script: auto
+   secure: always
+
+ - url: /use/.*
+   script: auto
+   secure: always
+   
+ - url: /api/mypage_sell/.*
+   script: auto
+   secure: always
+   
+ - url: /api/mypage_buy/.*
+   script: auto
+   secure: always
+
+ - url: /api/mypage_keyword/.*
+   script: auto
+   secure: always
+
+ - url: /.*
+   script: auto
+   secure: always
+
+ 
+
+
+
+
+
+

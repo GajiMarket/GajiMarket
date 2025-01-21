@@ -18,12 +18,12 @@ const storage = new Storage({
 const bucket = storage.bucket(process.env.BUCKET_NAME as string);
 
 
-export const addfinderAPI = async (images: Express.Multer.File[], productData: Product): Promise<Product | string[] | any> => {
+export const addfinderAPI = async (images: Express.Multer.File[], productData: Record<string, string>): Promise<Product | string[] | any> => {
   try {
-    logger.info(`Processing product data in service:${(productData)}`);
+    logger.info(`Processing product data in service:${String(productData)}`);
     // logger.debug(`service로 가져온 이미지:${images}`);
 
-    const result = await addProductDAO(productData as Product);
+    const result = await addProductDAO(productData);
     if (!result) {
       logger.error("Product insertion failed in DAO");
       return;
@@ -31,6 +31,10 @@ export const addfinderAPI = async (images: Express.Multer.File[], productData: P
 
     const uploadFiles: string[] = [];
     const productId = Number(result);
+
+    if(!result || !productData) {
+      logger.error(`파라미터, 반환한 product_id가 없습니다: result:${result}, productData:${String(productData)}`)
+    }
     
 
     if(result) {
@@ -66,13 +70,16 @@ export const addfinderAPI = async (images: Express.Multer.File[], productData: P
 
             const response = await productImagesDAO(uploadFiles, productId);
 
+            if(!response){
+              logger.error(`값을 반환하지 못했습니다: ${response}`);
+              return;
+            }
 
+
+            logger.info(`반환한 photo 테이블 값: ${response}`);
 
             resolve(uploadFiles);
 
-            logger.debug(`반환한 photo 테이블 값: ${response}`);
-
-            return response;
 
           });
 
@@ -90,7 +97,7 @@ export const addfinderAPI = async (images: Express.Multer.File[], productData: P
     }
 
     logger.info("Product added successfully in service");
-    return {uploadFiles, result};
+    return {uploadFiles, productId};
 
   } catch (error) {
     logger.error(`Error in addProductService:${error}`);

@@ -20,7 +20,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: [`http://localhost:${process.env.FRONT_PORT}`],
+    origin: [`http://localhost:${process.env.FRONT_PORT}`, `https://test-shpark-dot-winged-woods-442503-f1.du.r.appspot.com`],
     credentials: true
 }));
 

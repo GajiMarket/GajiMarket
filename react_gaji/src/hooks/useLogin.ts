@@ -1,7 +1,9 @@
 
 import axios from 'axios';
 
-const api: string = `http://localhost:3000` 
+const api: string = import.meta.env.VITE_NODE_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 //로그인 함수
 
@@ -13,6 +15,8 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
         console.log(formData);
         console.log(formData.id);
         console.log(formData.password);
+        console.log(api);
+        
         
         
 
