@@ -5,7 +5,9 @@
 
 ## 1.2 프로젝트 로고
 
-![image](https://github.com/user-attachments/assets/0fa8dbcf-fa0a-409c-b1ae-28dda02100c5)
+<div align="center">
+    <img src="/readme_image/Logo.png" alt="Logo">
+</div>
 
 
 ## 1.3 프로젝트 정보
@@ -14,9 +16,9 @@
 - 기존 중고 거래 플랫폼은 알고리즘 중심의 추천 방식으로 사용자가 다양한 상품을 탐색하는 데 제한적임
 - 근처에 더 저렴한 물건이 있더라도 이를 확인하지 못한 채 물건을 구매할 수 있다는 문제점을 인식함
 - 기존 중고거래 시스템의 광고 상품에 묻혀 구매자가 좋은 상품을 놓치는 경험을 개선하고자 함
-
-
-![image](https://github.com/user-attachments/assets/8344f8a5-c71a-4aac-8dab-14fb2d082f29)
+<div align="center">
+    <img src="/readme_image/AsIsToBe.png" alt="AsIsToBe">
+</div>
 
 
 ### 1.3.2 개발 목표
@@ -29,8 +31,9 @@
 - 지도 기반 상품 탐색 및 등록 기능 제공
 - 실시간 채팅 및 내 정보 관리 기능 추가
 
-
-![image](https://github.com/user-attachments/assets/4b1834e7-724d-4542-9bd3-5e90f0069a78)
+<div align="center">
+    <img src="/readme_image/FlowChart.png" alt="FlowChart">
+</div>
 
 
 ### 1.3.4 활용방안
@@ -51,8 +54,9 @@
 ## 1.4 개발 기간 (총 41일)
 ⏰ 2024년 12월 13일 ~ 2025년 1월 22일
 
-
-![image](https://github.com/user-attachments/assets/ba6c17d5-d6b5-4a2c-8799-b51da59251e2)
+<div align="center">
+    <img src="/readme_image/Method.png" alt="Method">
+</div>
 
 
 
