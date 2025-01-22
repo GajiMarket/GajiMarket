@@ -8,6 +8,10 @@ import heartFullIcon from "../assets/icons/heart-full-icon.png";
 // import productStroe from "../utils/productStore";
 import ProductDetailMap from "../components/map/ProductDetailMap";
 
+const server: string = import.meta.env.VITE_API_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
+
 interface Product {
   product_id: number;
   title: string;
@@ -60,7 +64,7 @@ const ProductPage: React.FC = () => {
           // console.log("productId 값:", productId);
 
           const response = await axios.get(
-            `http://localhost:3000/product/${productId}`
+            import.meta.env.NODE_ENV === 'production' ? `${google}/product/${productId}` : `${server}/product/${productId}`
           );
 
           // console.log("가져온 response:", response.data.data);

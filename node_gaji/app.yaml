@@ -5,7 +5,7 @@ entrypoint: node dist/bin/www.js
 
 env_variables:
   NODE_ENV: 'production'
-  PORT: 3000
+  PORT: 8080
   CLOUD_HOST: /cloudsql/winged-woods-442503-f1:asia-northeast3:codelab
   CODELAB_PORT: 5432
   CODELABDB: 'postgres'
@@ -26,7 +26,7 @@ env_variables:
   BUCKET_NAME: 'codelab_gajigaji'
   GOOGLE_SERVICE_KEY: 'b70978f33a227df3b300ecf2e6c98ba28df962f5'
   GOOLE_PROJECT_ID: 'code-lab-it-lbstech'
-  GOOGLE_APPLICATION_CREDENTIALS: '.\src\config\winged-woods-442503-f1-86741740a21e.json'
+  GOOGLE_APPLICATION_CREDENTIALS: '.\dist\config\winged-woods-442503-f1-86741740a21e.json'
 
 
 handlers:

@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const server: string = import.meta.env.VITE_API_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
+
 const api = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: import.meta.env.NODE_ENV === 'production' ? `${google}` : `${server}`,
     headers: {
         'Content-Type': 'application/json'
     }

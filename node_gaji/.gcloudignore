@@ -12,7 +12,7 @@
 # below:
 .git
 .gitignore
-logger.ts
+dist/logger.js
 
 # Node.js dependencies:
 node_modules/

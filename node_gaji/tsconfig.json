@@ -1,3 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "allowJs": true,
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": "./src",
+        "paths": {
+            "*": ["*"]
+        },
+        "downlevelIteration": true,
+    },
+    // "include": ["src/**/*", "logger.ts"],
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+}
+
+
+
 // {
 //     "compilerOptions": {
 //         "target": "ES2020",
@@ -23,21 +51,21 @@
 //     "exclude": ["node_modules"]
 // }
 
-{
-    "compilerOptions": {
-      "target": "ES2020",
-      "module": "ESNext",
-      "moduleResolution": "node",  // Node.js 모듈 해석 방식
-      "esModuleInterop": true,     // ES 모듈과 CommonJS 간의 호환성
-      "outDir": "./dist",          // 컴파일된 js 파일이 저장될 경로
-      "rootDir": "./src",          // 소스 파일 경로
-      "strict": true,              // 엄격한 타입 검사
-      "resolveJsonModule": true  // JSON 모듈을 import할 수 있도록 허용
+// {
+//     "compilerOptions": {
+//       "target": "ES2020",
+//       "module": "ESNext",
+//       "moduleResolution": "node",  // Node.js 모듈 해석 방식
+//       "esModuleInterop": true,     // ES 모듈과 CommonJS 간의 호환성
+//       "outDir": "./dist",          // 컴파일된 js 파일이 저장될 경로
+//       "rootDir": "./src",          // 소스 파일 경로
+//       "strict": true,              // 엄격한 타입 검사
+//       "resolveJsonModule": true  // JSON 모듈을 import할 수 있도록 허용
 
-    },
+//     },
     
     
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "models"]
-  }
+//     "include": ["src/**/*"],
+//     "exclude": ["node_modules", "models"]
+//   }
   

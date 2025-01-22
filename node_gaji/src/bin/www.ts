@@ -3,7 +3,7 @@ import webSocketServer from "../config/websocket"; // WebSocket 서버 import
 import { createServer } from "http"; // HTTP 서버 생성
 
 const main = async () => {
-  const PORT = process.env.PORT || "3000";
+  const PORT = process.env.PORT || "8080";
 
   // HTTP 서버 생성
   const server = createServer(app);

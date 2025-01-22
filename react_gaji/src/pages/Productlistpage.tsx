@@ -4,6 +4,10 @@ import axios from "axios";
 import "../style/Productlistpage.css";
 import Footer from "../components/all/Footer";
 
+const server: string = import.meta.env.VITE_API_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
+
 // Product 타입 정의
 interface Product {
   product_id: number;
@@ -16,7 +20,7 @@ interface Product {
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
-  const api = "http://localhost:3000";
+  const api = import.meta.env.NODE_ENV === 'production' ? `${google}` : `${server}`;
 
   useEffect(() => {
     const fetchProducts = async () => {
