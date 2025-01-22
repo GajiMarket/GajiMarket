@@ -104,7 +104,7 @@ export const validatePhone = (phone: string): string | null => {
 // 아이디 중복
 export const checkId = async (id: string): Promise<boolean> => {
   try {
-    const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${google}/auth/validateId` : `${api}/auth/validateId`, {
+    const response = await axios.post(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/validateId` : `${api}/auth/validateId`, {
         id: id,
     });
 
@@ -131,7 +131,7 @@ export const checkId = async (id: string): Promise<boolean> => {
 // 이메일 인증
 export const emailCheck = async (email:string, code: string): Promise<boolean> => {
   try {
-    const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${google}/auth/emailCheck` : `${api}/auth/emailCheck`, {
+    const response = await axios.post(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/emailCheck` : `${api}/auth/emailCheck`, {
       data: {
         code: code,
         email: email,
@@ -155,7 +155,7 @@ export const emailCheck = async (email:string, code: string): Promise<boolean> =
 
 export const emailSend = async (email: string): Promise<{success: boolean, code: string}> => {
   try {
-    const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${google}/auth/emailSend` : `${api}/auth/emailSend`, {
+    const response = await axios.post(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/emailSend` : `${api}/auth/emailSend`, {
       data:{
         email: email,
       },
@@ -195,7 +195,7 @@ export const emailSend = async (email: string): Promise<{success: boolean, code:
 
 export const signUp = async (formData: Record<string, string>): Promise<boolean> => {
   try {
-    const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${google}/auth/signUp` : `${api}/auth/signUp`, {
+    const response = await axios.post(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/signUp` : `${api}/auth/signUp`, {
       formData,
     });
 

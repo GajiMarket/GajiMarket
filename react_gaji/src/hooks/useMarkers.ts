@@ -39,7 +39,7 @@ const useMarkers = () => {
     const fetchProductLocations = async () => {
         try {
             const response = await axios.get<ApiResponse>(
-               import.meta.env.VITE_NODE_ENV == 'production' ? `${google}/map/product_preview` : `${api}/map/product_preview`
+                import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/map/product_preview` : `${api}/map/product_preview`
                 );
             const { success, data } = response.data;
             if(success && Array.isArray(data)){

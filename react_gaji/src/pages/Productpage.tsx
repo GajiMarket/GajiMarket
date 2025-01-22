@@ -64,7 +64,7 @@ const ProductPage: React.FC = () => {
           // console.log("productId 값:", productId);
 
           const response = await axios.get(
-            import.meta.env.NODE_ENV === 'production' ? `${google}/product/${productId}` : `${server}/product/${productId}`
+            import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/product/${productId}` : `${server}/product/${productId}`
           );
 
           // console.log("가져온 response:", response.data.data);

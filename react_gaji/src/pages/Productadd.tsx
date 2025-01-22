@@ -153,7 +153,7 @@ const ProductAdd: React.FC = () => {
       
       
       const response = await axios.post(
-        import.meta.env.NODE_ENV === 'production' ? `${google}/use/productadd` : `${server}/use/productadd`,
+        import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/use/productadd` : `${server}/use/productadd`,
         formData, 
       );
 

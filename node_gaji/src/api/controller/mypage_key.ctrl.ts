@@ -1,6 +1,30 @@
 import { Request, Response } from "express";
 import { keywordService, getUserKeywords, deleteUserKeywords } from "../service/keyword.service";
-
+/**
+ * @openapi
+ * /:
+ *   post:
+ *     tags:
+ *       - Mypage
+ *     summary: 키워드 추가
+ *     description: 사용자가 관심 있는 키워드를 추가합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *                 example: "쇼핑"
+ *                 description: 사용자가 추가할 관심 키워드
+ *     responses:
+ *       201:
+ *         description: 키워드 추가 성공
+ *       400:
+ *         description: 잘못된 요청
+ */
 export const keywordCtrl = async (req: Request, res: Response): Promise<void> => {
   try {
     const { userNo, keywords } = req.body;
@@ -37,7 +61,33 @@ export const keywordCtrl = async (req: Request, res: Response): Promise<void> =>
     return; // 명확히 반환
   }
 };
-
+/**
+ * @openapi
+ * /{id}:
+ *   get:
+ *     tags:
+ *       - Mypage
+ *     summary: 키워드 조회
+ *     description: 특정 사용자의 관심 키워드를 조회합니다.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 사용자의 고유 번호
+ *     responses:
+ *       200:
+ *         description: 키워드 조회 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *       404:
+ *         description: 사용자를 찾을 수 없음
+ */
 export const getKeywords = async (req: Request, res: Response): Promise<void> => {
   try {    
     const userNo = parseInt(req.params.id, 10);
@@ -74,7 +124,33 @@ export const getKeywords = async (req: Request, res: Response): Promise<void> =>
     return; // 명확히 반환
   }
 };
-
+/**
+ * @openapi
+ * /:
+ *   delete:
+ *     tags:
+ *       - Mypage
+ *     summary: 키워드 삭제
+ *     description: 사용자가 관심 목록에서 특정 키워드를 삭제합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               keyword:
+ *                 type: string
+ *                 example: "쇼핑"
+ *                 description: 삭제할 관심 키워드
+ *     responses:
+ *       200:
+ *         description: 키워드 삭제 성공
+ *       400:
+ *         description: 잘못된 요청
+ *       404:
+ *         description: 키워드를 찾을 수 없음
+ */
 export const deleteKeywords = async (req: Request, res: Response): Promise<void> => {
   try {
     const { userNo, keyword } = req.body;

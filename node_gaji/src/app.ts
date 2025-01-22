@@ -11,11 +11,10 @@ import { httpLogger } from './logger'
 
 dotenv.config();
 
-// const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 // const __dirname = path.resolve(process.cwd());
 
-console.log("__dirname 경로", __dirname);
+// console.log("__dirname 경로", __dirname);
 
 const app = express();
 
@@ -26,7 +25,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: [`http://localhost:${process.env.FRONT_PORT}`,`https://test-shpark-dot-winged-woods-442503-f1.du.r.appspot.com`,`https://gaji-test-dot-winged-woods-442503-f1.du.r.appspot.com/`],
+    origin: [`http://localhost:${process.env.FRONT_PORT}`,`https://shpark-test-dot-winged-woods-442503-f1.du.r.appspot.com`,`https://gaji-test-dot-winged-woods-442503-f1.du.r.appspot.com/`],
     credentials: true
 }));
 
@@ -52,14 +51,14 @@ app.use(httpLogger);
 // app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.join(__dirname, 'dist')));
 
-const reactPath = path.join(process.cwd(), 'react_gaji', 'dist');
+// const reactPath = path.join(process.cwd(), 'react_gaji', 'dist');
 
 // const distPath = path.join(__dirname, 'dist');
 
 // console.log("reactPath", reactPath);
 
 
-app.use(express.static(reactPath));
+// app.use(express.static(reactPath));
 
 
 
@@ -83,10 +82,10 @@ app.get('/', async (req: express.Request, res: express.Response) => {
     res.json({message: 'GajiMarket API Server'});
 });
 
-app.get("*", (req: express.Request, res: express.Response) => {
+// app.get("*", (req: express.Request, res: express.Response) => {
     
-    res.sendFile(path.join(reactPath, 'index.html'));
-});
+//     res.sendFile(path.join(reactPath, 'index.html'));
+// });
 
 // process.env.NODE_ENV === 'production' ? app.get('*', (req, res) => { res.sendFile(path.join(reactPath, 'index.html'));}) : app.get('/', async (req: express.Request, res: express.Response) => { res.log.info('Root route accessed'); res.json({ message: 'gcloud API server' }); /*res.send('GajiMarket API Server');*/ })
 

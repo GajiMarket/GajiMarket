@@ -2,7 +2,61 @@ import { Request, Response } from "express";
 import { addfinderAPI } from "../service/productadd.service";
 import { logger } from "../../logger";
 // import { IProduct } from "api/models/product";
-
+/**
+ * @openapi
+ * /productadd:
+ *   post:
+ *     tags:
+ *       - Product
+ *     summary: 상품 추가
+ *     description: 새 상품을 추가하고, 최대 10개의 이미지를 업로드합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               productImages:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: 업로드할 상품 이미지 파일들
+ *               productName:
+ *                 type: string
+ *                 example: "새로운 상품 이름"
+ *                 description: 상품 이름
+ *               productDescription:
+ *                 type: string
+ *                 example: "이 상품은 최고의 품질을 자랑합니다."
+ *                 description: 상품 설명
+ *               productPrice:
+ *                 type: number
+ *                 example: 19999
+ *                 description: 상품 가격
+ *     responses:
+ *       201:
+ *         description: 상품 추가 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 productId:
+ *                   type: integer
+ *                   example: 123
+ *                 message:
+ *                   type: string
+ *                   example: "상품이 성공적으로 추가되었습니다."
+ *       400:
+ *         description: 잘못된 요청
+ *       500:
+ *         description: 서버 오류
+ */
 export const productaddCtrl = async (req: Request, res: Response): Promise<void> => {
 
 
@@ -13,46 +67,12 @@ export const productaddCtrl = async (req: Request, res: Response): Promise<void>
     const title = req.body.title as string;
     const sell_price = req.body.sell_price;
     const description = req.body.description as string;
-    // const location = req.body.location;
-    // const {lng, lat} = req.body;
     const member_no = req.body.userNo;
     const status = req.body.status as string;
-    // const { title, sell_price, description, userNo, status, } = req.body;
-
-    // const locationData = JSON.stringify(req.body.location);
-
-    // const lng = JSON.stringify(req.body.location.lng);
-    // const lat = JSON.stringify(req.body.location.lat);
-    // const name = JSON.stringify(req.body.location.name);
-
-    // const location = JSON.parse(req.body.location);
-
-    // console.log("location 뭐가 있나", location);
-
-    // const sell_location = typeof req.body.location === 'string' ? JSON.parse(req.body.location) : req.body.location;
+   
     const sell_location = req.body.location;
 
-    // const lng = Number(sell_location.lng);
-    // const lat = Number(sell_location.lat);
-    // const name: string =sell_location.name as string;
-
-    // const locationData = [lng, lat];
-
-    // console.log("location 결과:", sell_location);
-    // console.log("lng 결과:", lng);
-    // console.log("lat 결과:", lat);
-    // console.log("name 결과:", name);
-    
-    
-    
-    
-    // const locationData = location
-
-    // logger.debug(`각각 파라미터:${title},${sell_price},${description},${JSON.stringify(location)},${userNo}, ${status}`);
-
-    // logger.debug(`갖고온 이미지들:${JSON.stringify(images)}`);
-    // logger.info(`Received product data:${req.body}`);
-    // console.log(`req.body data :  ${req.body}`)
+   
 
     if (!title || !sell_price || !description || !sell_location || !member_no || !status) {
       logger.error("Missing required fields");

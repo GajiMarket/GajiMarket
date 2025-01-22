@@ -32,7 +32,7 @@ const Chatlist: React.FC = () => {
 
     const fetchChats = async () => {
       try {
-        const response = await axios.get(import.meta.env.NODE_ENV === 'production' ? `${google}/api/chatrooms/${userNo}` : `${api}/api/chatrooms/${userNo}`); // 회원 번호를 URL에 포함
+        const response = await axios.get(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/api/chatrooms/${userNo}` : `${api}/api/chatrooms/${userNo}`); // 회원 번호를 URL에 포함
         console.log('Fetched chats:', response.data); // 로그 추가
         setChats(response.data);
       } catch (error) {

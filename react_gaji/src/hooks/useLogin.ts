@@ -15,12 +15,12 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
         console.log(formData);
         console.log(formData.id);
         console.log(formData.password);
-        console.log(api);
+        console.log(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/login` : `${api}/auth/login`);
         
         
         
 
-        const response = await axios.post(import.meta.env.NODE_ENV === 'production' ? `${google}/auth/login` : `${api}/auth/login`, {
+        const response = await axios.post(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/login` : `${api}/auth/login`, {
             data:{
                 id: formData.id,
                 pw: formData.password,

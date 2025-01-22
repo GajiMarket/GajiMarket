@@ -5,7 +5,7 @@ const server: string = import.meta.env.VITE_API_LOCAL;
 const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 const api = axios.create({
-    baseURL: import.meta.env.NODE_ENV === 'production' ? `${google}` : `${server}`,
+    baseURL: import.meta.env.VITE_NODE_ENV === 'production' ? `${google}` : `${server}`,
     headers: {
         'Content-Type': 'application/json'
     }

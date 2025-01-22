@@ -10,6 +10,35 @@ type loginType = Partial<IMemberTbl&IPhoto>;
 
 // 사용자 프로필 이미지 업데이트
 export const uploadImage = {
+    /**
+ * @openapi
+ * /uploadimage:
+ *   post:
+ *     tags:
+ *       - Mypage
+ *     summary: 프로필 이미지 업로드
+ *     description: 사용자가 프로필 이미지를 업로드합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               profileImage:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: 업로드할 프로필 이미지 파일들
+ *     responses:
+ *       200:
+ *         description: 프로필 이미지 업로드 성공
+ *       400:
+ *         description: 잘못된 요청
+ *       500:
+ *         description: 서버 오류
+ */
     uploadFiles: async (req: Request, res: Response) => {
 
         try {
@@ -69,7 +98,22 @@ export const uploadImage = {
             return;
         }
     },
-
+/**
+ * @openapi
+ * /defaultimage:
+ *   post:
+ *     tags:
+ *       - Mypage
+ *     summary: 기본 프로필 이미지 설정
+ *     description: 사용자의 프로필 이미지를 기본 이미지로 설정합니다.
+ *     responses:
+ *       200:
+ *         description: 기본 프로필 이미지 설정 성공
+ *       400:
+ *         description: 잘못된 요청
+ *       500:
+ *         description: 서버 오류
+ */
 // 프로필 기본 이미지
     defaultProfileImage: async (req: Request, res: Response) => {
 
@@ -105,7 +149,33 @@ export const uploadImage = {
             })
         }
     },
-
+/**
+ * @openapi
+ * /profileupdate:
+ *   post:
+ *     tags:
+ *       - Mypage
+ *     summary: 프로필 닉네임 변경
+ *     description: 사용자가 프로필 닉네임을 업데이트합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nickname:
+ *                 type: string
+ *                 example: newnickname
+ *                 description: 변경할 닉네임
+ *     responses:
+ *       200:
+ *         description: 닉네임 업데이트 성공
+ *       400:
+ *         description: 잘못된 요청
+ *       500:
+ *         description: 서버 오류
+ */
     proifleNickname: async(req: Request, res: Response) => {
 
         try {

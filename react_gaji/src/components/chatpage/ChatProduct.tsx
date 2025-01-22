@@ -24,7 +24,7 @@ const ChatProduct: React.FC<ChatProductProps> = ({ productId }) => {
     const fetchProduct = async () => {
       try {
         console.log(`Fetching product for productId: ${productId}`);
-        const response = await axios.get(import.meta.env.NODE_ENV === 'production' ?`${google}/api/product/${productId}` : `${api}/api/product/${productId}`);
+        const response = await axios.get(import.meta.env.VITE_NODE_ENV === 'production' ?`${google}/api/product/${productId}` : `${api}/api/product/${productId}`);
         console.log('Fetched product:', response.data);
         setProduct(response.data);
       } catch (error) {
