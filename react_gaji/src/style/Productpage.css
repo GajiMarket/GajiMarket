@@ -3,7 +3,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #f7f8fa;
   position: fixed;
   top: 0;
   min-width: 390px;
@@ -266,4 +265,9 @@
   justify-content: center;
   color: #555;
   border-radius: 8px;
+}
+
+.back-button{
+  background: none;
+  cursor: pointer;
 }

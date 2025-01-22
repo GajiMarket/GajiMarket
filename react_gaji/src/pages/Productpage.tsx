@@ -99,15 +99,15 @@ const ProductPage: React.FC = () => {
   return (
     <div className="product-page-total">
       {/* 상단 고정 헤더 */}
-      {/* <div className="productpage-header-container">
+      <div className="productpage-header-container">
         <button
           className="back-button"
           onClick={() => navigate("/productlistpage")}
         >
           ←
         </button>
-        <h1 className="header-title">상품 상세 페이지</h1>
-      </div> */}
+        {/* <h1 className="header-title">상품 상세 페이지</h1> */}
+      </div>
       
       <div className="product-page-container">
         {/* <div className="productpage-header-margin"></div> */}
