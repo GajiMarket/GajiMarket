@@ -16,7 +16,7 @@ const main = async () => {
   });
 
   // 서버 실행
-  app.listen(parseInt(PORT, 10), () => {
+  server.listen(parseInt(PORT, 10), () => {
     console.log(`Server is running on port ${PORT}, NODE_ENV=${process.env.NODE_ENV}`);
   });
 };

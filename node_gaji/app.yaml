@@ -12,25 +12,8 @@ env_variables:
   CODELAB_USER: 'codelab'
   CODELAB_PW: 'codelab1234'
   CODELAB_SCHEMA: 'team4'
-  EMAIL_SERVICE: 'gmail'
-  ADMIN_USER: 'hyung9683@gmail.com'
-  ADMIN_PASSWORD: 'vfpcqppbmadpwcde'
-  ADMIN_HOST: 'smtp.gmail.com'
-  ADMIN_PORT: 587
-  FRONT_PORT: 5173
-  LOG_LEVEL: 'debug'
-  KAKAO_API_KEY: '92d306357d9aa2dec212cf212a448853'
-  REDIRECT_LOCAL_URI: 'http://localhost:3000/auth/kakao'
-  REDIRECT_FRONT_URI: 'http://localhost:5173/auth/kakao'
-  TOKEN_KEY: 'GajiMarket_KEY'
-  BUCKET_NAME: 'codelab_gajigaji'
-  GOOGLE_SERVICE_KEY: 'b70978f33a227df3b300ecf2e6c98ba28df962f5'
-  GOOLE_PROJECT_ID: 'code-lab-it-lbstech'
-  GOOGLE_APPLICATION_CREDENTIALS: '.\src\config\winged-woods-442503-f1-86741740a21e.json'
-
 
 handlers:
-
  - url: /auth/.*
    script: auto
    secure: always
@@ -79,15 +62,6 @@ handlers:
    script: auto
    secure: always
 
-
  - url: /.*
    script: auto
    secure: always
- 
- 
-
-
-
-
-
-
