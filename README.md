@@ -46,9 +46,9 @@
 - 개인 간 거래 활성화를 통한 지역 경제 순환을 촉진할 수 있음
 
 ### 1.3.6 확장성
-- Version 1.0 (구매): 물건 구매 과정의 간소화
-- [Version 2.0](https://youtu.be/) (등록): 물건 등록 과정의 간소화
-- [Version 3.0](https://youtu.be/) (구매): 물건 구매 경험의 고도화  
+- [Version 1.0](https://github.com/GajiMarket/GajiMarket) (구매): 물건 구매 과정의 간소화
+- [Version 2.0](https://youtu.be/9_JZSpCr08c?si=-hu3tC1Tg8FTwoip) (등록): 물건 등록 과정의 간소화
+- [Version 3.0](https://youtu.be/S4XEgZRixbs?si=FhfbGhiToIRzHpEZ) (구매): 물건 구매 경험의 고도화  
 
 
 ## 1.4 개발 기간 (총 41일)
@@ -73,7 +73,7 @@
 
 ## 1.6 시연 영상 링크
 
-🎞 시연 영상 [보러가기](https://youtu.be/)
+🎞 시연 영상 [보러가기](https://youtu.be/fcBFewtZXk0?si=2QtEDuNG0risBkpw)
 
 
 # 2. 프로젝트 아키텍처
