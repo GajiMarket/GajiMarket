@@ -7,7 +7,7 @@ import { sendPathData } from "../api/pathFinder.api";
 
 const api: string = import.meta.env.VITE_API_LOCAL;
 
-const google: string = import.meta.env.VITE_GOOGLE_URL;
+// const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 interface ProductLocation {
     product_id: number;
@@ -39,7 +39,7 @@ const useMarkers = () => {
     const fetchProductLocations = async () => {
         try {
             const response = await axios.get<ApiResponse>(
-                import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/map/product_preview` : `${api}/map/product_preview`
+                import.meta.env.MODE === 'production' ? `https://gajimarket-api-dot-winged-woods-442503-f1.du.r.appspot.com/map/product_preview` : `${api}/map/product_preview`
                 );
             const { success, data } = response.data;
             if(success && Array.isArray(data)){

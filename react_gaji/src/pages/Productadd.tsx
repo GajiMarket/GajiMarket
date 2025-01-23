@@ -7,7 +7,7 @@ import loginStore from "../utils/loginStore";
 
 const server: string = import.meta.env.VITE_API_LOCAL;
 
-const google: string = import.meta.env.VITE_GOOGLE_URL;
+// const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -153,7 +153,7 @@ const ProductAdd: React.FC = () => {
       
       
       const response = await axios.post(
-        import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/use/productadd` : `${server}/use/productadd`,
+        import.meta.env.MODE === 'production' ? `https://gajimarket-api-dot-winged-woods-442503-f1.du.r.appspot.com/use/productadd` : `${server}/use/productadd`,
         formData, 
       );
 

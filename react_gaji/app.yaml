@@ -1,16 +1,19 @@
 service: shpark-test
 runtime: nodejs20
 instance_class: F1
+
 env_variables:
   NODE_ENV: 'production'
-  VITE_GOOGLE_URL: https://gajimarket-api-dot-winged-woods-442503-f1.du.r.appspot.com/
-  VITE_API_LOCAL: http://localhost:3000
+
 handlers:
+  - url: /
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
+
+
   - url: /(.*)
     static_files: dist/\1
     upload: dist/(.*)
 
-  - url: /(.*)
-    static_files: dist/index.html
-    upload: dist/index.html
     

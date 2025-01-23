@@ -10,7 +10,7 @@ import ProductDetailMap from "../components/map/ProductDetailMap";
 
 const server: string = import.meta.env.VITE_API_LOCAL;
 
-const google: string = import.meta.env.VITE_GOOGLE_URL;
+// const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 interface Product {
   product_id: number;
@@ -64,7 +64,7 @@ const ProductPage: React.FC = () => {
           // console.log("productId 값:", productId);
 
           const response = await axios.get(
-            import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/product/${productId}` : `${server}/product/${productId}`
+            import.meta.env.MODE === 'production' ? `https://gajimarket-api-dot-winged-woods-442503-f1.du.r.appspot.com/product/${productId}` : `${server}/product/${productId}`
           );
 
           // console.log("가져온 response:", response.data.data);

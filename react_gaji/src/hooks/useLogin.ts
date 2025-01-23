@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const api: string = import.meta.env.VITE_API_LOCAL;
 
-const google: string = import.meta.env.VITE_GOOGLE_URL;
+// const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 //로그인 함수
 
@@ -15,12 +15,12 @@ export const login = async (formData: Record<string, string>): Promise<{isChecke
         console.log(formData);
         console.log(formData.id);
         console.log(formData.password);
-        console.log(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/login` : `${api}/auth/login`);
+        // console.log(import.meta.env.NODE_ENV === 'production' ? `https://gajimarket-api-dot-winged-woods-442503-f1.du.r.appspot.com/auth/login` : `${api}/auth/login`);
         
         
         
 
-        const response = await axios.post(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/auth/login` : `${api}/auth/login`, {
+        const response = await axios.post(import.meta.env.MODE=== 'production' ? `https://gajimarket-api-dot-winged-woods-442503-f1.du.r.appspot.com/auth/login` : `${api}/auth/login`, {
             data:{
                 id: formData.id,
                 pw: formData.password,

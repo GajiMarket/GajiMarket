@@ -6,7 +6,7 @@ import Footer from "../components/all/Footer";
 
 const server: string = import.meta.env.VITE_API_LOCAL;
 
-const google: string = import.meta.env.VITE_GOOGLE_URL;
+// const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 // Product 타입 정의
 interface Product {
@@ -20,7 +20,7 @@ interface Product {
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
-  const api = import.meta.env.NODE_ENV === 'production' ? `${google}` : `${server}`;
+  const api = import.meta.env.MODE === 'production' ? `https://gajimarket-api-dot-winged-woods-442503-f1.du.r.appspot.com` : `${server}`;
 
   useEffect(() => {
     const fetchProducts = async () => {

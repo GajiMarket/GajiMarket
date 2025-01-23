@@ -25,7 +25,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: [`http://localhost:${process.env.FRONT_PORT}`,`https://shpark-test-dot-winged-woods-442503-f1.du.r.appspot.com`,`https://gaji-test-dot-winged-woods-442503-f1.du.r.appspot.com/`],
+    origin: [`http://localhost:${process.env.FRONT_PORT}`,`https://shpark-test-dot-winged-woods-442503-f1.du.r.appspot.com`],
     credentials: true
 }));
 

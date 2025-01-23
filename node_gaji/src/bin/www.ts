@@ -4,7 +4,7 @@ import { createServer } from "http"; // HTTP 서버 생성
 import swaggerDocs from '../config/swagger'
 
 const main = async () => {
-  const PORT = process.env.NODE_ENV === 'development' ? process.env.NODE_PORT : "8080";
+  const PORT = process.env.MODE === 'development' ? process.env.NODE_PORT : "8080";
 
   // HTTP 서버 생성
   const server = createServer(app);
