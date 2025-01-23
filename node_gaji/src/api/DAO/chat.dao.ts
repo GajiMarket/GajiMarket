@@ -1,5 +1,10 @@
 import { db } from '../../config/dbConfig';
-
+/**
+ * 주어진 memberNo에 해당하는 채팅방 목록을 데이터베이스에서 조회합니다.
+ * 
+ * @param memberNo - 채팅방을 조회할 회원의 고유 번호
+ * @returns 채팅방 목록
+ */
 export const getChatRoomsFromDB = async (memberNo: number) => {
   const result = await db.query(`
     SELECT cr.chat_room_id, cm.chat_message AS last_message,
@@ -47,7 +52,12 @@ export const getChatRoomsFromDB = async (memberNo: number) => {
   console.log('Query result:', result.rows); // 쿼리 결과 로그 추가
   return result.rows;
 };
-
+/**
+ * 주어진 productId에 해당하는 상품 정보를 데이터베이스에서 조회합니다.
+ * 
+ * @param productId - 상품의 고유 ID
+ * @returns 상품 정보
+ */
 export const getChatProductFromDB = async (productId: number) => {
   const productResult = await db.query(`
     SELECT status, title, sell_price AS price

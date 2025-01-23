@@ -1,13 +1,13 @@
 import loginStore from "../utils/loginStore";
 import axios from "axios";
 
-interface KeywordResponse {
-    success: boolean;
-    message: string;
-    data: {
-        keyword_name: string[];
-    };
-}
+// interface KeywordResponse {
+//     success: boolean;
+//     message: string;
+//     data: {
+//         keyword_name: string[];
+//     };
+// }
 const api = axios.create({
     baseURL: import.meta.env.VITE_NODE_URI,
     headers: {

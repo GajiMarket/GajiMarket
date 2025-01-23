@@ -3,8 +3,13 @@ import { keywordCtrl, getKeywords, deleteKeywords } from "./controller/mypage_ke
 
 const router = express.Router();
 
+
 router.post("/", keywordCtrl);
+
+
 router.get("/:id", getKeywords);
-router.delete("/", deleteKeywords)
+
+
+router.delete("/", deleteKeywords);
 
 export default router;

@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+// import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import "../style/Productpage.css";
 import heartUnfillIcon from "../assets/icons/heart-unfill-icon.png";
 import heartFullIcon from "../assets/icons/heart-full-icon.png";
 // import productStroe from "../utils/productStore";
 import ProductDetailMap from "../components/map/ProductDetailMap";
+
+const server: string = import.meta.env.VITE_API_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
 
 interface Product {
   product_id: number;
@@ -35,7 +40,7 @@ const ProductPage: React.FC = () => {
 
   // navigate로 전달된 state 가져오기
   const navigate = useNavigate();
-  const images = useLocation();
+  // const images = useLocation();
 
   // 상태 관리
   const [product, setProduct] = useState<ProductTbl | null>(null);
@@ -59,7 +64,7 @@ const ProductPage: React.FC = () => {
           // console.log("productId 값:", productId);
 
           const response = await axios.get(
-            `http://localhost:3000/product/${productId}`
+            import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/product/${productId}` : `${server}/product/${productId}`
           );
 
           // console.log("가져온 response:", response.data.data);

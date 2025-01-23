@@ -1,9 +1,10 @@
 import app from "../app";
 import webSocketServer from "../config/websocket"; // WebSocket 서버 import
 import { createServer } from "http"; // HTTP 서버 생성
+import swaggerDocs from '../config/swagger'
 
 const main = async () => {
-  const PORT = process.env.PORT || "3000";
+  const PORT = process.env.NODE_ENV === 'development' ? process.env.NODE_PORT : "8080";
 
   // HTTP 서버 생성
   const server = createServer(app);
@@ -16,8 +17,10 @@ const main = async () => {
   });
 
   // 서버 실행
-  server.listen(parseInt(PORT, 10), () => {
+  app.listen(parseInt(PORT as string, 10), () => {
     console.log(`Server is running on port ${PORT}, NODE_ENV=${process.env.NODE_ENV}`);
+
+    swaggerDocs(app, Number(PORT));
   });
 };
 

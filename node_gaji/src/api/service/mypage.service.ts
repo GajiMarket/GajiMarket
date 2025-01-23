@@ -1,8 +1,8 @@
 import {logger} from '../../logger'
 import { Storage } from '@google-cloud/storage'
 import {uploadImageDAO, profileDefault, profileNickDAO} from '../DAO/mypage.dao'
-import IPhoto from 'api/models/photo'
-import IMemberTbl from 'api/models/member_tbl'
+import IPhoto from '../models/photo'
+import IMemberTbl from '../models/member_tbl'
 import path from 'path'
 import dotenv from 'dotenv';
 

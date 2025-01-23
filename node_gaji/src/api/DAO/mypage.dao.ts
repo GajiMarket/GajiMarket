@@ -1,7 +1,7 @@
 import {logger} from '../../logger'
 import {db, schema} from '../../config/dbConfig';
 import IPhoto from '../models/photo';
-import IMemberTbl from 'api/models/member_tbl';
+import IMemberTbl from '../models/member_tbl';
 
 type Photo = Partial<IPhoto>
 type Member = Partial<IMemberTbl>

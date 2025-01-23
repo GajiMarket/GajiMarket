@@ -12,6 +12,7 @@
 # below:
 .git
 .gitignore
+dist/logger.js
 
 # Node.js dependencies:
 node_modules/

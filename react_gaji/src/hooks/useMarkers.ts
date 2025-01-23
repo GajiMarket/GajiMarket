@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { usePathStore } from "../utils/pathStore";
 import { sendPathData } from "../api/pathFinder.api";
 
+const api: string = import.meta.env.VITE_API_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
+
 interface ProductLocation {
     product_id: number;
     title: string;
@@ -35,7 +39,7 @@ const useMarkers = () => {
     const fetchProductLocations = async () => {
         try {
             const response = await axios.get<ApiResponse>(
-                "http://localhost:3000/map/product_preview"
+                import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/map/product_preview` : `${api}/map/product_preview`
                 );
             const { success, data } = response.data;
             if(success && Array.isArray(data)){

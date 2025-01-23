@@ -9,10 +9,23 @@ import searchIcon from "../../assets/icons/search-icon.png";
 import "../../style/Mypage_keyword_settings.css"; // 스타일 파일
 
 const MypageKeywordSettings: React.FC = () => {
-  const { addedKeywords, addKeyword, removeKeyword } = useKeywordStore(); // Zustand에서 상태 가져오기
+  // const { addedKeywords, addKeyword, removeKeyword } = useKeywordStore(); // Zustand에서 상태 가져오기
+  const { addKeyword, removeKeyword } = useKeywordStore(); // Zustand에서 상태 가져오기
   const { postKeywords, getKeywords } = sendKeyword(); // Axios 훅 가져오기
   const [searchInput, setSearchInput] = useState<string>("");
   const [keywords, setKeywords] = useState<string[]>([]); // 저장된 키워드 + 추가된 키워드
+  // const [suggestedKeywords, setSuggestedKeywords] = useState<string[]>([
+  //   "냉장고",
+  //   "세탁기",
+  //   "에어컨",
+  //   "자전거",
+  //   "운동화",
+  //   "드론",
+  //   "테이블",
+  //   "모니터",
+  //   "청소기",
+  //   "스피커",
+  // ]);
   const [suggestedKeywords, setSuggestedKeywords] = useState<string[]>([
     "냉장고",
     "세탁기",
@@ -25,6 +38,9 @@ const MypageKeywordSettings: React.FC = () => {
     "청소기",
     "스피커",
   ]);
+
+  console.log(setSuggestedKeywords);
+  
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
@@ -34,7 +50,7 @@ const MypageKeywordSettings: React.FC = () => {
       setLoading(true);
       try {
         const userNo = loginStore.getState().userNo; // 사용자 번호 가져오기
-        const response = await getKeywords(userNo);
+        const response = await getKeywords(Number(userNo));
 
         // keyword_name 배열만 상태에 저장
         if (response?.data?.keyword_name) {

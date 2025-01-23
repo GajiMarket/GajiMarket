@@ -11,7 +11,30 @@ type loginType = Partial<IMemberTbl&IPhoto>;
 
 
 
-
+/**
+ * @openapi
+ * /validateId:
+ *   post:
+  *     tags:
+ *      - Member 
+ *     summary: 아이디 중복 확인
+ *     description: 사용자가 입력한 아이디의 중복 여부를 확인합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *     responses:
+ *       200:
+ *         description: 사용 가능한 아이디
+ *       409:
+ *         description: 아이디가 이미 사용 중임
+ */
 // 아이디 중복
 export const duplicatedId = async (req: Request, res: Response) => {
     try {
@@ -59,7 +82,33 @@ export const duplicatedId = async (req: Request, res: Response) => {
     }
 }
 
-
+/**
+ * @openapi
+ * /login:
+ *   post:
+ *     tags:
+ *      - Member 
+ *     summary: 로그인
+ *     description: 사용자 인증을 위한 로그인 처리.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *               password:
+ *                 type: string
+ *                 example: yourpassword123
+ *     responses:
+ *       200:
+ *         description: 로그인 성공
+ *       401:
+ *         description: 인증 실패
+ */
 // 로그인
 export const userCtrl = async (req:Request, res: Response) => {
 
@@ -169,6 +218,95 @@ export const logout = async (req:Request, res:Response) => {
         message: "logout successed",
     });
 }
+/**
+ * @openapi
+ * /signup:
+ *   post:
+ *     tags:
+ *       - Member
+ *     summary: 회원가입
+ *     description: 사용자 정보를 입력받아 회원가입을 처리합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - member_id
+ *               - member_pwd
+ *               - member_email
+ *               - member_nick
+ *               - member_name
+ *               - member_phone
+ *               - member_addr
+ *               - member_login
+ *               - member_birth
+ *             properties:
+ *               member_id:
+ *                 type: string
+ *                 description: 사용자가 등록할 아이디
+ *                 example: johndoe123
+ *               member_pwd:
+ *                 type: string
+ *                 description: 사용자가 설정할 비밀번호
+ *                 example: yourpassword123
+ *               member_email:
+ *                 type: string
+ *                 description: 사용자의 이메일 주소
+ *                 example: user@example.com
+ *               member_nick:
+ *                 type: string
+ *                 description: 사용자의 닉네임임
+ *                 example: 장발산
+ *               member_name:
+ *                 type: string
+ *                 description: 사용자의 이름름
+ *                 example: 홍길동
+ *               member_phone:
+ *                 type: number
+ *                 description: 사용자의 핸드폰 번호호
+ *                 example: 01012341234
+ *               member_addr:
+ *                 type: string
+ *                 description: 사용자의 주소
+ *                 example: 금천구
+ *               member_login:
+ *                 type: number
+ *                 description: 사용자의 로그인 타입입
+ *                 example: 0
+ *               member_birth:
+ *                 type: number
+ *                 description: 사용자의 생년 월일일
+ *                 example: 19481101
+ *     responses:
+ *       201:
+ *         description: 회원가입 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "회원가입이 성공적으로 완료되었습니다."
+ *       400:
+ *         description: 잘못된 요청
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "요청 데이터가 잘못되었습니다."
+ */
 
 // 회원가입
 export const signCtrl = async (req: Request, res: Response) => {
@@ -232,7 +370,20 @@ export const signCtrl = async (req: Request, res: Response) => {
             
         }
     }
-
+/**
+ * @openapi
+ * /tokenvali:
+ *   get:
+  *     tags:
+ *      - Member 
+ *     summary: 토큰 유효성 검사
+ *     description: 클라이언트가 보유한 JWT 토큰이 유효한지 확인합니다.
+ *     responses:
+ *       200:
+ *         description: 토큰이 유효함
+ *       401:
+ *         description: 토큰이 유효하지 않음
+ */
 // 쿠키 token 유효성 검증
 // req값이 pino에 안나옴
 export const validateToken = (req: Request, res: Response) => {
@@ -279,7 +430,20 @@ export const validateToken = (req: Request, res: Response) => {
 
 }
 
-
+/**
+ * @openapi
+ * /getuserinfo:
+ *   get:
+  *     tags:
+ *      - Member 
+ *     summary: 사용자 정보 조회
+ *     description: 로그인된 사용자의 정보를 반환합니다.
+ *     responses:
+ *       200:
+ *         description: 사용자 정보 반환
+ *       401:
+ *         description: 인증 실패
+ */
 // 일반 로그인 사용자 정보
 export const getLoginInfo = async(req: Request, res: Response) => {
 

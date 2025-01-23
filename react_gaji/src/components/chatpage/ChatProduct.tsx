@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const api = import.meta.env.VITE_API_LOCAL;
+
+const google = import.meta.env.VITE_GOOGLE_URL;
+
 interface ChatProductProps {
   productId: string;
 }
@@ -20,7 +24,7 @@ const ChatProduct: React.FC<ChatProductProps> = ({ productId }) => {
     const fetchProduct = async () => {
       try {
         console.log(`Fetching product for productId: ${productId}`);
-        const response = await axios.get(`http://localhost:3000/api/product/${productId}`);
+        const response = await axios.get(import.meta.env.VITE_NODE_ENV === 'production' ?`${google}/api/product/${productId}` : `${api}/api/product/${productId}`);
         console.log('Fetched product:', response.data);
         setProduct(response.data);
       } catch (error) {

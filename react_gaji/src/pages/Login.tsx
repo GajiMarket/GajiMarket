@@ -18,6 +18,9 @@ useEffect(() =>{
   }
 
 },[])
+
+console.log(import.meta.env.VITE_NODE_ENV);
+
   
   const [formData, setFormData] = useState<Record<string, string>>({
     id: '',

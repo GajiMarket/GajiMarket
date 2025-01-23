@@ -8,7 +8,11 @@ import ChatProduct from '../components/chatpage/ChatProduct';
 import Chatting from '../components/chatpage/Chatting';
 import ChatSend from '../components/chatpage/ChatSend';
 
-const socket = io('http://localhost:3000');
+const api = import.meta.env.VITE_API_LOCAL;
+
+const google = import.meta.env.VITE_GOOGLE_URL;
+
+const socket = io(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}` : `${api}`);
 
 interface ChatMessage {
   id: number;
@@ -34,7 +38,7 @@ const Chatpage: React.FC = () => {
     const fetchMessages = async () => {
       try {
         console.log(`Fetching messages for chat ID: ${roomId}`);
-        const response = await axios.get(`http://localhost:3000/api/chat/${roomId}`);
+        const response = await axios.get(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/api/chat/${roomId}` : `${api}/api/chat/${roomId}`);
         console.log('Fetched messages:', response.data);
         response.data.forEach((msg: ChatMessage) => addMessage(roomId, msg));
       } catch (error) {
@@ -67,7 +71,7 @@ const Chatpage: React.FC = () => {
 
   const handleSendMessage = async (message: string) => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/chat/${roomId}`, { message });
+      const response = await axios.post(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/api/chat/${roomId}` : `${api}/api/chat/${roomId}`, { message });
       addMessage(roomId, response.data);
     } catch (error) {
       console.error('Failed to send message:', error);

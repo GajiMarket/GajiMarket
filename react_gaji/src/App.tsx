@@ -23,7 +23,7 @@ import MypageAlarm from "./components/mypage/Mypage_alarm";
 import Navigation from './pages/Navigation';
 import Lodingpage from "./pages/Lodingpage";
 import FindMain from './pages/FindMain';
-import Erorrpage from "./pages/erorrpage";
+// import Erorrpage from "./pages/erorrpage";
 
 
 const App: React.FC = () => {
@@ -62,7 +62,7 @@ const App: React.FC = () => {
               />
               <Route path="/mypage_alarm" element={<MypageAlarm />} /> {/* 알림 페이지 추가 */}
               <Route path="/navigation" element={<Navigation />} />
-              <Route path="/erorr" element={<Erorrpage />} />
+              {/* <Route path="/erorr" element={<Erorrpage />} /> */}
             </Routes>
         </BrowserRouter>
   );

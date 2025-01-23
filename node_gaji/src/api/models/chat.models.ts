@@ -1,4 +1,5 @@
 // 채팅 사용자
+
 export interface IChatUser {
     chat_room_id: number;
     buyer_no: number;
@@ -8,8 +9,8 @@ export interface IChatUser {
 }
 
 // 채팅 메시지
+
 export interface IChatMessage {
-    // message_id: number;
     chat_message: string;
     read_or_not: boolean;
     created_at: Date;
@@ -19,6 +20,7 @@ export interface IChatMessage {
 }
 
 // 회원 정보
+
 export interface IUser {
     member_no: number;
     member_id: string;

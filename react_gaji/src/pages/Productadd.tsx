@@ -5,6 +5,10 @@ import Mapcontainer from "../components/map/Mapcontainer";
 import axios from "axios";
 import loginStore from "../utils/loginStore";
 
+const server: string = import.meta.env.VITE_API_LOCAL;
+
+const google: string = import.meta.env.VITE_GOOGLE_URL;
+
 const ProductAdd: React.FC = () => {
   const [title, setTitle] = useState("");
   const [sell_price, setPrice] = useState("");
@@ -19,7 +23,7 @@ const ProductAdd: React.FC = () => {
 
   const [showMap, setShowMap] = useState(false);
 
-  const [firstImage, setFirstImage] = useState<string>('');
+  // const [firstImage, setFirstImage] = useState<string>('');
 
   const { isAuthenticated, userNo } = loginStore();
 
@@ -149,7 +153,7 @@ const ProductAdd: React.FC = () => {
       
       
       const response = await axios.post(
-        "http://localhost:3000/use/productadd",
+        import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/use/productadd` : `${server}/use/productadd`,
         formData, 
       );
 

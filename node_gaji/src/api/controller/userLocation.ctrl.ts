@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IULocation } from "api/models/user_location";
+import { IULocation } from "../models/user_location";
 
 export const userLocation = (req: Request, res: Response): void => {
     console.log("Request body:", req.body);

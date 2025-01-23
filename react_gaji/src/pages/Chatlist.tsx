@@ -7,6 +7,10 @@ import Footer from '../components/all/Footer';
 import { useNavigate } from 'react-router-dom';
 import loginStore from '../utils/loginStore'; // 로그인 상태를 가져오는 훅
 
+const api = import.meta.env.VITE_API_LOCAL;
+
+const google = import.meta.env.VITE_GOOGLE_URL;
+
 interface Chat {
   chat_room_id: number;
   last_message: string;
@@ -28,7 +32,7 @@ const Chatlist: React.FC = () => {
 
     const fetchChats = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/chatrooms/${userNo}`); // 회원 번호를 URL에 포함
+        const response = await axios.get(import.meta.env.VITE_NODE_ENV === 'production' ? `${google}/api/chatrooms/${userNo}` : `${api}/api/chatrooms/${userNo}`); // 회원 번호를 URL에 포함
         console.log('Fetched chats:', response.data); // 로그 추가
         setChats(response.data);
       } catch (error) {
